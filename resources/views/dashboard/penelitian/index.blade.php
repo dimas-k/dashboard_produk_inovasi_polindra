@@ -51,7 +51,7 @@
             @include('dashboard.layout.sidebar')
 
             <!--app-content open-->
-            @include('dashboard.layout.content')
+            @include('dashboard.penelitian.content')
             <!--app-content close-->
 
         </div>

@@ -264,6 +264,11 @@
     border-radius: 6px;
 }
 
+a {
+    text-decoration: none;
+    color: #252525;
+}
+
 
 /*** Facts ***/
 .fact-item {

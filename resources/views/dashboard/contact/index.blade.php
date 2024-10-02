@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <meta content="" name="keywords">
-    <meta content="" name="description">
 
     <link href="img/favicon.ico" rel="icon">
 
@@ -35,7 +33,7 @@
     <!-- Template Stylesheet -->
     <link rel="stylesheet" href={{ asset('css/dashboard.css') }}>
 
-    <title>Dashboard</title>
+    <title>Contact Us</title>
 
 </head>
 
@@ -51,7 +49,7 @@
             @include('dashboard.layout.sidebar')
 
             <!--app-content open-->
-            @include('dashboard.layout.content')
+            @include('dashboard.contact.content')
             <!--app-content close-->
 
         </div>

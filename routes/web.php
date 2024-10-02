@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\LoginAdminController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DashboardController;
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,5 +20,8 @@ Route::get('/', function () {
     return view('dashboard/index');
 });
 
-
 Route::get('/login', [LoginAdminController::class, 'loginPage']);
+
+Route::get('/dashboard', [DashboardController::class, 'index']);
+Route::get('/dashboard/penelitian', [DashboardController::class, 'penelitian']);
+Route::get('/dashboard/contact', [DashboardController::class, 'contact']);
