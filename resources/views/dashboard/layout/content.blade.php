@@ -139,7 +139,7 @@
             </div>
             <div class="row g-4">
                 <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                    <a class="service-item d-block rounded text-center h-100 p-4" href="">
+                    <a class="service-item d-block rounded text-center h-100 p-4 link-underline link-underline-opacity-0" href="">
                         <img class="img-fluid rounded mb-4" src="img/service-1.jpg" alt="">
                         <h4 class="mb-0">Web Design</h4>
                     </a>

@@ -10,42 +10,19 @@
     <div class="row align-items-center top-bar">
         <div class="col-lg-4 col-md-12 text-center text-lg-start">
             <a href="" class="navbar-brand m-0 p-0">
-                <h1 class="fw-bold text-primary m-0"><i class="fa fa-laptop-code me-3"></i>DGcom</h1>
-                <!-- <img src="img/logo.png" alt="Logo"> -->
+                <img src="{{ asset('assets/img/logo-dproin.png') }}" style="width: 160px; height:70px">
             </a>
         </div>
         <div class="col-lg-8 col-md-7 d-none d-lg-block">
-            <div class="row">
-                <div class="col-4">
-                    <div class="d-flex align-items-center justify-content-end">
-                        <div class="flex-shrink-0 btn-lg-square border rounded-circle">
-                            <i class="far fa-clock text-primary"></i>
-                        </div>
-                        <div class="ps-3">
-                            <p class="mb-2">Opening Hour</p>
-                            <h6 class="mb-0">Mon - Fri, 8:00 - 9:00</h6>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-4">
-                    <div class="d-flex align-items-center justify-content-end">
-                        <div class="flex-shrink-0 btn-lg-square border rounded-circle">
-                            <i class="fa fa-phone text-primary"></i>
-                        </div>
-                        <div class="ps-3">
-                            <p class="mb-2">Call Us</p>
-                            <h6 class="mb-0">+012 345 6789</h6>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-4">
+            <div class="row">  
+                <div class="col-12">
                     <div class="d-flex align-items-center justify-content-end">
                         <div class="flex-shrink-0 btn-lg-square border rounded-circle">
                             <i class="far fa-envelope text-primary"></i>
                         </div>
                         <div class="ps-3">
                             <p class="mb-2">Email Us</p>
-                            <h6 class="mb-0">info@example.com</h6>
+                            <a href="mailto:sentra_ki@polindra.ac.id">sentra_ki@polindra.ac.id</a>
                         </div>
                     </div>
                 </div>

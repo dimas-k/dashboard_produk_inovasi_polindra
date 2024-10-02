@@ -33,7 +33,7 @@
     <!-- Customized Bootstrap Stylesheet -->
     <link href={{ asset('css/bootstrap.min.css') }} rel="stylesheet">
 
-    <title>Dashboard</title>
+    <title>D-PROIN | Dashboard</title>
     
 </head>
 
