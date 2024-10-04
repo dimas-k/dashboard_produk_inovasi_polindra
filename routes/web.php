@@ -1,8 +1,9 @@
 <?php
 
-use App\Http\Controllers\LoginAdminController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\LoginAdminController;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 /*
@@ -20,8 +21,14 @@ Route::get('/', function () {
     return view('dashboard/index');
 });
 
-Route::get('/login', [LoginAdminController::class, 'loginPage']);
+Route::get('/login', [LoginAdminController::class, 'loginPage'])->name('login');
+Route::post('/login-admin/autentikasi', [LoginAdminController::class, 'authenticate']);
 
 Route::get('/dashboard', [DashboardController::class, 'index']);
 Route::get('/dashboard/penelitian', [DashboardController::class, 'penelitian']);
 Route::get('/dashboard/contact', [DashboardController::class, 'contact']);
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/admin/dashboard', [AdminController::class, 'dashboard']);                                                                                       
+    Route::get('/logout', [LoginAdminController::class, 'logout']);
+});
