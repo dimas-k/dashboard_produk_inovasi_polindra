@@ -23,7 +23,7 @@
             <div class="owl-carousel project-carousel wow fadeInUp" data-wow-delay="0.1s">
                 <div class="project-item border rounded h-100 p-4" data-dot="01">
                     <div class="position-relative mb-4">
-                        <img class="img-fluid rounded" src="img/project-1.jpg" alt="">
+                        <img class="img-fluid rounded" src={{ URL('img/roject-1.jpg') }} alt="">
                         <a href="img/project-1.jpg" data-lightbox="project"><i class="fa fa-eye fa-2x"></i></a>
                     </div>
                     <h6>UI / UX Design</h6>
@@ -31,7 +31,7 @@
                 </div>
                 <div class="project-item border rounded h-100 p-4" data-dot="02">
                     <div class="position-relative mb-4">
-                        <img class="img-fluid rounded" src="img/project-2.jpg" alt="">
+                        <img class="img-fluid rounded" src={{ URL('img/roject-2.jpg') }} alt="">
                         <a href="img/project-2.jpg" data-lightbox="project"><i class="fa fa-eye fa-2x"></i></a>
                     </div>
                     <h6>UI / UX Design</h6>
@@ -39,7 +39,7 @@
                 </div>
                 <div class="project-item border rounded h-100 p-4" data-dot="03">
                     <div class="position-relative mb-4">
-                        <img class="img-fluid rounded" src="img/project-3.jpg" alt="">
+                        <img class="img-fluid rounded" src={{ URL('img/roject-3.jpg') }} alt="">
                         <a href="img/project-2.jpg" data-lightbox="project"><i class="fa fa-eye fa-2x"></i></a>
                     </div>
                     <h6>UI / UX Design</h6>
@@ -47,7 +47,7 @@
                 </div>
                 <div class="project-item border rounded h-100 p-4" data-dot="04">
                     <div class="position-relative mb-4">
-                        <img class="img-fluid rounded" src="img/project-4.jpg" alt="">
+                        <img class="img-fluid rounded" src={{ URL('img/roject-4.jpg') }} alt="">
                         <a href="img/project-4.jpg" data-lightbox="project"><i class="fa fa-eye fa-2x"></i></a>
                     </div>
                     <h6>UI / UX Design</h6>
@@ -55,7 +55,7 @@
                 </div>
                 <div class="project-item border rounded h-100 p-4" data-dot="05">
                     <div class="position-relative mb-4">
-                        <img class="img-fluid rounded" src="img/project-5.jpg" alt="">
+                        <img class="img-fluid rounded" src={{ URL('img/roject-5.jpg') }} alt="">
                         <a href="img/project-5.jpg" data-lightbox="project"><i class="fa fa-eye fa-2x"></i></a>
                     </div>
                     <h6>UI / UX Design</h6>
@@ -63,7 +63,7 @@
                 </div>
                 <div class="project-item border rounded h-100 p-4" data-dot="06">
                     <div class="position-relative mb-4">
-                        <img class="img-fluid rounded" src="img/project-6.jpg" alt="">
+                        <img class="img-fluid rounded" src={{ URL('img/roject-6.jpg') }} alt="">
                         <a href="img/project-6.jpg" data-lightbox="project"><i class="fa fa-eye fa-2x"></i></a>
                     </div>
                     <h6>UI / UX Design</h6>
@@ -71,7 +71,7 @@
                 </div>
                 <div class="project-item border rounded h-100 p-4" data-dot="07">
                     <div class="position-relative mb-4">
-                        <img class="img-fluid rounded" src="img/project-7.jpg" alt="">
+                        <img class="img-fluid rounded" src={{ URL('img/roject-7.jpg') }} alt="">
                         <a href="img/project-7.jpg" data-lightbox="project"><i class="fa fa-eye fa-2x"></i></a>
                     </div>
                     <h6>UI / UX Design</h6>
@@ -79,7 +79,7 @@
                 </div>
                 <div class="project-item border rounded h-100 p-4" data-dot="08">
                     <div class="position-relative mb-4">
-                        <img class="img-fluid rounded" src="img/project-8.jpg" alt="">
+                        <img class="img-fluid rounded" src={{ URL('img/roject-8.jpg') }} alt="">
                         <a href="img/project-8.jpg" data-lightbox="project"><i class="fa fa-eye fa-2x"></i></a>
                     </div>
                     <h6>UI / UX Design</h6>
@@ -87,7 +87,7 @@
                 </div>
                 <div class="project-item border rounded h-100 p-4" data-dot="09">
                     <div class="position-relative mb-4">
-                        <img class="img-fluid rounded" src="img/project-9.jpg" alt="">
+                        <img class="img-fluid rounded" src={{ URL('img/roject-9.jpg') }} alt="">
                         <a href="img/project-9.jpg" data-lightbox="project"><i class="fa fa-eye fa-2x"></i></a>
                     </div>
                     <h6>UI / UX Design</h6>
@@ -95,7 +95,7 @@
                 </div>
                 <div class="project-item border rounded h-100 p-4" data-dot="10">
                     <div class="position-relative mb-4">
-                        <img class="img-fluid rounded" src="img/project-10.jpg" alt="">
+                        <img class="img-fluid rounded" src={{ URL('img/roject-10.jpg') }} alt="">
                         <a href="img/project-10.jpg" data-lightbox="project"><i class="fa fa-eye fa-2x"></i></a>
                     </div>
                     <h6>UI / UX Design</h6>

@@ -4,18 +4,18 @@
             <div class="carousel-indicators">
                 <button type="button" data-bs-target="#header-carousel" data-bs-slide-to="0" class="active"
                     aria-current="true" aria-label="Slide 1">
-                    <img class="img-fluid" src="img/carousel-1.jpg" alt="Image">
+                    <img class="img-fluid" src={{ URL('img/carousel-1.jpg') }} src="img/carousel-1.jpg" alt="Image">
                 </button>
                 <button type="button" data-bs-target="#header-carousel" data-bs-slide-to="1" aria-label="Slide 2">
-                    <img class="img-fluid" src="img/carousel-2.jpg" alt="Image">
+                    <img class="img-fluid" src={{ URL('img/carousel-2.jpg') }} alt="Image">
                 </button>
                 <button type="button" data-bs-target="#header-carousel" data-bs-slide-to="2" aria-label="Slide 3">
-                    <img class="img-fluid" src="img/carousel-3.jpg" alt="Image">
+                    <img class="img-fluid" src={{ URL('img/carousel-3.jpg') }} alt="Image">
                 </button>
             </div>
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <img class="w-100" src="img/carousel-1.jpg" alt="Image">
+                    <img class="w-100"  src={{ URL('img/carousel-1.jpg') }} alt="Image">
                     <div class="carousel-caption">
                         <div class="p-3" style="max-width: 900px;">
                             <h4 class="text-white text-uppercase mb-4 animated zoomIn">We Are Leader In</h4>
@@ -25,7 +25,7 @@
                     </div>
                 </div>
                 <div class="carousel-item">
-                    <img class="w-100" src="img/carousel-2.jpg" alt="Image">
+                    <img class="w-100" src={{ URL('img/carousel-2.jpg') }} alt="Image">
                     <div class="carousel-caption">
                         <div class="p-3" style="max-width: 900px;">
                             <h4 class="text-white text-uppercase mb-4 animated zoomIn">We Are Leader In</h4>
@@ -35,7 +35,7 @@
                     </div>
                 </div>
                 <div class="carousel-item">
-                    <img class="w-100" src="img/carousel-3.jpg" alt="Image">
+                    <img class="w-100" src={{ URL('img/carousel-3.jpg') }} alt="Image">
                     <div class="carousel-caption">
                         <div class="p-3" style="max-width: 900px;">
                             <h4 class="text-white text-uppercase mb-4 animated zoomIn">We Are Leader In</h4>
@@ -98,7 +98,7 @@
             <div class="project-item border rounded h-100 p-4" data-dot="01">
                 <div class="position-relative mb-4">
                     <img class="img-fluid rounded" src="img/project-1.jpg" alt="">
-                    <a href="img/project-1.jpg" data-lightbox="project"><i class="fa fa-eye fa-2x"></i></a>
+                    <a href={{ URL('img/project-1.jpg') }} href="img/project-1.jpg" data-lightbox="project"><i class="fa fa-eye fa-2x"></i></a>
                 </div>
                 <h6>UI / UX Design</h6>
                 <span>Digital agency website design and development</span>
@@ -106,7 +106,7 @@
             <div class="project-item border rounded h-100 p-4" data-dot="02">
                 <div class="position-relative mb-4">
                     <img class="img-fluid rounded" src="img/project-2.jpg" alt="">
-                    <a href="img/project-2.jpg" data-lightbox="project"><i class="fa fa-eye fa-2x"></i></a>
+                    <a href={{ URL('img/project-2.jpg') }} data-lightbox="project"><i class="fa fa-eye fa-2x"></i></a>
                 </div>
                 <h6>UI / UX Design</h6>
                 <span>Digital agency website design and development</span>
@@ -114,7 +114,7 @@
             <div class="project-item border rounded h-100 p-4" data-dot="03">
                 <div class="position-relative mb-4">
                     <img class="img-fluid rounded" src="img/project-3.jpg" alt="">
-                    <a href="img/project-2.jpg" data-lightbox="project"><i class="fa fa-eye fa-2x"></i></a>
+                    <a href={{ URL('img/project-3.jpg') }} data-lightbox="project"><i class="fa fa-eye fa-2x"></i></a>
                 </div>
                 <h6>UI / UX Design</h6>
                 <span>Digital agency website design and development</span>
@@ -122,7 +122,7 @@
             <div class="project-item border rounded h-100 p-4" data-dot="04">
                 <div class="position-relative mb-4">
                     <img class="img-fluid rounded" src="img/project-4.jpg" alt="">
-                    <a href="img/project-4.jpg" data-lightbox="project"><i class="fa fa-eye fa-2x"></i></a>
+                    <a href={{ URL('img/project-4.jpg') }} data-lightbox="project"><i class="fa fa-eye fa-2x"></i></a>
                 </div>
                 <h6>UI / UX Design</h6>
                 <span>Digital agency website design and development</span>
@@ -130,7 +130,7 @@
             <div class="project-item border rounded h-100 p-4" data-dot="05">
                 <div class="position-relative mb-4">
                     <img class="img-fluid rounded" src="img/project-5.jpg" alt="">
-                    <a href="img/project-5.jpg" data-lightbox="project"><i class="fa fa-eye fa-2x"></i></a>
+                    <a href={{ URL('img/project-5.jpg') }} data-lightbox="project"><i class="fa fa-eye fa-2x"></i></a>
                 </div>
                 <h6>UI / UX Design</h6>
                 <span>Digital agency website design and development</span>
@@ -138,7 +138,7 @@
             <div class="project-item border rounded h-100 p-4" data-dot="06">
                 <div class="position-relative mb-4">
                     <img class="img-fluid rounded" src="img/project-6.jpg" alt="">
-                    <a href="img/project-6.jpg" data-lightbox="project"><i class="fa fa-eye fa-2x"></i></a>
+                    <a href={{ URL('img/project-6.jpg') }} data-lightbox="project"><i class="fa fa-eye fa-2x"></i></a>
                 </div>
                 <h6>UI / UX Design</h6>
                 <span>Digital agency website design and development</span>
@@ -146,7 +146,7 @@
             <div class="project-item border rounded h-100 p-4" data-dot="07">
                 <div class="position-relative mb-4">
                     <img class="img-fluid rounded" src="img/project-7.jpg" alt="">
-                    <a href="img/project-7.jpg" data-lightbox="project"><i class="fa fa-eye fa-2x"></i></a>
+                    <a href={{ URL('img/project-7.jpg') }} data-lightbox="project"><i class="fa fa-eye fa-2x"></i></a>
                 </div>
                 <h6>UI / UX Design</h6>
                 <span>Digital agency website design and development</span>
@@ -154,7 +154,7 @@
             <div class="project-item border rounded h-100 p-4" data-dot="08">
                 <div class="position-relative mb-4">
                     <img class="img-fluid rounded" src="img/project-8.jpg" alt="">
-                    <a href="img/project-8.jpg" data-lightbox="project"><i class="fa fa-eye fa-2x"></i></a>
+                    <a href={{ URL('img/project-8.jpg') }} data-lightbox="project"><i class="fa fa-eye fa-2x"></i></a>
                 </div>
                 <h6>UI / UX Design</h6>
                 <span>Digital agency website design and development</span>
@@ -162,7 +162,7 @@
             <div class="project-item border rounded h-100 p-4" data-dot="09">
                 <div class="position-relative mb-4">
                     <img class="img-fluid rounded" src="img/project-9.jpg" alt="">
-                    <a href="img/project-9.jpg" data-lightbox="project"><i class="fa fa-eye fa-2x"></i></a>
+                    <a href={{ URL('img/project-9.jpg') }} data-lightbox="project"><i class="fa fa-eye fa-2x"></i></a>
                 </div>
                 <h6>UI / UX Design</h6>
                 <span>Digital agency website design and development</span>
@@ -170,7 +170,7 @@
             <div class="project-item border rounded h-100 p-4" data-dot="10">
                 <div class="position-relative mb-4">
                     <img class="img-fluid rounded" src="img/project-10.jpg" alt="">
-                    <a href="img/project-10.jpg" data-lightbox="project"><i class="fa fa-eye fa-2x"></i></a>
+                    <a href={{ URL('img/project-10.jpg') }} data-lightbox="project"><i class="fa fa-eye fa-2x"></i></a>
                 </div>
                 <h6>UI / UX Design</h6>
                 <span>Digital agency website design and development</span>
@@ -190,37 +190,37 @@
             <div class="row g-4">
                 <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
                     <a class="service-item d-block rounded text-center h-100 p-4 link-underline link-underline-opacity-0" href="">
-                        <img class="img-fluid rounded mb-4" src="img/service-1.jpg" alt="">
+                        <img class="img-fluid rounded mb-4" src={{ URL('img/service-1.jpg') }} alt="">
                         <h4 class="mb-0">Web Design</h4>
                     </a>
                 </div>
                 <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
                     <a class="service-item d-block rounded text-center h-100 p-4" href="">
-                        <img class="img-fluid rounded mb-4" src="img/service-2.jpg" alt="">
+                        <img class="img-fluid rounded mb-4" src={{ URL('img/service-2.jpg') }} alt="">
                         <h4 class="mb-0">App Development</h4>
                     </a>
                 </div>
                 <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
                     <a class="service-item d-block rounded text-center h-100 p-4" href="">
-                        <img class="img-fluid rounded mb-4" src="img/service-3.jpg" alt="">
+                        <img class="img-fluid rounded mb-4" src={{ URL('img/service-3.jpg') }} alt="">
                         <h4 class="mb-0">SEO Optimization</h4>
                     </a>
                 </div>
                 <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
                     <a class="service-item d-block rounded text-center h-100 p-4" href="">
-                        <img class="img-fluid rounded mb-4" src="img/service-4.jpg" alt="">
+                        <img class="img-fluid rounded mb-4" src={{ URL('img/service-4.jpg') }} alt="">
                         <h4 class="mb-0">Social Marketing</h4>
                     </a>
                 </div>
                 <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
                     <a class="service-item d-block rounded text-center h-100 p-4" href="">
-                        <img class="img-fluid rounded mb-4" src="img/service-5.jpg" alt="">
+                        <img class="img-fluid rounded mb-4" src={{ URL('img/service-5.jpg') }} alt="">
                         <h4 class="mb-0">Email Marketing</h4>
                     </a>
                 </div>
                 <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
                     <a class="service-item d-block rounded text-center h-100 p-4" href="">
-                        <img class="img-fluid rounded mb-4" src="img/service-6.jpg" alt="">
+                        <img class="img-fluid rounded mb-4" src={{ URL('img/service-6.jpg') }} alt="">
                         <h4 class="mb-0">PPC Advertising</h4>
                     </a>
                 </div>
