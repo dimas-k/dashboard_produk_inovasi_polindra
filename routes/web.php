@@ -28,3 +28,4 @@ Route::post('/login-admin/autentikasi', [LoginAdminController::class, 'authentic
 Route::get('/dashboard', [DashboardController::class, 'index']);
 Route::get('/dashboard/penelitian', [DashboardController::class, 'penelitian']);
 Route::get('/dashboard/contact', [DashboardController::class, 'contact']);
+Route::get('/dashboard/contact', [DashboardController::class, 'contact']);
