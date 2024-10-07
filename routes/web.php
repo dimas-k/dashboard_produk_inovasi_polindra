@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\KelompokBidangController;
 use App\Http\Controllers\LoginAdminController;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
@@ -29,6 +30,10 @@ Route::get('/dashboard/penelitian', [DashboardController::class, 'penelitian']);
 Route::get('/dashboard/contact', [DashboardController::class, 'contact']);
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/admin/dashboard', [AdminController::class, 'dashboard']);                                                                                       
+    Route::get('/admin/dashboard', [AdminController::class, 'dashboard']);
+    
+    Route::get('/admin/kelompok-bidang-keahlian', [KelompokBidangController::class, 'pageKelompokBidang']);
+    Route::post('/admin/kelompok-bidang-keahlian/create', [KelompokBidangController::class, 'storeKelompokKeahlian']);
+    
     Route::get('/logout', [LoginAdminController::class, 'logout']);
 });

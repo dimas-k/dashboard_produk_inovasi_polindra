@@ -2,7 +2,8 @@
     <div class="app-brand demo">
         <a href="index.html" class="app-brand-link">
             <span class="app-brand-logo demo">
-                <img src="{{ asset('assets-admin/img/logo-item-nobg.png') }}" alt="" style="width: 90px; heigh: 40px">
+                <img src="{{ asset('assets-admin/img/logo-item-bg.png') }}" alt=""
+                    style="width: 110px; heigh: 50px">
             </span>
         </a>
 
@@ -15,12 +16,17 @@
 
     <ul class="menu-inner py-1">
         <!-- Dashboards -->
-        
+
         <li class="menu-item">
-            <a href="/admin/dashboard"
-                target="_blank" class="menu-link">
+            <a href="/admin/dashboard" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-smile"></i>
                 <div class="text-truncate" data-i18n="Email">Dashboard</div>
+            </a>
+        </li>
+        <li class="menu-item">
+            <a href="/admin/kelompok-bidang-keahlian" class="menu-link">
+                <i class='menu-icon tf-icons bx bxs-cog'></i>
+                <div class="text-truncate" data-i18n="Email">Kelompok Bidang Keahlian</div>
             </a>
         </li>
 

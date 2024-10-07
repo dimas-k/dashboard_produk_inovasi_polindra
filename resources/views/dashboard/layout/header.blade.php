@@ -10,7 +10,7 @@
     <div class="row align-items-center top-bar">
         <div class="col-lg-4 col-md-12 text-center text-lg-start">
             <a href="" class="navbar-brand m-0 p-0">
-                <img src="{{ asset('assets/img/logo-dproin.png') }}" style="width: 160px; height:70px">
+                <img src="{{ asset('assets/img/logo-biru-bg.png') }}" style="width: 160px; height:75px">
             </a>
         </div>
         <div class="col-lg-8 col-md-7 d-none d-lg-block">
