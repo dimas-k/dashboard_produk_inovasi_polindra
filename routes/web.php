@@ -28,12 +28,3 @@ Route::post('/login-admin/autentikasi', [LoginAdminController::class, 'authentic
 Route::get('/dashboard', [DashboardController::class, 'index']);
 Route::get('/dashboard/penelitian', [DashboardController::class, 'penelitian']);
 Route::get('/dashboard/contact', [DashboardController::class, 'contact']);
-
-Route::middleware(['auth'])->group(function () {
-    Route::get('/admin/dashboard', [AdminController::class, 'dashboard']);
-    
-    Route::get('/admin/kelompok-bidang-keahlian', [KelompokBidangController::class, 'pageKelompokBidang']);
-    Route::post('/admin/kelompok-bidang-keahlian/create', [KelompokBidangController::class, 'storeKelompokKeahlian']);
-    
-    Route::get('/logout', [LoginAdminController::class, 'logout']);
-});

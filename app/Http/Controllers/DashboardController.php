@@ -19,4 +19,8 @@ class DashboardController extends Controller
         return view('dashboard.penelitian.index');
     }
 
+    public function detail_Penelitian() {
+        return view('dashboard.detail-penelitian.index');
+    }
+
 }
