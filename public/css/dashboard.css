@@ -495,3 +495,60 @@ a {
 .footer .copyright a:hover {
     color: var(--primary);
 }
+
+  .resume-item {
+    padding: 30px;
+    background: #333;
+    -webkit-transition: .3s all ease;
+    -o-transition: .3s all ease;
+    transition: .3s all ease;
+    border: 4px solid transparent;
+    border-radius: 7px; }
+    .resume-item .date {
+      display: block;
+      margin-bottom: 10px;
+      font-size: 12px;
+      font-weight: 700;
+      color: #fff; }
+    .resume-item .school {
+      display: block;
+      font-size: 16px; }
+    .resume-item h3 {
+      color: #009CFF;
+      font-size: 20px; }
+    .resume-item p {
+      color: #ffffff; }
+    .resume-item .school {
+      color: rgba(255, 255, 255, 0.711); }
+    .resume-item *:last-child {
+      margin-bottom: 0; }
+
+/*** Team ***/
+.team-item {
+    box-shadow: 0 0 45px rgba(0, 0, 0, .08);
+    height: calc(100% - 55px);
+    background: #ffffff;
+    margin-top: 16px;
+    transition: .5s;
+}
+
+.team-item img {
+    transition: .5s;
+    object-fit: cover;
+    border-radius: 50%;
+    height: 100px;
+    width: 100px;
+
+}
+
+.team-item:hover img {
+    transform: scale(1.1);
+}
+
+.team-item:hover {
+    height: 94%;
+}
+
+.team-item .btn {
+    border-radius: 38px 38px 0 0;
+}
