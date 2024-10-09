@@ -66,7 +66,6 @@
                         <th>Nama KBK</th>
                         <th>Jurusan</th>
                         <th>Aksi</th>
-
                     </tr>
                 </thead>
                 <tbody class="table-border-bottom-0">
@@ -76,8 +75,15 @@
                             <td>{{ $k->nama_kbk }}</td>
                             <td>{{ $k->jurusan }}</td>
                             <td>
+                                <div style="display: flex">
+
                                 <a href="" class="btn btn-sm btn-primary"><i class='bx bx-pencil'></i></a>
-                                <a href="" class="btn btn-sm btn-danger"><i class='bx bx-trash'></i></a>
+                                <form style="margin-left: 15px" method="post" action="{{ route('hapusKbk', ['id' => $k->id]) }}">
+                                    @method('delete')
+                                    @csrf
+                                    <button href="" class="btn btn-sm btn-danger" onclick="deleteConfirm(event)"><i class='bx bx-trash'></i></button>
+                                </form>
+                            </div>
                             </td>
                         </tr>
                     @endforeach

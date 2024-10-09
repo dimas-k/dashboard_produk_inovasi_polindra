@@ -27,8 +27,28 @@ class KelompokBidangController extends Controller
 
         return redirect('/admin/kelompok-bidang-keahlian')->with('success', 'Kelompok Keahlian berhasil ditambahkan');
     }
-    public function hapusKbk(string $id)
+    public function hapusKbk(string $id){
+        $kbk = KelompokKeahlian::findOrFail($id);
+        $kbk->delete();
+        return redirect('/admin/kelompok-bidang-keahlian')->with('success', 'product Deleted!');
+    }
+
+    public function edit(string $id)
     {
-        
+        $kbk = KelompokKeahlian::find($id);
+        return view('/admin/kelompok-bidang-keahlian/kbk', compact('admin'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id)
+    {
+        $kbk = KelompokKeahlian::find($id);
+        $kbk->nama_kbk = $request->nama_kbk;
+        $kbk->jurusan = $request->jurusan;
+        $kbk->save();
+
+        return redirect('/admin/kelompok-bidang-keahlian')->with('success', 'Data admin berhasil di update');
     }
 }

@@ -23,28 +23,31 @@
             </div>
         </div>
         <div class="col-md-6">
-            <h2 class="mb-5">Education</h2>
+            <h2 class="mb-5">T-Nose</h2>
             <div class="resume-item mb-4">
-                <span class="date"><span class="icon-calendar"></span> March 2013 - Present</span>
-                <h3>KK Applied Information System (AIS) merupakan kelompok keahlian di Fakultas Ilmu Terapan Universitas Telkom yang beranggotan 32 dosen dan memiliki lima sub-rumpun keilmuan, meliputi:</h3>
+                <strong style="color: white;">Invensi dapat dipatenkan jika invensi tersebut</strong> <br>
                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi possimus eum delectus, maxime error nesciunt cupiditate, quidem quos quae modi distinctio mollitia eos rerum nostrum iste amet excepturi neque aliquid!</p>
-                <span class="school">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam expedita a distinctio facere consectetur laboriosam sunt, cupiditate reprehenderit labore harum explicabo tempore itaque tempora amet exercitationem recusandae nobis dicta voluptatem!</span>
-                <div class="row g-4">
-                    <div class="col-lg-5 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                        <div class="team-item text-center rounded overflow-hidden">
-                            <div class="m-4">
-                                <img class="img-fluid" src={{ asset('img/carousel-1.jpg') }} alt="">
-                            </div>
-                            <h5 class="mb-0">Robieth Sohiburoyyan, S.Si., M.Si</h5>
-                            <small>Ketua Kelompok Keahlian</small>
-                            <div class="d-flex justify-content-center mt-3">
-                                <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-facebook-f"></i></a>
-                                <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-twitter"></i></a>
-                                <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-instagram"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <ol>
+                    <li>
+                        Management of Information Systems (15 scopes)
+                    </li>
+                    <li>
+                        Data Analytics (8 scopes)
+                    </li>
+                    <li>
+                        Big Data (9 scopes)
+                    </li>
+                    <li>
+                        Enterprise Systems (9 scopes)
+                    </li>
+                    <li>
+                        IT Infrastructure and Security (4 scopes)
+                    </li>
+                </ol>
+                <strong style="color: white;">Tahun Produk Dihasilkan</strong> <br>
+                <p>Tahun 2022</p>
+                <strong style="color: white;">Biaya Penelitian</strong> <br>
+                <p>-</p>
             </div>
         </div>
 
@@ -53,57 +56,37 @@
             <h2 class="mb-5">Experience</h2>
 
             <div class="resume-item mb-4">
-                <span class="date"><span class="icon-calendar"></span> March 2013 - Present</span>
-                <h3>Lead Product Designer</h3>
-                <p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic.</p>
-                <span class="school">Github</span>
+                <strong style="color: white;">Tim Inventor</strong> <br>
+                <p>Korespondensi :</p>
+                <ol>
+                    <li>
+                        Management of Information Systems (15 scopes)
+                    </li>
+                    <li>
+                        Data Analytics (8 scopes)
+                    </li>
+                    <li>
+                        Big Data (9 scopes)
+                    </li>
+                    <li>
+                        Enterprise Systems (9 scopes)
+                    </li>
+                    <li>
+                        IT Infrastructure and Security (4 scopes)
+                    </li>
+                </ol>
             </div>
         </div>
     </div>
 </div>
 </section> <!-- .section -->
 
-<div class="container-xxl py-5">
-<div class="container">
-    <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
-        <h6 class="section-title bg-white text-center text-primary px-3">Produk</h6>
-        <h1 class="display-6 mb-4">Penelitian</h1>
-    </div>
-    <div class="row g-4">
-        <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-            <a class="service-item d-block rounded text-center p-4 link-underline link-underline-opacity-0" href="">
-                <img class="img-fluid rounded" src={{ asset('img/service-1.jpg') }} alt="">
-            </a>
-        </div>
-        <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-            <a class="service-item d-block rounded text-center p-4 link-underline link-underline-opacity-0" href="">
-                <img class="img-fluid rounded" src={{ asset('img/service-1.jpg') }} alt="">
-            </a>
-        </div>
-        <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-            <a class="service-item d-block rounded text-center p-4 link-underline link-underline-opacity-0" href="">
-                <img class="img-fluid rounded" src={{ asset('img/service-1.jpg') }} alt="">
-            </a>
-        </div>
-        <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-            <a class="service-item d-block rounded text-center p-4 link-underline link-underline-opacity-0" href="">
-                <img class="img-fluid rounded" src={{ asset('img/service-1.jpg') }} alt="">
-            </a>
-        </div>
-        <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-            <a class="service-item d-block rounded text-center p-4 link-underline link-underline-opacity-0" href="">
-                <img class="img-fluid rounded" src={{ asset('img/service-1.jpg') }} alt="">
-            </a>
-        </div>
-        <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-            <a class="service-item d-block rounded text-center p-4 link-underline link-underline-opacity-0" href="">
-                <img class="img-fluid rounded" src={{ asset('img/service-1.jpg') }} alt="">
-            </a>
-        </div>
-    </div>
+<div class="article-meta">
+    <div>By Kontributor Satu TUVV </div>
+    <div>17 July 2023 </div>
+    <div> Kelompok Keahlian </div>
+    <div>Tags: Kelompok Keahlian, KK</div>
 </div>
-</div>
-<!-- .section -->
 
 <!-- Project Start -->
 <div class="container-xxl py-5">
@@ -197,3 +180,5 @@
 </div>
 </div>
 <!-- Project End -->
+
+

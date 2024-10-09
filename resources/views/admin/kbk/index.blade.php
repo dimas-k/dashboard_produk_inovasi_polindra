@@ -16,7 +16,7 @@
             /* SweetAlert z-index lebih tinggi dari Bootstrap modal */
         }
     </style>
-    
+
 
 
     <title>Admin D-PROIN | Dashboard</title>
@@ -102,6 +102,9 @@
     <!-- endbuild -->
 
     <!-- Vendors JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="sweetalert2.all.min.js"></script>
+
 
     <!-- Main JS -->
     <script src="{{ asset('assets-admin/js/main.js') }}"></script>
@@ -124,7 +127,7 @@
                 var nama_kbk = $('#namaKbk').val();
                 var jurusan = $('#jurusan').val();
 
-                
+
                 if (!nama_kbk) {
                     Swal.fire({
                         icon: "error",
@@ -153,7 +156,27 @@
         });
     </script>
 
-    
+    <script>
+        window.deleteConfirm = function (e) {
+            e.preventDefault();
+            var form = e.target.form;
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, delete it!"
+            }).then((result) => {
+            if (result.isConfirmed) {
+                form.submit();
+            }
+            });
+        }
+    </script>
+
+
 </body>
 
 </html>
