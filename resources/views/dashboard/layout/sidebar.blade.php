@@ -10,6 +10,16 @@
                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">KBK</a>
                 <div class="dropdown-menu border-0 rounded-0 rounded-bottom m-0">
                     <a href="/dashboard/penelitian" class="dropdown-item">KBK Sistem Informasi</a>
+                    <a href="/dashboard/penelitian" class="dropdown-item">KBK Rekayasa Perangkat Lunak dan Pengetahuan</a>
+                    <a href="/dashboard/penelitian" class="dropdown-item">⁠KBK Sistem Komputer dan Jaringan</a>
+                    <a href="/dashboard/penelitian" class="dropdown-item">KBK Sains Data</a>
+                    <a href="/dashboard/penelitian" class="dropdown-item">KBK Fundamental and Management Nursing</a>
+                    <a href="/dashboard/penelitian" class="dropdown-item">⁠KBK Clinical Care Nursing</a>
+                    <a href="/dashboard/penelitian" class="dropdown-item">KBK Mental Health and Community Nursing</a>
+                    <a href="/dashboard/penelitian" class="dropdown-item">KBK Perancangan dan Manufaktur</a>
+                    <a href="/dashboard/penelitian" class="dropdown-item">⁠KBK Rekayasa Material</a>
+                    <a href="/dashboard/penelitian" class="dropdown-item">⁠KBK RHVAC</a>
+                    <a href="/dashboard/penelitian" class="dropdown-item">⁠KBK Instrumentasi dan Kontrol</a>
                 </div>
             </div>
             <a href="/dashboard/contact" class="nav-item nav-link">Contact Us</a>

@@ -23,13 +23,51 @@
                 </div>
             </div>
             <div class="col-md-6">
-                <h2 class="mb-5">Education</h2>
                 <div class="resume-item mb-4">
-                    <span class="date"><span class="icon-calendar"></span> March 2013 - Present</span>
-                    <h3>KK Applied Information System (AIS) merupakan kelompok keahlian di Fakultas Ilmu Terapan Universitas Telkom yang beranggotan 32 dosen dan memiliki lima sub-rumpun keilmuan, meliputi:</h3>
+                    {{-- <span class="date"><span class="icon-calendar"></span> March 2013 - Present</span> --}}
+                    <strong style="color: white;">Invensi dapat dipatenkan jika invensi tersebut</strong> <br>
                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi possimus eum delectus, maxime error nesciunt cupiditate, quidem quos quae modi distinctio mollitia eos rerum nostrum iste amet excepturi neque aliquid!</p>
-                    <span class="school">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam expedita a distinctio facere consectetur laboriosam sunt, cupiditate reprehenderit labore harum explicabo tempore itaque tempora amet exercitationem recusandae nobis dicta voluptatem!</span>
-                    <div class="row g-4">
+                    <ol>
+                        <li>
+                            Management of Information Systems (15 scopes)
+                        </li>
+                        <li>
+                            Data Analytics (8 scopes)
+                        </li>
+                        <li>
+                            Big Data (9 scopes)
+                        </li>
+                        <li>
+                            Enterprise Systems (9 scopes)
+                        </li>
+                        <li>
+                            IT Infrastructure and Security (4 scopes)
+                        </li>
+                    </ol>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi possimus eum delectus, maxime error nesciunt cupiditate, quidem quos quae modi distinctio mollitia eos rerum nostrum iste amet excepturi neque aliquid!</p>
+                    <ol>
+                        <li>
+                            Improvement of business processes and applications
+                        </li>
+                        <li>
+                            Improvement of knowledge set-based
+                        </li>
+                        <li>
+                            Development and implementation of e-Commerce and e-Business applications
+                        </li>
+                        <li>
+                            Implementation and readiness of Emerging Technology
+                        </li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+
+                <div class="mb-8">
+                    <span class="date"><span class="icon-calendar"></span> March 2013 - Present</span>
+                    {{-- <h3>Lead Product Designer</h3> --}}
+                    <div class="row g-4 ">
                         <div class="col-lg-5 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
                             <div class="team-item text-center rounded overflow-hidden">
                                 <div class="m-4">
@@ -47,21 +85,16 @@
                     </div>
                 </div>
             </div>
-
-            <div class="col-md-6">
-
-                <h2 class="mb-5">Experience</h2>
-
-                <div class="resume-item mb-4">
-                    <span class="date"><span class="icon-calendar"></span> March 2013 - Present</span>
-                    <h3>Lead Product Designer</h3>
-                    <p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic.</p>
-                    <span class="school">Github</span>
-                </div>
-            </div>
         </div>
     </div>
 </section> <!-- .section -->
+
+<div class="article-meta">
+    <div>By Kontributor Satu TUVV </div>
+    <div>17 July 2023 </div>
+    <div> Kelompok Keahlian </div>
+    <div>Tags: Kelompok Keahlian, KK</div>
+</div>
 
 <div class="container-xxl py-5">
     <div class="container">
@@ -71,33 +104,18 @@
         </div>
         <div class="row g-4">
             <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                <a class="service-item d-block rounded text-center p-4 link-underline link-underline-opacity-0" href="">
+                <a class="service-item d-block rounded text-center p-4 link-underline link-underline-opacity-0" href="/dashboard/detail-penelitian">
                     <img class="img-fluid rounded" src={{ asset('img/service-1.jpg') }} alt="">
                 </a>
             </div>
             <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                <a class="service-item d-block rounded text-center p-4 link-underline link-underline-opacity-0" href="">
-                    <img class="img-fluid rounded" src={{ asset('img/service-1.jpg') }} alt="">
+                <a class="service-item d-block rounded text-center p-4 link-underline link-underline-opacity-0" href="/dashboard/detail-penelitian">
+                    <img class="img-fluid rounded" src={{ asset('img/service-2.jpg') }} alt="">
                 </a>
             </div>
             <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                <a class="service-item d-block rounded text-center p-4 link-underline link-underline-opacity-0" href="">
-                    <img class="img-fluid rounded" src={{ asset('img/service-1.jpg') }} alt="">
-                </a>
-            </div>
-            <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                <a class="service-item d-block rounded text-center p-4 link-underline link-underline-opacity-0" href="">
-                    <img class="img-fluid rounded" src={{ asset('img/service-1.jpg') }} alt="">
-                </a>
-            </div>
-            <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                <a class="service-item d-block rounded text-center p-4 link-underline link-underline-opacity-0" href="">
-                    <img class="img-fluid rounded" src={{ asset('img/service-1.jpg') }} alt="">
-                </a>
-            </div>
-            <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                <a class="service-item d-block rounded text-center p-4 link-underline link-underline-opacity-0" href="">
-                    <img class="img-fluid rounded" src={{ asset('img/service-1.jpg') }} alt="">
+                <a class="service-item d-block rounded text-center p-4 link-underline link-underline-opacity-0" href="/dashboard/detail-penelitian">
+                    <img class="img-fluid rounded" src={{ asset('img/service-3.jpg') }} alt="">
                 </a>
             </div>
         </div>
