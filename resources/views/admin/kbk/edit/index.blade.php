@@ -115,43 +115,7 @@
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-    <script>
-        $(document).ready(function() {
-            $('#uploadForm').submit(function(e) {
-                e.preventDefault(); // Mencegah form terkirim secara otomatis
-
-                // non file
-                var nama_kbk = $('#namaKbk').val();
-                var jurusan = $('#jurusan').val();
-
-                
-                if (!nama_kbk) {
-                    Swal.fire({
-                        icon: "error",
-                        title: "Oops... Ada yang salah...",
-                        text: "Tolong Masukkan Nama Kelompok Kehlian!",
-                        position: "top-end",
-                        showConfirmButton: false,
-                        timer: 2500
-                    });
-                    return false;
-                }
-                // Validasi Tanggal Lahir
-                if (!jurusan) {
-                    Swal.fire({
-                        icon: "error",
-                        title: "Oops... Ada yang salah...",
-                        text: "Tolong Masukkan Jurusan!",
-                        position: "top-end",
-                        showConfirmButton: false,
-                        timer: 2500
-                    });
-                    return false;
-                }
-                this.submit();
-            });
-        });
-    </script>
+    
 
     
 </body>

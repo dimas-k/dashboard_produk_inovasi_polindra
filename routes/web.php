@@ -34,6 +34,8 @@ Route::middleware(['auth'])->group(function () {
     
     Route::get('/admin/kelompok-bidang-keahlian', [KelompokBidangController::class, 'pageKelompokBidang']);
     Route::post('/admin/kelompok-bidang-keahlian/create', [KelompokBidangController::class, 'storeKelompokKeahlian']);
+
+    Route::get('/admin/admin-page', [AdminController::class, 'admin']);
     
     Route::get('/logout', [LoginAdminController::class, 'logout']);
 });

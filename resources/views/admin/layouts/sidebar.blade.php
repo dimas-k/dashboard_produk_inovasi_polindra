@@ -20,13 +20,19 @@
         <li class="menu-item">
             <a href="/admin/dashboard" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-smile"></i>
-                <div class="text-truncate" data-i18n="Email">Dashboard</div>
+                <div class="text-truncate" data-i18n="Dashboard">Dashboard</div>
             </a>
         </li>
         <li class="menu-item">
             <a href="/admin/kelompok-bidang-keahlian" class="menu-link">
                 <i class='menu-icon tf-icons bx bxs-cog'></i>
-                <div class="text-truncate" data-i18n="Email">Kelompok Bidang Keahlian</div>
+                <div class="text-truncate" data-i18n="KBK">Kelompok Bidang Keahlian</div>
+            </a>
+        </li>
+        <li class="menu-item">
+            <a href="/admin/admin-page" class="menu-link">
+                <i class='menu-icon tf-icons bx bxs-user-circle'></i>
+                <div class="text-truncate" data-i18n="Admin">Admin</div>
             </a>
         </li>
 

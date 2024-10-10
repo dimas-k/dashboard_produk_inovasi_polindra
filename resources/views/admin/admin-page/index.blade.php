@@ -19,7 +19,7 @@
     
 
 
-    <title>Admin D-PROIN | Kelompok Keahlian</title>
+    <title>Admin D-PROIN | Admin</title>
 
     <meta name="description" content="" />
 
@@ -72,7 +72,7 @@
 
                 <!-- Content wrapper -->
                 <div class="content-wrapper">
-                    @include('admin.content.kbk')
+                    @include('admin.content.admin-page')
                 </div>
                 <!-- / Content -->
 
