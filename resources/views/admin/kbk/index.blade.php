@@ -41,6 +41,7 @@
     <link rel="stylesheet" href="{{ asset('assets-admin/vendor/css/theme-default.css') }}"
         class="template-customizer-theme-css" />
     <link rel="stylesheet" href="{{ asset('assets-admin/css/demo.css') }}" />
+    <link rel="stylesheet" href="sweetalert2.min.css">
 
     <!-- Vendors CSS -->
     <link rel="stylesheet" href="{{ asset('assets-admin/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}" />
@@ -156,25 +157,25 @@
         });
     </script>
 
-    <script>
-        window.deleteConfirm = function (e) {
-            e.preventDefault();
-            var form = e.target.form;
-            Swal.fire({
-                title: "Are you sure?",
-                text: "You won't be able to revert this!",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#3085d6",
-                cancelButtonColor: "#d33",
-                confirmButtonText: "Yes, delete it!"
-            }).then((result) => {
-            if (result.isConfirmed) {
-                form.submit();
-            }
-            });
+<script>
+    window.deleteConfirm = function (e) {
+        e.preventDefault();
+        var form = e.target.form;
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+        if (result.isConfirmed) {
+            form.submit();
         }
-    </script>
+        });
+    }
+</script>
 
 
 </body>

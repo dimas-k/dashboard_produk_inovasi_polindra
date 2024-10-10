@@ -76,12 +76,50 @@
                             <td>{{ $k->jurusan }}</td>
                             <td>
                                 <div style="display: flex">
-
-                                <a href="" class="btn btn-sm btn-primary"><i class='bx bx-pencil'></i></a>
+                                {{-- <a href="" class="btn btn-sm btn-primary"><i class='bx bx-pencil'></i></a> --}}
+                                <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal"
+                                    data-bs-target="#exampleModal{{ $k->id }}">
+                                    <i class="bx bx-pencil"></i>
+                                        </button>
+                                        <div class="modal fade" id="exampleModal{{ $k->id }}" tabindex="-1"
+                                            data-bs-backdrop="static" aria-labelledby="exampleModalLabel"
+                                            aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-scrollable">
+                                                <div class="modal-content p-2">
+                                                    <div class="modal-body">
+                                                        <form method="post"
+                                                            action={{ Route('updateKelompokBidang', $k->id) }}>
+                                                            @csrf
+                                                            <div class="form-outline form-white mb-3">
+                                                                <label class="form-label" for="">Nama
+                                                                    KBK</label>
+                                                                <input type="text" id=""
+                                                                    class="form-control" name="nama_kbk"
+                                                                    value="{{ $k->nama_kbk }}">
+                                                            </div>
+                                                            <div class="form-outline form-white mb-3">
+                                                                <label class="form-label"
+                                                                    for="">Jabatan</label>
+                                                                <input type="text" id=""
+                                                                    class="form-control" name="jurusan"
+                                                                    value="{{ $k->jurusan }}">
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-outline-secondary me-1"
+                                                                    data-bs-dismiss="modal">
+                                                                    Batal
+                                                                </button>
+                                                                <button type="submit" class="btn btn-primary ms-1" id="btnSubmit">Simpan</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                 <form style="margin-left: 15px" method="post" action="{{ route('hapusKbk', ['id' => $k->id]) }}">
                                     @method('delete')
                                     @csrf
-                                    <button href="" class="btn btn-sm btn-danger" onclick="deleteConfirm(event)"><i class='bx bx-trash'></i></button>
+                                    <button class="btn btn-sm btn-danger" onclick="deleteConfirm(event)"><i class='bx bx-trash'></i></button>
                                 </form>
                             </div>
                             </td>

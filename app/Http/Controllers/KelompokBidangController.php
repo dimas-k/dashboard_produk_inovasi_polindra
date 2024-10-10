@@ -33,8 +33,7 @@ class KelompokBidangController extends Controller
         return redirect('/admin/kelompok-bidang-keahlian')->with('success', 'product Deleted!');
     }
 
-    public function edit(string $id)
-    {
+    public function edit(string $id) {
         $kbk = KelompokKeahlian::find($id);
         return view('/admin/kelompok-bidang-keahlian/kbk', compact('admin'));
     }
@@ -42,8 +41,7 @@ class KelompokBidangController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
-    {
+    public function update(Request $request, string $id) {
         $kbk = KelompokKeahlian::find($id);
         $kbk->nama_kbk = $request->nama_kbk;
         $kbk->jurusan = $request->jurusan;

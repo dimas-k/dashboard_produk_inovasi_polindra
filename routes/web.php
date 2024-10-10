@@ -36,7 +36,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin/kelompok-bidang-keahlian', [KelompokBidangController::class, 'pageKelompokBidang']);
     Route::post('/admin/kelompok-bidang-keahlian/create', [KelompokBidangController::class, 'storeKelompokKeahlian']);
     Route::delete('/admin/kelompok-bidang-keahlian/{id}', [KelompokBidangController::class, 'hapuskbk'])->name('hapusKbk');
-    Route::put('/admin/kelompok-bidang-keahlian/update', [KelompokBidangController::class, 'update'])->name('updateKelompokBidang');
+    Route::post('/admin/kelompok-bidang-keahlian/update', [KelompokBidangController::class, 'update'])->name('updateKelompokBidang');
     Route::get('/admin/kelompok-bidang-keahlian/edit/{id}', [KelompokBidangController::class, 'edit'])->name('editBidang');
 
     Route::get('/logout', [LoginAdminController::class, 'logout']);
