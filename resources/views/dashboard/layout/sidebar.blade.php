@@ -4,13 +4,14 @@
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarCollapse">
-        <div class="navbar-nav me-auto p-3 p-lg-0">
-            <a href="/dashboard" class="nav-item nav-link active">Home</a>
+        <div class="navbar-nav d-flex w-100 p-3 p-lg-0">
+            <a href="/dashboard" class="nav-item nav-link">Home</a>
             <div class="nav-item dropdown">
                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">KBK</a>
                 <div class="dropdown-menu border-0 rounded-0 rounded-bottom m-0">
                     <a href="/dashboard/penelitian" class="dropdown-item">KBK Sistem Informasi</a>
-                    <a href="/dashboard/penelitian" class="dropdown-item">KBK Rekayasa Perangkat Lunak dan Pengetahuan</a>
+                    <a href="/dashboard/penelitian" class="dropdown-item">KBK Rekayasa Perangkat Lunak dan
+                        Pengetahuan</a>
                     <a href="/dashboard/penelitian" class="dropdown-item">⁠KBK Sistem Komputer dan Jaringan</a>
                     <a href="/dashboard/penelitian" class="dropdown-item">KBK Sains Data</a>
                     <a href="/dashboard/penelitian" class="dropdown-item">KBK Fundamental and Management Nursing</a>
@@ -23,6 +24,9 @@
                 </div>
             </div>
             <a href="/dashboard/contact" class="nav-item nav-link">Contact Us</a>
+
+            <a href="/login" class="nav-item nav-link ms-auto" target="_blank">Login</a>
+
         </div>
     </div>
 </nav>

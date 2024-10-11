@@ -41,7 +41,7 @@
     <link rel="stylesheet" href="{{ asset('assets-admin/vendor/css/theme-default.css') }}"
         class="template-customizer-theme-css" />
     <link rel="stylesheet" href="{{ asset('assets-admin/css/demo.css') }}" />
-    <link rel="stylesheet" href="sweetalert2.min.css">
+    {{-- <link rel="stylesheet" href="sweetalert2.min.css"> --}}
 
     <!-- Vendors CSS -->
     <link rel="stylesheet" href="{{ asset('assets-admin/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}" />
@@ -103,8 +103,8 @@
     <!-- endbuild -->
 
     <!-- Vendors JS -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="sweetalert2.all.min.js"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> --}}
+    {{-- <script src="sweetalert2.all.min.js"></script> --}}
 
 
     <!-- Main JS -->
@@ -126,7 +126,7 @@
 
                 // non file
                 var nama_kbk = $('#namaKbk').val();
-                var jurusan = $('#jurusan').val();
+                // var jurusan = $('#jurusan').val();
 
 
                 if (!nama_kbk) {
@@ -140,42 +140,58 @@
                     });
                     return false;
                 }
-                // Validasi Tanggal Lahir
-                if (!jurusan) {
-                    Swal.fire({
-                        icon: "error",
-                        title: "Oops... Ada yang salah...",
-                        text: "Tolong Masukkan Jurusan!",
-                        position: "top-end",
-                        showConfirmButton: false,
-                        timer: 2500
-                    });
-                    return false;
-                }
                 this.submit();
             });
         });
     </script>
 
-<script>
-    window.deleteConfirm = function (e) {
-        e.preventDefault();
-        var form = e.target.form;
-        Swal.fire({
-            title: "Are you sure?",
-            text: "You won't be able to revert this!",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, delete it!"
-        }).then((result) => {
-        if (result.isConfirmed) {
-            form.submit();
+    <script>
+        window.deleteConfirm = function(e) {
+            e.preventDefault(); // Mencegah pengiriman form
+
+            var form = $(e.target).closest('form'); // Mengambil form terkait dan membungkusnya dengan jQuery
+
+            Swal.fire({
+                title: "Apakah Kamu yakin ?",
+                text: "KBK ini akan kamu hapus!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, delete it!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: form.attr('action'), // Mengambil URL dari atribut action
+                        type: 'POST',
+                        data: form.serialize() + '&_method=DELETE', // Menggunakan serialize dari jQuery
+                        success: function(response) {
+                            location.reload(); // Untuk memuat ulang halaman
+                            // Tampilkan alert sukses
+                            Swal.fire({
+                                title: 'Deleted!',
+                                text: 'Your file has been deleted.',
+                                icon: 'success',
+                                confirmButtonText: 'OK'
+                            }).then(() => {
+                                // Reload halaman atau redirect ke halaman lain
+                                
+                            });
+                        },
+                        error: function(xhr) {
+                            // Tangani kesalahan
+                            Swal.fire({
+                                title: 'Error!',
+                                text: 'There was a problem deleting the item.',
+                                icon: 'error',
+                                confirmButtonText: 'OK'
+                            });
+                        }
+                    });
+                }
+            });
         }
-        });
-    }
-</script>
+    </script>
 
 
 </body>

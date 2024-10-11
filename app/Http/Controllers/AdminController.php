@@ -14,7 +14,7 @@ class AdminController extends Controller
 
     public function admin()
     {
-        $admin = User::all();
+        $admin = User::where('role', 'admin')->get();
         return view('admin.admin-page.index', compact('admin'));
     }
     public function showAdmin(string $id)

@@ -11,11 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('kelompok_keahlian', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('nama_kbk');
-            $table->string('jurusan')->nullable();
-            $table->timestamps();
+        Schema::table('users', function (Blueprint $table) {
+            $table->string('role', 15)->default('admin')->after('password');
         });
     }
 
@@ -24,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('kelompok_keahlians');
+        Schema::table('users', function (Blueprint $table) {
+            //
+        });
     }
 };

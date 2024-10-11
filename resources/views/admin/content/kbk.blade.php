@@ -116,10 +116,10 @@
                                                 </div>
                                             </div>
                                         </div>
-                                <form style="margin-left: 15px" method="post" action="{{ route('hapusKbk', ['id' => $k->id]) }}">
-                                    @method('delete')
+                                <form style="margin-left: 15px" method="post" action="{{ route('hapusKbk', $k->id) }}" id="deleteForm">
+                                    @method('DELETE')
                                     @csrf
-                                    <button class="btn btn-sm btn-danger" onclick="deleteConfirm(event)"><i class='bx bx-trash'></i></button>
+                                    <button class="btn btn-sm btn-danger" type="submit" onclick="deleteConfirm(event)"><i class='bx bx-trash'></i></button>
                                 </form>
                             </div>
                             </td>

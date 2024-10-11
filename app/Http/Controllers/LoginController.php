@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class LoginAdminController extends Controller
+class LoginController extends Controller
 {
     public function loginPage()
     {
@@ -19,13 +19,20 @@ class LoginAdminController extends Controller
             'password' => 'required|min:3',
         ]);
 
-        if (Auth::attempt($credentials)) {
+        if(Auth::attempt($credentials))
+        {
             $request->session()->regenerate();
-
-            return redirect()->intended('/admin/dashboard');
+           if(Auth::user()->role =='admin')
+           {
+             return redirect('/admin/dashboard');
+           }
+           elseif(Auth::user()->role =='ketua_kbk')
+           {
+                return redirect('/umum/dashboard');
+           }
         }
-
         return back()->with('loginError', 'Login Gagal!');
+        
     }
     public function logout(request $request)
     {

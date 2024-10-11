@@ -17,7 +17,7 @@ class KelompokBidangController extends Controller
     {
         $validasidata = $request->validate([
             'nama_kbk' => 'required|string|max:255',
-            'jurusan' => 'required|string|max:255',
+            'jurusan' => 'string|max:255',
         ]);
 
         $kbk = new KelompokKeahlian();
