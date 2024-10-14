@@ -25,7 +25,7 @@
             </div>
             <a href="/dashboard/contact" class="nav-item nav-link">Contact Us</a>
 
-            <a href="/login" class="nav-item nav-link ms-auto" target="_blank">Login</a>
+            <a href="/login" class="nav-item nav-link" target="_blank">Login</a>
 
         </div>
     </div>
