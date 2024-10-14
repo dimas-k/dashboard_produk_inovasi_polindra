@@ -12,8 +12,8 @@ class KelompokKeahlian extends Model
 
     protected $table = 'kelompok_keahlians';
 
-    // public function user()
-    // {
-    //     return $this->hasOne(User::class, 'kelompok_keahlian_id');
-    // }
+    public function user()
+    {
+        return $this->hasOne(User::class, 'kelompok_keahlian_id');
+    }
 }

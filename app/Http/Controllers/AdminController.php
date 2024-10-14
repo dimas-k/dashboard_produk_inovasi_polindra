@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\KelompokKeahlian;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -23,15 +24,42 @@ class AdminController extends Controller
         $admin = User::find($id);
         return view('admin.admin-page.show.index', compact('admin'));
     }
+
+    public function storeAdmin(Request $request)
+    {
+        $validasi = $request->validate([
+            'nama_lengkap' => 'required|string',
+            'nip' => 'required|numeric|digits_between:1,20',
+            'no_hp' => 'required',
+            'email' => 'required|email|unique:users',
+            'jabatan' => 'required',
+            'username' => 'required',
+            'password' => 'required',
+            'role' => 'required',
+        ]);
+        $admin = new User();
+        $admin->nama_lengkap = $request->nama_lengkap;
+        $admin->nip = $request->nip;
+        $admin->kbk_id = $request->kbk_id;
+        $admin->no_hp = $request->no_hp;
+        $admin->email = $request->email;
+        $admin->jabatan = $request->jabatan;
+        $admin->username = $request->username;
+        $admin->password = Hash::make($request->password); // Hashing password
+        $admin->role = $request->role;
+        $admin->save($validasi);
+
+    }
     public function ketuaKBK()
     {
-        $kbk = User::where('role', 'ketua_kbk')->paginate(10);
-        return view('admin.ketua-kbk.index', compact('kbk'));
+        $kbk = User::with('kbk')->where('role', 'ketua_kbk')->paginate(10);
+        $jenis_kbk = KelompokKeahlian::all();
+        return view('admin.ketua-kbk.index', compact('kbk', 'jenis_kbk'));
     }
 
     public function showDataKetuaKbk(string $id)
     {
-        $k_kbk = User::find($id);
+        $k_kbk = User::with('kbk')->find($id);
         return view('admin.ketua-kbk.show.index', compact('k_kbk'));
     }
 
@@ -40,7 +68,7 @@ class AdminController extends Controller
         $validasi = $request->validate([
             'nama_lengkap' => 'required|string',
             'nip' => 'required|numeric|digits_between:1,20',
-            'kbk' => 'required',
+            'kbk_id' => 'required|exists:kelompok_keahlians,id',
             'no_hp' => 'required',
             'email' => 'required|email|unique:users',
             'jabatan' => 'required',
@@ -52,7 +80,7 @@ class AdminController extends Controller
         $k_kbk = new User();
         $k_kbk->nama_lengkap = $request->nama_lengkap;
         $k_kbk->nip = $request->nip;
-        $k_kbk->kbk = $request->kbk;
+        $k_kbk->kbk_id = $request->kbk_id;
         $k_kbk->no_hp = $request->no_hp;
         $k_kbk->email = $request->email;
         $k_kbk->jabatan = $request->jabatan;
@@ -60,21 +88,21 @@ class AdminController extends Controller
         $k_kbk->password = Hash::make($request->password); // Hashing password
         $k_kbk->role = $request->role;
         
-        $k_kbk->save();
+        $k_kbk->save($validasi);
 
         // dd($k_kbk);
 
         return redirect('/admin/ketua-kbk')->with('success', 'Data ketua Kelompok Keahlian berhasil ditambahkan!');
     }
 
-    public function updateKetuaKbk(Request $request, string $id)
+    public function updateKetuaKbk(Request $request, $id)
     {
         $validasi = $request->validate([
             'nama_lengkap' => 'required|string',
             'nip' => 'required|numeric|digits_between:1,20',
-            'kbk' => 'required',
+            'kbk_id' => 'required|exists:kelompok_keahlians,id',
             'no_hp' => 'required',
-            'email' => 'required|email|',
+            'email' => 'required|email|unique:users,email,' . $id,
             'jabatan' => 'required',
             'username' => 'required',
             'password' => 'required',
@@ -84,7 +112,7 @@ class AdminController extends Controller
         $k_kbk = User::find($id);
         $k_kbk->nama_lengkap = $request->nama_lengkap;
         $k_kbk->nip = $request->nip;
-        $k_kbk->kbk = $request->kbk;
+        $k_kbk->kbk_id = $request->kbk_id;
         $k_kbk->no_hp = $request->no_hp;
         $k_kbk->email = $request->email;
         $k_kbk->jabatan = $request->jabatan;
@@ -92,7 +120,7 @@ class AdminController extends Controller
         $k_kbk->password = Hash::make($request->password); // Hashing password
         $k_kbk->role = $request->role;
         
-        $k_kbk->save();
+        $k_kbk->save($validasi);
         return redirect('/admin/ketua-kbk')->with('success', 'Data ketua Kelompok Keahlian berhasil diupdate!');
     }
 

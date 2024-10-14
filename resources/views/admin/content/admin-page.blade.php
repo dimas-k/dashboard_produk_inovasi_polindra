@@ -16,22 +16,63 @@
                                 aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <form action="/admin/kelompok-bidang-keahlian/create" method="post" id="uploadForm">
+                            <form action="/admin/ketua-kbk/store" method="post" id="uploadForm">
                                 @csrf
                                 <div class="row">
                                     <div class="col mb-6">
                                         <label for="nameBasic" class="form-label">Nama Lengkap</label>
-                                        <input type="text" id="namaKbk" class="form-control"
-                                            placeholder="Masukkan nama lengkap" name="nama_kbk" />
+                                        <input type="text" id="nama_lengkap" class="form-control"
+                                            placeholder="Masukkan nama" name="nama_lengkap" />
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col mb-6">
-                                        <label for="nameBasic" class="form-label">Jurusan</label>
-                                        <input type="text" id="jurusan" class="form-control"
-                                            placeholder="Masukkan jurusan" name="jurusan" />
+                                        <label for="nameBasic" class="form-label">Nip</label>
+                                        <input type="text" id="nip" class="form-control"
+                                            placeholder="Masukkan nip" name="nip" />
                                     </div>
                                 </div>
+                                <div class="row">
+                                    <div class="col mb-6">
+                                        <label for="nameBasic" class="form-label">Jabatan</label>
+                                        <input type="jabatan" id="jabatan" class="form-control"
+                                            placeholder="Masukkan jabatan" name="jabatan" />
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col mb-6">
+                                        <label for="nameBasic" class="form-label">No Handphone</label>
+                                        <input type="number" id="no_hp" class="form-control"
+                                            placeholder="Masukkan no hanphone" name="no_hp" />
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col mb-6">
+                                        <label for="nameBasic" class="form-label">Email</label>
+                                        <input type="email" id="email" class="form-control"
+                                            placeholder="Masukkan email" name="email" />
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col mb-6">
+                                        <label for="nameBasic" class="form-label">Username</label>
+                                        <input type="text" id="username" class="form-control"
+                                            placeholder="Masukkan username" name="username" />
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col mb-6 form-password-toggle">
+                                        <label for="nameBasic" class="form-label">Password</label>
+                                        <div class="input-group input-group-merge">
+                                            <input type="password" id="password" class="form-control"
+                                                placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+                                                name="password" aria-describedby="password" />
+                                            <span class="input-group-text cursor-pointer"><i
+                                                    class="bx bx-hide"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <input type="text" value="ketua_kbk" name="role" hidden>
 
 
                                 <br>
@@ -40,7 +81,8 @@
                                         data-bs-dismiss="modal">
                                         Batal
                                     </button>
-                                    <button type="submit" class="btn btn-primary ms-1" id="btnSubmit">Simpan</button>
+                                    <button type="submit" class="btn btn-primary ms-1"
+                                        id="btnSubmit">Simpan</button>
                                 </div>
                             </form>
                         </div>

@@ -17,12 +17,11 @@ return new class extends Migration
             $table->bigInteger('nip')->unique();
             $table->string('jabatan');
             $table->string('no_hp');
-            $table->foreignId('user_id')->constrained('users')->nullable();
+            $table->foreignId('kbk_id')->nullable()->constrained('kelompok_keahlians')->nullable();
             $table->string('email')->unique();
             $table->string('username');
             $table->string('password');
             $table->timestamps();
-
         });
     }
 

@@ -52,9 +52,9 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    // public function kelompokKeahlian()
-    // {
-    //     return $this->belongsTo(KelompokKeahlian::class, 'id');
-    // }
+    public function kbk()
+    {
+        return $this->belongsTo(KelompokKeahlian::class, 'kbk_id');
+    }
 
 }

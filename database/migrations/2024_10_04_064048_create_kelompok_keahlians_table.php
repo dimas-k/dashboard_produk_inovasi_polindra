@@ -12,14 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('kelompok_keahlians', function (Blueprint $table) {
-            $table->bigIncrements('id'); // Primary key that is an unsigned big integer
+            $table->bigIncrements('id'); // Primary key
             $table->string('nama_kbk');
             $table->string('jurusan')->nullable();
-            // $table->unsi('user_id')->constrained('users')->onDelete('cascade');
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->timestamps();
-
-            
             // Defining foreign key constraint
         });
     }
