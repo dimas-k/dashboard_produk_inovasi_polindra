@@ -3,13 +3,14 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\KelompokKeahlian;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Models\Role;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
+use Spatie\Permission\Models\Permission;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Spatie\Permission\Models\Role;
-use Spatie\Permission\Models\Permission;
 
 class User extends Authenticatable
 {
@@ -23,9 +24,13 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'nama_lengkap',
         'email',
-        'password',
+        'username',
+        'nip',
+        'role',
+        'jabatan',
+        'kbk',
     ];
 
     /**
@@ -46,5 +51,10 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    // public function kelompokKeahlian()
+    // {
+    //     return $this->belongsTo(KelompokKeahlian::class, 'id');
+    // }
 
 }

@@ -22,7 +22,6 @@ class KetuaKbkSeeder extends Seeder
                 'jabatan' => 'Ketua KBK',
                 'no_hp' => '085742114040',
                 'email' => 'dianpramadhana@gmail.com',
-                'kbk' => 'Sistem Informasi',
                 'username' => '199302282022031007',
                 'password' => Hash::make('199302282022031007'),
                 'role' => 'ketua_kbk'
@@ -30,7 +29,6 @@ class KetuaKbkSeeder extends Seeder
             [
                 'nama_lengkap' => 'Yaqutina Marjani Santosa S.Pd., M.Cs.',
                 'nip' => '199211022022031014',
-                'kbk' => 'Rekayasa Perangkat Lunak dan Pengetahuan',
                 'no_hp' => '081329997431',
                 'email' => 'yaqutinams@polindra.ac.id',
                 'jabatan' => 'Ketua KBK',
@@ -41,7 +39,6 @@ class KetuaKbkSeeder extends Seeder
             [
                 'nama_lengkap' => 'Willy Permana Putra, S.T., M.Eng.',
                 'nip' => '198610042019031004',
-                'kbk' => 'Sistem Komputer dan Jaringan',
                 'no_hp' => '085878356247',
                 'email' => 'willy@polindra.ac.id',
                 'jabatan' => 'Ketua KBK',
@@ -52,7 +49,6 @@ class KetuaKbkSeeder extends Seeder
             [
                 'nama_lengkap' => 'Salamet Nur Himawan, S.Si., M.Si.',
                 'nip' => '199407022022031005',
-                'kbk' => 'Sains Data',
                 'no_hp' => '085771584505',
                 'email' => 'snhimawan@polindra.ac.id',
                 'jabatan' => 'Asisten Ahli',
@@ -63,7 +59,6 @@ class KetuaKbkSeeder extends Seeder
             [
                 'nama_lengkap' => 'Gilar Wisnu Hardi S.Ft., M.T',
                 'nip' => '199308112022031008',
-                'kbk' => 'Fundamental And Management Nursing',
                 'no_hp' => '081294582347',
                 'email' => 'gilarwisnu@gmail.com',
                 'jabatan' => 'Asisten Ahli',
@@ -74,7 +69,6 @@ class KetuaKbkSeeder extends Seeder
             [
                 'nama_lengkap' => 'Priyanto, S.Pd., M.Kes.',
                 'nip' => '196502231984121001',
-                'kbk' => 'Clinical Care Nursing',
                 'no_hp' => '081223236195',
                 'email' => 'priyantoghryfano@polindra.ac.id',
                 'jabatan' => 'Lektor',
@@ -85,7 +79,6 @@ class KetuaKbkSeeder extends Seeder
             [
                 'nama_lengkap' => 'Dr. Indra Ruswadi, S.Kep., NS., M.PH.',
                 'nip' => '196709271987031078',
-                'kbk' => 'Mental Health And Community Nursing',
                 'no_hp' => '081222532678',
                 'email' => 'indra@polindra.ac.id',
                 'jabatan' => 'Lektor',
@@ -96,7 +89,6 @@ class KetuaKbkSeeder extends Seeder
             [
                 'nama_lengkap' => 'Ir. Dedi Suwandi, S.ST., M.T.',
                 'nip' => '198405052019031016',
-                'kbk' => 'Perancangan Manufaktur',
                 'no_hp' => '087828663555',
                 'email' => 'dedi@polindra.ac.id',
                 'jabatan' => 'Lektor',
@@ -107,7 +99,6 @@ class KetuaKbkSeeder extends Seeder
             [
                 'nama_lengkap' => 'Tito Endramawan, S.Pd, M.Eng.',
                 'nip' => '19830312201121002',
-                'kbk' => 'Rekayasa Material',
                 'no_hp' => '085222212276',
                 'email' => 'titoendramawan@gmail.com',
                 'jabatan' => 'Lektor',
@@ -118,7 +109,6 @@ class KetuaKbkSeeder extends Seeder
             [
                 'nama_lengkap' => 'Yudhy Kurniawan, A.Md., S.T., M.T.',
                 'nip' => '197710112021211003',
-                'kbk' => 'RHVAC',
                 'no_hp' => '081330069393',
                 'email' => 'yudhy@polindra.ac.id',
                 'jabatan' => 'Asisten Ahli',
@@ -129,7 +119,6 @@ class KetuaKbkSeeder extends Seeder
             [
                 'nama_lengkap' => 'Bobi Khoerun, S.Pd., M.T.',
                 'nip' => '198806032018031001',
-                'kbk' => 'Instrumentasi dan Kontrol',
                 'no_hp' => '081914151132',
                 'email' => 'bobikhoerun@polindra.ac.id',
                 'jabatan' => 'Lektor',

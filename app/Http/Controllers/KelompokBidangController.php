@@ -47,6 +47,8 @@ class KelompokBidangController extends Controller
         $kbk->jurusan = $request->jurusan;
         $kbk->save();
 
+    
+
         return redirect('/admin/kelompok-bidang-keahlian')->with('success', 'Data admin berhasil di update');
     }
 }

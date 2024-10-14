@@ -43,6 +43,12 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::delete('/admin/kelompok-bidang-keahlian/delete/{id}', [KelompokBidangController::class, 'hapusKbk'])->name('hapusKbk');
     
     Route::get('/admin/admin-page', [AdminController::class, 'admin']);
+
+    Route::get('/admin/ketua-kbk', [AdminController::class, 'ketuaKBK']);
+    Route::get('/admin/k-kbk/show/{id}', [AdminController::class, 'showDataKetuaKbk'])->name('show.k-kbk');
+    Route::post('/admin/ketua-kbk/store', [AdminController::class, 'storeDataKetuaKbk']);
+    Route::post('/admin/ketua-kbk/update/{id}', [AdminController::class, 'updateKetuaKbk'])->name('update.k-kbk');
+    Route::delete('/admin/ketua-kbk/delete/{id}', [AdminController::class, 'hapusKetuaKbk'])->name('hapus.k-kbk');
     
 });
 

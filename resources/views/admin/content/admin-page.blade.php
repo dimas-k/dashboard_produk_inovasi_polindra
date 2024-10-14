@@ -20,9 +20,9 @@
                                 @csrf
                                 <div class="row">
                                     <div class="col mb-6">
-                                        <label for="nameBasic" class="form-label">Nama KBK</label>
+                                        <label for="nameBasic" class="form-label">Nama Lengkap</label>
                                         <input type="text" id="namaKbk" class="form-control"
-                                            placeholder="Masukkan nama kbk" name="nama_kbk" />
+                                            placeholder="Masukkan nama lengkap" name="nama_kbk" />
                                     </div>
                                 </div>
                                 <div class="row">
