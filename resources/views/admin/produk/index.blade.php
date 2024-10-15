@@ -72,7 +72,7 @@
 
                 <!-- Content wrapper -->
                 <div class="content-wrapper">
-                    @include('admin.content.admin-page')
+                    @include('admin.content.produk')
                 </div>
                 <!-- / Content -->
 
@@ -249,14 +249,14 @@
             });
         });
     </script>
-    {{-- <script>
+    <script>
         $(document).ready(function() {
             $('#editForm').submit(function(e) {
                 e.preventDefault(); // Mencegah form terkirim secara otomatis
 
                 // Ambil nilai input
                 var form = $(this); // Mendapatkan referensi form
-                var nama = $('#nama').val();
+                var nama = $('#nama_lengkap').val();
                 var nip = $('#nip').val();
                 var jabatan = $('#jabatan').val();
                 var no_hp = $('#no_hp').val();
@@ -407,7 +407,7 @@
                         // Redirect setelah berhasil
                         setTimeout(function() {
                             window.location.href = "/admin/ketua-kbk";
-                        }, 1000);
+                        }, 2500);
                     },
                     error: function(xhr, status, error) {
                         Swal.fire({
@@ -422,7 +422,7 @@
                 });
             });
         });
-    </script> --}}
+    </script>
 
 <script>
     window.deleteConfirm = function(e) {

@@ -20,7 +20,7 @@
                     </div>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end">
-                    <li>
+                    <li>~
                         <a class="dropdown-item" href="#">
                             <div class="d-flex">
                                 <div class="flex-shrink-0 me-3">
@@ -31,7 +31,7 @@
                                 </div>
                                 <div class="flex-grow-1">
                                     <h6 class="mb-0">{{ auth()->user()->nama_lengkap }}</h6>
-                                    <small class="text-muted">{{ auth()->user()->jabatan }}</small>
+                                    <small class="text-muted">{{ auth()->user()->kbk->nama_kbk }}</small>
                                 </div>
                             </div>
                         </a>

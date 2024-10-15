@@ -14,6 +14,8 @@ class AdminController extends Controller
         return view('admin.index');
     }
 
+
+    // Admin
     public function admin()
     {
         $admin = User::where('role', 'admin')->get();
@@ -35,21 +37,57 @@ class AdminController extends Controller
             'jabatan' => 'required',
             'username' => 'required',
             'password' => 'required',
-            'role' => 'required',
         ]);
         $admin = new User();
         $admin->nama_lengkap = $request->nama_lengkap;
         $admin->nip = $request->nip;
-        $admin->kbk_id = $request->kbk_id;
         $admin->no_hp = $request->no_hp;
         $admin->email = $request->email;
         $admin->jabatan = $request->jabatan;
         $admin->username = $request->username;
         $admin->password = Hash::make($request->password); // Hashing password
-        $admin->role = $request->role;
         $admin->save($validasi);
 
+        return redirect('/admin/admin-page')->with('success', 'Data admin berhasil ditambahkan!');
     }
+
+    public function updateAdmin(Request $request, $id)
+    {
+        $validasi = $request->validate([
+            'nama_lengkap' => 'required|string',
+            'nip' => 'required|numeric|digits_between:1,20',
+            'no_hp' => 'required',
+            'email' => 'required|email|unique:users,email,' . $id,
+            'jabatan' => 'required',
+            'username' => 'required',
+            'password' => 'nullable|min:3',
+        ]);
+
+        $admin = User::find($id);
+        $admin->nama_lengkap = $request->nama_lengkap;
+        $admin->nip = $request->nip;
+        $admin->no_hp = $request->no_hp;
+        $admin->email = $request->email;
+        $admin->jabatan = $request->jabatan;
+        $admin->username = $request->username;
+        if ($request->password) {
+            $admin->password = Hash::make($request->password);
+        } // Hashing password
+        $admin->save($validasi);
+
+        return redirect('/admin/admin-page')->with('success', 'Data admin berhasil diupdate!');
+    }
+
+    public function deleteAdmin($id)
+    {
+        $admin = User::findOrFail($id);
+        $admin->delete();
+        return redirect('/admin/admin-page')->with('success', 'Data admin berhasil dihapus');
+    }
+
+
+    // Ketua KBK
+
     public function ketuaKBK()
     {
         $kbk = User::with('kbk')->where('role', 'ketua_kbk')->paginate(10);
@@ -76,7 +114,7 @@ class AdminController extends Controller
             'password' => 'required',
             'role' => 'required',
         ]);
-        
+
         $k_kbk = new User();
         $k_kbk->nama_lengkap = $request->nama_lengkap;
         $k_kbk->nip = $request->nip;
@@ -87,7 +125,7 @@ class AdminController extends Controller
         $k_kbk->username = $request->username;
         $k_kbk->password = Hash::make($request->password); // Hashing password
         $k_kbk->role = $request->role;
-        
+
         $k_kbk->save($validasi);
 
         // dd($k_kbk);
@@ -119,7 +157,7 @@ class AdminController extends Controller
         $k_kbk->username = $request->username;
         $k_kbk->password = Hash::make($request->password); // Hashing password
         $k_kbk->role = $request->role;
-        
+
         $k_kbk->save($validasi);
         return redirect('/admin/ketua-kbk')->with('success', 'Data ketua Kelompok Keahlian berhasil diupdate!');
     }
@@ -129,6 +167,5 @@ class AdminController extends Controller
         $k_kbk = User::findOrFail($id);
         $k_kbk->delete();
         return redirect('/admin/ketua-kbk')->with('success', 'Data ketua Kelompok Keahlian berhasil dihapus');
-
     }
 }

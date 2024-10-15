@@ -16,7 +16,7 @@
                                 aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <form action="/admin/ketua-kbk/store" method="post" id="uploadForm">
+                            <form action="/admin/admin-page/tambah" method="post" id="uploadForm">
                                 @csrf
                                 <div class="row">
                                     <div class="col mb-6">
@@ -28,7 +28,7 @@
                                 <div class="row">
                                     <div class="col mb-6">
                                         <label for="nameBasic" class="form-label">Nip</label>
-                                        <input type="text" id="nip" class="form-control"
+                                        <input type="number" id="nip" class="form-control"
                                             placeholder="Masukkan nip" name="nip" />
                                     </div>
                                 </div>
@@ -72,7 +72,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                <input type="text" value="ketua_kbk" name="role" hidden>
 
 
                                 <br>
@@ -81,8 +80,7 @@
                                         data-bs-dismiss="modal">
                                         Batal
                                     </button>
-                                    <button type="submit" class="btn btn-primary ms-1"
-                                        id="btnSubmit">Simpan</button>
+                                    <button type="submit" class="btn btn-primary ms-1" id="btnSubmit">Simpan</button>
                                 </div>
                             </form>
                         </div>
@@ -108,25 +106,155 @@
                         <th>Nama Lengkap</th>
                         <th>NIP</th>
                         <th>Jabatan</th>
-                        <th>No Handphone</th>
-                        <th>Email</th>
                         <th>Aksi</th>
 
                     </tr>
                 </thead>
                 <tbody class="table-border-bottom-0">
-                    @foreach ($admin as $i =>$adm)
+                    @foreach ($admin as $i => $adm)
                         <tr>
                             <th scope="row">{{ $i + 1 }}</th>
                             <td>{{ $adm->nama_lengkap }}</td>
                             <td>{{ $adm->nip }}</td>
                             <td>{{ $adm->jabatan }}</td>
-                            <td>{{ $adm->no_hp }}</td>
-                            <td>{{ $adm->email }}</td>
                             <td>
-                                <a href="" class="btn btn-sm btn-success"><i class='bx bxs-show'></i></a>
-                                <a href="" class="btn btn-sm btn-primary"><i class='bx bx-pencil'></i></a>
-                                <a href="" class="btn btn-sm btn-danger"><i class='bx bx-trash'></i></a>
+                                <a href="{{ route('admin.show', $adm->id) }}" class="btn btn-sm btn-success"><i
+                                        class='bx bxs-show'></i></a>
+                                <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal"
+                                    data-bs-target="#basicModal{{ $adm->id }}">
+                                    <i class='bx bx-pencil'></i>
+                                </button>
+
+                                <!-- Modal -->
+                                <div class="modal fade" id="basicModal{{ $adm->id }}" tabindex="-1"
+                                    aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel1">update Admin</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form action="{{ route('upate.admin', $adm->id) }}" method="post"
+                                                    id="editForm">
+                                                    @csrf
+                                                    <div class="row">
+                                                        <div class="col mb-6">
+                                                            <label for="nameBasic" class="form-label">Nama
+                                                                Lengkap</label>
+                                                            <input type="text" id="nama"
+                                                                class="form-control @error('nama_lengkap') is-invalid @enderror" value="{{ $adm->nama_lengkap }}"
+                                                                name="nama_lengkap" />
+                                                                @error('nama_lengkap')
+                                                                <div class="invalid-feedback">
+                                                                    {{ $message }}
+                                                                </div>
+                                                            @enderror
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col mb-6">
+                                                            <label for="nameBasic" class="form-label">Nip</label>
+                                                            <input type="number" id="nip" class="form-control @error('nip') is-invalid @enderror"
+                                                                value="{{ $adm->nip }}" name="nip" />
+                                                                @error('nip')
+                                                                <div class="invalid-feedback">
+                                                                    {{ $message }}
+                                                                </div>
+                                                            @enderror
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col mb-6">
+                                                            <label for="nameBasic" class="form-label">Jabatan</label>
+                                                            <input type="text" id="jabatan" class="form-control @error('jabatan') is-invalid @enderror"
+                                                                value="{{ $adm->jabatan }}" name="jabatan" />
+                                                                @error('jabatan')
+                                                                <div class="invalid-feedback">
+                                                                    {{ $message }}
+                                                                </div>
+                                                            @enderror
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col mb-6">
+                                                            <label for="nameBasic" class="form-label">No
+                                                                Handphone</label>
+                                                            <input type="number" id="no_hp" class="form-control @error('no_hp') is-invalid @enderror"
+                                                                value="{{ $adm->no_hp }}" name="no_hp" />
+                                                                @error('no_hp')
+                                                                <div class="invalid-feedback">
+                                                                    {{ $message }}
+                                                                </div>
+                                                            @enderror
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col mb-6">
+                                                            <label for="nameBasic" class="form-label">Email</label>
+                                                            <input type="email" id="email" class="form-control @error('email') is-invalid @enderror"
+                                                                value="{{ $adm->email }}" name="email" />
+                                                                @error('email')
+                                                                <div class="invalid-feedback">
+                                                                    {{ $message }}
+                                                                </div>
+                                                            @enderror
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col mb-6">
+                                                            <label for="nameBasic" class="form-label">Username</label>
+                                                            <input type="text" id="username" class="form-control @error('username') is-invalid @enderror"
+                                                                value="{{ $adm->username }}" name="username" />
+                                                                @error('username')
+                                                                <div class="invalid-feedback">
+                                                                    {{ $message }}
+                                                                </div>
+                                                            @enderror
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col mb-6 form-password-toggle">
+                                                            <label for="nameBasic" class="form-label">Password</label>
+                                                            <div class="input-group input-group-merge">
+                                                                <input type="password" id="password"
+                                                                    class="form-control @error('password') is-invalid @enderror"
+                                                                    placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+                                                                    name="password" aria-describedby="password" />
+                                                                <span class="input-group-text cursor-pointer"><i
+                                                                        class="bx bx-hide"></i></span>
+                                                                @error('password')
+                                                                    <div class="invalid-feedback">
+                                                                        {{ $message }}
+                                                                    </div>
+                                                                @enderror
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+                                                    <br>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-outline-secondary me-1"
+                                                            data-bs-dismiss="modal">
+                                                            Batal
+                                                        </button>
+                                                        <button type="submit" class="btn btn-primary ms-1"
+                                                            id="btnSubmit">Update</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <form style="margin-left: 15px" method="post"
+                                    action="{{ route('hapus.admin', $adm->id) }}" id="deleteForm">
+                                    @method('DELETE')
+                                    @csrf
+                                    <button class="btn btn-sm btn-danger" type="submit"
+                                        onclick="deleteConfirm(event)"><i class='bx bx-trash'></i></button>
+                                </form>
                             </td>
                         </tr>
                     @endforeach

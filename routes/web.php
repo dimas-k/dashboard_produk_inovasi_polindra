@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AdminProdukInovasiController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KelompokBidangController;
@@ -49,12 +50,18 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::delete('/admin/kelompok-bidang-keahlian/delete/{id}', [KelompokBidangController::class, 'hapusKbk'])->name('hapusKbk');
     
     Route::get('/admin/admin-page', [AdminController::class, 'admin']);
+    route::post('/admin/admin-page/tambah', [AdminController::class, 'storeAdmin']);
+    Route::get('/admin/admin-page/show/{id}', [AdminController::class, 'showAdmin'])->name('admin.show');
+    Route::post('/admin/admin-page/update/{id}', [AdminController::class, 'updateAdmin'])->name('upate.admin');
+    Route::delete('/admin/admin-page/delete/{id}', [AdminController::class, 'deleteAdmin'])->name('hapus.admin');
 
     Route::get('/admin/ketua-kbk', [AdminController::class, 'ketuaKBK']);
     Route::get('/admin/k-kbk/show/{id}', [AdminController::class, 'showDataKetuaKbk'])->name('show.k-kbk');
     Route::post('/admin/ketua-kbk/store', [AdminController::class, 'storeDataKetuaKbk']);
     Route::post('/admin/ketua-kbk/update/{id}', [AdminController::class, 'updateKetuaKbk'])->name('update.k-kbk');
     Route::delete('/admin/ketua-kbk/delete/{id}', [AdminController::class, 'hapusKetuaKbk'])->name('hapus.k-kbk');
+
+    Route::get('/admin/produk-inovasi', [AdminProdukInovasiController::class, 'pageProduk']);
     
 });
 

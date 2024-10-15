@@ -28,10 +28,10 @@ class LoginController extends Controller
            }
            elseif(Auth::user()->role =='ketua_kbk')
            {
-                return redirect('/umum/dashboard');
+                return redirect('/k-kbk/dashboard');
            }
         }
-        return back()->with('loginError', 'Login Gagal!');
+        return back()->with('loginError', 'Username atau password salah!');
         
     }
     public function logout(request $request)

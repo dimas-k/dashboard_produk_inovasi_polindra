@@ -446,7 +446,7 @@
 
             Swal.fire({
                 title: "Apakah Kamu yakin ?",
-                text: "KBK ini akan kamu hapus!",
+                text: "Akun ini akan kamu hapus!",
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#3085d6",
