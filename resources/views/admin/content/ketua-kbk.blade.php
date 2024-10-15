@@ -33,9 +33,9 @@
                                 <div class="row">
                                     <div class="col mb-6">
                                         <label for="nameBasic" class="form-label">Nip</label>
-                                        <input type="text" id="nip" class="form-control"
+                                        <input type="number" id="nip" class="form-control"
                                             placeholder="Masukkan nip" name="nip" />
-                                            @error('nama_lengkap')
+                                        @error('nip')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
                                             </div>
@@ -47,6 +47,11 @@
                                         <label for="nameBasic" class="form-label">Jabatan</label>
                                         <input type="jabatan" id="jabatan" class="form-control"
                                             placeholder="Masukkan jabatan" name="jabatan" />
+                                        @error('jabatan')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="row">
@@ -54,6 +59,11 @@
                                         <label for="nameBasic" class="form-label">No Handphone</label>
                                         <input type="number" id="no_hp" class="form-control"
                                             placeholder="Masukkan no hanphone" name="no_hp" />
+                                        @error('no_hp')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="row">
@@ -61,6 +71,11 @@
                                         <label for="nameBasic" class="form-label">Email</label>
                                         <input type="email" id="email" class="form-control"
                                             placeholder="Masukkan email" name="email" />
+                                        @error('email')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="row">
@@ -74,6 +89,7 @@
                                                 <option value="{{ $j_kbk->id }}">{{ $j_kbk->nama_kbk }}</option>
                                             @endforeach
                                         </select>
+
                                     </div>
                                 </div>
                                 <div class="row">
@@ -81,6 +97,11 @@
                                         <label for="nameBasic" class="form-label">Username</label>
                                         <input type="text" id="username" class="form-control"
                                             placeholder="Masukkan username" name="username" />
+                                        @error('username')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="row">
@@ -92,6 +113,11 @@
                                                 name="password" aria-describedby="password" />
                                             <span class="input-group-text cursor-pointer"><i
                                                     class="bx bx-hide"></i></span>
+                                            @error('password')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
                                         </div>
                                     </div>
                                 </div>
@@ -173,6 +199,11 @@
                                                             <input type="text" id="nama_lengkap"
                                                                 class="form-control" value="{{ $k->nama_lengkap }}"
                                                                 name="nama_lengkap" />
+                                                            @error('nama_lengkap')
+                                                                <div class="invalid-feedback">
+                                                                    {{ $message }}
+                                                                </div>
+                                                            @enderror
                                                         </div>
                                                     </div>
                                                     <div class="row">
@@ -180,13 +211,23 @@
                                                             <label for="nameBasic" class="form-label">Nip</label>
                                                             <input type="text" id="nip" class="form-control"
                                                                 value="{{ $k->nip }}" name="nip" />
+                                                            @error('nip')
+                                                                <div class="invalid-feedback">
+                                                                    {{ $message }}
+                                                                </div>
+                                                            @enderror
                                                         </div>
                                                     </div>
                                                     <div class="row">
                                                         <div class="col mb-6">
                                                             <label for="nameBasic" class="form-label">Jabatan</label>
-                                                            <input type="jabatan" id="jabatan" class="form-control"
+                                                            <input type="text" id="jabatan" class="form-control"
                                                                 value="{{ $k->jabatan }}" name="jabatan" />
+                                                            @error('jabatan')
+                                                                <div class="invalid-feedback">
+                                                                    {{ $message }}
+                                                                </div>
+                                                            @enderror
                                                         </div>
                                                     </div>
                                                     <div class="row">
@@ -195,6 +236,11 @@
                                                                 Handphone</label>
                                                             <input type="number" id="no_hp" class="form-control"
                                                                 value="{{ $k->no_hp }}" name="no_hp" />
+                                                            @error('no_hp')
+                                                                <div class="invalid-feedback">
+                                                                    {{ $message }}
+                                                                </div>
+                                                            @enderror
                                                         </div>
                                                     </div>
                                                     <div class="row">
@@ -202,6 +248,11 @@
                                                             <label for="nameBasic" class="form-label">Email</label>
                                                             <input type="email" id="email" class="form-control"
                                                                 value="{{ $k->email }}" name="email" />
+                                                            @error('email')
+                                                                <div class="invalid-feedback">
+                                                                    {{ $message }}
+                                                                </div>
+                                                            @enderror
                                                         </div>
                                                     </div>
                                                     <div class="row">
@@ -235,6 +286,11 @@
                                                                     name="password" aria-describedby="password" />
                                                                 <span class="input-group-text cursor-pointer"><i
                                                                         class="bx bx-hide"></i></span>
+                                                                @error('password')
+                                                                    <div class="invalid-feedback">
+                                                                        {{ $message }}
+                                                                    </div>
+                                                                @enderror
                                                             </div>
                                                         </div>
                                                     </div>

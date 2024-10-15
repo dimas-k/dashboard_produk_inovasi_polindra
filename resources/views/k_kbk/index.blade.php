@@ -47,20 +47,20 @@
     <div class="layout-wrapper layout-content-navbar">
         <div class="layout-container">
             <!-- Menu -->
-            @include('admin.layouts.sidebar')
+            @include('k_kbk.layouts.sidebar')
             <!-- / Menu -->
 
             <!-- Layout container -->
             <div class="layout-page">
                 <!-- Navbar -->
 
-                @include('admin.layouts.header')
+                @include('k_kbk.layouts.header')
 
                 <!-- / Navbar -->
 
                 <!-- Content wrapper -->
                 <div class="content-wrapper">
-                    @include('admin.content.dashboard')
+                    @include('k_kbk.content.dashboard')
                 </div>
                 <!-- / Content -->
 

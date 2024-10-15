@@ -51,6 +51,12 @@
                 </li>
             </ul>
         </li>
+        <li class="menu-item">
+            <a href="/admin/produk-inovasi" class="menu-link">
+                <i class='menu-icon tf-icons bx bxs-cog'></i>
+                <div class="text-truncate" data-i18n="Produk">Produk</div>
+            </a>
+        </li>
 
         <!-- Apps & Pages -->
     </ul>
