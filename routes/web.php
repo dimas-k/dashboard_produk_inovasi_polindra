@@ -19,14 +19,20 @@ use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 |
 */
 
-Route::get('/', function () {
-    return view('dashboard/index');
-});
+Route::get('/', [DashboardController::class, 'index']);
 
 
 Route::get('/dashboard', [DashboardController::class, 'index']);
-Route::get('/dashboard/penelitian', [DashboardController::class, 'penelitian']);
 Route::get('/dashboard/contact', [DashboardController::class, 'contact']);
+
+// Route::get('dashboard/penelitian/{id}', function($id) {
+//     return view('dashboard.penelitian.index', [$id]);
+// });
+
+Route::get('dashboard/penelitian/{id}', [DashboardController::class,'penelitian'])->name('dashboard/penelitian/');
+Route::get('/dashboard/penelitian', [DashboardController::class, 'penelitian']);
+
+
 Route::get('/dashboard/detail-penelitian', [DashboardController::class, 'detail_Penelitian']);
 
 Route::get('/login', [LoginController::class, 'loginPage'])->name('login');
