@@ -159,6 +159,7 @@ class AdminController extends Controller
         $k_kbk->role = $request->role;
 
         $k_kbk->save($validasi);
+
         return redirect('/admin/ketua-kbk')->with('success', 'Data ketua Kelompok Keahlian berhasil diupdate!');
     }
 

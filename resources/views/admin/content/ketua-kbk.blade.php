@@ -178,8 +178,7 @@
                                 </button>
 
                                 <!-- Modal -->
-                                <div class="modal fade" id="basicModal{{ $k->id }}" tabindex="-1"
-                                    aria-hidden="true">
+                                <div class="modal fade" id="basicModal{{ $k->id }}" tabindex="-1" aria-hidden="true">
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
