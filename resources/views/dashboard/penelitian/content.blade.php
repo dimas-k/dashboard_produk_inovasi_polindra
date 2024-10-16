@@ -19,7 +19,10 @@
             <div class="container">
                 <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
                     <h6 class="section-title bg-white text-center text-primary px-3">Kelompok Bidang Keahlian</h6>
-                    <h1 class="display-6 mb-4">Sistem Informasi</h1>
+                    <h1 class="display-6 mb-4">
+                        {{$kbk_nama->nama_kbk}}
+
+                    </h1>
                 </div>
             </div>
             <div class="col-md-6">
@@ -73,7 +76,14 @@
                                 <div class="m-4">
                                     <img class="img-fluid" src={{ asset('img/carousel-1.jpg') }} alt="">
                                 </div>
-                                <h5 class="mb-0">Robieth Sohiburoyyan, S.Si., M.Si</h5>
+                                <h5 class="mb-0">
+                                    {{-- @foreach ($kkbk as $user)
+                                        {{ $user->nama }}
+                                    @endforeach --}}
+                                    {{-- dd($kkbk->kbk_id); --}}
+                                    {{ $kkbk->nama_lengkap }}
+                                </h5>
+
                                 <small>Ketua Kelompok Keahlian</small>
                                 <div class="d-flex justify-content-center mt-3">
                                     <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-facebook-f"></i></a>
