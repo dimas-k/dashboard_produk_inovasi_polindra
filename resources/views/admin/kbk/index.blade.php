@@ -53,6 +53,10 @@
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="{{ asset('assets-admin/js/config.js') }}"></script>
+   
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote.min.css" rel="stylesheet">
+
+
 </head>
 
 <body>
@@ -119,6 +123,16 @@
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('#descriptions').summernote();
+        });
+        $(document).ready(function() {
+            $('#descriptions1').summernote();
+        });
+    </script>
     <script>
         $(document).ready(function() {
             $('#uploadForm').submit(function(e) {

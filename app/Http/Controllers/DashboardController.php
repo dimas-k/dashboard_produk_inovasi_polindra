@@ -33,7 +33,8 @@ class DashboardController extends Controller
             ->select(
                 'users.id',
                 'users.nama_lengkap',
-                'kelompok_keahlians.nama_kbk'
+                'kelompok_keahlians.nama_kbk',
+                'kelompok_keahlians.deskripsi'
             )
             ->where('users.kbk_id','=',$id)
             ->first();
