@@ -90,14 +90,14 @@ class AdminController extends Controller
 
     public function ketuaKBK()
     {
-        $kbk = User::with('kbk')->where('role', 'ketua_kbk')->paginate(10);
+        $kbk = User::with('kelompokKeahlian')->where('role', 'ketua_kbk')->paginate(10);
         $jenis_kbk = KelompokKeahlian::all();
         return view('admin.ketua-kbk.index', compact('kbk', 'jenis_kbk'));
     }
 
     public function showDataKetuaKbk(string $id)
     {
-        $k_kbk = User::with('kbk')->find($id);
+        $k_kbk = User::with('kelompokKeahlian')->find($id);
         return view('admin.ketua-kbk.show.index', compact('k_kbk'));
     }
 

@@ -31,7 +31,7 @@
                                 </div>
                                 <div class="flex-grow-1">
                                     <h6 class="mb-0">{{ auth()->user()->nama_lengkap }}</h6>
-                                    <small class="text-muted">Ketua {{ auth()->user()->kbk->nama_kbk }}</small>
+                                    <small class="text-muted">Ketua {{ auth()->user()->kelompokKeahlian->nama_kbk }}</small>
                                 </div>
                             </div>
                         </a>

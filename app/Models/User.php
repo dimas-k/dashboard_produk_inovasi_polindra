@@ -52,7 +52,7 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function kbk()
+    public function kelompokKeahlian()
     {
         return $this->belongsTo(KelompokKeahlian::class, 'kbk_id');
     }

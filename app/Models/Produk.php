@@ -17,6 +17,6 @@ class Produk extends Model
 
     public function kelompokKeahlian()
     {
-        return $this->hasOne(KelompokKeahlian::class);
+        return $this->hasOne(KelompokKeahlian::class,  'id');
     }
 }

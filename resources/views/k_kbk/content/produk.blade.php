@@ -167,8 +167,148 @@
                                 @endif
                             </td>
                             <td>
-                                <a href="{{ route('show.k-kbk', $p->id) }}" class="btn btn-sm btn-success"><i
+                                <a href="{{ route('show.k-kbk', $p->id) }}" class="btn btn-sm btn-primary"><i
                                         class='bx bxs-show'></i></a>
+                                <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal"
+                                    data-bs-target="#basicModal{{ $p->id }}">
+                                    <i class='bx bx-pencil'></i>
+                                </button>
+                                <div class="modal fade" id="basicModal{{ $p->id }}" tabindex="-1"
+                                    aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel1">Update Produk {{ $p->nama_produk  }}
+                                                </h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form action="/k-kbk/produk/store" enctype="multipart/form-data"
+                                                    method="post" id="uploadForm">
+                                                    @csrf
+                                                    <div class="row">
+                                                        <div class="col mb-6">
+                                                            <label for="exampleFormControlSelect1" id="kbk"
+                                                                class="form-label">KBK</label>
+                                                            <input class="form-control" type="text"
+                                                                id="kelompokKeahlianName"
+                                                                value="{{ $p->kelompokKeahlian ? $p->kelompokKeahlian->nama_kbk : 'Tidak ada' }}"
+                                                                readonly />
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col mb-6">
+                                                            <label for="nameBasic" class="form-label">Nama
+                                                                produk</label>
+                                                            <input type="text" id="nama_produk"
+                                                                class="form-control"
+                                                                value="{{ $p->nama_produk }}"
+                                                                name="nama_produk" />
+                                                            @error('nama_produk')
+                                                                <div class="invalid-feedback">
+                                                                    {{ $message }}
+                                                                </div>
+                                                            @enderror
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col mb-6">
+                                                            <label for="nameBasic"
+                                                                class="form-label">Deskripsi</label>
+                                                            <textarea class="form-control" name="deskripsi" id="floatingTextarea"
+                                                                style="height: 100px">{{ $p->deskripsi }}</textarea>
+                                                            @error('deskripsi')
+                                                                <div class="invalid-feedback">
+                                                                    {{ $message }}
+                                                                </div>
+                                                            @enderror
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col mb-6">
+                                                            <label for="nameBasic" class="form-label">Gambar
+                                                                Produk</label>
+                                                            <input type="file" id="gambar" class="form-control"
+                                                                name="gambar" />
+                                                            @error('gambar')
+                                                                <div class="invalid-feedback">
+                                                                    {{ $message }}
+                                                                </div>
+                                                            @enderror
+                                                            <span class="text-danger"><i class='bx bxs-error me-1'></i>File harus di inputkan kembali</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col mb-6">
+                                                            <label for="nameBasic" class="form-label">Nama
+                                                                Inventor</label>
+                                                            <input type="text" id="no_hp" class="form-control"
+                                                                value="{{ $p->inventor }}"
+                                                                name="inventor" />
+                                                            @error('inventor')
+                                                                <div class="invalid-feedback">
+                                                                    {{ $message }}
+                                                                </div>
+                                                            @enderror
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col mb-6">
+                                                            <label for="nameBasic" class="form-label">Anggota
+                                                                Inventor</label>
+                                                            <textarea class="form-control" id="floatingTextarea" style="height: 80px"
+                                                                name="anggota_inventor">{{ $p->anggota_inventor }}</textarea>
+                                                            @error('anggota_inventor')
+                                                                <div class="invalid-feedback">
+                                                                    {{ $message }}
+                                                                </div>
+                                                            @enderror
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col mb-6">
+                                                            <label for="nameBasic" class="form-label">Email
+                                                                Inventor</label>
+                                                            <input type="email" id="username" class="form-control"
+                                                                value="{{ $p->email_inventor }}"
+                                                                name="email_inventor" />
+                                                            @error('email_inventor')
+                                                                <div class="invalid-feedback">
+                                                                    {{ $message }}
+                                                                </div>
+                                                            @enderror
+                                                            
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col mb-6">
+                                                            <label for="nameBasic" class="form-label">Lampiran</label>
+                                                            <input type="file" id="password" class="form-control"
+                                                                name="lampiran" />
+                                                            @error('lampiran')
+                                                                <div class="invalid-feedback">
+                                                                    {{ $message }}
+                                                                </div>
+                                                            @enderror
+                                                            <span class="text-danger"><i class='bx bxs-error me-1'></i>File harus di inputkan kembali</span>
+                                                        </div>
+                                                    </div>
+                                                    <hr class="border-3 w-100">
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-outline-secondary me-1"
+                                                            data-bs-dismiss="modal">
+                                                            Batal
+                                                        </button>
+                                                        <button type="submit" class="btn btn-primary ms-1"
+                                                            id="btnSubmit">Simpan</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </td>
                         </tr>
                     @endforeach
