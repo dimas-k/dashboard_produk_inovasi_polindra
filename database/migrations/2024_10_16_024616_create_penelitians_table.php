@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('penelitians', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('kbk_id')->constrained('kelompok_keahlians')->nullable();
+            $table->foreignId('kbk_id')->nullable()->constrained('kelompok_keahlians');
             $table->string('judul');
             $table->text('abstrak');
             $table->string('gambar')->nullable();
@@ -25,6 +25,7 @@ return new class extends Migration
             
             $table->timestamps();
         });
+
     }
 
     /**

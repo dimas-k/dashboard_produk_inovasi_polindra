@@ -31,12 +31,19 @@ class KetuaKbkController extends Controller
         $request->validate([
             'nama_produk' => 'required|string|max:255',
             'deskripsi' => 'required|string',
-            'kelompok_keahlian_id' => 'required|exists:kelompok_keahlians,id', // Pastikan kelompok_keahlian_id ada
+            'kbk_id' => 'required|exists:kelompok_keahlians,id',
             'inventor' => 'required|string|max:255',
+            'anggota_inventor' => 'nullable|string',
+            'email_inventor' => 'required|email',
+            'gambar' => 'required|file|mimes:jpeg,png,jpg,pdf|max:2048', // Sesuaikan dengan format file yang diperbolehkan
+            'lampiran' => 'nullable|file|mimes:jpeg,png,jpg,pdf,docx|max:2048',
         ]);
+
+        // dd($request->all());
 
         // Buat instance baru dari Produk
         $produk = new Produk();
+        $produk->kbk_id = $request->kbk_id;
         $produk->nama_produk = $request->nama_produk;
         $produk->deskripsi = $request->deskripsi;
         if ($request->hasFile('gambar')) {
@@ -44,13 +51,12 @@ class KetuaKbkController extends Controller
         }
         $produk->inventor = $request->inventor;
         $produk->anggota_inventor = $request->anggota_inventor;
-        
-        
+        $produk->email_inventor = $request->email_inventor;
+        if ($request->hasFile('lampiran')) {
+            $produk->lampiran = $request->file('lampiran')->store('dokumen-produk');
+        }
         $produk->save();
 
-        $kelompokKeahlian = KelompokKeahlian::find($request->kelompok_keahlian_id);
-        $kelompokKeahlian->produk_id = $produk->id;
-        $kelompokKeahlian->save();
 
         return redirect('/k-kbk/produk')->with('success', 'Data Produk berhasil ditambahkan!');
     }

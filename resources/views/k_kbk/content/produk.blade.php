@@ -13,14 +13,15 @@
                                 aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <form action="/k-kbk/produk/store" enctype="multipart/form-data" method="post" id="uploadForm">
+                            <form action="/k-kbk/produk/store" enctype="multipart/form-data" method="post"
+                                id="uploadForm">
                                 @csrf
                                 <div class="row">
                                     <div class="col mb-6">
                                         <label for="exampleFormControlSelect1" id="kbk" class="form-label">Pilih
                                             KBK</label>
-                                        <select class="form-select" id="exampleFormControlSelect1"
-                                            name="kelompok_keahlian_id" aria-label="Default select example">
+                                        <select class="form-select" id="exampleFormControlSelect1" name="kbk_id"
+                                            aria-label="Default select example">
                                             <option value="" selected>Pilih KBK</option>
                                             @foreach ($jenis_kbk as $j_kbk)
                                                 <option value="{{ $j_kbk->id }}">{{ $j_kbk->nama_kbk }}</option>
@@ -44,7 +45,8 @@
                                 <div class="row">
                                     <div class="col mb-6">
                                         <label for="nameBasic" class="form-label">Deskripsi</label>
-                                        <textarea class="form-control" placeholder="Masukkan deskripsi" id="floatingTextarea" style="height: 100px"></textarea>
+                                        <textarea class="form-control" name="deskripsi" placeholder="Masukkan deskripsi" id="floatingTextarea"
+                                            style="height: 100px"></textarea>
                                         @error('deskripsi')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
@@ -89,9 +91,9 @@
                                 </div>
                                 <div class="row">
                                     <div class="col mb-6">
-                                        <label for="nameBasic" class="form-label">Kontak Inventor</label>
+                                        <label for="nameBasic" class="form-label">Email Inventor</label>
                                         <input type="email" id="username" class="form-control"
-                                            placeholder="Masukkan email inventor" name="email_onventor" />
+                                            placeholder="Masukkan email inventor" name="email_inventor" />
                                         @error('email_inventor')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
@@ -100,15 +102,17 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <label for="nameBasic" class="form-label">Lampiran</label>
-                                    <input type="file" id="password" class="form-control" name="lampiran" />
-                                    @error('lampiran')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
+                                    <div class="col mb-6">
+                                        <label for="nameBasic" class="form-label">Lampiran</label>
+                                        <input type="file" id="password" class="form-control" name="lampiran" />
+                                        @error('lampiran')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
                                 </div>
-                                <br>
+                                <hr class="border-3 w-100">
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-outline-secondary me-1"
                                         data-bs-dismiss="modal">
@@ -139,7 +143,7 @@
                         <th>No</th>
                         <th>Nama Produk</th>
                         <th>Nama Inventor</th>
-                        <th>No Handphone Inventor</th>
+                        <th>email inventor</th>
                         <th>Status</th>
                         <th>Aksi</th>
                     </tr>
@@ -148,11 +152,11 @@
                     @foreach ($produks as $i => $p)
                         <tr>
                             <th scope="row">
-                                {{ ($produk->currentPage() - 1) * $produk->perPage() + $loop->iteration }}
+                                {{ ($produks->currentPage() - 1) * $produks->perPage() + $loop->iteration }}
                             </th>
                             <td>{{ $p->nama_produk }}</td>
                             <td>{{ $p->inventor }}</td>
-                            <td>{{ $p->no_hp_inventor }}</td>
+                            <td>{{ $p->email_inventor }}</td>
                             <td>
                                 @if ($p->status === 'Divalidasi')
                                     <span class="badge bg-label-success me-1">{{ $p->status }}</span>
