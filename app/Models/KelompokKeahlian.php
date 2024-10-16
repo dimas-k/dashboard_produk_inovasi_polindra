@@ -16,4 +16,9 @@ class KelompokKeahlian extends Model
     {
         return $this->hasOne(User::class, 'kelompok_keahlian_id');
     }
+
+    public function produk()
+    {
+        return $this->hasMany(Produk::class, 'produk_id');
+    }
 }

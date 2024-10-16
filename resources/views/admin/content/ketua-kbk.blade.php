@@ -45,7 +45,7 @@
                                 <div class="row">
                                     <div class="col mb-6">
                                         <label for="nameBasic" class="form-label">Jabatan</label>
-                                        <input type="jabatan" id="jabatan" class="form-control"
+                                        <input type="text" id="jabatan" class="form-control"
                                             placeholder="Masukkan jabatan" name="jabatan" />
                                         @error('jabatan')
                                             <div class="invalid-feedback">

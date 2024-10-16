@@ -10,19 +10,21 @@ return new class extends Migration
      * Run the migrations.
      */
     public function up(): void
-    {
-        Schema::create('produks', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('nama_produk');
-            $table->text('deskripsi');
-            $table->string('gambar')->nullable();
-            $table->string('inventor');
-            $table->text('anggota_inventor');
-            $table->string('no_hp_inventor');
-            $table->foreign('kelompok_keahlian_id')->nullable()->references('id')->on('kelompok_keahlians')->onDelete('cascade');
-            $table->timestamps();
-        });
-    }
+{
+    Schema::create('produks', function (Blueprint $table) {
+        $table->bigIncrements('id');
+        $table->unsignedBigInteger('kbk_id')->constrained('kelompok_keahlians')->nullable();
+        $table->string('nama_produk');
+        $table->text('deskripsi');
+        $table->string('gambar')->nullable();
+        $table->string('inventor');
+        $table->text('anggota_inventor')->nullable();
+        $table->string('email_inventor');
+        $table->text('lampiran')->nullable();
+        $table->string('status')->default('Belum Divalidasi');
+        $table->timestamps();
+    });
+}
 
     /**
      * Reverse the migrations.
