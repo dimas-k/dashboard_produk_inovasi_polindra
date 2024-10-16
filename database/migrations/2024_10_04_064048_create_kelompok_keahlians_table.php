@@ -15,7 +15,7 @@ return new class extends Migration
             $table->bigIncrements('id'); // Primary key
             $table->string('nama_kbk');
             $table->string('jurusan')->nullable();
-            $table->bigIncrements('produk_id')->nullable()->constrained('produks');
+            // $table->bigIncrements('produk_id')->nullable()->constrained('produks');
             $table->timestamps();
             // Defining foreign key constraint
         });

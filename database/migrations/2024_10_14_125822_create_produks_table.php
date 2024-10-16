@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('inventor');
             $table->text('anggota_inventor');
             $table->string('no_hp_inventor');
-            $table->foreign('kelompok_keahlian_id')->nullable()->references('id')->on('kelompok_keahlians')->onDelete('cascade');
+            // $table->foreign(columns: 'kelompok_keahlian_id')->nullable()->references('id')->on('kelompok_keahlians')->onDelete('cascade');
             $table->timestamps();
         });
     }

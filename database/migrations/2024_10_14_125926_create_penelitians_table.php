@@ -12,10 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('penelitians', function (Blueprint $table) {
-            $table->bigIncrements('id ');
+            $table->bigIncrements('id');
             $table->string('judul');
             $table->text('abstrak');
-            
             $table->timestamps();
         });
     }

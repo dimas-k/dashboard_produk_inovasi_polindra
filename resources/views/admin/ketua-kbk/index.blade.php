@@ -141,7 +141,7 @@
                     return nip.length <= 20;
                 }
 
-                // Validasi Nama Lengkap
+                Validasi Nama Lengkap
                 if (!nama || !isText(nama)) {
                     Swal.fire({
                         icon: "error",
@@ -229,7 +229,7 @@
                     return false;
                 }
 
-                // Validasi Username (hanya teks)
+                Validasi Username (hanya teks)
                 if (!username || !isText(username)) {
                     Swal.fire({
                         icon: "error",
@@ -288,7 +288,7 @@
                     return nip.length <= 20;
                 }
 
-                // Validasi Nama Lengkap
+                Validasi Nama Lengkap
                 if (!nama || !isText(nama)) {
                     Swal.fire({
                         icon: "error",
@@ -301,7 +301,7 @@
                     return false;
                 }
 
-                // Validasi NIP (harus angka dan tidak lebih dari 20 digit)
+                Validasi NIP (harus angka dan tidak lebih dari 20 digit)
                 if (!nip || isNaN(nip)) {
                     Swal.fire({
                         icon: "error",
