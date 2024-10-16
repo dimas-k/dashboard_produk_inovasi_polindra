@@ -32,6 +32,12 @@
                                             placeholder="Masukkan jurusan" name="jurusan" />
                                     </div>
                                 </div>
+                                <div class="row">
+                                    <div class="col mb-6">
+                                        <label for="deskripsi" class="form-label">Deskripsi</label>
+                                        <textarea name="deskripsi" id="descriptions" cols="10" rows="10"></textarea>
+                                    </div>
+                                </div>
 
 
                                 <br>
@@ -84,7 +90,7 @@
                                         <div class="modal fade" id="exampleModal{{ $k->id }}" tabindex="-1"
                                             data-bs-backdrop="static" aria-labelledby="exampleModalLabel"
                                             aria-hidden="true">
-                                            <div class="modal-dialog modal-dialog-scrollable">
+                                            <div class="modal-dialog modal-xl modal-dialog-scrollable">
                                                 <div class="modal-content p-2">
                                                     <div class="modal-body">
                                                         <form method="post"
@@ -99,10 +105,20 @@
                                                             </div>
                                                             <div class="form-outline form-white mb-3">
                                                                 <label class="form-label"
-                                                                    for="">Jabatan</label>
+                                                                    for="">Jurusan</label>
                                                                 <input type="text" id=""
                                                                     class="form-control" name="jurusan"
                                                                     value="{{ $k->jurusan }}">
+                                                            </div>
+                                                            <div class="form-outline form-white mb-3">
+                                                                <label class="form-label"
+                                                                    for="">Deskripsi</label>
+                                                                <textarea type="text"
+                                                                    class="form-control" name="deskripsi" 
+                                                                    id="descriptions1" 
+                                                                    style="width:100px">
+                                                                    {!! $k->deskripsi !!}
+                                                                </textarea>
                                                             </div>
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-outline-secondary me-1"

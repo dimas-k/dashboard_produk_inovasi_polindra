@@ -23,11 +23,10 @@
                                         <select class="form-select" id="exampleFormControlSelect1" name="kbk_id"
                                             aria-label="Default select example">
                                             <option value="" selected>Pilih KBK</option>
-                                            @foreach ($jenis_kbk as $j_kbk)
-                                                <option value="{{ $j_kbk->id }}">{{ $j_kbk->nama_kbk }}</option>
+                                            @foreach ($kkbk as $j_kbk)
+                                                <option value="{{ $j_kbk->id}}">{{ $j_kbk->nama_kbk}}</option>
                                             @endforeach
                                         </select>
-
                                     </div>
                                 </div>
                                 <div class="row">

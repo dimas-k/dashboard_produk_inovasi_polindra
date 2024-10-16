@@ -24,49 +24,16 @@
                 </div>
             </div>
             <div class="col-md-6">
-                <div class="resume-item mb-4">
-                    {{-- <span class="date"><span class="icon-calendar"></span> March 2013 - Present</span> --}}
-                    <strong style="color: white;">Invensi dapat dipatenkan jika invensi tersebut</strong> <br>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi possimus eum delectus, maxime error nesciunt cupiditate, quidem quos quae modi distinctio mollitia eos rerum nostrum iste amet excepturi neque aliquid!</p>
-                    <ol>
-                        <li>
-                            Management of Information Systems (15 scopes)
-                        </li>
-                        <li>
-                            Data Analytics (8 scopes)
-                        </li>
-                        <li>
-                            Big Data (9 scopes)
-                        </li>
-                        <li>
-                            Enterprise Systems (9 scopes)
-                        </li>
-                        <li>
-                            IT Infrastructure and Security (4 scopes)
-                        </li>
-                    </ol>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi possimus eum delectus, maxime error nesciunt cupiditate, quidem quos quae modi distinctio mollitia eos rerum nostrum iste amet excepturi neque aliquid!</p>
-                    <ol>
-                        <li>
-                            Improvement of business processes and applications
-                        </li>
-                        <li>
-                            Improvement of knowledge set-based
-                        </li>
-                        <li>
-                            Development and implementation of e-Commerce and e-Business applications
-                        </li>
-                        <li>
-                            Implementation and readiness of Emerging Technology
-                        </li>
-                    </ol>
+                <div class="resume-item mb-4 shadow">
+                    <strong style="color: rgb(0, 0, 0);">{{$kbk_nama->nama_kbk}}</strong><br>
+                    <p>{!! $kkbk->deskripsi !!}</p>
                 </div>
             </div>
 
             <div class="col-md-6">
 
                 <div class="mb-8">
-                    <span class="date"><span class="icon-calendar"></span> March 2013 - Present</span>
+                    {{-- <span class="date"><span class="icon-calendar"></span> March 2013 - Present</span> --}}
                     {{-- <h3>Lead Product Designer</h3> --}}
                     <div class="row g-4 ">
                         <div class="col-lg-5 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
@@ -97,12 +64,12 @@
     </div>
 </section> <!-- .section -->
 
-<div class="article-meta">
+{{-- <div class="article-meta">
     <div>By Kontributor Satu TUVV </div>
     <div>17 July 2023 </div>
     <div> Kelompok Keahlian </div>
     <div>Tags: Kelompok Keahlian, KK</div>
-</div>
+</div> --}}
 
 <div class="container-xxl py-5">
     <div class="container">

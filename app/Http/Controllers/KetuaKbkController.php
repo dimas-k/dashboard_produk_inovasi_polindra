@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Produk;
 use Illuminate\Http\Request;
 use App\Models\KelompokKeahlian;
+use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class KetuaKbkController extends Controller
 {
@@ -14,7 +18,7 @@ class KetuaKbkController extends Controller
     }
     public function produkInovasi()
     {
-        $jenis_kbk = KelompokKeahlian::all();
+        // $jenis_kbk = KelompokKeahlian::all();
         $kelompokKeahlianId = auth()->user()->kelompokKeahlian->id ?? null;
 
         $produks = Produk::when($kelompokKeahlianId, function ($query) use ($kelompokKeahlianId) {
@@ -23,7 +27,19 @@ class KetuaKbkController extends Controller
             });
         })->paginate(10);
 
-        return view('k_kbk.produk.index', compact('produks', 'jenis_kbk'));
+        $userId = Auth::id();
+        $kkbk = DB::table('users')
+        ->join('kelompok_keahlians', 'users.kbk_id', '=', 'kelompok_keahlians.id')
+        ->select(
+            'kelompok_keahlians.id',
+            'kelompok_keahlians.nama_kbk',
+            'users.nama_lengkap'
+        )
+        ->where('users.id','=', $userId)
+        ->get();
+        
+        // dd($kkbk);
+        return view('k_kbk.produk.index', compact('produks', 'kkbk'));
     }
 
     public function storeProduk(Request $request)
@@ -56,7 +72,6 @@ class KetuaKbkController extends Controller
             $produk->lampiran = $request->file('lampiran')->store('dokumen-produk');
         }
         $produk->save();
-
 
         return redirect('/k-kbk/produk')->with('success', 'Data Produk berhasil ditambahkan!');
     }

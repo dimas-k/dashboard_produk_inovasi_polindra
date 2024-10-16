@@ -23,6 +23,7 @@ class KelompokBidangController extends Controller
         $kbk = new KelompokKeahlian();
         $kbk->nama_kbk = $request->nama_kbk;
         $kbk->jurusan = $request->jurusan;
+        $kbk->deskripsi = $request->deskripsi;
         $kbk->save($validasidata);
 
         return redirect('/admin/kelompok-bidang-keahlian')->with('success', 'Kelompok Keahlian berhasil ditambahkan');
@@ -45,6 +46,7 @@ class KelompokBidangController extends Controller
         $kbk = KelompokKeahlian::find($id);
         $kbk->nama_kbk = $request->nama_kbk;
         $kbk->jurusan = $request->jurusan;
+        $kbk->deskripsi = $request->deskripsi;
         $kbk->save();
 
     
