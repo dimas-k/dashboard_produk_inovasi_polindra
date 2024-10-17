@@ -75,23 +75,25 @@ class KetuaKbkController extends Controller
         if ($request->hasFile('gambar')) {
 
             $originalName = $request->file('gambar')->getClientOriginalName();
-
-            $fileName = time() . '_' . $originalName;
-
-            $request->file('gambar')->move(public_path('dokumen-produk'), $fileName);
-
-            $produk->gambar = 'dokumen-produk/' . $fileName;
+            $fileName = time() . '_' . str_replace(' ', '_', $originalName); // Ganti spasi dengan underscore
+        
+            // Simpan file ke dalam storage/app/public/dokumen-produk
+            $path = $request->file('gambar')->storeAs('public/dokumen-produk', $fileName);
+        
+            // Simpan path tanpa 'public/' di database
+            $produk->gambar = str_replace('public/', '', $path);
         }
-
+        
         if ($request->hasFile('lampiran')) {
-
+        
             $originalName = $request->file('lampiran')->getClientOriginalName();
-
-            $fileName = time() . '_' . $originalName;
-
-            $request->file('lampiran')->move(public_path('dokumen-produk'), $fileName);
-
-            $produk->lampiran = 'dokumen-produk/' . $fileName;
+            $fileName = time() . '_' . str_replace(' ', '_', $originalName); // Ganti spasi dengan underscore
+        
+            // Simpan file ke dalam storage/app/public/dokumen-produk
+            $path = $request->file('lampiran')->storeAs('public/dokumen-produk', $fileName);
+        
+            // Simpan path tanpa 'public/' di database
+            $produk->lampiran = str_replace('public/', '', $path);
         }
         $produk->save();
 

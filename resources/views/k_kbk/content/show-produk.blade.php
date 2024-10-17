@@ -13,7 +13,7 @@
                 </tr>
                 <tr>
                     <th>Gambar Produk</th>
-                    <td>: <a href={{ asset( $produk->gambar) }} class=""
+                    <td>: <a href={{ asset( 'storage/' . $produk->gambar) }} class=""
                         target="_blank">Lihat Gambar</a></td>
                 </tr>
                 <tr>
@@ -34,7 +34,7 @@
                 </tr>
                 <tr>
                     <th>Lampiran</th>
-                    <td>: <a href={{ asset( $produk->lampiran) }} class=""
+                    <td>: <a href={{ asset( 'storage/' . $produk->lampiran) }} class=""
                         target="_blank">Lihat Lampiran</a></td>
                 </tr>
             </table>
