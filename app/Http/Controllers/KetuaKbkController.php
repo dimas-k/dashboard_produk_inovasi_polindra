@@ -73,25 +73,23 @@ class KetuaKbkController extends Controller
         $produk->anggota_inventor = $request->anggota_inventor;
         $produk->email_inventor = $request->email_inventor;
         if ($request->hasFile('gambar')) {
-
             $originalName = $request->file('gambar')->getClientOriginalName();
-            $fileName = time() . '_' . str_replace(' ', '_', $originalName); // Ganti spasi dengan underscore
-        
-            // Simpan file ke dalam storage/app/public/dokumen-produk
+            $fileName = time() . '_' . str_replace(' ', '_', $originalName);
+            
+            // Simpan file dengan nama kustom
             $path = $request->file('gambar')->storeAs('public/dokumen-produk', $fileName);
-        
+            
             // Simpan path tanpa 'public/' di database
             $produk->gambar = str_replace('public/', '', $path);
         }
         
         if ($request->hasFile('lampiran')) {
-        
             $originalName = $request->file('lampiran')->getClientOriginalName();
-            $fileName = time() . '_' . str_replace(' ', '_', $originalName); // Ganti spasi dengan underscore
-        
-            // Simpan file ke dalam storage/app/public/dokumen-produk
+            $fileName = time() . '_' . str_replace(' ', '_', $originalName);
+            
+            // Simpan file dengan nama kustom
             $path = $request->file('lampiran')->storeAs('public/dokumen-produk', $fileName);
-        
+            
             // Simpan path tanpa 'public/' di database
             $produk->lampiran = str_replace('public/', '', $path);
         }
