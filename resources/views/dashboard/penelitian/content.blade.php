@@ -26,7 +26,7 @@
             <div class="col-md-6">
                 <div class="resume-item mb-4 shadow">
                     <strong style="color: rgb(0, 0, 0);">{{$kbk_nama->nama_kbk}}</strong><br>
-                    <p>{!! $kkbk->deskripsi !!}</p>
+                    <p>{!! $kkbk->deskripsi ?? '' !!}</p>
                 </div>
             </div>
 
@@ -42,10 +42,6 @@
                                     <img class="img-fluid" src={{ asset('img/carousel-1.jpg') }} alt="">
                                 </div>
                                 <h5 class="mb-0">
-                                    {{-- @foreach ($kkbk as $user)
-                                        {{ $user->nama }}
-                                    @endforeach --}}
-                                    {{-- dd($kkbk->kbk_id); --}}
                                     {{ $kkbk->nama_lengkap ?? ''}}
                                 </h5>
 
