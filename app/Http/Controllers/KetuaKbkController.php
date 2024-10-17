@@ -45,6 +45,7 @@ class KetuaKbkController extends Controller
     public function showProduk($id)
     {
         $produk = Produk::with('KelompokKeahlian')->findOrFail($id);
+        // dd($produk->lampiran);
         return view('k_kbk.produk.show.index', compact('produk'));
     }
 
