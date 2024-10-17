@@ -61,7 +61,8 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::post('/admin/ketua-kbk/update/{id}', [AdminController::class, 'updateKetuaKbk'])->name('update.k-kbk');
     Route::delete('/admin/ketua-kbk/delete/{id}', [AdminController::class, 'hapusKetuaKbk'])->name('hapus.k-kbk');
 
-    Route::get('/admin/produk-inovasi', [AdminProdukInovasiController::class, 'pageProduk']);
+    Route::get('/admin/produk-inovasi/{id}', [AdminProdukInovasiController::class, 'pageProduk']);
+    Route::get('/admin/produk-inovasi/show/{id}', [AdminProdukInovasiController::class, 'ShowPageProduk'])->name('show.produk');
     
 });
 
