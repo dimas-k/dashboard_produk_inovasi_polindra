@@ -122,20 +122,31 @@
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-    <script>
+    {{-- <script>
         ClassicEditor
         .create( document.querySelector( '#editor' ) )
         .catch( error =>{
             console.error( error );
         } )
-    </script>
+    </script> --}}
+
     <script>
+        document.querySelectorAll('#editor').forEach(textarea => {
+            ClassicEditor
+                .create(textarea)
+                .catch(error => {
+                    console.error(error);
+                });
+        });
+    </script>
+
+    {{-- <script>
         ClassicEditor
         .create( document.querySelector( '#editor2' ) )
         .catch( error =>{
             console.error( error );
         } )
-    </script>
+    </script> --}}
     
     <script>
         $(document).ready(function() {
