@@ -53,10 +53,9 @@
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="{{ asset('assets-admin/js/config.js') }}"></script>
-   
-    <link href="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote.min.css" rel="stylesheet">
 
-
+     <!-- link cdn CKEditor -->
+     <script src="https://cdn.ckeditor.com/ckeditor5/34.2.0/classic/ckeditor.js"></script>
 </head>
 
 <body>
@@ -123,16 +122,21 @@
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote.min.js"></script>
-
     <script>
-        $(document).ready(function() {
-            $('#descriptions').summernote();
-        });
-        $(document).ready(function() {
-            $('#descriptions1').summernote();
-        });
+        ClassicEditor
+        .create( document.querySelector( '#editor' ) )
+        .catch( error =>{
+            console.error( error );
+        } )
     </script>
+    <script>
+        ClassicEditor
+        .create( document.querySelector( '#editor2' ) )
+        .catch( error =>{
+            console.error( error );
+        } )
+    </script>
+    
     <script>
         $(document).ready(function() {
             $('#uploadForm').submit(function(e) {

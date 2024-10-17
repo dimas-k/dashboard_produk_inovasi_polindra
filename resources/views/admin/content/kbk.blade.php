@@ -35,10 +35,15 @@
                                 <div class="row">
                                     <div class="col mb-6">
                                         <label for="deskripsi" class="form-label">Deskripsi</label>
-                                        <textarea name="deskripsi" id="descriptions" cols="10" rows="10"></textarea>
+                                        <textarea name="deskripsi" id="editor"></textarea>
                                     </div>
                                 </div>
-
+                                {{-- <div class="row">
+                                    <div class="col mb-6">
+                                        <label for="deskripsi" class="form-label">Deskripsi</label>
+                                        <textarea name="deskripsi" id="descriptions" cols="10" rows="10"></textarea>
+                                    </div>
+                                </div> --}}
 
                                 <br>
                                 <div class="modal-footer">
@@ -111,15 +116,19 @@
                                                                     value="{{ $k->jurusan }}">
                                                             </div>
                                                             <div class="form-outline form-white mb-3">
+                                                                <label for="deskripsi" class="form-label">Deskripsi</label>
+                                                                <textarea name="deskripsi" id="editor2">{!! $k->deskripsi !!}</textarea>
+                                                            </div>
+                                                            {{-- <div class="form-outline form-white mb-3">
                                                                 <label class="form-label"
                                                                     for="">Deskripsi</label>
                                                                 <textarea type="text"
                                                                     class="form-control" name="deskripsi" 
-                                                                    id="descriptions1" 
+                                                                    id="editor" 
                                                                     style="width:100px">
                                                                     {!! $k->deskripsi !!}
                                                                 </textarea>
-                                                            </div>
+                                                            </div> --}}
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-outline-secondary me-1"
                                                                     data-bs-dismiss="modal">
