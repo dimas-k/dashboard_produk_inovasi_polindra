@@ -72,7 +72,7 @@
 
                 <!-- Content wrapper -->
                 <div class="content-wrapper">
-                    @include('k_kbk.content.produk')
+                    @include('k_kbk.content.penelitian')
                 </div>
                 <!-- / Content -->
 

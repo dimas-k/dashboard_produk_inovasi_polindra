@@ -148,10 +148,10 @@
                     </tr>
                 </thead>
                 <tbody class="table-border-bottom-0">
-                    @foreach ($penelitians as $i => $p)
+                    @foreach ($produks as $i => $p)
                         <tr>
                             <th scope="row">
-                                {{ ($penelitians->currentPage() - 1) * $penelitians->perPage() + $loop->iteration }}
+                                {{ ($produks->currentPage() - 1) * $produks->perPage() + $loop->iteration }}
                             </th>
                             <td>{{ $p->nama_produk }}</td>
                             <td>{{ $p->inventor }}</td>
@@ -322,7 +322,7 @@
                 </tbody>
             </table>
             <div class="d-flex justify-content-end mt-2">
-                {{ $penelitians->links() }}
+                {{ $produks->links() }}
             </div>
         </div>
     </div>

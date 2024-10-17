@@ -20,6 +20,11 @@ class KelompokKeahlian extends Model
 
     public function produk()
     {
-        return $this->hasMany(Produk::class, 'kbk_id', 'id');
+        return $this->hasMany(Produk::class, 'kbk_id');
+    }
+
+    public function penelitian()
+    {
+        return $this->hasMany(Penelitian::class, 'kbk_id');
     }
 }

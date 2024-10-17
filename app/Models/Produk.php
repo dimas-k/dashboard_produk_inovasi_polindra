@@ -11,12 +11,12 @@ class Produk extends Model
 
     protected $fillable = [
         'nama_produk', 'deskripsi', 'gambar', 'inventor', 
-        'anggota_inventor', 'no_hp_inventor', 'lampiran', 
+        'anggota_inventor', 'email_penulis', 'lampiran', 
         'status'
     ];
 
     public function kelompokKeahlian()
     {
-        return $this->hasOne(KelompokKeahlian::class,  'id');
+        return $this->belongsTo(KelompokKeahlian::class,  'kbk_id');
     }
 }

@@ -67,9 +67,12 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
 Route::middleware(['auth', 'role:ketua_kbk'])->group(function () {
     Route::get('/k-kbk/dashboard', [KetuaKbkController::class, 'dashboardPage']);
+
     Route::get('/k-kbk/produk', [KetuaKbkController::class, 'produkInovasi']);
+    Route::get('/k-kbk/produk/lihat/{id}', [KetuaKbkController::class, 'showProduk'])->name('lihat.produk');
     Route::post('/k-kbk/produk/store', [KetuaKbkController::class, 'storeProduk']);
-    Route::get('/k-kbk/produk/edit/{id}', [KetuaKbkController::class, 'editProdukInovasi'])->name('edit.produk.page');
+    Route::put('/k-kbk/produk/update/{id}', [KetuaKbkController::class, 'updateProdukInovasi'])->name('update.produk');
+    Route::delete('/k-kbk/produk/hapus/{id}', [KetuaKbkController::class, 'hapusProduk'])->name('hapus.produk');
 
-
+    Route::get('/k-kbk/penelitian', [KetuaKbkController::class, 'penelitian']);
 });

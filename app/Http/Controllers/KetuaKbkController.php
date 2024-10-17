@@ -6,9 +6,12 @@ use App\Models\User;
 use App\Models\Produk;
 use Illuminate\Http\Request;
 use App\Models\KelompokKeahlian;
+use App\Models\Penelitian;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
+
 
 class KetuaKbkController extends Controller
 {
@@ -19,27 +22,30 @@ class KetuaKbkController extends Controller
     public function produkInovasi()
     {
         // $jenis_kbk = KelompokKeahlian::all();
-        $kelompokKeahlianId = auth()->user()->kelompokKeahlian->id ?? null;
+        $kelompokKeahlianId = Auth::user()->kelompokKeahlian->id ?? null;
 
-        $produks = Produk::when($kelompokKeahlianId, function ($query) use ($kelompokKeahlianId) {
-            return $query->whereHas('kelompokKeahlian', function ($q) use ($kelompokKeahlianId) {
-                $q->where('id', $kelompokKeahlianId);
-            });
-        })->paginate(10);
+        // Query produk berdasarkan kelompok keahlian ID
+        $produks = Produk::with('kelompokKeahlian')->where('kbk_id', $kelompokKeahlianId)->paginate(10);
 
         $userId = Auth::id();
         $kkbk = DB::table('users')
-        ->join('kelompok_keahlians', 'users.kbk_id', '=', 'kelompok_keahlians.id')
-        ->select(
-            'kelompok_keahlians.id',
-            'kelompok_keahlians.nama_kbk',
-            'users.nama_lengkap'
-        )
-        ->where('users.id','=', $userId)
-        ->get();
-        
-        // dd($kkbk);
+            ->join('kelompok_keahlians', 'users.kbk_id', '=', 'kelompok_keahlians.id')
+            ->select(
+                'kelompok_keahlians.id',
+                'kelompok_keahlians.nama_kbk',
+                'users.nama_lengkap'
+            )
+            ->where('users.id', '=', $userId)
+            ->get();
+
+
+        // dd($produks);
         return view('k_kbk.produk.index', compact('produks', 'kkbk'));
+    }
+    public function showProduk($id)
+    {
+        $produk = Produk::with('KelompokKeahlian')->findOrFail($id);
+        return view('k_kbk.produk.show.index', compact('produk'));
     }
 
     public function storeProduk(Request $request)
@@ -62,27 +68,28 @@ class KetuaKbkController extends Controller
         $produk->kbk_id = $request->kbk_id;
         $produk->nama_produk = $request->nama_produk;
         $produk->deskripsi = $request->deskripsi;
-        if ($request->hasFile('gambar')) {
-            // Ambil nama asli file
-            $originalName = $request->file('gambar')->getClientOriginalName();
-            // Tambahkan timestamp untuk memastikan nama file unik
-            $fileName = time() . '_' . $originalName;
-            // Pindahkan file ke folder 'uploads' di public
-            $request->file('gambar')->move(public_path('dokumen-produk'), $fileName);
-            // Simpan path file ke kolom 'gambar' di database
-            $produk->gambar = 'dokumen-produk/' . $fileName;
-        }
         $produk->inventor = $request->inventor;
         $produk->anggota_inventor = $request->anggota_inventor;
         $produk->email_inventor = $request->email_inventor;
-        if ($request->hasFile('lampiran')) {
-            // Ambil nama asli file
-            $originalName = $request->file('lampiran')->getClientOriginalName();
-            // Tambahkan timestamp untuk memastikan nama file unik
+        if ($request->hasFile('gambar')) {
+
+            $originalName = $request->file('gambar')->getClientOriginalName();
+
             $fileName = time() . '_' . $originalName;
-            // Pindahkan file ke folder 'uploads' di public
+
+            $request->file('gambar')->move(public_path('dokumen-produk'), $fileName);
+
+            $produk->gambar = 'dokumen-produk/' . $fileName;
+        }
+
+        if ($request->hasFile('lampiran')) {
+
+            $originalName = $request->file('lampiran')->getClientOriginalName();
+
+            $fileName = time() . '_' . $originalName;
+
             $request->file('lampiran')->move(public_path('dokumen-produk'), $fileName);
-            // Simpan path file ke kolom 'lampiran' di database
+
             $produk->lampiran = 'dokumen-produk/' . $fileName;
         }
         $produk->save();
@@ -95,7 +102,6 @@ class KetuaKbkController extends Controller
         $request->validate([
             'nama_produk' => 'required|string|max:255',
             'deskripsi' => 'required|string',
-            'kbk_id' => 'required|exists:kelompok_keahlians,id',
             'inventor' => 'required|string|max:255',
             'anggota_inventor' => 'nullable|string',
             'email_inventor' => 'required|email',
@@ -110,30 +116,74 @@ class KetuaKbkController extends Controller
         $produk->inventor = $request->inventor;
         $produk->anggota_inventor = $request->anggota_inventor;
         $produk->email_inventor = $request->email_inventor;
-        $produk->status = $request->status;
 
-        // Cek apakah ada file gambar yang diupload
         if ($request->hasFile('gambar')) {
-            // Ambil nama asli file
+
+            if ($produk->gambar && file_exists(public_path($produk->gambar))) {
+                unlink(public_path($produk->gambar));
+            }
+
             $originalName = $request->file('gambar')->getClientOriginalName();
-            // Tambahkan timestamp untuk memastikan nama file unik
+
             $fileName = time() . '_' . $originalName;
-            // Pindahkan file ke folder 'uploads' di public
+
             $request->file('gambar')->move(public_path('dokumen_produk'), $fileName);
-            // Simpan path file ke kolom 'gambar' di database
+
             $produk->gambar = 'dokumen_produk/' . $fileName;
         }
+
+
         if ($request->hasFile('lampiran')) {
-            // Ambil nama asli file
-            $originalName = $request->file('lampiran')->getClientOriginalName();
-            // Tambahkan timestamp untuk memastikan nama file unik
-            $fileName = time() . '_' . $originalName;
-            // Pindahkan file ke folder 'uploads' di public
-            $request->file('lampiran')->move(public_path('dokumen_produk'), $fileName);
-            // Simpan path file ke kolom 'lampiran' di database
-            $produk->lampiran = 'dokumen_produk/' . $fileName;
+
+            if ($produk->lampiran && file_exists(public_path($produk->lampiran))) {
+                unlink(public_path($produk->lampiran));
+            }
+
+            $originalLampiranName = $request->file('lampiran')->getClientOriginalName();
+
+            $lampiranFileName = time() . '_' . $originalLampiranName;
+
+            $request->file('lampiran')->move(public_path('dokumen_produk'), $lampiranFileName);
+
+            $produk->lampiran = 'dokumen_produk/' . $lampiranFileName;
         }
         $produk->save();
         return redirect('/k-kbk/produk')->with('success', 'Data Produk berhasil diupdate!');
+    }
+
+    public function hapusProduk($id)
+    {
+        $produk = Produk::findOrFail($id);
+
+        if ($produk->gambar && File::exists(public_path($produk->gambar))) {
+            File::delete(public_path($produk->gambar));
+        }
+        if ($produk->lampiran && File::exists(public_path($produk->lampiran))) {
+            File::delete(public_path($produk->lampiran));
+        }
+        $produk->delete();
+        return redirect('/k-kbk/produk')->with('success', 'Data Produk berhasil dihapus!');
+    }
+
+    //penelitian method
+    public function penelitian()
+    {
+
+        $kelompokKeahlianId = Auth::user()->kelompokKeahlian->id ?? null;
+        $penelitians = Penelitian::with('kelompokKeahlian')->where('kbk_id', $kelompokKeahlianId)->paginate(10);
+
+        $userId = Auth::id();
+        $kkbk = DB::table('users')
+            ->join('kelompok_keahlians', 'users.kbk_id', '=', 'kelompok_keahlians.id')
+            ->select(
+                'kelompok_keahlians.id',
+                'kelompok_keahlians.nama_kbk',
+                'users.nama_lengkap'
+            )
+            ->where('users.id', '=', $userId)
+            ->get();
+        
+        Return view('k_kbk.penelitian.index', compact('penelitians', 'kkbk'));
+        
     }
 }

@@ -19,7 +19,7 @@
 
 
 
-    <title>D-PROIN | Ketua KBK | produk</title>
+    <title>D-PROIN | Lihat Produk</title>
 
     <meta name="description" content="" />
 
@@ -72,7 +72,7 @@
 
                 <!-- Content wrapper -->
                 <div class="content-wrapper">
-                    @include('k_kbk.content.produk')
+                    @include('k_kbk.content.show-produk')
                 </div>
                 <!-- / Content -->
 
@@ -99,11 +99,6 @@
     <script src="{{ asset('assets-admin/vendor/libs/perfect-scrollbar/perfect-scrollbar.js') }}"></script>
     <script src="{{ asset('assets-admin/vendor/js/menu.js') }}"></script>
 
-    <!-- endbuild -->
-
-    <!-- Vendors JS -->
-
-    <!-- Main JS -->
     <script src="{{ asset('assets-admin/js/main.js') }}"></script>
 
     <!-- Page JS -->
@@ -115,50 +110,6 @@
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-    <script>
-        window.deleteConfirm = function(e) {
-            e.preventDefault(); // Mencegah pengiriman form
-
-            var form = $(e.target).closest('form'); // Mengambil form terkait dan membungkusnya dengan jQuery
-
-            Swal.fire({
-                title: "Apakah Kamu yakin ?",
-                text: "Produk ini akan kamu hapus!",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#3085d6",
-                cancelButtonColor: "#d33",
-                confirmButtonText: "Yes, delete it!"
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $.ajax({
-                        url: form.attr('action'), // Mengambil URL dari atribut action
-                        type: 'POST',
-                        data: form.serialize() + '&_method=DELETE', // Menggunakan serialize dari jQuery
-                        success: function(response) {
-                            location.reload(); // Untuk memuat ulang halaman
-                            // Tampilkan alert sukses
-                            Swal.fire({
-                                title: 'Dihapus!',
-                                text: 'Produk Telah Berhasil dihapus.',
-                                icon: 'success',
-                                confirmButtonText: 'OKE'
-                            })
-                        },
-                        error: function(xhr) {
-                            // Tangani kesalahan
-                            Swal.fire({
-                                title: 'Error!',
-                                text: 'There was a problem deleting the item.',
-                                icon: 'error',
-                                confirmButtonText: 'OK'
-                            });
-                        }
-                    });
-                }
-            });
-        }
-    </script>
 
 </body>
 
