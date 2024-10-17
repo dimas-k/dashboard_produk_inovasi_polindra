@@ -497,7 +497,7 @@ a {
 }
 
   .resume-item {
-    padding: 30px;
+    padding: 75px;
     background: #ffffff;
     -webkit-transition: .3s all ease;
     -o-transition: .3s all ease;
@@ -517,7 +517,7 @@ a {
       color: #009CFF;
       font-size: 20px; }
     .resume-item p {
-      color: #ffffff; }
+      color: #000000; }
     .resume-item .school {
       color: rgba(255, 255, 255, 0.711); }
     .resume-item *:last-child {

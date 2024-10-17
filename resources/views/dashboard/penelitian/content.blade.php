@@ -25,7 +25,7 @@
             </div>
             <div class="col-md-6">
                 <div class="resume-item mb-4 shadow">
-                    <strong style="color: rgb(0, 0, 0);">{{$kbk_nama->nama_kbk}}</strong><br>
+                    <strong>Deskripsi {{ $kbk_nama->nama_kbk ?? ''}}</strong><br>
                     <p>{!! $kkbk->deskripsi ?? '' !!}</p>
                 </div>
             </div>

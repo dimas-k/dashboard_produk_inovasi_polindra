@@ -117,7 +117,7 @@
                                                             </div>
                                                             <div class="form-outline form-white mb-3">
                                                                 <label for="deskripsi" class="form-label">Deskripsi</label>
-                                                                <textarea name="deskripsi" id="editor2">{!! $k->deskripsi !!}</textarea>
+                                                                <textarea name="deskripsi" id="editor">{!! $k->deskripsi !!}</textarea>
                                                             </div>
                                                             {{-- <div class="form-outline form-white mb-3">
                                                                 <label class="form-label"
