@@ -75,5 +75,8 @@ Route::middleware(['auth', 'role:ketua_kbk'])->group(function () {
     Route::delete('/k-kbk/produk/hapus/{id}', [KetuaKbkController::class, 'hapusProduk'])->name('hapus.produk');
 
     Route::get('/k-kbk/penelitian', [KetuaKbkController::class, 'penelitian']);
+    Route::get('/k-kbk/penelitian/{id}', [KetuaKbkController::class, 'showPenelitian'])->name('show.penelitian');
     Route::post('/k-kbk/penelitian/store', [KetuaKbkController::class, 'storePenelitian']);
+    Route::put('/k-kbk/penelitian/update/{id}', [KetuaKbkController::class, 'updatePenelitian'])->name('edit.penelitian');
+    Route::delete('/k-kbk/penelitian/hapus/{id}', [KetuaKbkController::class, 'hapusPenelitian'])->name('hapus.penelitian');
 });

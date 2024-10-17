@@ -186,6 +186,12 @@ class KetuaKbkController extends Controller
         Return view('k_kbk.penelitian.index', compact('penelitians', 'kkbk'));
     }
 
+    public function showPenelitian($id)
+    {
+        $penelitian = Penelitian::with('kelompokKeahlian')->findOrFail($id);
+        return view('k_kbk.penelitian.show.index', compact('penelitian'));
+    }
+
     public function storePenelitian(Request $request)
     {
         $request->validate([
@@ -205,7 +211,7 @@ class KetuaKbkController extends Controller
         $penelitian->penulis = $request->penulis;
         $penelitian->anggota_penulis = $request->anggota_penulis;
         $penelitian->email_penulis = $request->email_penulis;
-        
+
         if ($request->hasFile('abstrak')) {
 
             $originalName = $request->file('abstrak')->getClientOriginalName();
@@ -241,5 +247,68 @@ class KetuaKbkController extends Controller
         $penelitian->save();
 
         return redirect('/k-kbk/penelitian')->with('success', 'Data Produk berhasil ditambahkan!');
+    }
+
+    public function updatePenelitian(Request $request, $id)
+    {
+        $request->validate([
+            'judul' => 'required|string|max:255',
+            'abstrak' => 'required|file|mimes:pdf|max:2048',
+            'penulis' => 'required|string|max:255',
+            'anggota_penulis' => 'nullable|string',
+            'email_penulis' => 'required|email',
+            'gambar' => 'required|file|mimes:jpeg,png,jpg|max:2048', // Sesuaikan dengan format file yang diperbolehkan
+            'lampiran' => 'nullable|file|mimes:jpeg,png,jpg,pdf,docx|max:2048',
+        ]);
+        $penelitian = Penelitian::findOrFail($id);
+        $penelitian->judul = $request->judul;
+        $penelitian->penulis = $request->penulis;
+        $penelitian->anggota_penulis = $request->anggota_penulis;
+        $penelitian->email_penulis = $request->email_penulis;
+        if ($request->hasFile('gambar')) {
+
+            if ($penelitian->gambar && file_exists(public_path($penelitian->gambar))) {
+                unlink(public_path($penelitian->gambar));
+            }
+
+            $originalName = $request->file('gambar')->getClientOriginalName();
+
+            $fileName = time() . '_' . $originalName;
+
+            $request->file('gambar')->move(public_path('dokumen_penelitian'), $fileName);
+
+            $penelitian->gambar = 'dokumen_penelitian/' . $fileName;
+        }
+
+
+        if ($request->hasFile('lampiran')) {
+
+            if ($penelitian->lampiran && file_exists(public_path($penelitian->lampiran))) {
+                unlink(public_path($penelitian->lampiran));
+            }
+
+            $originalLampiranName = $request->file('lampiran')->getClientOriginalName();
+
+            $lampiranFileName = time() . '_' . $originalLampiranName;
+
+            $request->file('lampiran')->move(public_path('dokumen_penelitian'), $lampiranFileName);
+
+            $penelitian->lampiran = 'dokumen_penelitian/' . $lampiranFileName;
+        }
+        $penelitian->save();
+        return redirect('/k-kbk/penelitian')->with('success', 'Data Penelitian berhasil diupdate');
+    }
+    public function hapusPenelitian($id)
+    {
+        $penelitian = Penelitian::findOrFail($id);
+
+        if ($penelitian->gambar && File::exists(public_path($penelitian->gambar))) {
+            File::delete(public_path($penelitian->gambar));
+        }
+        if ($penelitian->lampiran && File::exists(public_path($penelitian->lampiran))) {
+            File::delete(public_path($penelitian->lampiran));
+        }
+        $penelitian->delete();
+        return redirect('/k-kbk/penelitian')->with('success', 'Data Penelitian berhasil dihapus');
     }
 }
