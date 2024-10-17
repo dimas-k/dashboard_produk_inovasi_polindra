@@ -30,7 +30,7 @@
             </a>
         </li>
         <li class="menu-item">
-            <a href="" class="menu-link">
+            <a href="/k-kbk/penelitian" class="menu-link">
                 <i class='menu-icon tf-icons bx bxs-cog'></i>
                 <div class="text-truncate" data-i18n="Penelitian">Penelitian</div>
             </a>
