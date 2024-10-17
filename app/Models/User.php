@@ -15,7 +15,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
-    
+
 
 
     /**
@@ -56,5 +56,4 @@ class User extends Authenticatable
     {
         return $this->belongsTo(KelompokKeahlian::class, 'kbk_id');
     }
-
 }

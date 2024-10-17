@@ -159,8 +159,6 @@
                             <td>
                                 @if ($p->status === 'Divalidasi')
                                     <span class="badge bg-label-success me-1">{{ $p->status }}</span>
-                                @elseif ($p->status === 'Tidak Divalidasi')
-                                    <span class="badge bg-label-danger me-1">{{ $p->status }}</span>
                                 @else
                                     <span class="badge bg-label-warning me-1">{{ $p->status }}</span>
                                 @endif

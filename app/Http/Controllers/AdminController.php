@@ -98,6 +98,7 @@ class AdminController extends Controller
     public function showDataKetuaKbk(string $id)
     {
         $k_kbk = User::with('kelompokKeahlian')->find($id);
+        // dd($k_kbk->toSql());
         return view('admin.ketua-kbk.show.index', compact('k_kbk'));
     }
 

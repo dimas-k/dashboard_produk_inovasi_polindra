@@ -14,7 +14,7 @@ class KelompokKeahlian extends Model
 
     public function user()
     {
-        return $this->hasOne(User::class, 'kelompok_keahlian_id');
+        return $this->hasOne(User::class, 'kbk_id');
         // return $this->hasMany(User::class, 'kbk_id');
     }
 

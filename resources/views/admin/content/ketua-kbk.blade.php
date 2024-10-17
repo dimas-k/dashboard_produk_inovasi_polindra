@@ -168,7 +168,7 @@
                             </th>
                             <td>{{ $k->nama_lengkap }}</td>
                             <td>{{ $k->nip }}</td>
-                            <td>{{ $k->kbk ? $k->kbk->nama_kbk : 'Tidak ada' }}</td>
+                            <td>{{ $k->KelompokKeahlian ? $k->KelompokKeahlian->nama_kbk : 'Tidak ada' }}</td>
                             <td>
                                 <a href="{{ route('show.k-kbk', $k->id) }}" class="btn btn-sm btn-success"><i
                                         class='bx bxs-show'></i></a>

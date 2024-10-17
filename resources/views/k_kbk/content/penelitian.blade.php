@@ -2,18 +2,18 @@
     <div class="d-flex justify-content-end mb-4">
         <div class="card p-2">
             <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#basicModal">
-                <i class='bx bx-plus-circle me-2'></i>Tambah Produk Inovasi
+                <i class='bx bx-plus-circle me-2'></i>Tambah Penelitian
             </button>
             <div class="modal fade" id="basicModal" tabindex="-1" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel1">Tambah Produk Inovasi</h5>
+                            <h5 class="modal-title" id="exampleModalLabel1">Tambah Penelitian</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                 aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <form action="/k-kbk/produk/store" enctype="multipart/form-data" method="post"
+                            <form action="/k-kbk/penelitian/store" enctype="multipart/form-data" method="post"
                                 id="uploadForm">
                                 @csrf
                                 <div class="row">
@@ -31,10 +31,10 @@
                                 </div>
                                 <div class="row">
                                     <div class="col mb-6">
-                                        <label for="nameBasic" class="form-label">Nama produk</label>
+                                        <label for="nameBasic" class="form-label">Judul</label>
                                         <input type="text" id="nama_produk" class="form-control"
-                                            placeholder="Masukkan nama produk" name="nama_produk" />
-                                        @error('nama_produk')
+                                            placeholder="Masukkan Judul" name="judul" />
+                                        @error('judul')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
                                             </div>
@@ -43,10 +43,9 @@
                                 </div>
                                 <div class="row">
                                     <div class="col mb-6">
-                                        <label for="nameBasic" class="form-label">Deskripsi</label>
-                                        <textarea class="form-control" name="deskripsi" placeholder="Masukkan deskripsi" id="floatingTextarea"
-                                            style="height: 100px"></textarea>
-                                        @error('deskripsi')
+                                        <label for="nameBasic" class="form-label">Abstrak</label>
+                                        <input type="file" id="abstrak" class="form-control" name="abstrak" />
+                                        @error('abstrak')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
                                             </div>
@@ -55,7 +54,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col mb-6">
-                                        <label for="nameBasic" class="form-label">Gambar Produk</label>
+                                        <label for="nameBasic" class="form-label">Gambar Penelitian</label>
                                         <input type="file" id="gambar" class="form-control" name="gambar" />
                                         @error('gambar')
                                             <div class="invalid-feedback">
@@ -66,10 +65,10 @@
                                 </div>
                                 <div class="row">
                                     <div class="col mb-6">
-                                        <label for="nameBasic" class="form-label">Nama Inventor</label>
+                                        <label for="nameBasic" class="form-label">Nama Penulis</label>
                                         <input type="text" id="no_hp" class="form-control"
-                                            placeholder="Masukkan nama inventor" name="inventor" />
-                                        @error('inventor')
+                                            placeholder="Masukkan nama penulis" name="penulis" />
+                                        @error('penulis')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
                                             </div>
@@ -78,9 +77,9 @@
                                 </div>
                                 <div class="row">
                                     <div class="col mb-6">
-                                        <label for="nameBasic" class="form-label">Anggota Inventor</label>
-                                        <textarea class="form-control" placeholder="Masukkan anggota inventor" id="floatingTextarea" style="height: 80px"
-                                            name="anggota_inventor"></textarea>
+                                        <label for="nameBasic" class="form-label">Anggota Penulis</label>
+                                        <textarea class="form-control" placeholder="Masukkan anggota penullis" id="floatingTextarea" style="height: 80px"
+                                            name="anggota_penulis"></textarea>
                                         @error('anggota_inventor')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
@@ -90,10 +89,10 @@
                                 </div>
                                 <div class="row">
                                     <div class="col mb-6">
-                                        <label for="nameBasic" class="form-label">Email Inventor</label>
+                                        <label for="nameBasic" class="form-label">Email Penulis</label>
                                         <input type="email" id="username" class="form-control"
-                                            placeholder="Masukkan email inventor" name="email_inventor" />
-                                        @error('email_inventor')
+                                            placeholder="Masukkan email penulis" name="email_penulis" />
+                                        @error('email_penulis')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
                                             </div>
@@ -134,7 +133,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         @endif
-        <h5 class="card-header"><i class='bx bx-table me-2'></i>Tabel Produk Inovasi</h5>
+        <h5 class="card-header"><i class='bx bx-table me-2'></i>Tabel Penelitian</h5>
         <div class="table-responsive text-nowrap">
             <table class="table">
                 <thead>
@@ -148,19 +147,17 @@
                     </tr>
                 </thead>
                 <tbody class="table-border-bottom-0">
-                    @foreach ($produks as $i => $p)
+                    @foreach ($penelitians as $i => $p)
                         <tr>
                             <th scope="row">
-                                {{ ($produks->currentPage() - 1) * $produks->perPage() + $loop->iteration }}
+                                {{ ($penelitians->currentPage() - 1) * $penelitians->perPage() + $loop->iteration }}
                             </th>
-                            <td>{{ $p->nama_produk }}</td>
-                            <td>{{ $p->inventor }}</td>
-                            <td>{{ $p->email_inventor }}</td>
+                            <td>{{ $p->judul }}</td>
+                            <td>{{ $p->penulis }}</td>
+                            <td>{{ $p->email_penulis }}</td>
                             <td>
                                 @if ($p->status === 'Divalidasi')
                                     <span class="badge bg-label-success me-1">{{ $p->status }}</span>
-                                @elseif ($p->status === 'Tidak Divalidasi')
-                                    <span class="badge bg-label-danger me-1">{{ $p->status }}</span>
                                 @else
                                     <span class="badge bg-label-warning me-1">{{ $p->status }}</span>
                                 @endif
@@ -322,7 +319,7 @@
                 </tbody>
             </table>
             <div class="d-flex justify-content-end mt-2">
-                {{ $produks->links() }}
+                {{ $penelitians->links() }}
             </div>
         </div>
     </div>

@@ -57,7 +57,7 @@ class KetuaKbkController extends Controller
             'inventor' => 'required|string|max:255',
             'anggota_inventor' => 'nullable|string',
             'email_inventor' => 'required|email',
-            'gambar' => 'required|file|mimes:jpeg,png,jpg,pdf|max:2048', // Sesuaikan dengan format file yang diperbolehkan
+            'gambar' => 'required|file|mimes:jpeg,png,jpg|max:2048', // Sesuaikan dengan format file yang diperbolehkan
             'lampiran' => 'nullable|file|mimes:jpeg,png,jpg,pdf,docx|max:2048',
         ]);
 
@@ -105,7 +105,7 @@ class KetuaKbkController extends Controller
             'inventor' => 'required|string|max:255',
             'anggota_inventor' => 'nullable|string',
             'email_inventor' => 'required|email',
-            'gambar' => 'required|file|mimes:jpeg,png,jpg,pdf|max:2048', // Sesuaikan dengan format file yang diperbolehkan
+            'gambar' => 'required|file|mimes:jpeg,png,jpg|max:2048', // Sesuaikan dengan format file yang diperbolehkan
             'lampiran' => 'nullable|file|mimes:jpeg,png,jpg,pdf,docx|max:2048',
         ]);
         $produk = Produk::findOrFail($id);
@@ -184,6 +184,62 @@ class KetuaKbkController extends Controller
             ->get();
         
         Return view('k_kbk.penelitian.index', compact('penelitians', 'kkbk'));
+    }
+
+    public function storePenelitian(Request $request)
+    {
+        $request->validate([
+            'judul' => 'required|string|max:255',
+            'abstrak' => 'required|file|mimes:pdf|max:2048',
+            'kbk_id' => 'required|exists:kelompok_keahlians,id',
+            'penulis' => 'required|string|max:255',
+            'anggota_penulis' => 'nullable|string',
+            'email_penulis' => 'required|email',
+            'gambar' => 'required|file|mimes:jpeg,png,jpg|max:2048', // Sesuaikan dengan format file yang diperbolehkan
+            'lampiran' => 'nullable|file|mimes:jpeg,png,jpg,pdf,docx|max:2048',
+        ]);
+
+        $penelitian = new Penelitian();
+        $penelitian->kbk_id = $request->kbk_id;
+        $penelitian->judul = $request->judul;
+        $penelitian->penulis = $request->penulis;
+        $penelitian->anggota_penulis = $request->anggota_penulis;
+        $penelitian->email_penulis = $request->email_penulis;
         
+        if ($request->hasFile('abstrak')) {
+
+            $originalName = $request->file('abstrak')->getClientOriginalName();
+
+            $fileName = time() . '_' . $originalName;
+
+            $request->file('abstrak')->move(public_path('dokumen-penelitian'), $fileName);
+
+            $penelitian->abstrak = 'dokumen-penelitian/' . $fileName;
+        }
+
+        if ($request->hasFile('gambar')) {
+
+            $originalName = $request->file('gambar')->getClientOriginalName();
+
+            $fileName = time() . '_' . $originalName;
+
+            $request->file('gambar')->move(public_path('dokumen-penelitian'), $fileName);
+
+            $penelitian->gambar = 'dokumen-penelitian/' . $fileName;
+        }
+
+        if ($request->hasFile('lampiran')) {
+
+            $originalName = $request->file('lampiran')->getClientOriginalName();
+
+            $fileName = time() . '_' . $originalName;
+
+            $request->file('lampiran')->move(public_path('dokumen-penelitian'), $fileName);
+
+            $penelitian->lampiran = 'dokumen-penelitian/' . $fileName;
+        }
+        $penelitian->save();
+
+        return redirect('/k-kbk/penelitian')->with('success', 'Data Produk berhasil ditambahkan!');
     }
 }

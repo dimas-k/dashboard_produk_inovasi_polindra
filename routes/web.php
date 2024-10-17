@@ -75,4 +75,5 @@ Route::middleware(['auth', 'role:ketua_kbk'])->group(function () {
     Route::delete('/k-kbk/produk/hapus/{id}', [KetuaKbkController::class, 'hapusProduk'])->name('hapus.produk');
 
     Route::get('/k-kbk/penelitian', [KetuaKbkController::class, 'penelitian']);
+    Route::post('/k-kbk/penelitian/store', [KetuaKbkController::class, 'storePenelitian']);
 });

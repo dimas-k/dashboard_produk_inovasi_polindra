@@ -17,7 +17,7 @@
                 </tr>
                 <tr>
                     <th>Ketua KBK</th>
-                    <td>: {{ $k_kbk->kbk ? $k_kbk->kbk->nama_kbk : 'Tidak ada' }}</td>
+                    <td>: {{ $k_kbk->kelompokKeahlian ? $k_kbk->kelompokKeahlian->nama_kbk : 'Tidak ada' }}</td>
                 </tr>
                 <tr>
                     <th>email</th>
