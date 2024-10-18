@@ -12,11 +12,6 @@
                     <td>: {{ $produk->deskripsi }}</td>
                 </tr>
                 <tr>
-                    <th>Gambar Produk</th>
-                    <td>: <a href={{ asset( 'storage/public/' . $produk->gambar) }} class=""
-                        target="_blank">Lihat Gambar</a></td>
-                </tr>
-                <tr>
                     <th>Nama Inventor</th>
                     <td>: {{ $produk->inventor }}</td>
                 </tr>
@@ -31,6 +26,10 @@
                 <tr>
                     <th>email</th>
                     <td>: {{ $produk->email_inventor }}</td>
+                </tr>
+                <tr>
+                    <th>Gambar Produk</th>
+                    <td>: <img src="{{ asset( 'storage/public/' . $produk->gambar) }}" alt="" ></td>
                 </tr>
                 <tr>
                     <th>Lampiran</th>
