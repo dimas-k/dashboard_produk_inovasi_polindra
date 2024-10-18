@@ -6,7 +6,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         @endif
-        <h5 class="card-header"><i class='bx bx-table me-2'></i>Tabel Ketua Kelompok Bidang Keahlian</h5>
+        <h5 class="card-header"><i class='bx bx-table me-2'></i>Tabel Produk KBK {{ $kbk_navigasi1->nama_kbk }}</h5>
         <div class="table-responsive text-nowrap">
             <table class="table">
                 <thead>
@@ -14,30 +14,38 @@
                         <th>No</th>
                         <th>Nama Produk</th>
                         <th>Nama Inventor</th>
-                        <th>No Handphone Inventor</th>
+                        <th>Email Inventor</th>
+                        <th>STATUS</th>
                         <th>Aksi</th>
                         <th>Validasi</th>
 
                     </tr>
                 </thead>
                 <tbody class="table-border-bottom-0">
-                    @foreach ($produk as $i => $p)
+                    @foreach ($data_produk as $i => $p)
                         <tr>
-                            <th scope="row">{{ ($produk->currentPage() - 1) * $produk->perPage() + $loop->iteration }}
+                            <th scope="row">{{ ($data_produk->currentPage() - 1) * $data_produk->perPage() + $loop->iteration }}
                             </th>
-                            <td>{{ $p->nama_lengkap }}</td>
-                            <td>{{ $p->nip }}</td>
-                            <td>{{ $p->kbk ? $p->kbk->nama_kbk : 'Tidak ada' }}</td>
+                            <td>{{ $p->nama_produk }}</td>
+                            <td>{{ $p->inventor }}</td>
+                            <td>{{ $p->email_inventor }}</td>
+                            <td>{{ $p->status}}</td>
                             <td>
+                                <a href="{{ route('show.produk', $p->id_produks) }}" class="btn btn-sm btn-success"><i
+                                    class='bx bxs-show'></i></a>
+                            </td>
+                            
+                            {{-- <td>
                                 <a href="{{ route('show.k-kbk', $p->id) }}" class="btn btn-sm btn-success"><i
                                         class='bx bxs-show'></i></a>
-                            </td>
+                            </td> --}}
+                            <td></td>
                         </tr>
                     @endforeach
                 </tbody>
             </table>
             <div class="d-flex justify-content-end mt-2">
-                {{ $produk->links() }}
+                {{ $data_produk->links() }}
             </div>
         </div>
     </div>

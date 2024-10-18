@@ -46,18 +46,31 @@
                 </li>
                 <li class="menu-item">
                     <a href="/admin/ketua-kbk" class="menu-link">
-                        <div class="text-truncate" data-i18n="Admin">Ketua KBK</div>
+                        <div class="text-truncate" data-i18n="KetuaKBK">Ketua KBK</div>
                     </a>
                 </li>
             </ul>
         </li>
-        <li class="menu-item">
-            <a href="/admin/produk-inovasi" class="menu-link">
-                <i class='menu-icon tf-icons bx bxs-cog'></i>
-                <div class="text-truncate" data-i18n="Produk">Produk</div>
-            </a>
-        </li>
 
+        <li class="menu-item">
+            <a href="javascript:void(o)" class="menu-link menu-toggle">
+                <i class='menu-icon tf-icons bx bxs-cog'></i>
+                <div class="text-truncate" data-i18n="Produk">Produk Inovasi</div>
+            </a>
+            @foreach ($kbk_navigasi as $i)
+                <ul class="menu-sub">
+                    <li class="menu-item">
+                        <a href="/admin/produk-inovasi/{{ $i->id }}" class="menu-link">
+                            <div class="text-truncate" data-i18n="{{ $i->nama_kbk }}">{{ $i->nama_kbk }}</div>
+                        </a>
+                    </li>
+                </ul>
+            @endforeach
+        </li>
         <!-- Apps & Pages -->
     </ul>
 </aside>
+
+
+
+

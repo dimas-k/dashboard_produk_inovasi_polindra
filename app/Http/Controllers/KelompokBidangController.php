@@ -4,13 +4,22 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\KelompokKeahlian;
+use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\DB;
 
 class KelompokBidangController extends Controller
 {
     public function pageKelompokBidang()
     {
         $kbk = KelompokKeahlian::all();
-        return view('admin.kbk.index', compact('kbk'));
+
+        $kbk_navigasi = DB::table('kelompok_keahlians')
+        ->select(
+            'kelompok_keahlians.id',
+            'kelompok_keahlians.nama_kbk'
+        )
+        ->get();
+        return view('admin.kbk.index', compact('kbk','kbk_navigasi'));
     }
 
     public function storeKelompokKeahlian(Request $request)

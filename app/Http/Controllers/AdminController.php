@@ -2,29 +2,49 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\KelompokKeahlian;
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Models\KelompokKeahlian;
+use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
     public function dashboard()
     {
-        return view('admin.index');
+        $kbk_navigasi = DB::table('kelompok_keahlians')
+        ->select(
+            'kelompok_keahlians.id',
+            'kelompok_keahlians.nama_kbk'
+        )
+        ->get();
+        return view('admin.index', compact('kbk_navigasi'));
     }
 
 
     // Admin
     public function admin()
     {
+        $kbk_navigasi = DB::table('kelompok_keahlians')
+        ->select(
+            'kelompok_keahlians.id',
+            'kelompok_keahlians.nama_kbk'
+        )
+        ->get();
         $admin = User::where('role', 'admin')->get();
-        return view('admin.admin-page.index', compact('admin'));
+        return view('admin.admin-page.index', compact('admin','kbk_navigasi'));
     }
     public function showAdmin(string $id)
     {
         $admin = User::find($id);
-        return view('admin.admin-page.show.index', compact('admin'));
+        $kbk_navigasi = DB::table('kelompok_keahlians')
+        ->select(
+            'kelompok_keahlians.id',
+            'kelompok_keahlians.nama_kbk'
+        )
+        ->get();
+        return view('admin.admin-page.show.index', compact('admin','kbk_navigasi'));
     }
 
     public function storeAdmin(Request $request)
@@ -92,14 +112,28 @@ class AdminController extends Controller
     {
         $kbk = User::with('kelompokKeahlian')->where('role', 'ketua_kbk')->paginate(10);
         $jenis_kbk = KelompokKeahlian::all();
-        return view('admin.ketua-kbk.index', compact('kbk', 'jenis_kbk'));
+        
+        $kbk_navigasi = DB::table('kelompok_keahlians')
+        ->select(
+            'kelompok_keahlians.id',
+            'kelompok_keahlians.nama_kbk'
+        )
+        ->get();
+        return view('admin.ketua-kbk.index', compact('kbk', 'jenis_kbk','kbk_navigasi'));
     }
 
     public function showDataKetuaKbk(string $id)
     {
+        $kbk_navigasi = DB::table('kelompok_keahlians')
+        ->select(
+            'kelompok_keahlians.id',
+            'kelompok_keahlians.nama_kbk'
+        )
+        ->get();
+
         $k_kbk = User::with('kelompokKeahlian')->find($id);
         // dd($k_kbk->toSql());
-        return view('admin.ketua-kbk.show.index', compact('k_kbk'));
+        return view('admin.ketua-kbk.show.index', compact('k_kbk','kbk_navigasi'));
     }
 
     public function storeDataKetuaKbk(Request $request)
