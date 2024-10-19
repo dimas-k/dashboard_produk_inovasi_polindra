@@ -46,7 +46,32 @@
     <link rel="stylesheet" href="{{ asset('assets-admin/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}" />
 
     <!-- Page CSS -->
+    <style>
+        .btn-checkbox {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            display: inline-block;
+            width: 55px;
+            height: 35px;
+            background-color: #00ccff;
+            /* Warna default (belum dicentang) */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            line-height: 40px;
+        }
 
+        .btn-checkbox:hover {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            /* Tambahkan bayangan */
+            transform: translateY(-1px);
+            /* Checkbox sedikit terangkat ke atas */
+        }
+
+    </style>
     <!-- Helpers -->
     <script src="{{ asset('assets-admin/vendor/js/helpers.js') }}"></script>
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
@@ -117,138 +142,45 @@
 
     <script>
         $(document).ready(function() {
-            $('#uploadForm').submit(function(e) {
-                e.preventDefault(); // Mencegah form terkirim secara otomatis
-
-                // Ambil nilai input
-                var nama = $('#nama_lengkap').val();
-                var nip = $('#nip').val();
-                var jabatan = $('#jabatan').val();
-                var no_hp = $('#no_hp').val();
-                var email = $('#email').val();
-
-                var username = $('#username').val();
-                var password = $('#password').val();
-
-                // Fungsi untuk mengecek apakah input hanya berisi teks
-                function isText(input) {
-                    var textPattern = /^[a-zA-Z\s]+$/;
-                    return textPattern.test(input);
-                }
-
-                // Fungsi untuk validasi panjang NIP
-                function validateNIPLength(nip) {
-                    return nip.length <= 20;
-                }
-
-                // Validasi Nama Lengkap
-                if (!nama || !isText(nama)) {
-                    Swal.fire({
-                        icon: "error",
-                        title: "Oops... Ada yang salah...",
-                        text: "Nama Lengkap tidak boleh kosong & hanya boleh berisi huruf!",
-                        position: "top-end",
-                        showConfirmButton: false,
-                        timer: 2500
-                    });
-                    return false;
-                }
-
-                // Validasi NIP (harus angka dan tidak lebih dari 20 digit)
-                if (!nip || isNaN(nip)) {
-                    Swal.fire({
-                        icon: "error",
-                        title: "Oops... Ada yang salah...",
-                        text: "NIP tidak boleh kosong & harus berupa angka!",
-                        position: "top-end",
-                        showConfirmButton: false,
-                        timer: 2500
-                    });
-                    return false;
-                } else if (!validateNIPLength(nip)) {
-                    Swal.fire({
-                        icon: "error",
-                        title: "Oops... Ada yang salah...",
-                        text: "NIP tidak boleh lebih dari 20 digit!",
-                        position: "top-end",
-                        showConfirmButton: false,
-                        timer: 2500
-                    });
-                    return false;
-                }
-
-                // Validasi Jabatan (hanya teks)
-                if (!jabatan || !isText(jabatan)) {
-                    Swal.fire({
-                        icon: "error",
-                        title: "Oops... Ada yang salah...",
-                        text: "Jabatan tidak boleh kosong & hanya boleh berisi huruf!",
-                        position: "top-end",
-                        showConfirmButton: false,
-                        timer: 2500
-                    });
-                    return false;
-                }
-
-                // Validasi No Handphone (harus angka)
-                if (!no_hp || isNaN(no_hp)) {
-                    Swal.fire({
-                        icon: "error",
-                        title: "Oops... Ada yang salah...",
-                        text: "No Handphone tidak boleh kosong & harus berupa angka!",
-                        position: "top-end",
-                        showConfirmButton: false,
-                        timer: 2500
-                    });
-                    return false;
-                }
-
-                // Validasi Email
-                if (!email || !email.includes('@')) {
-                    Swal.fire({
-                        icon: "error",
-                        title: "Oops... Ada yang salah...",
-                        text: "Masukkan email yang valid!",
-                        position: "top-end",
-                        showConfirmButton: false,
-                        timer: 2500
-                    });
-                    return false;
-                }
-
-                // Validasi KBK (tidak boleh kosong)
-
-                // Validasi Username (hanya teks)
-                if (!username || !isText(username)) {
-                    Swal.fire({
-                        icon: "error",
-                        title: "Oops... Ada yang salah...",
-                        text: "Username tidak boleh kosong &  hanya boleh berisi huruf!",
-                        position: "top-end",
-                        showConfirmButton: false,
-                        timer: 2500
-                    });
-                    return false;
-                }
-
-                // Validasi Password (tidak boleh kosong)
-                if (!password) {
-                    Swal.fire({
-                        icon: "error",
-                        title: "Oops... Ada yang salah...",
-                        text: "Masukkan password Anda!",
-                        position: "top-end",
-                        showConfirmButton: false,
-                        timer: 2500
-                    });
-                    return false;
-                }
-
-                // Submit form jika semua validasi terpenuhi
-                this.submit();
+            // Seleksi semua checkbox dengan id yang dimulai dengan "status_validasi-"
+            $('input[type="checkbox"][id^="status_validasi-"]').on('change', function(e) {
+                e.preventDefault(); // Mencegah aksi default checkbox
+    
+                let checkbox = $(this);
+                let form = checkbox.closest('form'); // Mendapatkan form terdekat dari checkbox yang diklik
+                let isChecked = checkbox.is(':checked');
+    
+                // Tampilkan konfirmasi SweetAlert
+                Swal.fire({
+                    title: 'Apakah anda yakin?',
+                    text: "Anda ingin memvalidasi produk ini.",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Ya, Validasi',
+                    cancelButtonText: 'Batal'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Jika dikonfirmasi, tampilkan alert sukses
+                        Swal.fire({
+                            title: 'Selamat!',
+                            text: 'Produk telah divalidasi.',
+                            icon: 'success'
+                        }).then(() => {
+                            // Ubah status checkbox dan submit form
+                            checkbox.prop('checked', isChecked);
+                            form.submit(); // Mengirimkan form terkait
+                        });
+                    } else {
+                        // Jika dibatalkan, kembalikan status checkbox ke semula
+                        checkbox.prop('checked', !isChecked);
+                    }
+                });
             });
         });
     </script>
+
     <script>
         $(document).ready(function() {
             $('#editForm').submit(function(e) {
@@ -424,50 +356,84 @@
         });
     </script>
 
-<script>
-    window.deleteConfirm = function(e) {
-        e.preventDefault(); // Mencegah pengiriman form
+    <script>
+        window.deleteConfirm = function(e) {
+            e.preventDefault(); // Mencegah pengiriman form
 
-        var form = $(e.target).closest('form'); // Mengambil form terkait dan membungkusnya dengan jQuery
+            var form = $(e.target).closest('form'); // Mengambil form terkait dan membungkusnya dengan jQuery
 
-        Swal.fire({
-            title: "Apakah Kamu yakin ?",
-            text: "Akun ini akan kamu hapus!",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, delete it!"
-        }).then((result) => {
-            if (result.isConfirmed) {
-                $.ajax({
-                    url: form.attr('action'), // Mengambil URL dari atribut action
-                    type: 'POST',
-                    data: form.serialize() + '&_method=DELETE', // Menggunakan serialize dari jQuery
-                    success: function(response) {
-                        location.reload(); // Untuk memuat ulang halaman
-                        // Tampilkan alert sukses
-                        Swal.fire({
-                            title: 'Dihapus!',
-                            text: 'KBK Telah Berhasil dihapus.',
-                            icon: 'success',
-                            confirmButtonText: 'OKE'
+            Swal.fire({
+                title: "Apakah Kamu yakin ?",
+                text: "Akun ini akan kamu hapus!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, delete it!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: form.attr('action'), // Mengambil URL dari atribut action
+                        type: 'POST',
+                        data: form.serialize() + '&_method=DELETE', // Menggunakan serialize dari jQuery
+                        success: function(response) {
+                            location.reload(); // Untuk memuat ulang halaman
+                            // Tampilkan alert sukses
+                            Swal.fire({
+                                title: 'Dihapus!',
+                                text: 'KBK Telah Berhasil dihapus.',
+                                icon: 'success',
+                                confirmButtonText: 'OKE'
+                            })
+                        },
+                        error: function(xhr) {
+                            // Tangani kesalahan
+                            Swal.fire({
+                                title: 'Error!',
+                                text: 'There was a problem deleting the item.',
+                                icon: 'error',
+                                confirmButtonText: 'OK'
+                            });
+                        }
+                    });
+                }
+            });
+        }
+    </script>
+    {{-- <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var checkbox = document.getElementById('status_validasi');
+
+            checkbox.addEventListener('change', function() {
+                var status = checkbox.checked ? 'sudah' : 'belum';
+
+                // Kirim permintaan AJAX
+                fetch('{{ route('produk.validasi', $data_produk->id) }}', {
+                        method: 'PATCH',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        },
+                        body: JSON.stringify({
+                            status: status
                         })
-                    },
-                    error: function(xhr) {
-                        // Tangani kesalahan
-                        Swal.fire({
-                            title: 'Error!',
-                            text: 'There was a problem deleting the item.',
-                            icon: 'error',
-                            confirmButtonText: 'OK'
-                        });
-                    }
-                });
-            }
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            console.log(data.message); // Tampilkan pesan sukses
+                            // Jika Anda ingin mengalihkan pengguna ke halaman produk inovasi
+                            window.location.href = '{{ route('admin.produk', $data_produk->id) }}';
+                        } else {
+                            console.error('Gagal memperbarui status validasi');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Terjadi kesalahan:', error);
+                    });
+            });
         });
-    }
-</script>
+    </script> --}}
 
 </body>
 

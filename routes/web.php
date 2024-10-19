@@ -61,8 +61,9 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::post('/admin/ketua-kbk/update/{id}', [AdminController::class, 'updateKetuaKbk'])->name('update.k-kbk');
     Route::delete('/admin/ketua-kbk/delete/{id}', [AdminController::class, 'hapusKetuaKbk'])->name('hapus.k-kbk');
 
-    Route::get('/admin/produk-inovasi/{id}', [AdminProdukInovasiController::class, 'pageProduk']);
+    Route::get('/admin/produk-inovasi/{id}', [AdminProdukInovasiController::class, 'pageProduk'])->name('admin.produk');
     Route::get('/admin/produk-inovasi/show/{id}', [AdminProdukInovasiController::class, 'ShowPageProduk'])->name('show.produk');
+    Route::put('/admin/produk-inovasi/edit-status/{id}', [AdminProdukInovasiController::class, 'validateProduk'])->name('validate.produk');
     
 });
 
@@ -80,4 +81,8 @@ Route::middleware(['auth', 'role:ketua_kbk'])->group(function () {
     Route::post('/k-kbk/penelitian/store', [KetuaKbkController::class, 'storePenelitian']);
     Route::put('/k-kbk/penelitian/update/{id}', [KetuaKbkController::class, 'updatePenelitian'])->name('edit.penelitian');
     Route::delete('/k-kbk/penelitian/hapus/{id}', [KetuaKbkController::class, 'hapusPenelitian'])->name('hapus.penelitian');
+
+    Route::get('/k-kbk/profil', [KetuaKbkController::class, 'profil']);
+    Route::get('/k-kbk/profil/edit', [KetuaKbkController::class, 'editProfil']);
+    Route::put('/k-kbk/profil/update/{id}', [KetuaKbkController::class, 'updateProfil'])->name('update.profil');
 });

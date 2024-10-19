@@ -67,7 +67,7 @@
                                 <div class="row">
                                     <div class="col mb-6">
                                         <label for="nameBasic" class="form-label">Nama Inventor</label>
-                                        <input type="text" id="no_hp" class="form-control"
+                                        <input type="text" id="inventor" class="form-control"
                                             placeholder="Masukkan nama inventor" name="inventor" />
                                         @error('inventor')
                                             <div class="invalid-feedback">
@@ -91,7 +91,7 @@
                                 <div class="row">
                                     <div class="col mb-6">
                                         <label for="nameBasic" class="form-label">Email Inventor</label>
-                                        <input type="email" id="username" class="form-control"
+                                        <input type="email" id="email" class="form-control"
                                             placeholder="Masukkan email inventor" name="email_inventor" />
                                         @error('email_inventor')
                                             <div class="invalid-feedback">
@@ -103,7 +103,7 @@
                                 <div class="row">
                                     <div class="col mb-6">
                                         <label for="nameBasic" class="form-label">Lampiran</label>
-                                        <input type="file" id="password" class="form-control" name="lampiran" />
+                                        <input type="file" id="lampiran" class="form-control" name="lampiran" />
                                         @error('lampiran')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
@@ -157,7 +157,7 @@
                             <td>{{ $p->inventor }}</td>
                             <td>{{ $p->email_inventor }}</td>
                             <td>
-                                @if ($p->status === 'Divalidasi')
+                                @if ($p->status === 'Tervalidasi')
                                     <span class="badge bg-label-success me-1">{{ $p->status }}</span>
                                 @else
                                     <span class="badge bg-label-warning me-1">{{ $p->status }}</span>

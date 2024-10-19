@@ -178,7 +178,7 @@ class AdminController extends Controller
             'email' => 'required|email|unique:users,email,' . $id,
             'jabatan' => 'required',
             'username' => 'required',
-            'password' => 'required',
+
             'role' => 'required',
         ]);
 
@@ -190,7 +190,9 @@ class AdminController extends Controller
         $k_kbk->email = $request->email;
         $k_kbk->jabatan = $request->jabatan;
         $k_kbk->username = $request->username;
-        $k_kbk->password = Hash::make($request->password); // Hashing password
+        if ($request->filled('password')) {
+            $k_kbk->password = bcrypt($request->password);
+        } // Hashing password
         $k_kbk->role = $request->role;
 
         $k_kbk->save($validasi);

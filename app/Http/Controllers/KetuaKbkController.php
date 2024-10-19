@@ -312,4 +312,41 @@ class KetuaKbkController extends Controller
         $penelitian->delete();
         return redirect('/k-kbk/penelitian')->with('success', 'Data Penelitian berhasil dihapus');
     }
+
+    public function profil()
+    {
+       
+        return view('k_kbk.profil.index');
+    }
+
+    public function editProfil()
+    {
+        return view('k_kbk.profil.edit.index');
+    }
+    public function updateProfil(Request $request, $id)
+    {
+        $request->validate([
+            'nama_lengkap' => 'required|string|max:255',
+            'nip' => 'required|string|max:20',
+            'jabatan' => 'required|string|max:100',
+            'email' => 'required|email|max:255',
+            'no_hp' => 'required|max:15',
+            'username' => 'required|string|max:255',
+            
+        ]);
+    
+        $user = User::find($id);
+        $user->nama_lengkap = $request->nama_lengkap;
+        $user->nip = $request->nip;
+        $user->jabatan = $request->jabatan;
+        $user->email = $request->email;
+        $user->no_hp = $request->no_hp;
+        $user->username = $request->username;
+        if ($request->filled('password')) {
+            $user->password = bcrypt($request->password);
+        }
+        $user->save();
+
+    return redirect('/k-kbk/profil')->with('success', 'Data ketua kbk berhasil diperbaharui');
+    }
 }

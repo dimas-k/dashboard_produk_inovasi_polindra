@@ -40,8 +40,8 @@
                         <div class="dropdown-divider my-1"></div>
                     </li>
                     <li>
-                        <a class="dropdown-item" href="#">
-                            <i class="bx bx-user bx-md me-3"></i><span>My Profile</span>
+                        <a class="dropdown-item" href="/k-kbk/profil">
+                            <i class="bx bx-user bx-md me-3"></i><span>Profil Saya</span>
                         </a>
                     </li>
                     <li>

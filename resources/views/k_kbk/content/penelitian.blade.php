@@ -32,7 +32,7 @@
                                 <div class="row">
                                     <div class="col mb-6">
                                         <label for="nameBasic" class="form-label">Judul</label>
-                                        <input type="text" id="nama_produk" class="form-control"
+                                        <input type="text" id="judul" class="form-control"
                                             placeholder="Masukkan Judul" name="judul" />
                                         @error('judul')
                                             <div class="invalid-feedback">
@@ -66,7 +66,7 @@
                                 <div class="row">
                                     <div class="col mb-6">
                                         <label for="nameBasic" class="form-label">Nama Penulis</label>
-                                        <input type="text" id="no_hp" class="form-control"
+                                        <input type="text" id="penulis" class="form-control"
                                             placeholder="Masukkan nama penulis" name="penulis" />
                                         @error('penulis')
                                             <div class="invalid-feedback">
@@ -90,7 +90,7 @@
                                 <div class="row">
                                     <div class="col mb-6">
                                         <label for="nameBasic" class="form-label">Email Penulis</label>
-                                        <input type="email" id="username" class="form-control"
+                                        <input type="email" id="email" class="form-control"
                                             placeholder="Masukkan email penulis" name="email_penulis" />
                                         @error('email_penulis')
                                             <div class="invalid-feedback">
@@ -102,7 +102,7 @@
                                 <div class="row">
                                     <div class="col mb-6">
                                         <label for="nameBasic" class="form-label">Lampiran</label>
-                                        <input type="file" id="password" class="form-control" name="lampiran" />
+                                        <input type="file" id="lampiran" class="form-control" name="lampiran" />
                                         @error('lampiran')
                                             <div class="invalid-feedback">
                                                 {{ $message }}

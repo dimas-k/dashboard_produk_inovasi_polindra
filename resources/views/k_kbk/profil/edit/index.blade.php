@@ -19,7 +19,7 @@
 
 
 
-    <title>D-PROIN | Ketua KBK | produk</title>
+    <title>D-PROIN | Ketua KBK | profil</title>
 
     <meta name="description" content="" />
 
@@ -72,7 +72,7 @@
 
                 <!-- Content wrapper -->
                 <div class="content-wrapper">
-                    @include('k_kbk.content.penelitian')
+                    @include('k_kbk.content.profil-edit')
                 </div>
                 <!-- / Content -->
 
@@ -123,7 +123,7 @@
 
             Swal.fire({
                 title: "Apakah Kamu yakin ?",
-                text: "Penelitian ini akan kamu hapus!",
+                text: "Produk ini akan kamu hapus!",
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#3085d6",
@@ -140,7 +140,7 @@
                             // Tampilkan alert sukses
                             Swal.fire({
                                 title: 'Dihapus!',
-                                text: 'Penelitian Telah Berhasil dihapus.',
+                                text: 'Produk Telah Berhasil dihapus.',
                                 icon: 'success',
                                 confirmButtonText: 'OKE'
                             })
@@ -149,7 +149,7 @@
                             // Tangani kesalahan
                             Swal.fire({
                                 title: 'Error!',
-                                text: 'Ada error nih, penelitian tidak bisa di hapus.',
+                                text: 'There was a problem deleting the item.',
                                 icon: 'error',
                                 confirmButtonText: 'OK'
                             });
@@ -160,83 +160,125 @@
         }
     </script>
 
-<script>
-    $(document).ready(function() {
-        $('#uploadForm').on('submit', function(e) {
-            e.preventDefault(); // Mencegah submit form secara langsung
-
-            // Mengambil nilai input
-            const kbk_id = $('#exampleFormControlSelect1').val();
-            const judul = $('#judul').val();
-            const abstrak = $('#abstrak').val();
-            const gambar = $('#gambar').val();
-            const penulis = $('#penulis').val();
-            const anggota_penulis = $('textarea[name="anggota_penulis"]').val();
-            const email_penulis = $('#email').val();
-            const lampiran = $('#lampiran').val();
-
-            // Regex untuk validasi file extensions
-            const gambarExtensions = /(\.jpg|\.jpeg|\.png)$/i;
-            const lampiranExtensions = /(\.jpg|\.jpeg|\.png|\.pdf|\.docx)$/i;
-            const abstrakExtension = /(\.pdf)$/i;
-
-            // Validasi input kosong
-            if (!kbk_id || !penulis || !abstrak || !gambar || !penulis || !anggota_penulis || !email_penulis || !lampiran) {
+    {{-- <script>
+        $(document).ready(function() {
+            $('#uploadForm').on('submit', function(e) {
+                e.preventDefault(); // Mencegah submit form secara langsung
+    
+                // Mengambil nilai input
+                const kbk_id = $('#exampleFormControlSelect1').val();
+                const nama_produk = $('#nama_produk').val();
+                const deskripsi = $('textarea[name="deskripsi"]').val();
+                const gambar = $('#gambar').val();
+                const inventor = $('#inventor').val();
+                const anggota_inventor = $('textarea[name="anggota_inventor"]').val();
+                const email_inventor = $('#email').val();
+                const lampiran = $('#lampiran').val();
+    
+                // Regex untuk validasi file extensions
+                const gambarExtensions = /(\.jpg|\.jpeg|\.png)$/i;
+                const lampiranExtensions = /(\.jpg|\.jpeg|\.png|\.pdf|\.docx)$/i;
+    
+                // Validasi input kosong
+                if (!kbk_id || !nama_produk || !deskripsi || !gambar || !inventor || !anggota_inventor || !email_inventor || !lampiran) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Gagal',
+                        text: 'Semua input harus diisi!',
+                    });
+                    return;
+                }
+    
+                // Validasi format file gambar
+                if (!gambarExtensions.exec(gambar)) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Gagal',
+                        text: 'Gambar harus dalam format JPG, JPEG, atau PNG!',
+                    });
+                    return;
+                }
+    
+                // Validasi format file lampiran
+                if (!lampiranExtensions.exec(lampiran)) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Gagal',
+                        text: 'Lampiran harus dalam format JPG, JPEG, PNG, PDF, atau DOCX!',
+                    });
+                    return;
+                }
+    
+                // Jika semua validasi lolos, submit form
                 Swal.fire({
-                    icon: 'error',
-                    title: 'Gagal',
-                    text: 'Semua input harus diisi!',
+                    title: 'Simpan Data?',
+                    text: "Apakah Anda yakin ingin menyimpan data produk ini?",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Ya, Simpan!',
+                    cancelButtonText: 'Batal'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Submit form secara manual
+                        $('#uploadForm')[0].submit();
+                    }
                 });
-                return;
-            }
+            });
+        });
+    </script> --}}
 
-            // Validasi format file gambar
-            if (!gambarExtensions.exec(gambar)) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Gagal',
-                    text: 'Gambar harus dalam format JPG, JPEG, atau PNG!',
-                });
-                return;
-            }
+    <script>
+        $(document).ready(function() {
+            $('#updateForm').on('submit', function(e) {
+                e.preventDefault(); // Mencegah submit form default
 
-            // Validasi format file lampiran
-            if (!lampiranExtensions.exec(lampiran)) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Gagal',
-                    text: 'Lampiran harus dalam format JPG, JPEG, PNG, PDF, atau DOCX!',
-                });
-                return;
-            }
-            if (!abstrakExtension.exec(abstrak)) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Gagal',
-                    text: 'Abstrak harus dalam format PDF!',
-                });
-                return;
-            }
+                // Variabel untuk mengecek validitas
+                var isValid = true;
+                var errorMessage = '';
 
-            // Jika semua validasi lolos, submit form
-            Swal.fire({
-                title: 'Simpan Data?',
-                text: "Apakah Anda yakin ingin menyimpan data penelitian ini?",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Ya, Simpan!',
-                cancelButtonText: 'Batal'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    // Submit form secara manual
-                    $('#uploadForm')[0].submit();
+                // Loop untuk mengecek input (kecuali password)
+                $('#updateForm').find('input').each(function() {
+                    if ($(this).attr('name') !== 'password' && $(this).val().trim() === '') {
+                        isValid = false;
+                        errorMessage = 'Semua input harus diisi kecuali password.';
+                        return false; // Berhenti saat menemukan input yang kosong
+                    }
+                });
+
+                // Jika tidak valid, tampilkan SweetAlert2
+                if (!isValid) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: errorMessage,
+                        confirmButtonText: 'OK'
+                    });
+                } else {
+                    // Jika valid, tampilkan konfirmasi SweetAlert2
+                    Swal.fire({
+                        title: 'Apakah Anda yakin?',
+                        text: "Anda akan memperbarui profil!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Ya, update!',
+                        cancelButtonText: 'Tidak, batalkan'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            // Jika pengguna mengonfirmasi, submit form
+                            this.submit();
+                        }
+                    });
                 }
             });
         });
-    });
-</script>
+    </script>
+
+
+
 
 </body>
 

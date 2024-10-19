@@ -159,6 +159,76 @@
             });
         }
     </script>
+    
+    <script>
+        $(document).ready(function() {
+            $('#uploadForm').on('submit', function(e) {
+                e.preventDefault(); // Mencegah submit form secara langsung
+    
+                // Mengambil nilai input
+                const kbk_id = $('#exampleFormControlSelect1').val();
+                const nama_produk = $('#nama_produk').val();
+                const deskripsi = $('textarea[name="deskripsi"]').val();
+                const gambar = $('#gambar').val();
+                const inventor = $('#inventor').val();
+                const anggota_inventor = $('textarea[name="anggota_inventor"]').val();
+                const email_inventor = $('#email').val();
+                const lampiran = $('#lampiran').val();
+    
+                // Regex untuk validasi file extensions
+                const gambarExtensions = /(\.jpg|\.jpeg|\.png)$/i;
+                const lampiranExtensions = /(\.jpg|\.jpeg|\.png|\.pdf|\.docx)$/i;
+    
+                // Validasi input kosong
+                if (!kbk_id || !nama_produk || !deskripsi || !gambar || !inventor || !anggota_inventor || !email_inventor || !lampiran) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Gagal',
+                        text: 'Semua input harus diisi!',
+                    });
+                    return;
+                }
+    
+                // Validasi format file gambar
+                if (!gambarExtensions.exec(gambar)) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Gagal',
+                        text: 'Gambar harus dalam format JPG, JPEG, atau PNG!',
+                    });
+                    return;
+                }
+    
+                // Validasi format file lampiran
+                if (!lampiranExtensions.exec(lampiran)) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Gagal',
+                        text: 'Lampiran harus dalam format JPG, JPEG, PNG, PDF, atau DOCX!',
+                    });
+                    return;
+                }
+    
+                // Jika semua validasi lolos, submit form
+                Swal.fire({
+                    title: 'Simpan Data?',
+                    text: "Apakah Anda yakin ingin menyimpan data produk ini?",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Ya, Simpan!',
+                    cancelButtonText: 'Batal'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Submit form secara manual
+                        $('#uploadForm')[0].submit();
+                    }
+                });
+            });
+        });
+    </script>
+    
 
 </body>
 
