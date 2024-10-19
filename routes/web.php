@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AdminPenelitianController;
 use App\Http\Controllers\AdminProdukInovasiController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\DashboardController;
@@ -64,6 +65,10 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/produk-inovasi/{id}', [AdminProdukInovasiController::class, 'pageProduk'])->name('admin.produk');
     Route::get('/admin/produk-inovasi/show/{id}', [AdminProdukInovasiController::class, 'ShowPageProduk'])->name('show.produk');
     Route::put('/admin/produk-inovasi/edit-status/{id}', [AdminProdukInovasiController::class, 'validateProduk'])->name('validate.produk');
+
+    Route::get('/admin/penelitian/{id}', [AdminPenelitianController::class, 'pagePenelitian'])->name('admin.penelitian');
+    Route::get('/admin/penelitian/show/{id}', [AdminPenelitianController::class, 'showPenelitian'])->name('admin.show.penelitian');
+    Route::put('/admin/penelitian/edit-status/{id}', [AdminPenelitianController::class, 'validatePenelitian'])->name('validasi.penelitian');
     
 });
 

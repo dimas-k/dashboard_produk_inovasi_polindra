@@ -13,8 +13,7 @@ class AdminController extends Controller
 {
     public function dashboard()
     {
-        $kbk_navigasi = DB::table('kelompok_keahlians')
-        ->select(
+        $kbk_navigasi = KelompokKeahlian::select(
             'kelompok_keahlians.id',
             'kelompok_keahlians.nama_kbk'
         )

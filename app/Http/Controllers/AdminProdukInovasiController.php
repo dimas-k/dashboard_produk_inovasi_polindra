@@ -14,19 +14,9 @@ class AdminProdukInovasiController extends Controller
 {
     public function pageProduk($id)
     {
-
-        // Mendapatkan navigasi kelompok keahlian
         $kbk_navigasi = KelompokKeahlian::select('id', 'nama_kbk')->get();
-
-        // Mendapatkan detail kelompok keahlian berdasarkan ID
-        $kbk_navigasi1 = KelompokKeahlian::select('id', 'nama_kbk')
-            ->where('id', $id)
-            ->first();
-
-        // Mengambil produk berdasarkan kbk_id dan melakukan paginasi
-        $data_produk = Produk::with('kelompokKeahlian') // Mengambil relasi kelompok keahlian jika diperlukan
-            ->where('kbk_id', $id) // Mengambil produk berdasarkan kelompok keahlian
-            ->paginate(10); // Paginasi produk, 10 produk per halaman
+        $kbk_navigasi1 = KelompokKeahlian::select('id', 'nama_kbk')->where('id', $id)->first();
+        $data_produk = Produk::with('kelompokKeahlian') ->where('kbk_id', $id) ->paginate(10); 
 
 
         return view('admin.produk.index', compact('kbk_navigasi', 'kbk_navigasi1', 'data_produk'));
@@ -49,6 +39,6 @@ class AdminProdukInovasiController extends Controller
         $produk->status = $request->has('status') ? 'Tervalidasi' : 'Belum Divalidasi';
         $produk->save();
 
-        return redirect()->route('admin.produk', ['id' => $produk->kbk_id])->with('success', 'Produk berhasil di validasi');
+        return redirect()->route('admin.produk', ['id' => $produk->kbk_id])->with('success', 'Produk tervalidasi');
     }
 }

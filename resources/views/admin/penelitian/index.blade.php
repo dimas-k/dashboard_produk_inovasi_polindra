@@ -97,7 +97,7 @@
 
                 <!-- Content wrapper -->
                 <div class="content-wrapper">
-                    @include('admin.content.produk')
+                    @include('admin.content.penelitian')
                 </div>
                 <!-- / Content -->
 
@@ -153,7 +153,7 @@
                 // Tampilkan konfirmasi SweetAlert
                 Swal.fire({
                     title: 'Apakah anda yakin?',
-                    text: "Anda ingin memvalidasi produk ini.",
+                    text: "Anda ingin memvalidasi penelitian ini.",
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
@@ -165,7 +165,7 @@
                         // Jika dikonfirmasi, tampilkan alert sukses
                         Swal.fire({
                             title: 'Selamat!',
-                            text: 'Produk telah tervalidasi.',
+                            text: 'Penelitian telah tervalidasi.',
                             icon: 'success'
                         }).then(() => {
                             // Ubah status checkbox dan submit form
