@@ -121,9 +121,24 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="row">
+                                    <div class="col mb-6 form-password-toggle">
+                                        <label for="confirm_password" class="form-label">Konfirmasi Password</label>
+                                        <div class="input-group input-group-merge">
+                                            <input type="password" id="confirm_password" class="form-control"
+                                                placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+                                                name="confirm_password" aria-describedby="confirm_password" />
+                                            <span class="input-group-text cursor-pointer"><i
+                                                    class="bx bx-hide"></i></span>
+                                            @error('confirm_password')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                </div>
                                 <input type="text" value="ketua_kbk" name="role" hidden>
-
-
                                 <br>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-outline-secondary me-1"
@@ -176,6 +191,22 @@
                                     data-bs-target="#basicModal{{ $k->id }}">
                                     <i class='bx bx-pencil'></i>
                                 </button>
+                                {{-- <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal"
+                                    data-bs-target="#basicModal{{ $k->id }}">
+                                    <i class='bx bx-pencil'></i>
+                                </button>  --}}
+                                {{-- button selanjutnya --}}
+                                <div class="btn btn-sm btn-danger">
+                                    <form method="post" action="{{ route('hapus.k-kbk', $k->id) }}" id="deleteForm">
+                                        @method('DELETE')
+                                        @csrf
+                                        <a type="submit" onclick="deleteConfirm(event)"><i class='bx bx-trash'></i></a>
+                                    </form>
+                                </div>
+                                
+                                <a href="#" class="btn btn-sm btn-danger"><i class='bx bx-recycle'></i>Reset Password</a>
+
+
 
                                 <!-- Modal -->
                                 <div class="modal fade" id="basicModal{{ $k->id }}" tabindex="-1" aria-hidden="true">
@@ -275,7 +306,7 @@
                                                                 value="{{ $k->username }}" name="username" />
                                                         </div>
                                                     </div>
-                                                    <div class="row">
+                                                    {{-- <div class="row">
                                                         <div class="col mb-6 form-password-toggle">
                                                             <label for="nameBasic" class="form-label">Password</label>
                                                             <div class="input-group input-group-merge">
@@ -292,10 +323,9 @@
                                                                 @enderror
                                                             </div>
                                                         </div>
-                                                    </div>
+                                                    </div> --}}
                                                     <input type="text" value="{{ $k->role }}" name="role"
                                                         hidden>
-
 
                                                     <br>
                                                     <div class="modal-footer">
@@ -311,13 +341,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                <form style="margin-left: 15px" method="post"
-                                    action="{{ route('hapus.k-kbk', $k->id) }}" id="deleteForm">
-                                    @method('DELETE')
-                                    @csrf
-                                    <button class="btn btn-sm btn-danger" type="submit"
-                                        onclick="deleteConfirm(event)"><i class='bx bx-trash'></i></button>
-                                </form>
                             </td>
                         </tr>
                     @endforeach

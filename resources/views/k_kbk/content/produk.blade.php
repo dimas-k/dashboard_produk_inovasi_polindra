@@ -307,13 +307,20 @@
                                         </div>
                                     </div>
                                 </div>
-                                <form style="margin-left: 15px" method="post"
+                                {{-- <form style="margin-left: 15px" method="post"
                                     action="{{ route('hapus.produk', $p->id) }}" id="deleteForm">
                                     @method('DELETE')
                                     @csrf
                                     <button class="btn btn-sm btn-danger" type="submit"
                                         onclick="deleteConfirm(event)"><i class='bx bx-trash'></i></button>
-                                </form>
+                                </form> --}}
+                                <div class="btn btn-sm btn-danger">
+                                    <form method="post" action="{{ route('hapus.produk', $p->id) }}" id="deleteForm">
+                                        @method('DELETE')
+                                        @csrf
+                                        <a type="submit" onclick="deleteConfirm(event)"><i class='bx bx-trash'></i></a>
+                                    </form>
+                                </div>
                             </td>
                         </tr>
                     @endforeach

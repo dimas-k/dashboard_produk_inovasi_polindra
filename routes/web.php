@@ -85,4 +85,7 @@ Route::middleware(['auth', 'role:ketua_kbk'])->group(function () {
     Route::get('/k-kbk/profil', [KetuaKbkController::class, 'profil']);
     Route::get('/k-kbk/profil/edit', [KetuaKbkController::class, 'editProfil']);
     Route::put('/k-kbk/profil/update/{id}', [KetuaKbkController::class, 'updateProfil'])->name('update.profil');
+    Route::get('/k-kbk/profil/ubah_password/{id}', [KetuaKbkController::class, 'ubahPasswordUser'])->name('ubah.password');
+    Route::post('/k-kbk/profil/ubah_password/{id}', [KetuaKbkController::class, 'prosesUbahPassword'])->name('proses.ubah.password');
+
 });

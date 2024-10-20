@@ -72,25 +72,26 @@
     <div class="container">
         <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
             <h6 class="section-title bg-white text-center text-primary px-3">Produk</h6>
-            <h1 class="display-6 mb-4">Penelitian</h1>
+            {{-- <h1 class="display-6 mb-4">Produk</h1> --}}
         </div>
+        {{-- @foreach ( as )
+
+            <div class="row g-4">
+                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                    <a class="service-item d-block rounded text-center p-4 link-underline link-underline-opacity-0" href="/dashboard/detail-penelitian">
+                        <img class="img-fluid rounded" src={{ asset('public/storage/public/dokumen-produk/1729177938_gitar.jpeg') }} alt="Gambar Produk">
+                    </a>
+                </div>
+            </div>
+        @endforeach --}}
         <div class="row g-4">
             <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
                 <a class="service-item d-block rounded text-center p-4 link-underline link-underline-opacity-0" href="/dashboard/detail-penelitian">
-                    <img class="img-fluid rounded" src={{ asset('img/service-1.jpg') }} alt="">
-                </a>
-            </div>
-            <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                <a class="service-item d-block rounded text-center p-4 link-underline link-underline-opacity-0" href="/dashboard/detail-penelitian">
-                    <img class="img-fluid rounded" src={{ asset('img/service-2.jpg') }} alt="">
-                </a>
-            </div>
-            <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                <a class="service-item d-block rounded text-center p-4 link-underline link-underline-opacity-0" href="/dashboard/detail-penelitian">
-                    <img class="img-fluid rounded" src={{ asset('img/service-3.jpg') }} alt="">
+                    <img class="img-fluid rounded" src={{ asset('img/carousel-1.jpg') }} alt="Gambar Produk">
                 </a>
             </div>
         </div>
+
     </div>
 </div>
 <!-- .section -->

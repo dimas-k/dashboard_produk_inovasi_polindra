@@ -4,13 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Produk;
+use App\Models\Penelitian;
 use Illuminate\Http\Request;
 use App\Models\KelompokKeahlian;
-use App\Models\Penelitian;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Hash;
 
 
 class KetuaKbkController extends Controller
@@ -323,30 +324,107 @@ class KetuaKbkController extends Controller
     {
         return view('k_kbk.profil.edit.index');
     }
+
+    // public function updateProfil(Request $request, $id)
+    // {
+    //     $request->validate([
+    //         'nama_lengkap' => 'required|string|max:255',
+    //         'nip' => 'required|string|max:20',
+    //         'jabatan' => 'required|string|max:100',
+    //         'email' => 'required|email|max:255',
+    //         'no_hp' => 'required|max:15',
+    //         'username' => 'required|string|max:255',
+            
+    //     ]);
+    
+    //     $user = User::find($id);
+    //     $user->nama_lengkap = $request->nama_lengkap;
+    //     $user->nip = $request->nip;
+    //     $user->jabatan = $request->jabatan;
+    //     $user->email = $request->email;
+    //     $user->no_hp = $request->no_hp;
+    //     $user->username = $request->username;
+    //     if ($request->filled('password')) {
+    //         $user->password = bcrypt($request->password);
+    //     }
+    //     $user->save();
+
+    // return redirect('/k-kbk/profil')->with('success', 'Data ketua kbk berhasil diperbaharui');
+    // }
+
     public function updateProfil(Request $request, $id)
     {
         $request->validate([
-            'nama_lengkap' => 'required|string|max:255',
+            'nama_lengkap' => 'required|string|max:255', 
             'nip' => 'required|string|max:20',
             'jabatan' => 'required|string|max:100',
             'email' => 'required|email|max:255',
             'no_hp' => 'required|max:15',
             'username' => 'required|string|max:255',
-            
+            'password_last' => 'required|string', // Validasi password terakhir
         ]);
     
         $user = User::find($id);
-        $user->nama_lengkap = $request->nama_lengkap;
-        $user->nip = $request->nip;
-        $user->jabatan = $request->jabatan;
-        $user->email = $request->email;
-        $user->no_hp = $request->no_hp;
-        $user->username = $request->username;
+    
+        // Cek apakah password terakhir yang dimasukkan sesuai
+        if (!Hash::check($request->password_last, $user->password)) {
+            return redirect()->back()->withErrors(['password_last' => 'Password terakhir salah.']);
+        }
+    
+        // Cek perubahan data
+        if ($request->filled('nama_lengkap')) {
+            $user->nama_lengkap = $request->nama_lengkap;
+        }
+        if ($request->filled('nip')) {
+            $user->nip = $request->nip;
+        }
+        if ($request->filled('jabatan')) {
+            $user->jabatan = $request->jabatan;
+        }
+        if ($request->filled('email')) {
+            $user->email = $request->email;
+        }
+        if ($request->filled('no_hp')) {
+            $user->no_hp = $request->no_hp;
+        }
+        if ($request->filled('username')) {
+            $user->username = $request->username;
+        }
         if ($request->filled('password')) {
             $user->password = bcrypt($request->password);
         }
+    
         $user->save();
-
-    return redirect('/k-kbk/profil')->with('success', 'Data ketua kbk berhasil diperbaharui');
+    
+        return redirect('/k-kbk/profil')->with('success', 'Data ketua kbk berhasil diperbaharui');
     }
+
+    public function ubahPasswordUser(Request $request, $id)
+    {
+        // Menampilkan view form ubah password
+        return view('k_kbk.profil.ubahPassword.index');
+    }
+    
+    public function prosesUbahPassword(Request $request, $id)
+    {
+        $request->validate([
+            'password_lama' => 'required|string',
+            'password_baru' => 'required|string|min:5|confirmed', // Pastikan ada konfirmasi
+        ]);
+    
+        $user = User::find($id);
+    
+        // Cek apakah password lama sesuai
+        if (!Hash::check($request->password_lama, $user->password)) {
+            return redirect()->back()->withErrors(['password_lama' => 'Password lama salah.']);
+        }
+    
+        // Update password baru
+        $user->password = bcrypt($request->password_baru);
+        $user->save();
+    
+        return redirect('/k-kbk/profil')->with('success', 'Password berhasil diubah.');
+    }
+    
+
 }

@@ -40,6 +40,7 @@
             </table>
 
             <a href="/k-kbk/profil/edit" class="btn btn-primary m-3">Edit data profil</a>
+            <a href="/k-kbk/profil/ubah_password/{$id}" class="btn btn-primary m-3">Ubah Password</a>
         </div>
     </div>
 </div>

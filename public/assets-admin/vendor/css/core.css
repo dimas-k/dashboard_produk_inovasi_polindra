@@ -389,6 +389,7 @@ label {
 
 button {
   border-radius: 0;
+  
 }
 
 button:focus:not(:focus-visible) {
@@ -3198,6 +3199,7 @@ textarea.form-control-lg {
   --bs-btn-box-shadow: 0 0 0 #000;
   --bs-btn-focus-shadow-rgb: 128, 130, 255;
   text-decoration: none;
+  
 }
 .btn-link:focus-visible {
   color: var(--bs-btn-color);
@@ -3218,6 +3220,7 @@ textarea.form-control-lg {
   --bs-btn-padding-x: 0.75rem;
   --bs-btn-font-size: 0.8125rem;
   --bs-btn-border-radius: var(--bs-border-radius-sm);
+
 }
 
 .fade {
@@ -7632,6 +7635,7 @@ a.invert-bg-dark:hover, a.invert-bg-dark:focus {
 
 label.btn {
   margin-bottom: 0;
+  
 }
 
 .btn-xl, .btn-group-xl > .btn {
@@ -7643,6 +7647,7 @@ label.btn {
 
 .btn-sm, .btn-group-sm > .btn {
   line-height: 1.375;
+
 }
 
 .btn-xs, .btn-group-xs > .btn {
