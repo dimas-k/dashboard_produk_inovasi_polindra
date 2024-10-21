@@ -64,22 +64,28 @@
                 <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
                     <div class="fact-item bg-light rounded text-center h-100 p-5">
                         <i class="fa fa-search fa-4x text-primary mb-4"></i>
-                        <h5 class="mb-3">Kelompok Keahlian</h5>
-                        <h1 class="display-5 mb-0" data-toggle="counter-up">1234</h1>
+                        <h5 class="mb-3">Kelompok Bidang Keahlian</h5>
+                        <h1 class="display-5 mb-0" data-toggle="counter-up">
+                            {{ $jumlah_kbk }}
+                        </h1>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
                     <div class="fact-item bg-light rounded text-center h-100 p-5">
                         <i class="fa fa-archive fa-4x text-primary mb-4"></i>
                         <h5 class="mb-3">Produk</h5>
-                        <h1 class="display-5 mb-0" data-toggle="counter-up">1234</h1>
+                        <h1 class="display-5 mb-0" data-toggle="counter-up">
+                            {{ $jumlah_produk }}
+                        </h1>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
                     <div class="fact-item bg-light rounded text-center h-100 p-5">
                         <i class="fa fa-cogs fa-4x text-primary mb-4"></i>
                         <h5 class="mb-3">Pusat Penelitian</h5>
-                        <h1 class="display-5 mb-0" data-toggle="counter-up">1234</h1>
+                        <h1 class="display-5 mb-0" data-toggle="counter-up">
+                            {{ $jumlah_pusat_penelitian }}
+                        </h1>
                     </div>
                 </div>
             </div>
