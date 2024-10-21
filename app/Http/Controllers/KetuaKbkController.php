@@ -215,35 +215,36 @@ class KetuaKbkController extends Controller
         if ($request->hasFile('abstrak')) {
             $originalName = $request->file('abstrak')->getClientOriginalName();
             $fileName = time() . '_' . str_replace(' ', '_', $originalName);
-
-            // Simpan file dengan nama kustom
+        
+            // Simpan file ke folder 'storage/app/public/dokumen-penelitian'
             $path = $request->file('abstrak')->storeAs('public/dokumen-penelitian', $fileName);
-
-            // Simpan path tanpa 'public/' di database
-            $penelitian->abstrak = str_replace('public/', '', $path);
+        
+            // Simpan path utuh ke database
+            $penelitian->abstrak = $path;
         }
-
+        
         if ($request->hasFile('gambar')) {
             $originalName = $request->file('gambar')->getClientOriginalName();
             $fileName = time() . '_' . str_replace(' ', '_', $originalName);
-
-            // Simpan file dengan nama kustom
+        
+            // Simpan file ke folder 'storage/app/public/dokumen-penelitian'
             $path = $request->file('gambar')->storeAs('public/dokumen-penelitian', $fileName);
-
-            // Simpan path tanpa 'public/' di database
-            $penelitian->gambar = str_replace('public/', '', $path);
+        
+            // Simpan path utuh ke database
+            $penelitian->gambar = $path;
         }
-
+        
         if ($request->hasFile('lampiran')) {
             $originalName = $request->file('lampiran')->getClientOriginalName();
             $fileName = time() . '_' . str_replace(' ', '_', $originalName);
-
-            // Simpan file dengan nama kustom
+        
+            // Simpan file ke folder 'storage/app/public/dokumen-penelitian'
             $path = $request->file('lampiran')->storeAs('public/dokumen-penelitian', $fileName);
-
-            // Simpan path tanpa 'public/' di database
-            $penelitian->lampiran = str_replace('public/', '', $path);
+        
+            // Simpan path utuh ke database
+            $penelitian->lampiran = $path;
         }
+        
         $penelitian->save();
 
         return redirect('/k-kbk/penelitian')->with('success', 'Data Produk berhasil ditambahkan!');

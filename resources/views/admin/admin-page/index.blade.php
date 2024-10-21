@@ -116,136 +116,69 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script>
-        $(document).ready(function() {
-            $('#uploadForm').submit(function(e) {
-                e.preventDefault(); // Mencegah form terkirim secara otomatis
-
-                // Ambil nilai input
-                var nama = $('#nama_lengkap').val();
+        $(document).ready(function () {
+            $('#uploadForm').submit(function (e) {
+                e.preventDefault();
+    
+                // Ambil semua inputan
+                var nama_lengkap = $('#nama_lengkap').val();
                 var nip = $('#nip').val();
                 var jabatan = $('#jabatan').val();
+                var foto = $('#foto').val();
                 var no_hp = $('#no_hp').val();
                 var email = $('#email').val();
-
                 var username = $('#username').val();
                 var password = $('#password').val();
-
-                // Fungsi untuk mengecek apakah input hanya berisi teks
-                function isText(input) {
-                    var textPattern = /^[a-zA-Z\s]+$/;
-                    return textPattern.test(input);
-                }
-
-                // Fungsi untuk validasi panjang NIP
-                function validateNIPLength(nip) {
-                    return nip.length <= 20;
-                }
-
-                // Validasi Nama Lengkap
-                if (!nama || !isText(nama)) {
+    
+                // Cek jika inputan ada yang kosong
+                if (!nama_lengkap || !nip || !jabatan || !foto || !no_hp || !email || !username || !password) {
                     Swal.fire({
-                        icon: "error",
-                        title: "Oops... Ada yang salah...",
-                        text: "Nama Lengkap tidak boleh kosong & hanya boleh berisi huruf!",
-                        position: "top-end",
-                        showConfirmButton: false,
-                        timer: 2500
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Semua inputan harus diisi!',
                     });
                     return false;
                 }
-
-                // Validasi NIP (harus angka dan tidak lebih dari 20 digit)
-                if (!nip || isNaN(nip)) {
+    
+                // Validasi file pas foto (hanya jpg, jpeg, png)
+                var allowedExtensions = /(\.jpg|\.jpeg|\.png)$/i;
+                if (!allowedExtensions.exec(foto)) {
                     Swal.fire({
-                        icon: "error",
-                        title: "Oops... Ada yang salah...",
-                        text: "NIP tidak boleh kosong & harus berupa angka!",
-                        position: "top-end",
-                        showConfirmButton: false,
-                        timer: 2500
-                    });
-                    return false;
-                } else if (!validateNIPLength(nip)) {
-                    Swal.fire({
-                        icon: "error",
-                        title: "Oops... Ada yang salah...",
-                        text: "NIP tidak boleh lebih dari 20 digit!",
-                        position: "top-end",
-                        showConfirmButton: false,
-                        timer: 2500
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Pas Foto harus berformat jpg, jpeg, atau png!',
                     });
                     return false;
                 }
+    
+                Swal.fire({
+                    title: 'Simpan Data?',
+                    text: "Apakah Anda yakin ingin menyimpan data ini?",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Ya, Simpan!',
+                    cancelButtonText: 'Batal'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Submit form secara manual
+                        $('#basicModal').modal('hide');
 
-                // Validasi Jabatan (hanya teks)
-                if (!jabatan || !isText(jabatan)) {
-                    Swal.fire({
-                        icon: "error",
-                        title: "Oops... Ada yang salah...",
-                        text: "Jabatan tidak boleh kosong & hanya boleh berisi huruf!",
-                        position: "top-end",
-                        showConfirmButton: false,
-                        timer: 2500
-                    });
-                    return false;
-                }
+                        // Setelah modal ditutup, submit form
+                        setTimeout(function() {
+                            $('#uploadForm')[0].submit();
 
-                // Validasi No Handphone (harus angka)
-                if (!no_hp || isNaN(no_hp)) {
-                    Swal.fire({
-                        icon: "error",
-                        title: "Oops... Ada yang salah...",
-                        text: "No Handphone tidak boleh kosong & harus berupa angka!",
-                        position: "top-end",
-                        showConfirmButton: false,
-                        timer: 2500
-                    });
-                    return false;
-                }
-
-                // Validasi Email
-                if (!email || !email.includes('@')) {
-                    Swal.fire({
-                        icon: "error",
-                        title: "Oops... Ada yang salah...",
-                        text: "Masukkan email yang valid!",
-                        position: "top-end",
-                        showConfirmButton: false,
-                        timer: 2500
-                    });
-                    return false;
-                }
-
-                // Validasi KBK (tidak boleh kosong)
-
-                // Validasi Username (hanya teks)
-                if (!username || !isText(username)) {
-                    Swal.fire({
-                        icon: "error",
-                        title: "Oops... Ada yang salah...",
-                        text: "Username tidak boleh kosong &  hanya boleh berisi huruf!",
-                        position: "top-end",
-                        showConfirmButton: false,
-                        timer: 2500
-                    });
-                    return false;
-                }
-
-                // Validasi Password (tidak boleh kosong)
-                if (!password) {
-                    Swal.fire({
-                        icon: "error",
-                        title: "Oops... Ada yang salah...",
-                        text: "Masukkan password Anda!",
-                        position: "top-end",
-                        showConfirmButton: false,
-                        timer: 2500
-                    });
-                    return false;
-                }
-
-                // Submit form jika semua validasi terpenuhi
-                this.submit();
+                            // Tampilkan alert setelah submit
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Berhasil',
+                                text: 'Selamat, data telah berhasil ditambahkan!',
+                            });
+                        },
+                        500);
+                    }
+                });
             });
         });
     </script>

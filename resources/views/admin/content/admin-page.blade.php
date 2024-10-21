@@ -16,7 +16,7 @@
                                 aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <form action="/admin/admin-page/tambah" method="post" id="uploadForm">
+                            <form action="/admin/admin-page/tambah" enctype="multipart/form-data" method="post" id="uploadForm">
                                 @csrf
                                 <div class="row">
                                     <div class="col mb-6">
@@ -35,8 +35,15 @@
                                 <div class="row">
                                     <div class="col mb-6">
                                         <label for="nameBasic" class="form-label">Jabatan</label>
-                                        <input type="jabatan" id="jabatan" class="form-control"
+                                        <input type="text" id="jabatan" class="form-control"
                                             placeholder="Masukkan jabatan" name="jabatan" />
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col mb-6">
+                                        <label for="nameBasic" class="form-label">Pas Foto</label>
+                                        <input type="file" id="foto" class="form-control"
+                                             name="pas_foto" />
                                     </div>
                                 </div>
                                 <div class="row">

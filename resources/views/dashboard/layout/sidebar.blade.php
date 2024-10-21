@@ -29,6 +29,7 @@
             </div>  
             <a href="/dashboard/contact" class="nav-item nav-link">Contact Us</a>
 
+            <a href="https://siki.polindra.ac.id/" class="nav-item nav-link" target="_blank">Sentra Ki</a>
             <a href="/login" class="nav-item nav-link" target="_blank">Login</a>
 
         </div>

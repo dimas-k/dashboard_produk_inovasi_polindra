@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('nama_lengkap');
             $table->bigInteger('nip')->unique();
             $table->string('jabatan');
+            $table->string('pas_foto')->nullable();
             $table->string('no_hp');
             $table->foreignId('kbk_id')->nullable()->constrained('kelompok_keahlians')->nullable();
             $table->string('email')->unique();

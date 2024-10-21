@@ -127,12 +127,6 @@
         </div>
     </div>
     <div class="card p-2">
-        @if (session()->has('success'))
-            <div class="alert alert-success alert-dismissible fade show rounded" role="alert">
-                {{ session('success') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        @endif
         <h5 class="card-header"><i class='bx bx-table me-2'></i>Tabel Penelitian</h5>
         <div class="table-responsive text-nowrap">
             <table class="table">
@@ -181,7 +175,7 @@
                                             </div>
                                             <div class="modal-body">
                                                 <form action="{{ route('edit.penelitian', $p->id) }}" enctype="multipart/form-data"
-                                                    method="post" id="uploadForm">
+                                                    method="post" id="editForm_{{ $p->id }}">
                                                     @method('PUT')
                                                     @csrf
                                                     <div class="row">
@@ -198,7 +192,7 @@
                                                     <div class="row">
                                                         <div class="col mb-6">
                                                             <label for="nameBasic" class="form-label">Judul</label>
-                                                            <input type="text" id="nama_produk"
+                                                            <input type="text" id="judul_{{ $p->id }}"
                                                                 class="form-control"
                                                                 value="{{ $p->judul }}"
                                                                 name="judul" />
@@ -213,7 +207,7 @@
                                                         <div class="col mb-6">
                                                             <label for="nameBasic"
                                                                 class="form-label">Abstrak</label>
-                                                            <input type="file" name="abstrak" id="" class="form-control">
+                                                            <input type="file" name="abstrak" id="abstrak_{{ $p->id }}" class="form-control">
                                                             @error('abstrak')
                                                                 <div class="invalid-feedback">
                                                                     {{ $message }}
@@ -226,7 +220,7 @@
                                                         <div class="col mb-6">
                                                             <label for="nameBasic" class="form-label">Gambar
                                                                 Penelitian</label>
-                                                            <input type="file" id="gambar" class="form-control"
+                                                            <input type="file" id="gambar_{{ $p->id }}" class="form-control"
                                                                 name="gambar" />
                                                             @error('gambar')
                                                                 <div class="invalid-feedback">
@@ -239,7 +233,7 @@
                                                     <div class="row">
                                                         <div class="col mb-6">
                                                             <label for="nameBasic" class="form-label">Nama Penulis</label>
-                                                            <input type="text" id="no_hp" class="form-control"
+                                                            <input type="text" id="penulis_{{ $p->id }}" class="form-control"
                                                                 value="{{ $p->penulis }}"
                                                                 name="penulis" />
                                                             @error('penulis')
@@ -252,7 +246,7 @@
                                                     <div class="row">
                                                         <div class="col mb-6">
                                                             <label for="nameBasic" class="form-label">Anggota Penulis</label>
-                                                            <textarea class="form-control" id="floatingTextarea" style="height: 80px"
+                                                            <textarea class="form-control" id="anggota_{{ $p->id }}" style="height: 80px"
                                                                 name="anggota_penulis">{{ $p->anggota_penulis }}</textarea>
                                                             @error('anggota_penulis')
                                                                 <div class="invalid-feedback">
@@ -264,7 +258,7 @@
                                                     <div class="row">
                                                         <div class="col mb-6">
                                                             <label for="nameBasic" class="form-label">Email Penulis</label>
-                                                            <input type="email" id="username" class="form-control"
+                                                            <input type="email" id="email_{{ $p->id }}" class="form-control"
                                                                 value="{{ $p->email_penulis }}"
                                                                 name="email_penulis" />
                                                             @error('email_penulis')
@@ -278,7 +272,7 @@
                                                     <div class="row">
                                                         <div class="col mb-6">
                                                             <label for="nameBasic" class="form-label">Lampiran</label>
-                                                            <input type="file" id="password" class="form-control"
+                                                            <input type="file" id="lampiran_{{ $p->id }}" class="form-control"
                                                                 name="lampiran" />
                                                             @error('lampiran')
                                                                 <div class="invalid-feedback">
