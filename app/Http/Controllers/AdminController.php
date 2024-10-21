@@ -233,4 +233,20 @@ class AdminController extends Controller
         $k_kbk->delete();
         return redirect('/admin/ketua-kbk')->with('success', 'Data ketua Kelompok Keahlian berhasil dihapus');
     }
+
+    public function resetPassword(Request $request, $id ){
+        // Temukan user berdasarkan ID
+        $user = User::find($id);
+        
+        if (!$user) {
+            return redirect()->back()->with('error', 'User tidak ditemukan.');
+        }
+
+        // Reset password menjadi "@Polindra123"
+        $user->password = bcrypt('@Polindra123'); // Atau Anda bisa menggunakan Hash::make('@Polindra123');
+        $user->save();
+
+        return redirect()->back()->with('success', 'Password berhasil direset menjadi "@Polindra123".');
+    }
+
 }

@@ -204,7 +204,14 @@
                                     </form>
                                 </div>
                                 
-                                <a href="#" class="btn btn-sm btn-danger"><i class='bx bx-recycle'></i>Reset Password</a>
+                                {{-- <a href="/admin/ketua-kbk/reset_password_KKBK/{id}" class="btn btn-sm btn-danger"><i class='bx bx-recycle'></i>Reset Password</a> --}}
+                                {{-- <button class="btn btn-danger" onclick="confirmResetPassword()">Reset Password</button> --}}
+
+                                <a href="{{ route('reset.password', $k->id) }}" class="btn btn-danger" onclick="confirmResetPassword()">Reset Password</a>
+
+                                {{-- <form id="resetPasswordForm" action="{{ route('reset.password', $k->id) }}" method="POST" style="display: none;">
+                                    @csrf
+                                </form> --}}
 
 
 

@@ -60,6 +60,8 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::post('/admin/ketua-kbk/store', [AdminController::class, 'storeDataKetuaKbk']);
     Route::post('/admin/ketua-kbk/update/{id}', [AdminController::class, 'updateKetuaKbk'])->name('update.k-kbk');
     Route::delete('/admin/ketua-kbk/delete/{id}', [AdminController::class, 'hapusKetuaKbk'])->name('hapus.k-kbk');
+    Route::get('/admin/ketua-kbk/reset_password_KKBK/{id}', [AdminController::class, 'resetPassword'])->name('reset.password');
+
 
     Route::get('/admin/produk-inovasi/{id}', [AdminProdukInovasiController::class, 'pageProduk'])->name('admin.produk');
     Route::get('/admin/produk-inovasi/show/{id}', [AdminProdukInovasiController::class, 'ShowPageProduk'])->name('show.produk');
