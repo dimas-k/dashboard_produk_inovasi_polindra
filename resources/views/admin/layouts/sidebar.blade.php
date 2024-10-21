@@ -67,6 +67,21 @@
                 </ul>
             @endforeach
         </li>
+        <li class="menu-item">
+            <a href="javascript:void(o)" class="menu-link menu-toggle">
+                <i class='menu-icon tf-icons bx bxs-cog'></i>
+                <div class="text-truncate" data-i18n="Produk">Penelitian</div>
+            </a>
+            @foreach ($kbk_navigasi as $i)
+                <ul class="menu-sub">
+                    <li class="menu-item">
+                        <a href="/admin/penelitian/{{ $i->id }}" class="menu-link">
+                            <div class="text-truncate" data-i18n="{{ $i->nama_kbk }}">{{ $i->nama_kbk }}</div>
+                        </a>
+                    </li>
+                </ul>
+            @endforeach
+        </li>
         <!-- Apps & Pages -->
     </ul>
 </aside>

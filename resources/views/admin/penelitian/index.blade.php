@@ -19,7 +19,7 @@
 
 
 
-    <title>Admin D-PROIN | Ketua KBK</title>
+    <title>Admin D-PROIN | Admin</title>
 
     <meta name="description" content="" />
 
@@ -46,7 +46,32 @@
     <link rel="stylesheet" href="{{ asset('assets-admin/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}" />
 
     <!-- Page CSS -->
+    <style>
+        .btn-checkbox {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            display: inline-block;
+            width: 55px;
+            height: 35px;
+            background-color: #00ccff;
+            /* Warna default (belum dicentang) */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            line-height: 40px;
+        }
 
+        .btn-checkbox:hover {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            /* Tambahkan bayangan */
+            transform: translateY(-1px);
+            /* Checkbox sedikit terangkat ke atas */
+        }
+
+    </style>
     <!-- Helpers -->
     <script src="{{ asset('assets-admin/vendor/js/helpers.js') }}"></script>
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
@@ -72,7 +97,7 @@
 
                 <!-- Content wrapper -->
                 <div class="content-wrapper">
-                    @include('admin.content.ketua-kbk')
+                    @include('admin.content.penelitian')
                 </div>
                 <!-- / Content -->
 
@@ -116,67 +141,40 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script>
-        $(document).ready(function () {
-            $('#uploadForm').submit(function (e) {
-                e.preventDefault();
+        $(document).ready(function() {
+            // Seleksi semua checkbox dengan id yang dimulai dengan "status_validasi-"
+            $('input[type="checkbox"][id^="status_validasi-"]').on('change', function(e) {
+                e.preventDefault(); // Mencegah aksi default checkbox
     
-                // Ambil semua inputan
-                var nama_lengkap = $('#nama_lengkap').val();
-                var nip = $('#nip').val();
-                var jabatan = $('#jabatan').val();
-                var foto = $('#foto').val();
-                var no_hp = $('#no_hp').val();
-                var email = $('#email').val();
-                var username = $('#username').val();
-                var password = $('#password').val();
+                let checkbox = $(this);
+                let form = checkbox.closest('form'); // Mendapatkan form terdekat dari checkbox yang diklik
+                let isChecked = checkbox.is(':checked');
     
-                // Cek jika inputan ada yang kosong
-                if (!nama_lengkap || !nip || !jabatan || !foto || !no_hp || !email || !username || !password) {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Oops...',
-                        text: 'Semua inputan harus diisi!',
-                    });
-                    return false;
-                }
-    
-                // Validasi file pas foto (hanya jpg, jpeg, png)
-                var allowedExtensions = /(\.jpg|\.jpeg|\.png)$/i;
-                if (!allowedExtensions.exec(foto)) {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Oops...',
-                        text: 'Pas Foto harus berformat jpg, jpeg, atau png!',
-                    });
-                    return false;
-                }
-    
+                // Tampilkan konfirmasi SweetAlert
                 Swal.fire({
-                    title: 'Simpan Data?',
-                    text: "Apakah Anda yakin ingin menyimpan data ini?",
+                    title: 'Apakah anda yakin?',
+                    text: "Anda ingin memvalidasi penelitian ini.",
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33',
-                    confirmButtonText: 'Ya, Simpan!',
+                    confirmButtonText: 'Ya, Validasi',
                     cancelButtonText: 'Batal'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        // Submit form secara manual
-                        $('#basicModal').modal('hide');
-
-                        // Setelah modal ditutup, submit form
-                        setTimeout(function() {
-                            $('#uploadForm')[0].submit();
-
-                            // Tampilkan alert setelah submit
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'Berhasil',
-                                text: 'Selamat, data telah berhasil ditambahkan!',
-                            });
-                        },
-                        500);
+                        // Jika dikonfirmasi, tampilkan alert sukses
+                        Swal.fire({
+                            title: 'Selamat!',
+                            text: 'Penelitian telah tervalidasi.',
+                            icon: 'success'
+                        }).then(() => {
+                            // Ubah status checkbox dan submit form
+                            checkbox.prop('checked', isChecked);
+                            form.submit(); // Mengirimkan form terkait
+                        });
+                    } else {
+                        // Jika dibatalkan, kembalikan status checkbox ke semula
+                        checkbox.prop('checked', !isChecked);
                     }
                 });
             });
@@ -210,7 +208,7 @@
                     return nip.length <= 20;
                 }
 
-                Validasi Nama Lengkap
+                // Validasi Nama Lengkap
                 if (!nama || !isText(nama)) {
                     Swal.fire({
                         icon: "error",
@@ -223,7 +221,7 @@
                     return false;
                 }
 
-                Validasi NIP (harus angka dan tidak lebih dari 20 digit)
+                // Validasi NIP (harus angka dan tidak lebih dari 20 digit)
                 if (!nip || isNaN(nip)) {
                     Swal.fire({
                         icon: "error",
@@ -358,8 +356,6 @@
         });
     </script>
 
-
-
     <script>
         window.deleteConfirm = function(e) {
             e.preventDefault(); // Mencegah pengiriman form
@@ -404,8 +400,40 @@
             });
         }
     </script>
+    {{-- <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var checkbox = document.getElementById('status_validasi');
 
+            checkbox.addEventListener('change', function() {
+                var status = checkbox.checked ? 'sudah' : 'belum';
 
+                // Kirim permintaan AJAX
+                fetch('{{ route('produk.validasi', $data_produk->id) }}', {
+                        method: 'PATCH',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        },
+                        body: JSON.stringify({
+                            status: status
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            console.log(data.message); // Tampilkan pesan sukses
+                            // Jika Anda ingin mengalihkan pengguna ke halaman produk inovasi
+                            window.location.href = '{{ route('admin.produk', $data_produk->id) }}';
+                        } else {
+                            console.error('Gagal memperbarui status validasi');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Terjadi kesalahan:', error);
+                    });
+            });
+        });
+    </script> --}}
 
 </body>
 

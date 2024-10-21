@@ -16,7 +16,7 @@
                                 aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <form action="/admin/ketua-kbk/store" method="post" id="uploadForm">
+                            <form action="/admin/ketua-kbk/store" enctype="multipart/form-data" method="post" id="uploadForm">
                                 @csrf
                                 <div class="row">
                                     <div class="col mb-6">
@@ -52,6 +52,13 @@
                                                 {{ $message }}
                                             </div>
                                         @enderror
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col mb-6">
+                                        <label for="nameBasic" class="form-label">Pas Foto</label>
+                                        <input type="file" id="foto" class="form-control"
+                                             name="pas_foto" />
                                     </div>
                                 </div>
                                 <div class="row">

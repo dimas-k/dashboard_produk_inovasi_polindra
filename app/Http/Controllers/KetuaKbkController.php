@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 
 class KetuaKbkController extends Controller
@@ -76,21 +77,21 @@ class KetuaKbkController extends Controller
         if ($request->hasFile('gambar')) {
             $originalName = $request->file('gambar')->getClientOriginalName();
             $fileName = time() . '_' . str_replace(' ', '_', $originalName);
-            
+
             // Simpan file dengan nama kustom
             $path = $request->file('gambar')->storeAs('public/dokumen-produk', $fileName);
-            
+
             // Simpan path tanpa 'public/' di database
             $produk->gambar = str_replace('public/', '', $path);
         }
-        
+
         if ($request->hasFile('lampiran')) {
             $originalName = $request->file('lampiran')->getClientOriginalName();
             $fileName = time() . '_' . str_replace(' ', '_', $originalName);
-            
+
             // Simpan file dengan nama kustom
             $path = $request->file('lampiran')->storeAs('public/dokumen-produk', $fileName);
-            
+
             // Simpan path tanpa 'public/' di database
             $produk->lampiran = str_replace('public/', '', $path);
         }
@@ -111,8 +112,6 @@ class KetuaKbkController extends Controller
             'lampiran' => 'nullable|file|mimes:jpeg,png,jpg,pdf,docx|max:2048',
         ]);
         $produk = Produk::findOrFail($id);
-
-        // Update data produk
         $produk->nama_produk = $request->nama_produk;
         $produk->deskripsi = $request->deskripsi;
         $produk->inventor = $request->inventor;
@@ -120,34 +119,31 @@ class KetuaKbkController extends Controller
         $produk->email_inventor = $request->email_inventor;
 
         if ($request->hasFile('gambar')) {
-
-            if ($produk->gambar && file_exists(public_path($produk->gambar))) {
-                unlink(public_path($produk->gambar));
+            if ($produk->gambar && Storage::exists($produk->gambar)) {
+                Storage::delete($produk->gambar);
             }
-
             $originalName = $request->file('gambar')->getClientOriginalName();
+            $fileName = time() . '_' . str_replace(' ', '_', $originalName);
 
-            $fileName = time() . '_' . $originalName;
+            // Simpan file dengan nama kustom
+            $path = $request->file('gambar')->storeAs('public/dokumen-produk', $fileName);
 
-            $request->file('gambar')->move(public_path('dokumen_produk'), $fileName);
-
-            $produk->gambar = 'dokumen_produk/' . $fileName;
+            // Simpan path tanpa 'public/' di database
+            $produk->gambar = str_replace('public/', '', $path);
         }
 
-
         if ($request->hasFile('lampiran')) {
-
-            if ($produk->lampiran && file_exists(public_path($produk->lampiran))) {
-                unlink(public_path($produk->lampiran));
+            if ($produk->lampiran && Storage::exists($produk->lampiran)) {
+                Storage::delete($produk->lampiran);
             }
+            $originalName = $request->file('lampiran')->getClientOriginalName();
+            $fileName = time() . '_' . str_replace(' ', '_', $originalName);
 
-            $originalLampiranName = $request->file('lampiran')->getClientOriginalName();
+            // Simpan file dengan nama kustom
+            $path = $request->file('lampiran')->storeAs('public/dokumen-produk', $fileName);
 
-            $lampiranFileName = time() . '_' . $originalLampiranName;
-
-            $request->file('lampiran')->move(public_path('dokumen_produk'), $lampiranFileName);
-
-            $produk->lampiran = 'dokumen_produk/' . $lampiranFileName;
+            // Simpan path tanpa 'public/' di database
+            $produk->lampiran = str_replace('public/', '', $path);
         }
         $produk->save();
         return redirect('/k-kbk/produk')->with('success', 'Data Produk berhasil diupdate!');
@@ -157,11 +153,14 @@ class KetuaKbkController extends Controller
     {
         $produk = Produk::findOrFail($id);
 
-        if ($produk->gambar && File::exists(public_path($produk->gambar))) {
-            File::delete(public_path($produk->gambar));
+        // Hapus gambar jika ada
+        if ($produk->gambar && Storage::exists($produk->gambar)) {
+            Storage::delete($produk->gambar);
         }
-        if ($produk->lampiran && File::exists(public_path($produk->lampiran))) {
-            File::delete(public_path($produk->lampiran));
+
+        // Hapus lampiran jika ada
+        if ($produk->lampiran && Storage::exists($produk->lampiran)) {
+            Storage::delete($produk->lampiran);
         }
         $produk->delete();
         return redirect('/k-kbk/produk')->with('success', 'Data Produk berhasil dihapus!');
@@ -184,8 +183,8 @@ class KetuaKbkController extends Controller
             )
             ->where('users.id', '=', $userId)
             ->get();
-        
-        Return view('k_kbk.penelitian.index', compact('penelitians', 'kkbk'));
+
+        return view('k_kbk.penelitian.index', compact('penelitians', 'kkbk'));
     }
 
     public function showPenelitian($id)
@@ -215,37 +214,38 @@ class KetuaKbkController extends Controller
         $penelitian->email_penulis = $request->email_penulis;
 
         if ($request->hasFile('abstrak')) {
-
             $originalName = $request->file('abstrak')->getClientOriginalName();
-
-            $fileName = time() . '_' . $originalName;
-
-            $request->file('abstrak')->move(public_path('dokumen-penelitian'), $fileName);
-
-            $penelitian->abstrak = 'dokumen-penelitian/' . $fileName;
+            $fileName = time() . '_' . str_replace(' ', '_', $originalName);
+        
+            // Simpan file ke folder 'storage/app/public/dokumen-penelitian'
+            $path = $request->file('abstrak')->storeAs('public/dokumen-penelitian', $fileName);
+        
+            // Simpan path utuh ke database
+            $penelitian->abstrak = $path;
         }
-
+        
         if ($request->hasFile('gambar')) {
-
             $originalName = $request->file('gambar')->getClientOriginalName();
-
-            $fileName = time() . '_' . $originalName;
-
-            $request->file('gambar')->move(public_path('dokumen-penelitian'), $fileName);
-
-            $penelitian->gambar = 'dokumen-penelitian/' . $fileName;
+            $fileName = time() . '_' . str_replace(' ', '_', $originalName);
+        
+            // Simpan file ke folder 'storage/app/public/dokumen-penelitian'
+            $path = $request->file('gambar')->storeAs('public/dokumen-penelitian', $fileName);
+        
+            // Simpan path utuh ke database
+            $penelitian->gambar = $path;
         }
-
+        
         if ($request->hasFile('lampiran')) {
-
             $originalName = $request->file('lampiran')->getClientOriginalName();
-
-            $fileName = time() . '_' . $originalName;
-
-            $request->file('lampiran')->move(public_path('dokumen-penelitian'), $fileName);
-
-            $penelitian->lampiran = 'dokumen-penelitian/' . $fileName;
+            $fileName = time() . '_' . str_replace(' ', '_', $originalName);
+        
+            // Simpan file ke folder 'storage/app/public/dokumen-penelitian'
+            $path = $request->file('lampiran')->storeAs('public/dokumen-penelitian', $fileName);
+        
+            // Simpan path utuh ke database
+            $penelitian->lampiran = $path;
         }
+        
         $penelitian->save();
 
         return redirect('/k-kbk/penelitian')->with('success', 'Data Produk berhasil ditambahkan!');
@@ -267,35 +267,45 @@ class KetuaKbkController extends Controller
         $penelitian->penulis = $request->penulis;
         $penelitian->anggota_penulis = $request->anggota_penulis;
         $penelitian->email_penulis = $request->email_penulis;
-        if ($request->hasFile('gambar')) {
 
-            if ($penelitian->gambar && file_exists(public_path($penelitian->gambar))) {
-                unlink(public_path($penelitian->gambar));
+        if ($request->hasFile('abstrak')) {
+            if ($penelitian->abstrak && Storage::exists($penelitian->abstrak)) {
+                Storage::delete($penelitian->abstrak);
             }
+            $originalName = $request->file('abstrak')->getClientOriginalName();
+            $fileName = time() . '_' . str_replace(' ', '_', $originalName);
 
-            $originalName = $request->file('gambar')->getClientOriginalName();
+            // Simpan file dengan nama kustom
+            $path = $request->file('abstrak')->storeAs('public/dokumen-penelitian', $fileName);
 
-            $fileName = time() . '_' . $originalName;
-
-            $request->file('gambar')->move(public_path('dokumen_penelitian'), $fileName);
-
-            $penelitian->gambar = 'dokumen_penelitian/' . $fileName;
+            // Simpan path tanpa 'public/' di database
+            $penelitian->gambar = str_replace('public/', '', $path);
         }
-
-
-        if ($request->hasFile('lampiran')) {
-
-            if ($penelitian->lampiran && file_exists(public_path($penelitian->lampiran))) {
-                unlink(public_path($penelitian->lampiran));
+        if ($request->hasFile('gambar')) {
+            if ($penelitian->gambar && Storage::exists($penelitian->gambar)) {
+                Storage::delete($penelitian->gambar);
             }
+            $originalName = $request->file('gambar')->getClientOriginalName();
+            $fileName = time() . '_' . str_replace(' ', '_', $originalName);
 
-            $originalLampiranName = $request->file('lampiran')->getClientOriginalName();
+            // Simpan file dengan nama kustom
+            $path = $request->file('gambar')->storeAs('public/dokumen-penelitian', $fileName);
 
-            $lampiranFileName = time() . '_' . $originalLampiranName;
+            // Simpan path tanpa 'public/' di database
+            $penelitian->gambar = str_replace('public/', '', $path);
+        }
+        if ($request->hasFile('lampiran')) {
+            if ($penelitian->lampiran && Storage::exists($penelitian->lampiran)) {
+                Storage::delete($penelitian->lampiran);
+            }
+            $originalName = $request->file('lampiran')->getClientOriginalName();
+            $fileName = time() . '_' . str_replace(' ', '_', $originalName);
 
-            $request->file('lampiran')->move(public_path('dokumen_penelitian'), $lampiranFileName);
+            // Simpan file dengan nama kustom
+            $path = $request->file('lampiran')->storeAs('public/dokumen-penelitian', $fileName);
 
-            $penelitian->lampiran = 'dokumen_penelitian/' . $lampiranFileName;
+            // Simpan path tanpa 'public/' di database
+            $penelitian->lampiran = str_replace('public/', '', $path);
         }
         $penelitian->save();
         return redirect('/k-kbk/penelitian')->with('success', 'Data Penelitian berhasil diupdate');
@@ -304,11 +314,16 @@ class KetuaKbkController extends Controller
     {
         $penelitian = Penelitian::findOrFail($id);
 
-        if ($penelitian->gambar && File::exists(public_path($penelitian->gambar))) {
-            File::delete(public_path($penelitian->gambar));
+        if ($penelitian->gambar && Storage::exists($penelitian->gambar)) {
+            Storage::delete($penelitian->gambar);
         }
-        if ($penelitian->lampiran && File::exists(public_path($penelitian->lampiran))) {
-            File::delete(public_path($penelitian->lampiran));
+
+        // Hapus lampiran jika ada
+        if ($penelitian->lampiran && Storage::exists($penelitian->lampiran)) {
+            Storage::delete($penelitian->lampiran);
+        }
+        if ($penelitian->abstrak && Storage::exists($penelitian->abstrak)) {
+            Storage::delete($penelitian->abstrak);
         }
         $penelitian->delete();
         return redirect('/k-kbk/penelitian')->with('success', 'Data Penelitian berhasil dihapus');
@@ -316,7 +331,7 @@ class KetuaKbkController extends Controller
 
     public function profil()
     {
-       
+
         return view('k_kbk.profil.index');
     }
 
@@ -363,7 +378,7 @@ class KetuaKbkController extends Controller
             'username' => 'required|string|max:255',
             'password_last' => 'required|string', // Validasi password terakhir
         ]);
-    
+
         $user = User::find($id);
     
         // Cek apakah password terakhir yang dimasukkan sesuai

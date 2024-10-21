@@ -165,7 +165,7 @@
                         // Jika dikonfirmasi, tampilkan alert sukses
                         Swal.fire({
                             title: 'Selamat!',
-                            text: 'Produk telah divalidasi.',
+                            text: 'Produk telah tervalidasi.',
                             icon: 'success'
                         }).then(() => {
                             // Ubah status checkbox dan submit form

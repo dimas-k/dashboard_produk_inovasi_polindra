@@ -13,8 +13,7 @@ class AdminController extends Controller
 {
     public function dashboard()
     {
-        $kbk_navigasi = DB::table('kelompok_keahlians')
-        ->select(
+        $kbk_navigasi = KelompokKeahlian::select(
             'kelompok_keahlians.id',
             'kelompok_keahlians.nama_kbk'
         )
@@ -53,6 +52,7 @@ class AdminController extends Controller
             'nama_lengkap' => 'required|string',
             'nip' => 'required|numeric|digits_between:1,20',
             'no_hp' => 'required',
+            'pas_foto' =>'required|file|mimes:jpg,jpeg,png|max:2048',
             'email' => 'required|email|unique:users',
             'jabatan' => 'required',
             'username' => 'required',
@@ -63,6 +63,16 @@ class AdminController extends Controller
         $admin->nip = $request->nip;
         $admin->no_hp = $request->no_hp;
         $admin->email = $request->email;
+        if ($request->hasFile('pas_foto')) {
+            $originalName = $request->file('pas_foto')->getClientOriginalName();
+            $fileName = time() . '_' . str_replace(' ', '_', $originalName);
+    
+            // Simpan file ke storage/app/public/dokumen-user
+            $path = $request->file('pas_foto')->storeAs('public/dokumen-user', $fileName);
+    
+            // Simpan path utuh di database
+            $admin->pas_foto = $path;
+        }
         $admin->jabatan = $request->jabatan;
         $admin->username = $request->username;
         $admin->password = Hash::make($request->password); // Hashing password
@@ -176,6 +186,7 @@ class AdminController extends Controller
             'username' => 'required|unique:users',
             'password' => 'required|min:5', // Minimum length for password
             'confirm_password' => 'required|same:password', // Ensure passwords match
+            'pas_foto' =>'required|file|mimes:jpg,jpeg,png|max:2048',
             'role' => 'required',
         ]);
     
@@ -186,6 +197,16 @@ class AdminController extends Controller
         $k_kbk->no_hp = $request->no_hp;
         $k_kbk->email = $request->email;
         $k_kbk->jabatan = $request->jabatan;
+        if ($request->hasFile('pas_foto')) {
+            $originalName = $request->file('pas_foto')->getClientOriginalName();
+            $fileName = time() . '_' . str_replace(' ', '_', $originalName);
+    
+            // Simpan file ke storage/app/public/dokumen-user
+            $path = $request->file('pas_foto')->storeAs('public/dokumen-user', $fileName);
+    
+            // Simpan path utuh di database
+            $k_kbk->pas_foto = $path;
+        }
         $k_kbk->username = $request->username;
         $k_kbk->password = Hash::make($request->password); // Hashing password
         $k_kbk->role = $request->role;

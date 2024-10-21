@@ -159,12 +159,12 @@
             });
         }
     </script>
-    
+
     <script>
         $(document).ready(function() {
             $('#uploadForm').on('submit', function(e) {
                 e.preventDefault(); // Mencegah submit form secara langsung
-    
+
                 // Mengambil nilai input
                 const kbk_id = $('#exampleFormControlSelect1').val();
                 const nama_produk = $('#nama_produk').val();
@@ -174,13 +174,14 @@
                 const anggota_inventor = $('textarea[name="anggota_inventor"]').val();
                 const email_inventor = $('#email').val();
                 const lampiran = $('#lampiran').val();
-    
+
                 // Regex untuk validasi file extensions
                 const gambarExtensions = /(\.jpg|\.jpeg|\.png)$/i;
                 const lampiranExtensions = /(\.jpg|\.jpeg|\.png|\.pdf|\.docx)$/i;
-    
+
                 // Validasi input kosong
-                if (!kbk_id || !nama_produk || !deskripsi || !gambar || !inventor || !anggota_inventor || !email_inventor || !lampiran) {
+                if (!kbk_id || !nama_produk || !deskripsi || !gambar || !inventor || !anggota_inventor || !
+                    email_inventor || !lampiran) {
                     Swal.fire({
                         icon: 'error',
                         title: 'Gagal',
@@ -188,7 +189,7 @@
                     });
                     return;
                 }
-    
+
                 // Validasi format file gambar
                 if (!gambarExtensions.exec(gambar)) {
                     Swal.fire({
@@ -198,7 +199,7 @@
                     });
                     return;
                 }
-    
+
                 // Validasi format file lampiran
                 if (!lampiranExtensions.exec(lampiran)) {
                     Swal.fire({
@@ -208,7 +209,7 @@
                     });
                     return;
                 }
-    
+
                 // Jika semua validasi lolos, submit form
                 Swal.fire({
                     title: 'Simpan Data?',
@@ -222,13 +223,115 @@
                 }).then((result) => {
                     if (result.isConfirmed) {
                         // Submit form secara manual
-                        $('#uploadForm')[0].submit();
+                        $('#basicModal').modal('hide');
+
+                        // Setelah modal ditutup, submit form
+                        setTimeout(function() {
+                            $('#uploadForm')[0].submit();
+
+                            // Tampilkan alert setelah submit
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Berhasil',
+                                text: 'Selamat, produk Anda telah berhasil ditambahkan!',
+                            });
+                        },
+                        500);
                     }
                 });
             });
         });
     </script>
-    
+
+<script>
+    $(document).ready(function() {
+        // Loop untuk setiap form berdasarkan ID produk
+        @foreach ($produks as $p)
+            $('#editForm_{{ $p->id }}').on('submit', function(e) {
+                e.preventDefault(); // Mencegah submit form secara langsung
+
+                // Ambil ID produk untuk elemen yang sedang diproses
+                const id = '{{ $p->id }}';
+
+                // Mengambil nilai input berdasarkan ID produk
+                const nama_produk = $('#nama_produk_' + id).val();
+                const deskripsi = $('#deskripsi_' + id).val();
+                const anggota = $('#anggota_' + id).val();
+                const email = $('#email_' + id).val();
+                const inventor = $('#inventor_' + id).val();
+                const gambar = $('#gambar_' + id)[0].files.length ? $('#gambar_' + id)[0].files[0].name : '';
+                const lampiran = $('#lampiran_' + id)[0].files.length ? $('#lampiran_' + id)[0].files[0].name : '';
+
+                // Regex untuk validasi file extensions
+                const gambarExtensions = /(\.jpg|\.jpeg|\.png)$/i;
+                const lampiranExtensions = /(\.jpg|\.jpeg|\.png|\.pdf|\.docx)$/i;
+
+                // Validasi input kosong
+                if (!nama_produk || !deskripsi || !anggota || !email || !inventor || !gambar || !lampiran) {
+
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Gagal',
+                        text: 'Semua input harus diisi!',
+                    });
+                    return;
+                }
+
+                // Validasi format file gambar
+                if (gambar && !gambarExtensions.exec(gambar)) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Gagal',
+                        text: 'Gambar produk harus dalam format JPG, JPEG, atau PNG!',
+                    });
+                    return;
+                }
+
+                // Validasi format file lampiran
+                if (lampiran && !lampiranExtensions.exec(lampiran)) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Gagal',
+                        text: 'Lampiran harus dalam format JPG, JPEG, PNG, PDF, atau DOCX!',
+                    });
+                    return;
+                }
+
+                // Jika semua validasi lolos, submit form
+                Swal.fire({
+                    title: 'Simpan Data?',
+                    text: "Apakah Anda yakin ingin update data produk ini?",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Ya, Simpan!',
+                    cancelButtonText: 'Batal'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Tutup modal sebelum submit form
+                        $('#basicModal{{ $p->id }}').modal('hide');
+
+                        // Submit form yang terkait berdasarkan ID produk
+                        $('#editForm_{{ $p->id }}')[0].submit();
+
+                        // Tampilkan alert setelah submit sukses
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Berhasil',
+                            text: 'Data berhasil diupdate!'
+                        });
+                    }
+                });
+            });
+        @endforeach
+    });
+</script>
+
+
+
+
+
 
 </body>
 

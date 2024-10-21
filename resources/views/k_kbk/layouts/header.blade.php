@@ -15,8 +15,8 @@
             <li class="nav-item navbar-dropdown dropdown-user dropdown">
                 <a class="nav-link dropdown-toggle hide-arrow p-0" href="javascript:void(0);" data-bs-toggle="dropdown">
                     <div class="avatar avatar-online">
-                        <img src="{{ asset('assets-admin/img/avatars/6.png') }}" alt
-                            class="w-px-40 h-auto rounded-circle" />
+                        <img src="{{ asset('storage/' . auth()->user()->pas_foto) }}"
+                            class="w-40 h-40 rounded-circle object-fit-cover" />
                     </div>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end">
@@ -25,13 +25,14 @@
                             <div class="d-flex">
                                 <div class="flex-shrink-0 me-3">
                                     <div class="avatar avatar-online">
-                                        <img src="{{ asset('assets-admin/img/avatars/6.png') }}" alt
-                                            class="w-px-40 h-auto rounded-circle" />
+                                        <img src="{{ asset('storage/' . auth()->user()->pas_foto) }}"
+                                            class="w-40 h-40 rounded-circle object-fit-cover" />
                                     </div>
                                 </div>
                                 <div class="flex-grow-1">
                                     <h6 class="mb-0">{{ auth()->user()->nama_lengkap }}</h6>
-                                    <small class="text-muted">Ketua {{ auth()->user()->kelompokKeahlian->nama_kbk }}</small>
+                                    <small class="text-muted">Ketua
+                                        {{ auth()->user()->kelompokKeahlian->nama_kbk }}</small>
                                 </div>
                             </div>
                         </a>
