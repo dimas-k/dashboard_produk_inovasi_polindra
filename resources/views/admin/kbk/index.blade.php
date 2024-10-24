@@ -54,8 +54,8 @@
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="{{ asset('assets-admin/js/config.js') }}"></script>
 
-     <!-- link cdn CKEditor -->
-     <script src="https://cdn.ckeditor.com/ckeditor5/34.2.0/classic/ckeditor.js"></script>
+    <!-- link cdn CKEditor -->
+    <script src="https://cdn.ckeditor.com/ckeditor5/34.2.0/classic/ckeditor.js"></script>
 </head>
 
 <body>
@@ -141,38 +141,109 @@
     </script>
 
     {{-- <script>
-        ClassicEditor
-        .create( document.querySelector( '#editor2' ) )
-        .catch( error =>{
-            console.error( error );
-        } )
+        $(document).ready(function() {
+            // Saat form disubmit
+            @foreach ($kbk as $k)
+
+                $('#editForm_{{ $k->id }}').submit(function(e) {
+                    e.preventDefault(); // Mencegah form terkirim secara langsung
+
+                    // Ambil nilai dari inputan
+                    var nama_kbk = $('#kbk_{{ $k->id }}').val().trim(); // Pastikan trim() untuk menghilangkan spasi
+                    var jurusan = $('#jurusan_{{ $k->id }}').val().trim(); // Ambil value berdasarkan name
+                    var deskripsi = $('textarea[name="deskripsi"]').val().trim();
+
+                    // Validasi inputan (tidak boleh kosong)
+                    if (!nama_kbk || !jurusan || !deskripsi) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Semua inputan harus diisi!',
+                        });
+                        return false;
+                    }
+
+                    // Submit form menggunakan AJAX
+                    $.ajax({
+                        url: $(this).attr('action'), // URL untuk update (dari atribut action form)
+                        type: 'POST',
+                        data: $(this).serialize(), // Ambil data dari form
+                        success: function(response) {
+                            // Tutup modal setelah submit sukses
+                            $('#exampleModal{{ $k->id }}').modal('hide');
+
+                            // Tampilkan alert setelah modal ditutup
+                            setTimeout(function() {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Berhasil!',
+                                    text: 'Selamat, data KBK telah di-update!',
+                                });
+                            }, 500); // Penundaan sebelum alert muncul (menunggu modal tertutup)
+                        },
+                        error: function(xhr) {
+                            // Tampilkan alert jika ada error saat menyimpan data
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Gagal',
+                                text: 'Terjadi kesalahan saat mengupdate data. Silakan coba lagi.',
+                            });
+                        }
+                    });
+                });
+            @endforeach
+        });
     </script> --}}
-    
+
     <script>
         $(document).ready(function() {
             $('#uploadForm').submit(function(e) {
                 e.preventDefault(); // Mencegah form terkirim secara otomatis
 
-                // non file
+                // Ambil nilai input
                 var nama_kbk = $('#namaKbk').val();
-                // var jurusan = $('#jurusan').val();
+                var jurusan = $('#jurusan').val();
+                var editor = $('#editor').val();
 
-
-                if (!nama_kbk) {
+                // Validasi input
+                if (!nama_kbk || !jurusan || !editor) {
                     Swal.fire({
                         icon: "error",
                         title: "Oops... Ada yang salah...",
-                        text: "Tolong Masukkan Nama Kelompok Kehlian!",
-                        position: "top-end",
-                        showConfirmButton: false,
-                        timer: 2500
+                        text: "Inputan tidak boleh kosong!",
                     });
                     return false;
                 }
-                this.submit();
+
+                // Kirim form menggunakan AJAX
+                $.ajax({
+                    url: $(this).attr(
+                        'action'), // URL untuk mengirim data (dari atribut action form)
+                    type: 'POST',
+                    data: $(this).serialize(), // Mengambil semua input dari form
+                    success: function(response) {
+                        // Reload halaman terlebih dahulu
+                        location.reload();
+                        // Tampilkan notifikasi setelah halaman selesai dimuat
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Berhasil',
+                            text: 'Data berhasil ditambahkan!',
+                        });
+                    },
+                    error: function(xhr) {
+                        // Menampilkan pesan error jika terjadi kesalahan
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Gagal',
+                            text: 'Ada masalah saat menambahkan data. Silakan coba lagi.',
+                        });
+                    }
+                });
             });
         });
     </script>
+
 
     <script>
         window.deleteConfirm = function(e) {
@@ -187,7 +258,8 @@
                 showCancelButton: true,
                 confirmButtonColor: "#3085d6",
                 cancelButtonColor: "#d33",
-                confirmButtonText: "Yes, delete it!"
+                confirmButtonText: "Ya, hapus!",
+                cancelButtonText: "Batal"
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
@@ -204,14 +276,24 @@
                                 confirmButtonText: 'OKE'
                             }).then(() => {
                                 // Reload halaman atau redirect ke halaman lain
-                                
                             });
                         },
                         error: function(xhr) {
-                            // Tangani kesalahan
+                            // Tangkap pesan error dari server
+                            var errorMessage = 'Terjadi masalah saat hapus kbk.';
+
+                            // Jika server mengirimkan respons JSON dengan pesan error
+                            if (xhr.responseJSON && xhr.responseJSON.message) {
+                                errorMessage = xhr.responseJSON.message;
+                            } else if (xhr.responseText) {
+                                // Jika tidak ada responseJSON, gunakan responseText
+                                errorMessage = xhr.responseText;
+                            }
+
+                            // Tampilkan alert error dengan pesan kesalahan spesifik
                             Swal.fire({
                                 title: 'Error!',
-                                text: 'There was a problem deleting the item.',
+                                text: errorMessage, // Menampilkan pesan error dari server
                                 icon: 'error',
                                 confirmButtonText: 'OK'
                             });
@@ -220,6 +302,19 @@
                 }
             });
         }
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            @if (session('success'))
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Selamat!',
+                    text: '{{ session('success') }}',
+                    confirmButtonText: 'OK'
+                });
+            @endif
+        });
     </script>
 
 

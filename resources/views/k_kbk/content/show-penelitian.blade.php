@@ -25,17 +25,17 @@
                 </tr>
                 <tr>
                     <th>Abstrak</th>
-                    <td>: <a href={{ asset($penelitian->abstrak) }} class=""
+                    <td>: <a href={{ asset('storage/' . $penelitian->abstrak) }} class=""
                         target="_blank">Lihat Abstrak</a></td>
                 </tr>
                 <tr>
                     <th>Lampiran</th>
-                    <td>: <a href={{ asset($penelitian->lampiran) }} class=""
+                    <td>: <a href={{ asset('storage/'.$penelitian->lampiran) }} class=""
                         target="_blank">Lihat Lampiran</a></td>
                 </tr>
                 <tr>
                     <th>Gambar Penelitian</th>
-                    <td>: <img src="{{ asset($penelitian->gambar) }}" alt="" ></td>
+                    <td>: <img src="{{ asset('storage/'.$penelitian->gambar) }}" alt="" style="max-width: 70%; height: auto"></td>
                 </tr>
             </table>
         </div>

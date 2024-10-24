@@ -16,7 +16,8 @@
                                 aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <form action="/admin/admin-page/tambah" enctype="multipart/form-data" method="post" id="uploadForm">
+                            <form action="/admin/admin-page/tambah" enctype="multipart/form-data" method="post"
+                                id="uploadForm">
                                 @csrf
                                 <div class="row">
                                     <div class="col mb-6">
@@ -42,8 +43,7 @@
                                 <div class="row">
                                     <div class="col mb-6">
                                         <label for="nameBasic" class="form-label">Pas Foto</label>
-                                        <input type="file" id="foto" class="form-control"
-                                             name="pas_foto" />
+                                        <input type="file" id="foto" class="form-control" name="pas_foto" />
                                     </div>
                                 </div>
                                 <div class="row">
@@ -87,7 +87,8 @@
                                         data-bs-dismiss="modal">
                                         Batal
                                     </button>
-                                    <button type="submit" class="btn btn-primary ms-1" id="btnSubmit">Simpan</button>
+                                    <button type="submit" class="btn btn-primary ms-1"
+                                        id="btnSubmit">Simpan</button>
                                 </div>
                             </form>
                         </div>
@@ -98,12 +99,6 @@
     </div>
 
     <div class="card p-2">
-        @if (session()->has('success'))
-            <div class="alert alert-success alert-dismissible fade show rounded" role="alert">
-                {{ session('success') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        @endif
         <h5 class="card-header"><i class='bx bx-table me-2'></i>Tabel Admin</h5>
         <div class="table-responsive text-nowrap">
             <table class="table">
@@ -118,7 +113,7 @@
                     </tr>
                 </thead>
                 <tbody class="table-border-bottom-0">
-                    @foreach ($admin as $i => $adm)
+                    @forelse ($admin as $i => $adm)
                         <tr>
                             <th scope="row">{{ $i + 1 }}</th>
                             <td>{{ $adm->nama_lengkap }}</td>
@@ -143,17 +138,19 @@
                                                     aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
-                                                <form action="{{ route('upate.admin', $adm->id) }}" method="post"
-                                                    id="editForm">
+                                                <form action="{{ route('upate.admin', $adm->id) }}"
+                                                    enctype="multipart/form-data" method="post"
+                                                    id="editForm_{{ $adm->id }}">
                                                     @csrf
                                                     <div class="row">
                                                         <div class="col mb-6">
                                                             <label for="nameBasic" class="form-label">Nama
                                                                 Lengkap</label>
-                                                            <input type="text" id="nama"
-                                                                class="form-control @error('nama_lengkap') is-invalid @enderror" value="{{ $adm->nama_lengkap }}"
+                                                            <input type="text" id="nama_{{ $adm->id }}"
+                                                                class="form-control @error('nama_lengkap') is-invalid @enderror"
+                                                                value="{{ $adm->nama_lengkap }}"
                                                                 name="nama_lengkap" />
-                                                                @error('nama_lengkap')
+                                                            @error('nama_lengkap')
                                                                 <div class="invalid-feedback">
                                                                     {{ $message }}
                                                                 </div>
@@ -163,9 +160,10 @@
                                                     <div class="row">
                                                         <div class="col mb-6">
                                                             <label for="nameBasic" class="form-label">Nip</label>
-                                                            <input type="number" id="nip" class="form-control @error('nip') is-invalid @enderror"
+                                                            <input type="number" id="nip_{{ $adm->id }}"
+                                                                class="form-control @error('nip') is-invalid @enderror"
                                                                 value="{{ $adm->nip }}" name="nip" />
-                                                                @error('nip')
+                                                            @error('nip')
                                                                 <div class="invalid-feedback">
                                                                     {{ $message }}
                                                                 </div>
@@ -175,9 +173,10 @@
                                                     <div class="row">
                                                         <div class="col mb-6">
                                                             <label for="nameBasic" class="form-label">Jabatan</label>
-                                                            <input type="text" id="jabatan" class="form-control @error('jabatan') is-invalid @enderror"
+                                                            <input type="text" id="jabatan_{{ $adm->id }}"
+                                                                class="form-control @error('jabatan') is-invalid @enderror"
                                                                 value="{{ $adm->jabatan }}" name="jabatan" />
-                                                                @error('jabatan')
+                                                            @error('jabatan')
                                                                 <div class="invalid-feedback">
                                                                     {{ $message }}
                                                                 </div>
@@ -186,11 +185,22 @@
                                                     </div>
                                                     <div class="row">
                                                         <div class="col mb-6">
+                                                            <label for="nameBasic" class="form-label">Pas Foto</label>
+                                                            <input type="file" id="foto_{{ $adm->id }}"
+                                                                class="form-control" name="pas_foto" />
+                                                            <span class="text-danger"><i
+                                                                    class='bx bxs-error me-1'></i>Jika ingin diganti
+                                                                silahkan isi, jika tidak biarkan</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col mb-6">
                                                             <label for="nameBasic" class="form-label">No
                                                                 Handphone</label>
-                                                            <input type="number" id="no_hp" class="form-control @error('no_hp') is-invalid @enderror"
+                                                            <input type="number" id="no_hp_{{ $adm->id }}"
+                                                                class="form-control @error('no_hp') is-invalid @enderror"
                                                                 value="{{ $adm->no_hp }}" name="no_hp" />
-                                                                @error('no_hp')
+                                                            @error('no_hp')
                                                                 <div class="invalid-feedback">
                                                                     {{ $message }}
                                                                 </div>
@@ -200,9 +210,10 @@
                                                     <div class="row">
                                                         <div class="col mb-6">
                                                             <label for="nameBasic" class="form-label">Email</label>
-                                                            <input type="email" id="email" class="form-control @error('email') is-invalid @enderror"
+                                                            <input type="email" id="email_{{ $adm->id }}"
+                                                                class="form-control @error('email') is-invalid @enderror"
                                                                 value="{{ $adm->email }}" name="email" />
-                                                                @error('email')
+                                                            @error('email')
                                                                 <div class="invalid-feedback">
                                                                     {{ $message }}
                                                                 </div>
@@ -212,9 +223,10 @@
                                                     <div class="row">
                                                         <div class="col mb-6">
                                                             <label for="nameBasic" class="form-label">Username</label>
-                                                            <input type="text" id="username" class="form-control @error('username') is-invalid @enderror"
+                                                            <input type="text" id="username_{{ $adm->id }}"
+                                                                class="form-control @error('username') is-invalid @enderror"
                                                                 value="{{ $adm->username }}" name="username" />
-                                                                @error('username')
+                                                            @error('username')
                                                                 <div class="invalid-feedback">
                                                                     {{ $message }}
                                                                 </div>
@@ -225,7 +237,8 @@
                                                         <div class="col mb-6 form-password-toggle">
                                                             <label for="nameBasic" class="form-label">Password</label>
                                                             <div class="input-group input-group-merge">
-                                                                <input type="password" id="password"
+                                                                <input type="password"
+                                                                    id="password_{{ $adm->id }}"
                                                                     class="form-control @error('password') is-invalid @enderror"
                                                                     placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
                                                                     name="password" aria-describedby="password" />
@@ -263,17 +276,26 @@
                                         onclick="deleteConfirm(event)"><i class='bx bx-trash'></i></button>
                                 </form> --}}
                                 <div class="btn btn-sm btn-danger">
-                                    <form method="post" action="{{ route('hapus.admin', $adm->id) }}" id="deleteForm">
+                                    <form method="post" action="{{ route('hapus.admin', $adm->id) }}"
+                                        id="deleteForm">
                                         @method('DELETE')
                                         @csrf
-                                        <a type="submit" onclick="deleteConfirm(event)"><i class='bx bx-trash'></i></a>
+                                        <a type="submit" onclick="deleteConfirm(event)"><i
+                                                class='bx bx-trash'></i></a>
                                     </form>
                                 </div>
                             </td>
                         </tr>
-                    @endforeach
-                </tbody>
-            </table>
+                        @empty
+                            <tr>
+                                <td colspan="5" class="text-center">
+                                    <img src="{{ asset('img/no-data.jpg') }}" style="width:15%; height:auto">
+                                    <p>Opss.. <br> <span class="fw-bold">Tidak ada data yang tersedia.</span></p>
+                                </td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
-</div>

@@ -116,10 +116,10 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script>
-        $(document).ready(function () {
-            $('#uploadForm').submit(function (e) {
+        $(document).ready(function() {
+            $('#uploadForm').submit(function(e) {
                 e.preventDefault();
-    
+
                 // Ambil semua inputan
                 var nama_lengkap = $('#nama_lengkap').val();
                 var nip = $('#nip').val();
@@ -129,9 +129,10 @@
                 var email = $('#email').val();
                 var username = $('#username').val();
                 var password = $('#password').val();
-    
+
                 // Cek jika inputan ada yang kosong
-                if (!nama_lengkap || !nip || !jabatan || !foto || !no_hp || !email || !username || !password) {
+                if (!nama_lengkap || !nip || !jabatan || !foto || !no_hp || !email || !username || !
+                    password) {
                     Swal.fire({
                         icon: 'error',
                         title: 'Oops...',
@@ -139,7 +140,7 @@
                     });
                     return false;
                 }
-    
+
                 // Validasi file pas foto (hanya jpg, jpeg, png)
                 var allowedExtensions = /(\.jpg|\.jpeg|\.png)$/i;
                 if (!allowedExtensions.exec(foto)) {
@@ -150,7 +151,8 @@
                     });
                     return false;
                 }
-    
+
+                // Konfirmasi untuk menyimpan data
                 Swal.fire({
                     title: 'Simpan Data?',
                     text: "Apakah Anda yakin ingin menyimpan data ini?",
@@ -162,245 +164,210 @@
                     cancelButtonText: 'Batal'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        // Submit form secara manual
+                        // Tutup modal sebelum submit form
                         $('#basicModal').modal('hide');
 
-                        // Setelah modal ditutup, submit form
-                        setTimeout(function() {
-                            $('#uploadForm')[0].submit();
+                        // Submit form secara manual
+                        $.ajax({
+                            url: $('#uploadForm').attr('action'),
+                            type: 'POST',
+                            data: new FormData(
+                                this), // Menggunakan FormData untuk file upload
+                            processData: false,
+                            contentType: false,
+                            success: function(response) {
+                                // Menyimpan pesan sukses di local storage
+                                localStorage.setItem('successMessage',
+                                    'Selamat, data telah berhasil ditambahkan!');
 
-                            // Tampilkan alert setelah submit
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'Berhasil',
-                                text: 'Selamat, data telah berhasil ditambahkan!',
-                            });
-                        },
-                        500);
-                    }
-                });
-            });
-        });
-    </script>
-    {{-- <script>
-        $(document).ready(function() {
-            $('#editForm').submit(function(e) {
-                e.preventDefault(); // Mencegah form terkirim secara otomatis
+                                // Reload halaman
+                                location.reload();
+                            },
+                            error: function(xhr) {
+                                // Mengambil pesan error dari respons server
+                                let errorMessage =
+                                    'Terjadi kesalahan saat menyimpan data.';
 
-                // Ambil nilai input
-                var form = $(this); // Mendapatkan referensi form
-                var nama = $('#nama').val();
-                var nip = $('#nip').val();
-                var jabatan = $('#jabatan').val();
-                var no_hp = $('#no_hp').val();
-                var email = $('#email').val();
-                var kbk = $('#exampleFormControlSelect1').val();
-                var username = $('#username').val();
-                var password = $('#password').val();
+                                if (xhr.responseJSON && xhr.responseJSON.message) {
+                                    errorMessage = xhr.responseJSON
+                                        .message; // Mengambil pesan spesifik
+                                }
 
-                // Fungsi untuk mengecek apakah input hanya berisi teks
-                function isText(input) {
-                    var textPattern = /^[a-zA-Z\s]+$/;
-                    return textPattern.test(input);
-                }
-
-                // Fungsi untuk validasi panjang NIP
-                function validateNIPLength(nip) {
-                    return nip.length <= 20;
-                }
-
-                // Validasi Nama Lengkap
-                if (!nama || !isText(nama)) {
-                    Swal.fire({
-                        icon: "error",
-                        title: "Oops... Ada yang salah...",
-                        text: "Nama Lengkap tidak boleh kosong & hanya boleh berisi huruf!",
-                        position: "top-end",
-                        showConfirmButton: false,
-                        timer: 2500
-                    });
-                    return false;
-                }
-
-                // Validasi NIP (harus angka dan tidak lebih dari 20 digit)
-                if (!nip || isNaN(nip)) {
-                    Swal.fire({
-                        icon: "error",
-                        title: "Oops... Ada yang salah...",
-                        text: "NIP tidak boleh kosong & harus berupa angka!",
-                        position: "top-end",
-                        showConfirmButton: false,
-                        timer: 2500
-                    });
-                    return false;
-                } else if (!validateNIPLength(nip)) {
-                    Swal.fire({
-                        icon: "error",
-                        title: "Oops... Ada yang salah...",
-                        text: "NIP tidak boleh lebih dari 20 digit!",
-                        position: "top-end",
-                        showConfirmButton: false,
-                        timer: 2500
-                    });
-                    return false;
-                }
-
-                // Validasi Jabatan (hanya teks)
-                if (!jabatan || !isText(jabatan)) {
-                    Swal.fire({
-                        icon: "error",
-                        title: "Oops... Ada yang salah...",
-                        text: "Jabatan tidak boleh kosong & hanya boleh berisi huruf!",
-                        position: "top-end",
-                        showConfirmButton: false,
-                        timer: 2500
-                    });
-                    return false;
-                }
-
-                // Validasi No Handphone (harus angka)
-                if (!no_hp || isNaN(no_hp)) {
-                    Swal.fire({
-                        icon: "error",
-                        title: "Oops... Ada yang salah...",
-                        text: "No Handphone tidak boleh kosong & harus berupa angka!",
-                        position: "top-end",
-                        showConfirmButton: false,
-                        timer: 2500
-                    });
-                    return false;
-                }
-
-                // Validasi Email
-                if (!email || !email.includes('@')) {
-                    Swal.fire({
-                        icon: "error",
-                        title: "Oops... Ada yang salah...",
-                        text: "Masukkan email yang valid!",
-                        position: "top-end",
-                        showConfirmButton: false,
-                        timer: 2500
-                    });
-                    return false;
-                }
-
-                // Validasi KBK (tidak boleh kosong)
-                if (kbk === "") {
-                    Swal.fire({
-                        icon: "error",
-                        title: "Oops... Ada yang salah...",
-                        text: "Pilih KBK yang tersedia!",
-                        position: "top-end",
-                        showConfirmButton: false,
-                        timer: 2500
-                    });
-                    return false;
-                }
-
-                // Validasi Username (hanya teks)
-                if (!username || !isText(username)) {
-                    Swal.fire({
-                        icon: "error",
-                        title: "Oops... Ada yang salah...",
-                        text: "Username tidak boleh kosong & hanya boleh berisi huruf!",
-                        position: "top-end",
-                        showConfirmButton: false,
-                        timer: 2500
-                    });
-                    return false;
-                }
-
-                // Validasi Password (tidak boleh kosong)
-                if (!password) {
-                    Swal.fire({
-                        icon: "error",
-                        title: "Oops... Ada yang salah...",
-                        text: "Masukkan password Anda!",
-                        position: "top-end",
-                        showConfirmButton: false,
-                        timer: 2500
-                    });
-                    return false;
-                }
-
-                // Jika semua validasi lolos, kirim form menggunakan AJAX
-                $.ajax({
-                    url: form.attr('action'), // URL diambil dari atribut 'action' form
-                    type: 'POST',
-                    data: form.serialize(), // Kirim semua data form
-                    success: function(response) {
-                        Swal.fire({
-                            icon: "success",
-                            title: "Berhasil",
-                            text: "Data berhasil diupdate!",
-                            position: "top-end",
-                            showConfirmButton: false,
-                            timer: 2500
-                        });
-                        // Redirect setelah berhasil
-                        setTimeout(function() {
-                            window.location.href = "/admin/ketua-kbk";
-                        }, 1000);
-                    },
-                    error: function(xhr, status, error) {
-                        Swal.fire({
-                            icon: "error",
-                            title: "Oops... Ada yang salah...",
-                            text: "Gagal mengupdate data!",
-                            position: "top-end",
-                            showConfirmButton: false,
-                            timer: 2500
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Gagal',
+                                    text: errorMessage,
+                                });
+                            }
                         });
                     }
                 });
             });
-        });
-    </script> --}}
 
-<script>
-    window.deleteConfirm = function(e) {
-        e.preventDefault(); // Mencegah pengiriman form
-
-        var form = $(e.target).closest('form'); // Mengambil form terkait dan membungkusnya dengan jQuery
-
-        Swal.fire({
-            title: "Apakah Kamu yakin ?",
-            text: "Akun ini akan kamu hapus!",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, delete it!"
-        }).then((result) => {
-            if (result.isConfirmed) {
-                $.ajax({
-                    url: form.attr('action'), // Mengambil URL dari atribut action
-                    type: 'POST',
-                    data: form.serialize() + '&_method=DELETE', // Menggunakan serialize dari jQuery
-                    success: function(response) {
-                        location.reload(); // Untuk memuat ulang halaman
-                        // Tampilkan alert sukses
-                        Swal.fire({
-                            title: 'Dihapus!',
-                            text: 'KBK Telah Berhasil dihapus.',
-                            icon: 'success',
-                            confirmButtonText: 'OKE'
-                        })
-                    },
-                    error: function(xhr) {
-                        // Tangani kesalahan
-                        Swal.fire({
-                            title: 'Error!',
-                            text: 'There was a problem deleting the item.',
-                            icon: 'error',
-                            confirmButtonText: 'OK'
-                        });
-                    }
+            // Menampilkan alert setelah halaman dimuat
+            if (localStorage.getItem('successMessage')) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Berhasil',
+                    text: localStorage.getItem('successMessage'),
+                }).then(() => {
+                    // Menghapus pesan dari local storage setelah ditampilkan
+                    localStorage.removeItem('successMessage');
                 });
             }
         });
-    }
-</script>
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            // Ganti ID form dengan ID yang sesuai
+            @foreach ($admin as $adm)
+            $('#editForm_{{ $adm->id }}').submit(function(e) {
+                e.preventDefault();
+
+                // Ambil semua inputan
+                var nama_lengkap = $('#nama_{{ $adm->id }}').val();
+                var nip = $('#nip_{{ $adm->id }}').val();
+                var jabatan = $('#jabatan_{{ $adm->id }}').val();
+                var foto = $('#foto_{{ $adm->id }}').val();
+                var no_hp = $('#no_hp_{{ $adm->id }}').val();
+                var email = $('#email_{{ $adm->id }}').val();
+                var username = $('#username_{{ $adm->id }}').val();
+                var password = $('#password_{{ $adm->id }}').val();
+
+                // Cek jika inputan ada yang kosong
+                if (!nama_lengkap || !nip || !jabatan || !no_hp || !email || !username) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Semua inputan harus diisi!',
+                    });
+                    return false;
+                }
+
+                // Validasi file pas foto (hanya jpg, jpeg, png)
+                var allowedExtensions = /(\.jpg|\.jpeg|\.png)$/i;
+                if (foto && !allowedExtensions.exec(foto)) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Pas Foto harus berformat jpg, jpeg, atau png!',
+                    });
+                    return false;
+                }
+
+                // Konfirmasi untuk menyimpan data
+                Swal.fire({
+                    title: 'Update Data?',
+                    text: "Apakah Anda yakin ingin memperbarui data ini?",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Ya, Perbarui!',
+                    cancelButtonText: 'Batal'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Tutup modal sebelum submit form
+                        $('#basicModal{{ $adm->id }}').modal('hide');
+
+                        // Submit form secara manual
+                        $.ajax({
+                            url: $(this).attr('action'), // Ambil URL action dari form
+                            type: 'POST',
+                            data: new FormData(
+                            this), // Menggunakan FormData untuk file upload
+                            processData: false,
+                            contentType: false,
+                            success: function(response) {
+                                // Menyimpan pesan sukses di local storage
+                                localStorage.setItem('successMessage',
+                                    'Data telah berhasil diperbarui!');
+
+                                // Reload halaman
+                                location.reload();
+                            },
+                            error: function(xhr) {
+                                // Mengambil pesan error dari respons server
+                                let errorMessage =
+                                    'Terjadi kesalahan saat memperbarui data.';
+
+                                if (xhr.responseJSON && xhr.responseJSON.message) {
+                                    errorMessage = xhr.responseJSON
+                                    .message; // Mengambil pesan spesifik
+                                }
+
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Gagal',
+                                    text: errorMessage,
+                                });
+                            }
+                        });
+                    }
+                });
+            });
+
+            // Menampilkan alert setelah halaman dimuat
+            if (localStorage.getItem('successMessage')) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Berhasil',
+                    text: localStorage.getItem('successMessage'),
+                }).then(() => {
+                    // Menghapus pesan dari local storage setelah ditampilkan
+                    localStorage.removeItem('successMessage');
+                });
+            }
+            @endforeach
+        });
+    </script>
+
+
+    <script>
+        window.deleteConfirm = function(e) {
+            e.preventDefault(); // Mencegah pengiriman form
+
+            var form = $(e.target).closest('form'); // Mengambil form terkait dan membungkusnya dengan jQuery
+
+            Swal.fire({
+                title: "Apakah Kamu yakin ?",
+                text: "Akun ini akan kamu hapus!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, delete it!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: form.attr('action'), // Mengambil URL dari atribut action
+                        type: 'POST',
+                        data: form.serialize() + '&_method=DELETE', // Menggunakan serialize dari jQuery
+                        success: function(response) {
+                            location.reload(); // Untuk memuat ulang halaman
+                            // Tampilkan alert sukses
+                            Swal.fire({
+                                title: 'Dihapus!',
+                                text: 'Akun Telah Berhasil dihapus.',
+                                icon: 'success',
+                                confirmButtonText: 'OKE'
+                            })
+                        },
+                        error: function(xhr) {
+                            // Tangani kesalahan
+                            Swal.fire({
+                                title: 'Error!',
+                                text: 'There was a problem deleting the item.',
+                                icon: 'error',
+                                confirmButtonText: 'OK'
+                            });
+                        }
+                    });
+                }
+            });
+        }
+    </script>
 
 </body>
 

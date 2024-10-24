@@ -16,7 +16,8 @@
                                 aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <form action="/admin/ketua-kbk/store" enctype="multipart/form-data" method="post" id="uploadForm">
+                            <form action="/admin/ketua-kbk/store" enctype="multipart/form-data" method="post"
+                                id="uploadForm">
                                 @csrf
                                 <div class="row">
                                     <div class="col mb-6">
@@ -57,8 +58,7 @@
                                 <div class="row">
                                     <div class="col mb-6">
                                         <label for="nameBasic" class="form-label">Pas Foto</label>
-                                        <input type="file" id="foto" class="form-control"
-                                             name="pas_foto" />
+                                        <input type="file" id="foto" class="form-control" name="pas_foto" />
                                     </div>
                                 </div>
                                 <div class="row">
@@ -180,11 +180,10 @@
                         <th>NIP</th>
                         <th>KBK</th>
                         <th>Aksi</th>
-
                     </tr>
                 </thead>
                 <tbody class="table-border-bottom-0">
-                    @foreach ($kbk as $i => $k)
+                    @forelse ($kbk as $i => $k)
                         <tr>
                             <th scope="row">{{ ($kbk->currentPage() - 1) * $kbk->perPage() + $loop->iteration }}
                             </th>
@@ -192,174 +191,45 @@
                             <td>{{ $k->nip }}</td>
                             <td>{{ $k->KelompokKeahlian ? $k->KelompokKeahlian->nama_kbk : 'Tidak ada' }}</td>
                             <td>
-                                <a href="{{ route('show.k-kbk', $k->id) }}" class="btn btn-sm btn-success"><i
-                                        class='bx bxs-show'></i></a>
+                                <a href="{{ route('show.k-kbk', $k->id) }}" class="btn btn-sm btn-success">
+                                    <i class='bx bxs-show'></i>
+                                </a>
                                 <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal"
                                     data-bs-target="#basicModal{{ $k->id }}">
                                     <i class='bx bx-pencil'></i>
                                 </button>
-                                {{-- <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal"
-                                    data-bs-target="#basicModal{{ $k->id }}">
-                                    <i class='bx bx-pencil'></i>
-                                </button>  --}}
-                                {{-- button selanjutnya --}}
                                 <div class="btn btn-sm btn-danger">
-                                    <form method="post" action="{{ route('hapus.k-kbk', $k->id) }}" id="deleteForm">
+                                    <form method="post" action="{{ route('hapus.k-kbk', $k->id) }}"
+                                        id="deleteForm">
                                         @method('DELETE')
                                         @csrf
-                                        <a type="submit" onclick="deleteConfirm(event)"><i class='bx bx-trash'></i></a>
+                                        <a type="submit" onclick="deleteConfirm(event)"><i
+                                                class='bx bx-trash'></i></a>
                                     </form>
                                 </div>
-                                
-                                {{-- <a href="/admin/ketua-kbk/reset_password_KKBK/{id}" class="btn btn-sm btn-danger"><i class='bx bx-recycle'></i>Reset Password</a> --}}
-                                {{-- <button class="btn btn-danger" onclick="confirmResetPassword()">Reset Password</button> --}}
-
-                                <a href="{{ route('reset.password', $k->id) }}" class="btn btn-danger" onclick="confirmResetPassword()">Reset Password</a>
-
-                                {{-- <form id="resetPasswordForm" action="{{ route('reset.password', $k->id) }}" method="POST" style="display: none;">
-                                    @csrf
-                                </form> --}}
-
-
-
-                                <!-- Modal -->
-                                <div class="modal fade" id="basicModal{{ $k->id }}" tabindex="-1" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel1">update Ketua Kelompok
-                                                    Bidang Keahlian</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                    aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <form action="{{ route('update.k-kbk', $k->id) }}" method="post"
-                                                    id="editForm">
-                                                    @csrf
-                                                    <div class="row">
-                                                        <div class="col mb-6">
-                                                            <label for="nameBasic" class="form-label">Nama
-                                                                Lengkap</label>
-                                                            <input type="text" id="nama_lengkap"
-                                                                class="form-control" value="{{ $k->nama_lengkap }}"
-                                                                name="nama_lengkap" />
-                                                            @error('nama_lengkap')
-                                                                <div class="invalid-feedback">
-                                                                    {{ $message }}
-                                                                </div>
-                                                            @enderror
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col mb-6">
-                                                            <label for="nameBasic" class="form-label">Nip</label>
-                                                            <input type="text" id="nip" class="form-control"
-                                                                value="{{ $k->nip }}" name="nip" />
-                                                            @error('nip')
-                                                                <div class="invalid-feedback">
-                                                                    {{ $message }}
-                                                                </div>
-                                                            @enderror
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col mb-6">
-                                                            <label for="nameBasic" class="form-label">Jabatan</label>
-                                                            <input type="text" id="jabatan" class="form-control"
-                                                                value="{{ $k->jabatan }}" name="jabatan" />
-                                                            @error('jabatan')
-                                                                <div class="invalid-feedback">
-                                                                    {{ $message }}
-                                                                </div>
-                                                            @enderror
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col mb-6">
-                                                            <label for="nameBasic" class="form-label">No
-                                                                Handphone</label>
-                                                            <input type="number" id="no_hp" class="form-control"
-                                                                value="{{ $k->no_hp }}" name="no_hp" />
-                                                            @error('no_hp')
-                                                                <div class="invalid-feedback">
-                                                                    {{ $message }}
-                                                                </div>
-                                                            @enderror
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col mb-6">
-                                                            <label for="nameBasic" class="form-label">Email</label>
-                                                            <input type="email" id="email" class="form-control"
-                                                                value="{{ $k->email }}" name="email" />
-                                                            @error('email')
-                                                                <div class="invalid-feedback">
-                                                                    {{ $message }}
-                                                                </div>
-                                                            @enderror
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col mb-6">
-                                                            <label for="exampleFormControlSelect1" id="kbk"
-                                                                class="form-label">Pilih KBK</label>
-                                                            <select class="form-select" id="exampleFormControlSelect1"
-                                                                name="kbk_id" aria-label="Default select example">
-                                                                <option value="" selected>Pilih KBK</option>
-                                                                @foreach ($jenis_kbk as $j_kbk)
-                                                                    <option value="{{ $j_kbk->id }}">
-                                                                        {{ $j_kbk->nama_kbk }}</option>
-                                                                @endforeach
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col mb-6">
-                                                            <label for="nameBasic" class="form-label">Username</label>
-                                                            <input type="text" id="username" class="form-control"
-                                                                value="{{ $k->username }}" name="username" />
-                                                        </div>
-                                                    </div>
-                                                    {{-- <div class="row">
-                                                        <div class="col mb-6 form-password-toggle">
-                                                            <label for="nameBasic" class="form-label">Password</label>
-                                                            <div class="input-group input-group-merge">
-                                                                <input type="password" id="password"
-                                                                    class="form-control"
-                                                                    placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
-                                                                    name="password" aria-describedby="password" />
-                                                                <span class="input-group-text cursor-pointer"><i
-                                                                        class="bx bx-hide"></i></span>
-                                                                @error('password')
-                                                                    <div class="invalid-feedback">
-                                                                        {{ $message }}
-                                                                    </div>
-                                                                @enderror
-                                                            </div>
-                                                        </div>
-                                                    </div> --}}
-                                                    <input type="text" value="{{ $k->role }}" name="role"
-                                                        hidden>
-
-                                                    <br>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-outline-secondary me-1"
-                                                            data-bs-dismiss="modal">
-                                                            Batal
-                                                        </button>
-                                                        <button type="submit" class="btn btn-primary ms-1"
-                                                            id="btnSubmit">Update</button>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                <a href="{{ route('reset.password', $k->id) }}"
+                                    class="btn btn-danger resetPasswordBtn"
+                                    data-url="{{ route('reset.password', $k->id) }}">Reset Password</a>
                             </td>
                         </tr>
-                    @endforeach
+
+                        <!-- Modal Update -->
+                        <div class="modal fade" id="basicModal{{ $k->id }}" tabindex="-1"
+                            aria-hidden="true">
+                            <!-- Modal content here -->
+                        </div>
+
+                    @empty
+                        <tr>
+                            <td colspan="5" class="text-center">
+                                <img src="{{ asset('img/no-data.jpg') }}" style="width:15%; height:auto">
+                                <p>Opss.. <br> <span class="fw-bold">Tidak ada data yang tersedia.</span></p>
+                            </td>
+                        </tr>
+                    @endforelse
                 </tbody>
             </table>
+
             <div class="d-flex justify-content-end mt-2">
                 {{ $kbk->links() }}
             </div>

@@ -26,12 +26,12 @@
                 </tr>
                 <tr>
                     <th>Lampiran</th>
-                    <td>: <a href={{ asset('storage/public/' . $produk->lampiran) }} class="" target="_blank">Lihat
+                    <td>: <a href={{ asset('storage/' . $produk->lampiran) }} class="" target="_blank">Lihat
                             Lampiran</a></td>
                 </tr>
                 <tr>
                     <th>Gambar</th>
-                    <td>: <img src="{{ asset('storage/public/' . $produk->gambar) }}" alt="" style="width: 220px; height: 130px"></td>
+                    <td>: <img src="{{ asset('storage/' . $produk->gambar) }}" alt="" style="max-width: 70%; height: auto"></td>
                 </tr>
             </table>
         </div>

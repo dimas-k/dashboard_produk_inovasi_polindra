@@ -38,14 +38,15 @@
                     <div class="row g-4 ">
                         <div class="col-lg-5 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
                             <div class="team-item text-center rounded overflow-hidden">
+    
                                 <div class="m-4">
-                                    <img class="img-fluid" src={{ asset('img/carousel-1.jpg') }} alt="">
+                                    <img class="img-fluid" src={{ asset('storage/'.$kkbk->pas_foto) }} alt="">
                                 </div>
                                 <h5 class="mb-0">
                                     {{ $kkbk->nama_lengkap ?? ''}}
                                 </h5>
 
-                                <small>Ketua Kelompok Keahlian</small>
+                                <small>Ketua {{ $kkbk->nama_kbk }}</small>
                                 <div class="d-flex justify-content-center mt-3">
                                     <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-facebook-f"></i></a>
                                     <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-twitter"></i></a>

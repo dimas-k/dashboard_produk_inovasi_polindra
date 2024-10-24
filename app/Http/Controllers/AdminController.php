@@ -3,22 +3,26 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Produk;
 use Illuminate\Http\Request;
 use App\Models\KelompokKeahlian;
+use App\Models\Penelitian;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class AdminController extends Controller
 {
     public function dashboard()
     {
-        $kbk_navigasi = KelompokKeahlian::select(
-            'kelompok_keahlians.id',
-            'kelompok_keahlians.nama_kbk'
-        )
-        ->get();
-        return view('admin.index', compact('kbk_navigasi'));
+        $kbk_navigasi = KelompokKeahlian::select('id', 'nama_kbk')->get();
+        $prdk_valid = Produk::with('kelompokKeahlian') ->where('status', 'Tervalidasi')->count();
+        $prdk_nonvalid = Produk::with('kelompokKeahlian') ->where('status', 'Belum Divalidasi')->count();
+
+        $pnltan_valid = Penelitian::with('kelompokKeahlian') ->where('status', 'Tervalidasi')->count();
+        $pnltan_nonvalid = Penelitian::with('kelompokKeahlian') ->where('status', 'Belum Divalidasi')->count();
+        return view('admin.index', compact('kbk_navigasi' , 'pnltan_valid' , 'pnltan_nonvalid' , 'prdk_valid' , 'prdk_nonvalid'));
     }
 
 
@@ -68,7 +72,7 @@ class AdminController extends Controller
             $fileName = time() . '_' . str_replace(' ', '_', $originalName);
     
             // Simpan file ke storage/app/public/dokumen-user
-            $path = $request->file('pas_foto')->storeAs('public/dokumen-user', $fileName);
+            $path = $request->file('pas_foto')->storeAs('dokumen-user', $fileName);
     
             // Simpan path utuh di database
             $admin->pas_foto = $path;
@@ -91,6 +95,7 @@ class AdminController extends Controller
             'jabatan' => 'required',
             'username' => 'required',
             'password' => 'nullable|min:3',
+            'pas_foto' =>'file|mimes:jpg,jpeg,png|max:2048',
         ]);
 
         $admin = User::find($id);
@@ -100,6 +105,20 @@ class AdminController extends Controller
         $admin->email = $request->email;
         $admin->jabatan = $request->jabatan;
         $admin->username = $request->username;
+        if ($request->hasFile('pas_foto')) {
+            // Hapus foto lama jika ada
+            if ($admin->pas_foto && Storage::exists($admin->pas_foto)) {
+                Storage::delete($admin->pas_foto);
+            }
+            
+            // Simpan foto baru
+            $originalName = $request->file('pas_foto')->getClientOriginalName();
+            $fileName = time() . '_' . str_replace(' ', '_', $originalName);
+            $path = $request->file('pas_foto')->storeAs('dokumen-user', $fileName);
+            
+            // Simpan path ke database
+            $admin->pas_foto = $path;
+        }
         if ($request->password) {
             $admin->password = Hash::make($request->password);
         } // Hashing password
@@ -148,37 +167,10 @@ class AdminController extends Controller
 
     public function storeDataKetuaKbk(Request $request)
     {
-        // $validasi = $request->validate([
-        //     'nama_lengkap' => 'required|string',
-        //     'nip' => 'required|numeric|digits_between:1,20',
-        //     'kbk_id' => 'required|exists:kelompok_keahlians,id',
-        //     'no_hp' => 'required',
-        //     'email' => 'required|email|unique:users',
-        //     'jabatan' => 'required',
-        //     'username' => 'required',
-        //     'password' => 'required',
-        //     'role' => 'required',
-        // ]);
-
-        // $k_kbk = new User();
-        // $k_kbk->nama_lengkap = $request->nama_lengkap;
-        // $k_kbk->nip = $request->nip;
-        // $k_kbk->kbk_id = $request->kbk_id;
-        // $k_kbk->no_hp = $request->no_hp;
-        // $k_kbk->email = $request->email;
-        // $k_kbk->jabatan = $request->jabatan;
-        // $k_kbk->username = $request->username;
-        // $k_kbk->password = Hash::make($request->password); // Hashing password
-        // $k_kbk->role = $request->role;
-
-        // $k_kbk->save($validasi);
-
-        // dd($k_kbk);
-
-        // return redirect('/admin/ketua-kbk')->with('success', 'Data ketua Kelompok Keahlian berhasil ditambahkan!');
+        
         $validasi = $request->validate([
             'nama_lengkap' => 'required|string',
-            'nip' => 'required|numeric|digits_between:1,20',
+            'nip' => 'required|numeric|digits_between:1,20|unique:users',
             'kbk_id' => 'required|exists:kelompok_keahlians,id',
             'no_hp' => 'required',
             'email' => 'required|email|unique:users',
@@ -202,7 +194,7 @@ class AdminController extends Controller
             $fileName = time() . '_' . str_replace(' ', '_', $originalName);
     
             // Simpan file ke storage/app/public/dokumen-user
-            $path = $request->file('pas_foto')->storeAs('public/dokumen-user', $fileName);
+            $path = $request->file('pas_foto')->storeAs('dokumen-user', $fileName);
     
             // Simpan path utuh di database
             $k_kbk->pas_foto = $path;
@@ -220,13 +212,13 @@ class AdminController extends Controller
     {
         $validasi = $request->validate([
             'nama_lengkap' => 'required|string',
-            'nip' => 'required|numeric|digits_between:1,20',
+            'nip' => 'required|numeric|digits_between:1,20|unique:users,email,' . $id,
             'kbk_id' => 'required|exists:kelompok_keahlians,id',
             'no_hp' => 'required',
             'email' => 'required|email|unique:users,email,' . $id,
             'jabatan' => 'required',
             'username' => 'required',
-
+            'pas_foto' =>'file|mimes:jpg,jpeg,png|max:2048',
             'role' => 'required',
         ]);
 
@@ -237,10 +229,22 @@ class AdminController extends Controller
         $k_kbk->no_hp = $request->no_hp;
         $k_kbk->email = $request->email;
         $k_kbk->jabatan = $request->jabatan;
+        if ($request->hasFile('pas_foto')) {
+            // Hapus foto lama jika ada
+            if ($k_kbk->pas_foto && Storage::exists($k_kbk->pas_foto)) {
+                Storage::delete($k_kbk->pas_foto);
+            }
+            
+            // Simpan foto baru
+            $originalName = $request->file('pas_foto')->getClientOriginalName();
+            $fileName = time() . '_' . str_replace(' ', '_', $originalName);
+            $path = $request->file('pas_foto')->storeAs('dokumen-user', $fileName);
+            
+            // Simpan path ke database
+            $k_kbk->pas_foto = $path;
+        }
         $k_kbk->username = $request->username;
-        // if ($request->filled('password')) {
-        //     $k_kbk->password = bcrypt($request->password);
-        // } // Hashing password
+        
         $k_kbk->role = $request->role;
 
         $k_kbk->save($validasi);
@@ -267,7 +271,7 @@ class AdminController extends Controller
         $user->password = bcrypt('@Polindra123'); // Atau Anda bisa menggunakan Hash::make('@Polindra123');
         $user->save();
 
-        return redirect()->back()->with('success', 'Password berhasil direset menjadi "@Polindra123".');
+        return response()->json(['message' => 'Password berhasil direset menjadi "@Polindra123".']);
     }
 
 }

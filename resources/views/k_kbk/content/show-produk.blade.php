@@ -29,11 +29,11 @@
                 </tr>
                 <tr>
                     <th>Gambar Produk</th>
-                    <td>: <img src="{{ asset( 'storage/public/' . $produk->gambar) }}" alt="" ></td>
+                    <td>: <img src="{{ asset( 'storage/' . $produk->gambar) }}" alt="" style="max-width: 70%; height: auto"></td>
                 </tr>
                 <tr>
                     <th>Lampiran</th>
-                    <td>: <a href={{ asset( 'storage/public/' . $produk->lampiran) }} class=""
+                    <td>: <a href={{ asset( 'storage/' . $produk->lampiran) }} class=""
                         target="_blank">Lihat Lampiran</a></td>
                 </tr>
             </table>

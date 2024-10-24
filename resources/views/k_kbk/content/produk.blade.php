@@ -24,7 +24,7 @@
                                             aria-label="Default select example">
                                             <option value="" selected>Pilih KBK</option>
                                             @foreach ($kkbk as $j_kbk)
-                                                <option value="{{ $j_kbk->id}}">{{ $j_kbk->nama_kbk}}</option>
+                                                <option value="{{ $j_kbk->id }}">{{ $j_kbk->nama_kbk }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -142,7 +142,7 @@
                     </tr>
                 </thead>
                 <tbody class="table-border-bottom-0">
-                    @foreach ($produks as $i => $p)
+                    @forelse ($produks as $i => $p)
                         <tr>
                             <th scope="row">
                                 {{ ($produks->currentPage() - 1) * $produks->perPage() + $loop->iteration }}
@@ -169,14 +169,16 @@
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel1">Update Produk {{ $p->nama_produk  }}
+                                                <h5 class="modal-title" id="exampleModalLabel1">Update Produk
+                                                    {{ $p->nama_produk }}
                                                 </h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                     aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
-                                                <form action="{{ route('update.produk', $p->id) }}" enctype="multipart/form-data"
-                                                    method="post" id="editForm_{{ $p->id }}">
+                                                <form action="{{ route('update.produk', $p->id) }}"
+                                                    enctype="multipart/form-data" method="post"
+                                                    id="editForm_{{ $p->id }}">
                                                     @method('PUT')
                                                     @csrf
                                                     <div class="row">
@@ -194,9 +196,9 @@
                                                         <div class="col mb-6">
                                                             <label for="nameBasic" class="form-label">Nama
                                                                 produk</label>
-                                                            <input type="text" id="nama_produk_{{ $p->id }}"
-                                                                class="form-control"
-                                                                value="{{ $p->nama_produk }}"
+                                                            <input type="text"
+                                                                id="nama_produk_{{ $p->id }}"
+                                                                class="form-control" value="{{ $p->nama_produk }}"
                                                                 name="nama_produk" />
                                                             @error('nama_produk')
                                                                 <div class="invalid-feedback">
@@ -209,8 +211,7 @@
                                                         <div class="col mb-6">
                                                             <label for="nameBasic"
                                                                 class="form-label">Deskripsi</label>
-                                                            <textarea class="form-control" name="deskripsi" id="deskripsi_{{ $p->id }}"
-                                                                style="height: 100px">{{ $p->deskripsi }}</textarea>
+                                                            <textarea class="form-control" name="deskripsi" id="deskripsi_{{ $p->id }}" style="height: 100px">{{ $p->deskripsi }}</textarea>
                                                             @error('deskripsi')
                                                                 <div class="invalid-feedback">
                                                                     {{ $message }}
@@ -222,22 +223,23 @@
                                                         <div class="col mb-6">
                                                             <label for="nameBasic" class="form-label">Gambar
                                                                 Produk</label>
-                                                            <input type="file" id="gambar_{{ $p->id }}" class="form-control"
-                                                                name="gambar" />
+                                                            <input type="file" id="gambar_{{ $p->id }}"
+                                                                class="form-control" name="gambar" />
                                                             @error('gambar')
                                                                 <div class="invalid-feedback">
                                                                     {{ $message }}
                                                                 </div>
                                                             @enderror
-                                                            <span class="text-danger"><i class='bx bxs-error me-1'></i>File harus di inputkan kembali</span>
+                                                            <span class="text-danger"><i
+                                                                    class='bx bxs-error me-1'></i>File dapat diinputkan kembali atau tidak</span>
                                                         </div>
                                                     </div>
                                                     <div class="row">
                                                         <div class="col mb-6">
                                                             <label for="nameBasic" class="form-label">Nama
                                                                 Inventor</label>
-                                                            <input type="text" id="inventor_{{ $p->id }}" class="form-control"
-                                                                value="{{ $p->inventor }}"
+                                                            <input type="text" id="inventor_{{ $p->id }}"
+                                                                class="form-control" value="{{ $p->inventor }}"
                                                                 name="inventor" />
                                                             @error('inventor')
                                                                 <div class="invalid-feedback">
@@ -250,8 +252,7 @@
                                                         <div class="col mb-6">
                                                             <label for="nameBasic" class="form-label">Anggota
                                                                 Inventor</label>
-                                                            <textarea class="form-control" id="anggota_{{$p->id}}" style="height: 80px"
-                                                                name="anggota_inventor">{{ $p->anggota_inventor }}</textarea>
+                                                            <textarea class="form-control" id="anggota_{{ $p->id }}" style="height: 80px" name="anggota_inventor">{{ $p->anggota_inventor }}</textarea>
                                                             @error('anggota_inventor')
                                                                 <div class="invalid-feedback">
                                                                     {{ $message }}
@@ -263,28 +264,30 @@
                                                         <div class="col mb-6">
                                                             <label for="nameBasic" class="form-label">Email
                                                                 Inventor</label>
-                                                            <input type="email" id="email_{{ $p->id }}" class="form-control"
-                                                                value="{{ $p->email_inventor }}"
+                                                            <input type="email" id="email_{{ $p->id }}"
+                                                                class="form-control" value="{{ $p->email_inventor }}"
                                                                 name="email_inventor" />
                                                             @error('email_inventor')
                                                                 <div class="invalid-feedback">
                                                                     {{ $message }}
                                                                 </div>
                                                             @enderror
-                                                            
+
                                                         </div>
                                                     </div>
                                                     <div class="row">
                                                         <div class="col mb-6">
                                                             <label for="nameBasic" class="form-label">Lampiran</label>
-                                                            <input type="file" id="lampiran_{{ $p->id }}" class="form-control"
-                                                                name="lampiran" />
+                                                            <input type="file" id="lampiran_{{ $p->id }}"
+                                                                class="form-control" name="lampiran" />
                                                             @error('lampiran')
                                                                 <div class="invalid-feedback">
                                                                     {{ $message }}
                                                                 </div>
                                                             @enderror
-                                                            <span class="text-danger"><i class='bx bxs-error me-1'></i>File harus di inputkan kembali</span>
+                                                            <span class="text-danger"><i
+                                                                    class='bx bxs-error me-1'></i>File harus di
+                                                                inputkan kembali</span>
                                                         </div>
                                                     </div>
                                                     <hr class="border-3 w-100">
@@ -309,15 +312,24 @@
                                         onclick="deleteConfirm(event)"><i class='bx bx-trash'></i></button>
                                 </form> --}}
                                 <div class="btn btn-sm btn-danger">
-                                    <form method="post" action="{{ route('hapus.produk', $p->id) }}" id="deleteForm">
+                                    <form method="post" action="{{ route('hapus.produk', $p->id) }}"
+                                        id="deleteForm">
                                         @method('DELETE')
                                         @csrf
-                                        <a type="submit" onclick="deleteConfirm(event)"><i class='bx bx-trash'></i></a>
+                                        <a type="submit" onclick="deleteConfirm(event)"><i
+                                                class='bx bx-trash'></i></a>
                                     </form>
                                 </div>
                             </td>
                         </tr>
-                    @endforeach
+                    @empty
+                        <tr>
+                            <td colspan="5" class="text-center">
+                                <img src="{{ asset('img/no-data.jpg') }}" style="width:15%; height:auto">
+                                <p>Opss.. <br> <span class="fw-bold">Tidak ada data yang tersedia.</span></p>
+                            </td>
+                        </tr>
+                    @endforelse
                 </tbody>
             </table>
             <div class="d-flex justify-content-end mt-2">

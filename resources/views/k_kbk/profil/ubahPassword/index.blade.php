@@ -63,7 +63,7 @@
                     @include('k_kbk.content.profil-ubahPasswordUser')
                 </div>
                 <!-- / Content -->
-                
+
                 <div class="content-backdrop fade"></div>
             </div>
             <!-- Content wrapper -->
@@ -96,6 +96,74 @@
 
     <!-- Place this tag before closing body tag for github widget button. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        $(document).ready(function() {
+            // Fungsi untuk menampilkan pesan SweetAlert
+            function showError(message) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: message,
+                });
+            }
+
+            // Fungsi validasi form
+            $("#changePassForm").submit(function(e) {
+                let passwordLama = $('#password_lama').val();
+                let passwordBaru = $('#password_baru').val();
+                let passwordKonfirmasi = $('#password_baru_confirmation').val();
+
+                // Validasi jika ada inputan yang kosong
+                if (!passwordLama) {
+                    showError('Password lama tidak boleh kosong!');
+                    e.preventDefault();
+                    return false;
+                }
+
+                if (!passwordBaru) {
+                    showError('Password baru tidak boleh kosong!');
+                    e.preventDefault();
+                    return false;
+                }
+
+                if (!passwordKonfirmasi) {
+                    showError('Konfirmasi password tidak boleh kosong!');
+                    e.preventDefault();
+                    return false;
+                }
+
+                // Validasi jika password baru dan konfirmasi password tidak sama
+                if (passwordBaru !== passwordKonfirmasi) {
+                    showError('Konfirmasi password harus sama dengan password baru!');
+                    e.preventDefault();
+                    return false;
+                }
+
+                // Jika semua validasi lolos, tampilkan SweetAlert success sebelum submit form
+                Swal.fire({
+                    title: 'Apakah Anda yakin?',
+                    text: "Password akan diganti dengan yang baru!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Ya, ubah password!',
+                    cancelButtonText: 'Batal'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $(this).unbind('submit').submit(); // submit form jika user konfirmasi
+                    }
+                });
+
+                // Prevent form submit sebelum SweetAlert diselesaikan
+                e.preventDefault();
+            });
+        });
+    </script>
+
 </body>
 
 </html>

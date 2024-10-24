@@ -3,7 +3,7 @@
         <h5 class="card-header border-3 w-100 mb-2"><i class='bx bx-table me-2'></i>Ubah Password Akun<br>
             {{ auth()->user()->nama_lengkap }}</h5>
         <div class="table-responsive text-nowrap">
-            <form action="{{ route('proses.ubah.password', auth()->user()->id) }}" method="post">
+            <form action="{{ route('proses.ubah.password', auth()->user()->id) }}" method="post" id="changePassForm">
                 @csrf
                 <table class="table table-borderless">
                     <tr>
@@ -59,7 +59,7 @@
                         </td>
                     </tr>
                 </table>
-                <button type="submit" class="btn btn-primary">Ubah Password</button>
+                <button type="submit" class="btn btn-primary m-2">Ubah Password</button>
             </form>
         </div>
     </div>

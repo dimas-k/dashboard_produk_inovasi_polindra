@@ -18,10 +18,12 @@ class DashboardController extends Controller
     {
         $kbk = KelompokKeahlian::all();
         $jumlah_kbk = KelompokKeahlian::all()->count();
-        $jumlah_produk = Produk::all()->count();
-        $jumlah_pusat_penelitian = Penelitian::all()->count();
+        $jumlah_produk = Produk::where('status', 'Tervalidasi')->count();
+        $jumlah_pusat_penelitian = Penelitian::where('status', 'Tervalidasi')->count();
+        $produk = Produk::where('status', 'Tervalidasi')->get();
+        $pusat_penelitian = Penelitian::where('status', 'Tervalidasi')->get();
         // dd($jumlah_kbk);
-        return view('dashboard.index', compact('kbk','jumlah_kbk','jumlah_produk','jumlah_pusat_penelitian'));
+        return view('dashboard.index', compact('kbk','jumlah_kbk','jumlah_produk','jumlah_pusat_penelitian', 'produk', 'pusat_penelitian'));
     }
 
     public function contact()
@@ -39,6 +41,7 @@ class DashboardController extends Controller
             ->select(
                 'users.id',
                 'users.nama_lengkap',
+                'users.pas_foto',
                 'kelompok_keahlians.nama_kbk',
                 'kelompok_keahlians.deskripsi'
             )
@@ -63,7 +66,7 @@ class DashboardController extends Controller
             'users.nip', 
             'users.jabatan', 
             'users.no_hp', 
-            'users.email', 
+            'users.email',
             'kelompok_keahlians.nama_kbk', 
             'kelompok_keahlians.jurusan', 
             'produks.nama_produk', 

@@ -3,6 +3,7 @@
         <h5 class="card-header border-3 w-100 mb-2"><i class='bx bx-table me-2'></i>Data
             {{ auth()->user()->nama_lengkap }}
         </h5>
+        <img src="{{ asset('storage/'. auth()->user()->pas_foto) }}" class="rounded-circle mx-auto d-block mb-5 mt-2" alt="" style="width: 140px; height: 140px; border-radius: 70%; object-fit: cover;">
         <div class="table-responsive text-nowrap">
 
             <table class="table table-borderless">
@@ -19,18 +20,18 @@
                     <td>: {{ auth()->user()->jabatan }}</td>
                 </tr>
                 <tr>
+                    <th>Kelompok Keahlian</th>
+                    <td>:
+                        {{ auth()->user()->kelompokKeahlian ? auth()->user()->kelompokKeahlian->nama_kbk : 'Tidak ada' }}
+                    </td>
+                </tr>
+                <tr>
                     <th>email</th>
                     <td>: {{ auth()->user()->email }}</td>
                 </tr>
                 <tr>
                     <th>no handphone</th>
                     <td>: {{ auth()->user()->no_hp }}</td>
-                </tr>
-                <tr>
-                    <th>Kelompok Keahlian</th>
-                    <td>:
-                        {{ auth()->user()->kelompokKeahlian ? auth()->user()->kelompokKeahlian->nama_kbk : 'Tidak ada' }}
-                    </td>
                 </tr>
                 <tr>
                     <th>username</th>
@@ -40,7 +41,7 @@
             </table>
 
             <a href="/k-kbk/profil/edit" class="btn btn-primary m-3">Edit data profil</a>
-            <a href="/k-kbk/profil/ubah_password/{$id}" class="btn btn-primary m-3">Ubah Password</a>
+            <a href="/k-kbk/profil/ubah_password/{$id}" class="btn btn-outline-primary m-3">Ubah Password</a>
         </div>
     </div>
 </div>

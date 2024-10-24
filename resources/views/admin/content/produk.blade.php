@@ -20,7 +20,7 @@
                         $nomor = ($data_produk->currentPage() - 1) * $data_produk->perPage() + 1; // Menghitung nomor awal berdasarkan halaman
                     @endphp
 
-                    @foreach ($data_produk as $p)
+                    @forelse ($data_produk as $p)
                         <tr>
                             <th scope="row">{{ $nomor++ }}</th>
                             <td>{{ $p->nama_produk }}</td>
@@ -50,7 +50,14 @@
                                 </form>
                             </td>
                         </tr>
-                    @endforeach
+                    @empty
+                        <tr>
+                            <td colspan="5" class="text-center">
+                                <img src="{{ asset('img/no-data.jpg') }}" style="width:15%; height:auto">
+                                <p>Opss.. <br> <span class="fw-bold">Tidak ada data yang tersedia.</span></p>
+                            </td>
+                        </tr>
+                    @endforelse
                 </tbody>
             </table>
             <div class="d-flex justify-content-end mt-2">
