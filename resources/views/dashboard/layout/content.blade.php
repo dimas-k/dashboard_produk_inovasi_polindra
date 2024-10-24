@@ -82,7 +82,7 @@
                 <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
                     <div class="fact-item bg-light rounded text-center h-100 p-5">
                         <i class="fa fa-cogs fa-4x text-primary mb-4"></i>
-                        <h5 class="mb-3">Pusat Penelitian</h5>
+                        <h5 class="mb-3">Penelitian</h5>
                         <h1 class="display-5 mb-0" data-toggle="counter-up">
                             {{ $jumlah_pusat_penelitian }}
                         </h1>
@@ -240,7 +240,7 @@
         <div class="container">
             <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
                 <h6 class="section-title bg-white text-center text-primary px-3">Testimonial</h6>
-                <h1 class="display-6 mb-4">Pusat Penelitian</h1>
+                <h1 class="display-6 mb-4">Penelitian</h1>
             </div>
             <div class="owl-carousel testimonial-carousel wow fadeInUp" data-wow-delay="0.1s">
                 <div class="testimonial-item bg-light rounded p-4">

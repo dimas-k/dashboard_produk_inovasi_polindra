@@ -39,6 +39,7 @@ class DashboardController extends Controller
             ->select(
                 'users.id',
                 'users.nama_lengkap',
+                'users.email',
                 'kelompok_keahlians.nama_kbk',
                 'kelompok_keahlians.deskripsi'
             )

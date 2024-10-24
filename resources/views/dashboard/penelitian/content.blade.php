@@ -47,9 +47,7 @@
 
                                 <small>Ketua Kelompok Keahlian</small>
                                 <div class="d-flex justify-content-center mt-3">
-                                    <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-facebook-f"></i></a>
-                                    <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-twitter"></i></a>
-                                    <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-instagram"></i></a>
+                                    <a class="btn btn-square btn-primary mx-1" href="mailto:{{ $kkbk->email }}"><i class="fa fa-envelope"></i></a>
                                 </div>
                             </div>
                         </div>
