@@ -42,6 +42,7 @@ class DashboardController extends Controller
                 'users.id',
                 'users.nama_lengkap',
                 'users.pas_foto',
+                'users.email',
                 'kelompok_keahlians.nama_kbk',
                 'kelompok_keahlians.deskripsi'
             )
