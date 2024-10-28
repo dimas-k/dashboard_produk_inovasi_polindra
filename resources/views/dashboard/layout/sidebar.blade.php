@@ -5,33 +5,22 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarCollapse">
         <div class="navbar-nav d-flex w-100 p-3 p-lg-0">
-            <a href="/dashboard" class="nav-item nav-link">Home</a>
+            <a href="/" class="nav-item nav-link {{ Request::is('/') ? 'active' : '' }}">Home</a>
             <div class="nav-item dropdown">
-                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">KBK</a>
+                <a href="#" class="nav-link dropdown-toggle {{ Request::is('dashboard/kelompok-bidang-keahlian/*') ? 'active' : '' }}" data-bs-toggle="dropdown">Kelompok Bidang Keahlian</a>
                 <div class="dropdown-menu border-0 rounded-0 rounded-bottom m-0">
-                    {{-- <a href="/dashboard/penelitian" class="dropdown-item">KBK Sistem Informasi</a> --}}
-                    {{-- <a href="/dashboard/penelitian" class="dropdown-item">KBK Rekayasa Perangkat Lunak dan
-                        Pengetahuan</a> --}}
-                    {{-- <a href="/dashboard/penelitian" class="dropdown-item">⁠KBK Sistem Komputer dan Jaringan</a> --}}
-                    {{-- <a href="/dashboard/penelitian" class="dropdown-item">KBK Sains Data</a> --}}
-                    {{-- <a href="/dashboard/penelitian" class="dropdown-item">KBK Fundamental and Management Nursing</a> --}}
-                    {{-- <a href="/dashboard/penelitian" class="dropdown-item">⁠KBK Clinical Care Nursing</a> --}}
-                    {{-- <a href="/dashboard/penelitian" class="dropdown-item">KBK Mental Health and Community Nursing</a> --}}
-                    {{-- <a href="/dashboard/penelitian" class="dropdown-item">KBK Perancangan dan Manufaktur</a> --}}
-                    {{-- <a href="/dashboard/penelitian" class="dropdown-item">⁠KBK Rekayasa Material</a> --}}
-                    {{-- <a href="/dashboard/penelitian" class="dropdown-item">⁠KBK RHVAC</a> --}}
-                    {{-- <a href="/dashboard/penelitian" class="dropdown-item">⁠KBK Instrumentasi dan Kontrol</a> --}}
-
                     @foreach ($kbk as $i)
-                    <a href="{{ route('dashboard/penelitian/',$i->id) }}" class="dropdown-item">{{ $i->nama_kbk }}⁠</a>
+                    <a href="{{ route('dashboard.penelitian', $i->nama_kbk) }}" 
+                       class="dropdown-item {{ Request::is('dashboard/kelompok-bidang-keahlian/' . $i->nama_kbk) ? 'active' : '' }}">
+                        {{ $i->nama_kbk }}
+                    </a>
                     @endforeach
                 </div>
             </div>  
-            <a href="/dashboard/contact" class="nav-item nav-link">Contact Us</a>
-
-            <a href="https://siki.polindra.ac.id/" class="nav-item nav-link" target="_blank">Sentra Ki</a>
-            <a href="/login" class="nav-item nav-link" target="_blank">Login</a>
-
+            <a href="/dashboard/kontak" class="nav-item nav-link {{ Request::is('dashboard/kontak') ? 'active' : '' }}">Kontak Kami</a>
+            <a href="https://siki.polindra.ac.id/" class="nav-item nav-link" target="_blank">Sentra KI</a>
+            <a href="/login" class="nav-item nav-link {{ Request::is('login') ? 'active' : '' }}" target="_blank">Login</a>
         </div>
     </div>
 </nav>
+

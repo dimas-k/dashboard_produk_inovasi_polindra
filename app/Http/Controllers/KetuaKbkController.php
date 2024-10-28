@@ -297,12 +297,12 @@ class KetuaKbkController extends Controller
     {
         $request->validate([
             'judul' => 'required|string|max:255',
-            'abstrak' => 'required|file|mimes:pdf|max:2048',
+            'abstrak' => 'file|mimes:pdf|max:2048',
             'penulis' => 'required|string|max:255',
             'anggota_penulis' => 'nullable|string',
             'email_penulis' => 'required|email',
-            'gambar' => 'required|file|mimes:jpeg,png,jpg|max:2048', // Sesuaikan dengan format file yang diperbolehkan
-            'lampiran' => 'nullable|file|mimes:jpeg,png,jpg,pdf,docx|max:2048',
+            'gambar' => 'file|mimes:jpeg,png,jpg|max:2048', // Sesuaikan dengan format file yang diperbolehkan
+            'lampiran' => 'file|mimes:jpeg,png,jpg,pdf,docx|max:2048',
         ]);
         $penelitian = Penelitian::findOrFail($id);
         $penelitian->judul = $request->judul;

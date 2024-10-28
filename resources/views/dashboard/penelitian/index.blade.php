@@ -34,8 +34,9 @@
 
     <!-- Template Stylesheet -->
     <link rel="stylesheet" href={{ asset('css/dashboard.css') }}>
+    <link rel="icon" type="image/x-icon" href="{{ asset('assets-admin/img/logo-polindra.png') }}" />
 
-    <title>Dashboard</title>
+    <title>Dashboard Produk Inovasi dan Penelitian || Ketua Kelompok Keahlian</title>
 
 </head>
 

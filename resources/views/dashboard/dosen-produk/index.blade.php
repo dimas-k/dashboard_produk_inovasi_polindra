@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
 
-    <link href="img/favicon.ico" rel="icon">
+    {{-- <link href="img/favicon.ico" rel="icon"> --}}
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -29,13 +32,22 @@
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href={{ asset('assets/bootstrap/css/bootstrap.min.css') }} rel="stylesheet">
+    <style>
+        .hover-animate img {
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .hover-animate img:hover {
+            transform: scale(1.1);
+            /* Zoom effect */
+        }
+    </style>
 
     <!-- Template Stylesheet -->
     <link rel="stylesheet" href={{ asset('css/dashboard.css') }}>
     <link rel="icon" type="image/x-icon" href="{{ asset('assets-admin/img/logo-polindra.png') }}" />
 
-
-    <title>Dashboard Produk Inovasi dan Penelitian || kontak Kami</title>
+    <title>Dashboard Produk Inovasi dan Penelitian || Detail Produk</title>
 
 </head>
 
@@ -51,7 +63,7 @@
             @include('dashboard.layout.sidebar')
 
             <!--app-content open-->
-            @include('dashboard.contact.content')
+            @include('dashboard.dosen-produk.content')
             <!--app-content close-->
 
         </div>
@@ -63,7 +75,8 @@
     </div>
 
     <!-- Back to Top -->
-    <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded-circle back-to-top"><i class="bi bi-arrow-up"></i></a>
+    <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded-circle back-to-top"><i
+            class="bi bi-arrow-up"></i></a>
 
 
     <!-- JavaScript Libraries -->

@@ -1,14 +1,14 @@
 <!-- Page Header Start -->
-<div class="container-fluid page-header py-5 mb-5 wow fadeIn" data-wow-delay="0.1s">
-        <div class="container text-center py-5">
-            <h1 class="display-4 text-white animated slideInDown mb-3">Kelompok Bidang Keahlian</h1>
-            {{-- <nav aria-label="breadcrumb animated slideInDown">
+<div class="container-fluid page-header py-5 mb-5 wow fadeIn" data-wow-delay="0.01s">
+    <div class="container text-center py-5">
+        <h1 class="display-4 text-white animated slideInDown mb-3">Kelompok Bidang Keahlian</h1>
+        <nav aria-label="breadcrumb animated slideInDown">
                 <ol class="breadcrumb justify-content-center mb-0">
-                    <li class="breadcrumb-item"><a class="text-white" href="#">Home</a></li>
-                    <li class="breadcrumb-item text-primary active" aria-current="page">Kelompok Bidang Keahlian</li>
+                    <li class="breadcrumb-item"><a class="text-white" href="/">Home</a></li>
+                    <li class="breadcrumb-item text-primary active" aria-current="page">{{ $kkbk->nama_kbk }}</li>
                 </ol>
-            </nav> --}}
-        </div>
+            </nav>
+    </div>
 </div>
 <!-- Page Header End -->
 
@@ -19,13 +19,13 @@
                 <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
                     <h6 class="section-title bg-white text-center text-primary px-3">Kelompok Bidang Keahlian</h6>
                     <h1 class="display-6 mb-4">
-                        {{$kbk_nama->nama_kbk ?? '' }}
+                        {{ $kkbk->nama_kbk ?? '' }}
                     </h1>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="resume-item mb-4 shadow">
-                    <strong>Deskripsi {{ $kbk_nama->nama_kbk ?? ''}}</strong><br>
+                    <strong>Deskripsi {{ $kkbk->nama_kbk }}</strong><br>
                     <p>{!! $kkbk->deskripsi ?? '' !!}</p>
                 </div>
             </div>
@@ -37,18 +37,19 @@
                     {{-- <h3>Lead Product Designer</h3> --}}
                     <div class="row g-4 ">
                         <div class="col-lg-5 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                            <div class="team-item text-center rounded overflow-hidden">
-    
+                            <div class="team-item text-center rounded overflow-hidden shadow">
+
                                 <div class="m-4">
-                                    <img class="img-fluid" src={{ asset('storage/'.$kkbk->pas_foto) }} alt="">
+                                    <img class="img-fluid" src={{ asset('storage/' . $kkbk->pas_foto) }} alt="">
                                 </div>
                                 <h5 class="mb-0">
-                                    {{ $kkbk->nama_lengkap ?? ''}}
+                                    {{ $kkbk->nama_lengkap ?? '' }}
                                 </h5>
 
                                 <small>Ketua {{ $kkbk->nama_kbk }}</small>
                                 <div class="d-flex justify-content-center mt-3">
-                                    <a class="btn btn-square btn-primary mx-1" href="mailto:{{ $kkbk->email }}"><i class="fa fa-envelope"></i></a>
+                                    <a class="btn btn-square btn-primary mx-1" href="mailto:{{ $kkbk->email }}"><i
+                                            class="fa fa-envelope"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -60,37 +61,40 @@
 </section>
 <!-- .section -->
 
-{{-- <div class="article-meta">
-    <div>By Kontributor Satu TUVV </div>
-    <div>17 July 2023 </div>
-    <div> Kelompok Keahlian </div>
-    <div>Tags: Kelompok Keahlian, KK</div>
-</div> --}}
-
 <div class="container-xxl py-5">
     <div class="container">
         <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
             <h6 class="section-title bg-white text-center text-primary px-3">Produk</h6>
-            {{-- <h1 class="display-6 mb-4">Produk</h1> --}}
         </div>
-        {{-- @foreach ( as )
-
-            <div class="row g-4">
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                    <a class="service-item d-block rounded text-center p-4 link-underline link-underline-opacity-0" href="/dashboard/detail-penelitian">
-                        <img class="img-fluid rounded" src={{ asset('public/storage/public/dokumen-produk/1729177938_gitar.jpeg') }} alt="Gambar Produk">
+        <div class="row g-4">
+            @foreach ($data_produk as $i => $pro)
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <a class="service-item d-block rounded text-center p-4 link-underline link-underline-opacity-0"
+                        href="{{ route('detail.produk',  $pro->nama_produks) }}">
+                        <img class="img-fluid w-100" src="{{ asset('storage/' . $pro->gambar) }}" alt="Gambar Produk">
+                        <h6 class="mt-2">{{ $pro->nama_produks }}</h6>
                     </a>
                 </div>
-            </div>
-        @endforeach --}}
-        <div class="row g-4">
-            <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                <a class="service-item d-block rounded text-center p-4 link-underline link-underline-opacity-0" href="/dashboard/detail-penelitian">
-                    <img class="img-fluid rounded" src={{ asset('img/carousel-1.jpg') }} alt="Gambar Produk">
-                </a>
-            </div>
+            @endforeach
         </div>
-
+    </div>
+</div>
+<div class="container-xxl py-5">
+    <div class="container">
+        <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
+            <h6 class="section-title bg-white text-center text-primary px-3">Penelitian</h6>
+        </div>
+        <div class="row g-4">
+            @foreach ($data_penelitian as $plt)
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <a class="service-item d-block rounded text-center p-4 link-underline link-underline-opacity-0"
+                        href="/dashboard/detail-penelitian">
+                        <img class="img-fluid w-100" src="{{ asset('storage/' . $plt->gambar) }}" alt="Gambar penelitian">
+                        <h6 class="mt-2">{{ $plt->judul}}</h6>
+                    </a>
+                </div>
+            @endforeach
+        </div>
     </div>
 </div>
 <!-- .section -->

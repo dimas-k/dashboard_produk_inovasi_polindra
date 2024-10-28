@@ -230,8 +230,8 @@
                                                                     {{ $message }}
                                                                 </div>
                                                             @enderror
-                                                            <span class="text-danger"><i
-                                                                    class='bx bxs-error me-1'></i>File dapat diinputkan kembali atau tidak</span>
+                                                            <span class="text-danger"><small><i
+                                                                class='bx bxs-error me-1'></i>Jika tidak ada perubahan file tidak usah dinputkan kembali</small></span>
                                                         </div>
                                                     </div>
                                                     <div class="row">
@@ -285,9 +285,8 @@
                                                                     {{ $message }}
                                                                 </div>
                                                             @enderror
-                                                            <span class="text-danger"><i
-                                                                    class='bx bxs-error me-1'></i>File harus di
-                                                                inputkan kembali</span>
+                                                            <span class="text-danger"><small><i
+                                                                class='bx bxs-error me-1'></i>Jika tidak ada perubahan file tidak usah dinputkan kembali</small></span>
                                                         </div>
                                                     </div>
                                                     <hr class="border-3 w-100">

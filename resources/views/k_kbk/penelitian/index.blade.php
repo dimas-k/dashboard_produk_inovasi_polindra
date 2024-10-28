@@ -248,12 +248,12 @@
                     const abstrakExtensions = /(\.pdf)$/i;
 
                     // Validasi input kosong
-                    if (!judul || !abstrak || !anggota || !email || !penulis || !gambar || !lampiran) {
+                    if (!judul || !anggota || !email || !penulis) {
 
                         Swal.fire({
                             icon: 'error',
                             title: 'Gagal',
-                            text: 'Semua input harus diisi!',
+                            text: 'Semua input harus diisi kecuali abstrak, gambar, dan lampiran!',
                         });
                         return;
                     }
