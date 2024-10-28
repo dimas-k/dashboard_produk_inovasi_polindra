@@ -49,13 +49,13 @@
                                 @endif
                             </p>
                             <div class="article-meta-sm mt-2">
-                                <div>{{ $g_produk->kelompokKeahlian->nama_kbk }}</div>
+                                <div><a class="link-secondary" href="{{ route('dashboard.penelitian', ['nama_kbk' => $g_produk->KelompokKeahlian->nama_kbk]) }}">{{ $g_produk->kelompokKeahlian->nama_kbk }}</a></div>
                                 <div>{{ $g_produk->kelompokKeahlian->nama_kbk }}</div>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-4 col-sm-12 ps-md-4">
-                        
+
                     </div>
                 </div>
             @endforeach

@@ -3,11 +3,11 @@
     <div class="container text-center py-5">
         <h1 class="display-4 text-white animated slideInDown mb-3">Kelompok Bidang Keahlian</h1>
         <nav aria-label="breadcrumb animated slideInDown">
-                <ol class="breadcrumb justify-content-center mb-0">
-                    <li class="breadcrumb-item"><a class="text-white" href="/">Home</a></li>
-                    <li class="breadcrumb-item text-primary active" aria-current="page">{{ $kkbk->nama_kbk }}</li>
-                </ol>
-            </nav>
+            <ol class="breadcrumb justify-content-center mb-0">
+                <li class="breadcrumb-item"><a class="text-white" href="/">Home</a></li>
+                <li class="breadcrumb-item text-primary active" aria-current="page">{{ $kkbk->nama_kbk }}</li>
+            </ol>
+        </nav>
     </div>
 </div>
 <!-- Page Header End -->
@@ -64,18 +64,23 @@
 <div class="container-xxl py-5">
     <div class="container">
         <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
-            <h6 class="section-title bg-white text-center text-primary px-3">Produk</h6>
+            <h6 class="section-title bg-white text-center text-primary px-3">Penelitian</h6>
+            {{-- <h1 class="display-6 mb-4">Penelitian Terbaru</h1> --}}
         </div>
-        <div class="row g-4">
-            @foreach ($data_produk as $i => $pro)
-                <div class="col-lg-4 col-md-6 col-sm-12">
-                    <a class="service-item d-block rounded text-center p-4 link-underline link-underline-opacity-0"
-                        href="{{ route('detail.produk',  $pro->nama_produks) }}">
-                        <img class="img-fluid w-100" src="{{ asset('storage/' . $pro->gambar) }}" alt="Gambar Produk">
-                        <h6 class="mt-2">{{ $pro->nama_produks }}</h6>
-                    </a>
+        <div class="owl-carousel project-carousel wow fadeInUp" data-wow-delay="0.1s">
+            @foreach ($data_produk as $p)
+                <div class="project-item border rounded h-100 p-4" data-dot="{{ $loop->iteration }}">
+                    <div class="position-relative mb-4">
+                        <img class="img-fluid rounded" src="{{ asset('storage/' . $p->gambar) }}"
+                            alt="Gambar Produk">
+                        <a href="{{ asset('storage/' . $p->gambar) }}" data-lightbox="project">
+                            <i class="fa fa-eye fa-2x"></i>
+                        </a>
+                    </div>
+                    <h6>{{ $p->nama_produks }}</h6>
                 </div>
             @endforeach
+
         </div>
     </div>
 </div>
@@ -83,17 +88,22 @@
     <div class="container">
         <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
             <h6 class="section-title bg-white text-center text-primary px-3">Penelitian</h6>
+            {{-- <h1 class="display-6 mb-4">Penelitian Terbaru</h1> --}}
         </div>
-        <div class="row g-4">
+        <div class="owl-carousel project-carousel wow fadeInUp" data-wow-delay="0.1s">
             @foreach ($data_penelitian as $plt)
-                <div class="col-lg-4 col-md-6 col-sm-12">
-                    <a class="service-item d-block rounded text-center p-4 link-underline link-underline-opacity-0"
-                        href="/dashboard/detail-penelitian">
-                        <img class="img-fluid w-100" src="{{ asset('storage/' . $plt->gambar) }}" alt="Gambar penelitian">
-                        <h6 class="mt-2">{{ $plt->judul}}</h6>
-                    </a>
+                <div class="project-item border rounded h-100 p-4" data-dot="{{ $loop->iteration }}">
+                    <div class="position-relative mb-4">
+                        <img class="img-fluid rounded" src="{{ asset('storage/' . $plt->gambar) }}"
+                            alt="Gambar Produk">
+                        <a href="{{ asset('storage/' . $plt->gambar) }}" data-lightbox="project">
+                            <i class="fa fa-eye fa-2x"></i>
+                        </a>
+                    </div>
+                    <h6>{{ $plt->judul }}</h6>
                 </div>
             @endforeach
+
         </div>
     </div>
 </div>
