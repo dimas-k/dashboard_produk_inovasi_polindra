@@ -32,15 +32,12 @@ class KetuaKbkController extends Controller
     public function anggotaPage()
     {
         $kelompokKeahlianId = Auth::user()->kelompokKeahlian->id ?? null;
-
-        // Query produk berdasarkan kelompok keahlian ID dan sertakan anggota inventor
         $anggotas = AnggotaKelompokKeahlian::with('kelompokKeahlian')
-            ->where('kelompok_keahlian_id', $kelompokKeahlianId) // Ganti dengan ID KBK yang sesuai
+            ->where('kbk_id', $kelompokKeahlianId) // Ganti dengan ID KBK yang sesuai
             ->paginate(10);
 
         $userId = Auth::id();
-        $kkbk = DB::table('users')
-            ->join('kelompok_keahlians', 'users.kbk_id', '=', 'kelompok_keahlians.id')
+        $kkbk = DB::table('users')->join('kelompok_keahlians', 'users.kbk_id', '=', 'kelompok_keahlians.id')
             ->select(
                 'kelompok_keahlians.id',
                 'kelompok_keahlians.nama_kbk',
@@ -55,10 +52,11 @@ class KetuaKbkController extends Controller
         $request->validate([
             'nama_lengkap' => 'required|string|max:255',
             'jabatan' => 'required|string|max:255',
-            'kelompok_keahlian_id' => 'required|exists:kelompok_keahlians,id', // Pastikan ini sesuai dengan relasi
+            'kbk_id' => 'required|exists:kelompok_keahlians,id', // Pastikan ini sesuai dengan relasi
         ]);
 
         $anggota = new AnggotaKelompokKeahlian();
+        $anggota->kbk_id = $request->input('kbk_id');
         $anggota->nama_lengkap = $request->input('nama_lengkap');
         $anggota->jabatan = $request->input('jabatan');
         $anggota->kelompok_keahlian_id = $request->input('kelompok_keahlian_id');

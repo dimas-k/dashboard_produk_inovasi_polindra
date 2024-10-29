@@ -29,6 +29,6 @@ class KelompokKeahlian extends Model
     }
     public function anggota()
     {
-        return $this->hasMany(AnggotaKelompokKeahlian::class, 'kelompok_keahlian_id');
+        return $this->hasMany(AnggotaKelompokKeahlian::class, 'kbk_id');
     }
 }
