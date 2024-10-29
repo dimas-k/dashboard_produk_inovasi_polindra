@@ -123,12 +123,13 @@
 
             Swal.fire({
                 title: "Apakah Kamu yakin ?",
-                text: "Produk ini akan kamu hapus!",
+                text: "Nama anggota ini akan kamu hapus!",
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#3085d6",
                 cancelButtonColor: "#d33",
-                confirmButtonText: "Yes, delete it!"
+                confirmButtonText: "Ya, hapus!",
+                cancelButtonText: 'Batal'
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
@@ -160,7 +161,7 @@
         }
     </script>
 
-    {{-- <script>
+    <script>
         $(document).ready(function() {
             $('#uploadForm').on('submit', function(e) {
                 e.preventDefault(); // Mencegah submit default
@@ -169,7 +170,7 @@
                 var formData = new FormData(this);
                 Swal.fire({
                     title: 'Simpan Data?',
-                    text: "Apakah Anda yakin ingin simpan data produk ini?",
+                    text: "Apakah Anda yakin ingin simpan data anggota ini?",
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
@@ -179,7 +180,7 @@
                 }).then((result) => {
                     if (result.isConfirmed) {
                         $.ajax({
-                            url: '/k-kbk/produk/store',
+                            url: '/k-kbk/anggota-kbk/store',
                             type: 'POST',
                             data: formData,
                             contentType: false,
@@ -218,114 +219,69 @@
                 });
             });
         });
-    </script> --}}
+    </script>
+    <script>
+        $(document).ready(function() {
+            @foreach ($anggotas as $p)
+                $('#editForm_{{ $p->id }}').on('submit', function(e) {
+                    e.preventDefault(); // Mencegah submit default
 
-<script>
-    $(document).ready(function() {
-        // Loop untuk setiap form berdasarkan ID produk
-        @foreach ($anggotas as $p)
-            $('#editForm_{{ $p->id }}').on('submit', function(e) {
-                e.preventDefault(); // Mencegah submit form secara langsung
-
-                // Ambil ID produk untuk elemen yang sedang diproses
-                const id = '{{ $p->id }}';
-
-                // Mengambil nilai input berdasarkan ID produk
-                const nama_produk = $('#nama_produk_' + id).val();
-                const deskripsi = $('#deskripsi_' + id).val();
-                const anggota = $('#anggota_' + id).val();
-                const email = $('#email_' + id).val();
-                const inventor = $('#inventor_' + id).val();
-                const gambar = $('#gambar_' + id)[0].files.length ? $('#gambar_' + id)[0].files[0] : null;
-                const lampiran = $('#lampiran_' + id)[0].files.length ? $('#lampiran_' + id)[0].files[0] : null;
-
-                // Regex untuk validasi file extensions
-                const gambarExtensions = /(\.jpg|\.jpeg|\.png)$/i;
-                const lampiranExtensions = /(\.jpg|\.jpeg|\.png|\.pdf|\.docx)$/i;
-
-                const maxGambarSize = 10 * 1024 * 1024; // 10MB
-                const maxLampiranSize = 10 * 1024 * 1024; // 2MB
-
-                // Validasi input kosong
-                if (!nama_produk || !deskripsi || !anggota || !email || !inventor) {
+                    // Buat form data
+                    var formData = new FormData(this);
                     Swal.fire({
-                        icon: 'error',
-                        title: 'Gagal',
-                        text: 'Semua input harus diisi!',
+                        title: 'Simpan Data?',
+                        text: "Apakah Anda yakin ingin update data anggota ini?",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Ya, Simpan!',
+                        cancelButtonText: 'Batal'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            $.ajax({
+                                url: $(this).attr('action'),
+                                type: 'POST',
+                                data: formData,
+                                contentType: false,
+                                processData: false,
+                                success: function(response) {
+                                    if (response.success) {
+                                        // Jika sukses, tutup modal dan tampilkan pesan success
+                                        $('#basicModal').modal('hide');
+                                        Swal.fire({
+                                            icon: 'success',
+                                            title: 'Berhasil',
+                                            text: response.message,
+                                        }).then(() => {
+                                            // Redirect atau reload halaman jika diperlukan
+                                            window.location.reload();
+                                        });
+                                    }
+                                },
+                                error: function(xhr) {
+                                    let errorMessage = 'Terjadi kesalahan.';
+
+                                    // Cek apakah ada pesan error yang lebih detail dari respons JSON
+                                    if (xhr.responseJSON && xhr.responseJSON.message) {
+                                        errorMessage = xhr.responseJSON.message;
+                                    }
+
+                                    // Tampilkan alert error dengan pesan yang jelas
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: 'Error',
+                                        text: errorMessage,
+                                    });
+                                }
+                            });
+                        }
                     });
-                    return;
-                }
-
-                // Validasi format dan ukuran file gambar
-                if (gambar) {
-                    if (!gambarExtensions.exec(gambar.name)) {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Gagal',
-                            text: 'Gambar produk harus dalam format JPG, JPEG, atau PNG!',
-                        });
-                        return;
-                    }
-                    if (gambar.size > maxGambarSize) {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Gagal',
-                            text: 'Ukuran gambar tidak boleh lebih dari 10MB!',
-                        });
-                        return;
-                    }
-                }
-
-                // Validasi format dan ukuran file lampiran
-                if (lampiran) {
-                    if (!lampiranExtensions.exec(lampiran.name)) {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Gagal',
-                            text: 'Lampiran harus dalam format JPG, JPEG, PNG, PDF, atau DOCX!',
-                        });
-                        return;
-                    }
-                    if (lampiran.size > maxLampiranSize) {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Gagal',
-                            text: 'Ukuran lampiran tidak boleh lebih dari 10MB!',
-                        });
-                        return;
-                    }
-                }
-
-                // Jika semua validasi lolos, submit form
-                Swal.fire({
-                    title: 'Simpan Data?',
-                    text: "Apakah Anda yakin ingin update data produk ini?",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Ya, Simpan!',
-                    cancelButtonText: 'Batal'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        // Tutup modal sebelum submit form
-                        $('#basicModal_' + id).modal('hide');
-
-                        // Submit form yang terkait berdasarkan ID produk
-                        $('#editForm_' + id)[0].submit();
-
-                        // Tampilkan alert setelah submit sukses
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Berhasil',
-                            text: 'Data berhasil diupdate!'
-                        });
-                    }
                 });
-            });
-        @endforeach
-    });
-</script>
+            @endforeach
+        });
+    </script>
+
 
 
 

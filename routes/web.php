@@ -80,7 +80,8 @@ Route::middleware(['auth', 'role:ketua_kbk'])->group(function () {
 
     Route::get('/k-kbk/anggota-kbk', [KetuaKbkController::class, 'anggotaPage']);
     Route::post('/k-kbk/anggota-kbk/store', [KetuaKbkController::class, 'storeAnggota']);
-    Route::get('/k-kbk/anggota-kbk/lihat/{id}', [KetuaKbkController::class, 'showAnggota'])->name('lihat.anggota');
+    Route::put('/k-kbk/anggota-kbk/edit/{id}', [KetuaKbkController::class, 'updateAnggota'])->name('edit.anggota');
+    Route::delete('/k-kbk/anggota-kbk/hapus/{id}', [KetuaKbkController::class, 'hapusAnggota'])->name('hapus.anggota');
 
     Route::get('/k-kbk/produk', [KetuaKbkController::class, 'produkInovasi']);
     Route::get('/k-kbk/produk/lihat/{id}', [KetuaKbkController::class, 'showProduk'])->name('lihat.produk');

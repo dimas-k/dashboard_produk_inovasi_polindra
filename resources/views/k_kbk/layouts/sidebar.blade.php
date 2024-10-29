@@ -25,7 +25,7 @@
         </li>
         <li class="menu-item">
             <a href="/k-kbk/anggota-kbk" class="menu-link">
-                <i class="menu-icon tf-icons bx bxs-user-plus"></i>
+                <i class="menu-icon tf-icons bx bxs-user"></i>
                 <div class="text-truncate" data-i18n="Dashboard">Anggota KBK</div>
             </a>
         </li>

@@ -36,7 +36,7 @@
                             </li>
                         </ul>
                     @endforeach
-                    
+
                 </div>
             </div>
 
@@ -78,7 +78,10 @@
             {{-- <h1 class="display-6 mb-4">Penelitian Terbaru</h1> --}}
         </div>
         <div class="owl-carousel project-carousel wow fadeInUp" data-wow-delay="0.1s">
-            @foreach ($data_produk as $p)
+            @php
+                $uniqueProducts = $data_produk->unique('id_produks');
+            @endphp
+            @foreach ($uniqueProducts as $p)
                 <a href="{{ route('detail.produk', $p->nama_produks) }}">
                     <div class="project-item-new border rounded h-100 p-4" data-dot="{{ $loop->iteration }}">
                         <div class="position-relative mb-4">

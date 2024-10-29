@@ -56,7 +56,7 @@ class DashboardController extends Controller
             ->join('kelompok_keahlians', 'anggota_kelompok_keahlians.kbk_id', '=', 'kelompok_keahlians.id')
             ->where('kelompok_keahlians.nama_kbk', '=', $nama_kbk)
             ->select(
-                'anggota_kelompok_keahlians.id',
+                'anggota_kelompok_keahlians.nama_lengkap',
                 'anggota_kelompok_keahlians.nama_lengkap'
             )->get();
 
@@ -69,26 +69,21 @@ class DashboardController extends Controller
         // }
 
         // $data_produk = Produk::where('kbk_id', $id)->get();
-        $data_produk = DB::table('users')
-            ->join('kelompok_keahlians', 'users.kbk_id', '=', 'kelompok_keahlians.id')
-            ->join('produks', 'produks.kbk_id', '=', 'kelompok_keahlians.id')
+        $data_produk = DB::table('produks')
+            ->join('kelompok_keahlians', 'produks.kbk_id', '=', 'kelompok_keahlians.id')
+            ->join('users', 'users.kbk_id', '=', 'kelompok_keahlians.id')
             ->select(
                 'produks.id as id_produks',
-                'users.nama_lengkap',
-                'users.nip',
-                'users.jabatan',
-                'users.no_hp',
-                'users.email',
-                'kelompok_keahlians.nama_kbk',
-                'kelompok_keahlians.jurusan',
                 'produks.nama_produk as nama_produks',
                 'produks.deskripsi as produk_deskripsi',
-                'produks.gambar',
-                'produks.inventor',
-                'produks.anggota_inventor',
-                'produks.email_inventor',
-                'produks.lampiran',
-            )->where('kelompok_keahlians.nama_kbk', '=', $nama_kbk)->where('status', 'Tervalidasi')->latest('produks.created_at')->get();
+                'produks.gambar'
+            )
+            ->where('kelompok_keahlians.nama_kbk', '=', $nama_kbk)
+            ->where('status', 'Tervalidasi')
+            ->groupBy('produks.nama_produk')  // Group by product ID to remove duplicates
+            ->latest('produks.created_at')
+            ->get();
+
 
         $data_penelitian = DB::table('users')
             ->join('kelompok_keahlians', 'users.kbk_id', '=', 'kelompok_keahlians.id')

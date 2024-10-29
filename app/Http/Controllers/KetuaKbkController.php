@@ -49,27 +49,83 @@ class KetuaKbkController extends Controller
 
     public function storeAnggota(Request $request)
     {
-        $request->validate([
-            'nama_lengkap' => 'required|string|max:255',
-            'jabatan' => 'required|string|max:255',
-            'kbk_id' => 'required|exists:kelompok_keahlians,id', // Pastikan ini sesuai dengan relasi
-        ]);
+        try {
+            $request->validate(
+                [
+                    'nama_lengkap' => 'required|string|max:255',
+                    'jabatan' => 'required|string|max:255',
+                    'kbk_id' => 'required|exists:kelompok_keahlians,id',
+                    'email'=>'required|email',
+                ],
+                [
+                    'nama_lengkap.required' => 'Nama Lengkap anggota harus diisi',
+                    'jabatan.required' => 'Jabatan anggota harus diisi',
+                    'kbk_id.required' => 'KBK harus diisi',
+                    'email.required'=>'Email harus diisi',
+                    'email.email'=>'Masukkan email yang valid'
+                ]
+            );
 
-        $anggota = new AnggotaKelompokKeahlian();
-        $anggota->kbk_id = $request->input('kbk_id');
-        $anggota->nama_lengkap = $request->input('nama_lengkap');
-        $anggota->jabatan = $request->input('jabatan');
-        $anggota->save();
+            $anggota = new AnggotaKelompokKeahlian();
+            $anggota->kbk_id = $request->input('kbk_id');
+            $anggota->nama_lengkap = $request->input('nama_lengkap');
+            $anggota->jabatan = $request->input('jabatan');
+            $anggota->email = $request->input('email');
+            $anggota->save();
 
-        // Redirect atau return response
-        return redirect()->back()->with('success', 'Anggota berhasil ditambahkan!');
+            return response()->json([
+                'success' => true,
+                'message' => 'Data anggota berhasil disimpan.'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Terjadi kesalahan : ' . $e->getMessage()
+            ], 500);
+        }
     }
-    public function showAngggota($id)
+    public function updateAnggota(Request $request, $id)
     {
-        $anggota = AnggotaKelompokKeahlian::with('kelompokKeahlian')->findOrFail($id);
-
-        return view('k_kbk.anggota.show.index', compact('anggota'));
+        try {
+            $request->validate(
+                [
+                    'nama_lengkap' => 'required|string|max:255',
+                    'jabatan' => 'required|string|max:255',
+                    'email'=>'required|email',
+                ],
+                [
+                    'nama_lengkap.required' => 'Nama Lengkap anggota harus diisi',
+                    'jabatan.required' => 'Jabatan anggota harus diisi',
+                    'email.required'=>'Email harus diisi',
+                    'email.email'=>'Masukkan email yang valid'
+                ]
+            );
+    
+            $anggota = AnggotaKelompokKeahlian::findOrFail($id);
+            $anggota->nama_lengkap = $request->input('nama_lengkap');
+            $anggota->jabatan = $request->input('jabatan');
+            $anggota->email = $request->input('email');
+            $anggota->save();
+            return response()->json([
+                'success' => true,
+                'message' => 'Data anggota berhasil diupdate.'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Terjadi kesalahan : ' . $e->getMessage()
+            ], 500);
+        }
     }
+
+    public function hapusAnggota($id)
+    {
+        $anggota = AnggotaKelompokKeahlian::findOrFail($id);
+        $anggota->delete();
+
+        return redirect('/k-kbk/anggota-kbk')->with('success', 'Data anggota berhasil dihapus!');
+    }
+
     public function produkInovasi()
     {
         // $jenis_kbk = KelompokKeahlian::all();
