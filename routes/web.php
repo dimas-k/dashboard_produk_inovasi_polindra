@@ -78,6 +78,9 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 Route::middleware(['auth', 'role:ketua_kbk'])->group(function () {
     Route::get('/k-kbk/dashboard', [KetuaKbkController::class, 'dashboardPage']);
 
+    Route::get('/k-kbk/anggota-kbk', [KetuaKbkController::class, 'anggotaPage']);
+    Route::post('/k-kbk/anggota-kbk/store', [KetuaKbkController::class, 'storeAnggota']);
+
     Route::get('/k-kbk/produk', [KetuaKbkController::class, 'produkInovasi']);
     Route::get('/k-kbk/produk/lihat/{id}', [KetuaKbkController::class, 'showProduk'])->name('lihat.produk');
     Route::post('/k-kbk/produk/store', [KetuaKbkController::class, 'storeProduk']);

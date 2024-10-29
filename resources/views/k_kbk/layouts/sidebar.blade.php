@@ -24,6 +24,12 @@
             </a>
         </li>
         <li class="menu-item">
+            <a href="/k-kbk/anggota-kbk" class="menu-link">
+                <i class="menu-icon tf-icons bx bxs-user-plus"></i>
+                <div class="text-truncate" data-i18n="Dashboard">Anggota KBK</div>
+            </a>
+        </li>
+        <li class="menu-item">
             <a href="/k-kbk/produk" class="menu-link">
                 <i class='menu-icon tf-icons bx bxs-cog'></i>
                 <div class="text-truncate" data-i18n="Produk Inovasi">Produk Inovasi</div>

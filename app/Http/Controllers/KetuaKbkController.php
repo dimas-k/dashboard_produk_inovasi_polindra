@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
+use App\Models\AnggotaKelompokKeahlian;
 use Illuminate\Support\Facades\Storage;
 
 
@@ -26,6 +27,45 @@ class KetuaKbkController extends Controller
         $pnltan_valid = Penelitian::with('kelompokKeahlian')->where('kbk_id', $kelompokKeahlianId)->where('status', 'Tervalidasi')->count();
         $pnltan_nonvalid = Penelitian::with('kelompokKeahlian')->where('kbk_id', $kelompokKeahlianId)->where('status', 'Belum Divalidasi')->count();
         return view('k_kbk.index', compact('pnltan_valid', 'pnltan_nonvalid', 'pnltan_nonvalid', 'prdk_valid', 'prdk_nonvalid'));
+    }
+
+    public function anggotaPage()
+    {
+        $kelompokKeahlianId = Auth::user()->kelompokKeahlian->id ?? null;
+
+        // Query produk berdasarkan kelompok keahlian ID dan sertakan anggota inventor
+        $anggotas = AnggotaKelompokKeahlian::with('kelompokKeahlian')
+            ->where('kelompok_keahlian_id', $kelompokKeahlianId) // Ganti dengan ID KBK yang sesuai
+            ->paginate(10);
+
+        $userId = Auth::id();
+        $kkbk = DB::table('users')
+            ->join('kelompok_keahlians', 'users.kbk_id', '=', 'kelompok_keahlians.id')
+            ->select(
+                'kelompok_keahlians.id',
+                'kelompok_keahlians.nama_kbk',
+                'users.nama_lengkap'
+            )->where('users.id', '=', $userId)->get();
+
+        return view('k_kbk.anggota.index', compact('anggotas', 'kkbk'));
+    }
+
+    public function storeAnggota(Request $request)
+    {
+        $request->validate([
+            'nama_lengkap' => 'required|string|max:255',
+            'jabatan' => 'required|string|max:255',
+            'kelompok_keahlian_id' => 'required|exists:kelompok_keahlians,id', // Pastikan ini sesuai dengan relasi
+        ]);
+
+        $anggota = new AnggotaKelompokKeahlian();
+        $anggota->nama_lengkap = $request->input('nama_lengkap');
+        $anggota->jabatan = $request->input('jabatan');
+        $anggota->kelompok_keahlian_id = $request->input('kelompok_keahlian_id');
+        $anggota->save();
+
+        // Redirect atau return response
+        return redirect()->back()->with('success', 'Anggota berhasil ditambahkan!');
     }
     public function produkInovasi()
     {
@@ -217,9 +257,9 @@ class KetuaKbkController extends Controller
                 'email_penulis' => 'required|email',
                 'gambar' => 'required|file|mimes:jpeg,png,jpg|max:10240', // Sesuaikan dengan format file yang diperbolehkan
                 'lampiran' => 'required|file|mimes:jpeg,png,jpg,pdf,docx|max:10240',
-            ],[
+            ], [
                 'judul.required' => 'Judul penelitian wajib diisi.',
-                'kbk_id.required' =>'Harap Isi Kbk',
+                'kbk_id.required' => 'Harap Isi Kbk',
                 'penulis.required' => 'Nama penulis wajib diisi.',
                 'email_penulis.required' => 'Email penulis wajib diisi.',
                 'email_penulis.email' => 'Email penulis tidak valid.',
@@ -230,67 +270,66 @@ class KetuaKbkController extends Controller
 
                 'abstrak.max' => 'Ukuran file abstrak maksimal 10MB.',
                 'gambar.max' => 'Ukuran file gambar maksimal 10MB.',
-                'lampiran.max' => 'Ukuran file lampiran maksimal 10MB.', 
+                'lampiran.max' => 'Ukuran file lampiran maksimal 10MB.',
 
                 'abstrak.mimes' => 'File abstrak harus berupa PDF.',
                 'gambar.mimes' => 'File gambar harus berupa JPG, JPEG, atau PNG.',
                 'lampiran.mimes' => 'File lampiran harus berupa JPG, JPEG, PNG, PDF, atau DOCX.',
             ]);
-    
+
             $penelitian = new Penelitian();
             $penelitian->kbk_id = $request->kbk_id;
             $penelitian->judul = $request->judul;
             $penelitian->penulis = $request->penulis;
             $penelitian->anggota_penulis = $request->anggota_penulis;
             $penelitian->email_penulis = $request->email_penulis;
-    
+
             if ($request->hasFile('abstrak')) {
                 $originalName = $request->file('abstrak')->getClientOriginalName();
                 $fileName = time() . '_' . str_replace(' ', '_', $originalName);
-    
+
                 // Simpan file ke folder 'storage/app/public/dokumen-penelitian'
                 $path = $request->file('abstrak')->storeAs('dokumen-penelitian', $fileName);
-    
+
                 // Simpan path utuh ke database
                 $penelitian->abstrak = $path;
             }
-    
+
             if ($request->hasFile('gambar')) {
                 $originalName = $request->file('gambar')->getClientOriginalName();
                 $fileName = time() . '_' . str_replace(' ', '_', $originalName);
-    
+
                 // Simpan file ke folder 'storage/app/public/dokumen-penelitian'
                 $path = $request->file('gambar')->storeAs('dokumen-penelitian', $fileName);
-    
+
                 // Simpan path utuh ke database
                 $penelitian->gambar = $path;
             }
-    
+
             if ($request->hasFile('lampiran')) {
                 $originalName = $request->file('lampiran')->getClientOriginalName();
                 $fileName = time() . '_' . str_replace(' ', '_', $originalName);
-    
+
                 // Simpan file ke folder 'storage/app/public/dokumen-penelitian'
                 $path = $request->file('lampiran')->storeAs('dokumen-penelitian', $fileName);
-    
+
                 // Simpan path utuh ke database
                 $penelitian->lampiran = $path;
             }
-    
+
             $penelitian->save();
-    
+
             return response()->json([
                 'success' => true,
                 'message' => 'Produk berhasil disimpan.'
             ]);
-        }  catch (\Exception $e) {
+        } catch (\Exception $e) {
             // Jika ada error, return response error dengan pesan
             return response()->json([
                 'success' => false,
                 'message' => 'Terjadi kesalahan : ' . $e->getMessage()
             ], 500);
         }
-        
     }
 
     public function updatePenelitian(Request $request, $id)

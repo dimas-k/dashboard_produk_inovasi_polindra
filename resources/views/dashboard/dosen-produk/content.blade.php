@@ -22,6 +22,10 @@
                 </div>
             </div>
 
+            <div class="container-fluid">
+                
+            </div>
+
             @foreach ($p_dosen as $index => $g_produk)
                 <div class="col-12 d-flex flex-wrap align-items-start mb-4">
                     <!-- Image Section -->
@@ -34,15 +38,15 @@
                         </a>
                     </div>
                     <!-- Text Section -->
-                    <div class="col-md-4 col-sm-12 ps-md-4">
+                    <div class="col-md-6 col-sm-12 ps-md-4">
                         <div>
                             <h3><a href="{{ route('detail.produk', ['nama_produk' => $g_produk->nama_produk]) }}">{{ $g_produk->nama_produk }}</a></h3>
                             @php
-                                $limitedDescription = \Illuminate\Support\Str::limit($g_produk->deskripsi, 70, '');
+                                $limitedDescription = \Illuminate\Support\Str::limit($g_produk->deskripsi, 120, '');
                             @endphp
-                            <p>
+                            <p style="white-space: normal; word-wrap: break-word;">
                                 {{ $limitedDescription }}
-                                @if (strlen($g_produk->deskripsi) > 70)
+                                @if (strlen($g_produk->deskripsi) > 120)
                                     <a href="{{ route('detail.produk', ['nama_produk' => $g_produk->nama_produk]) }}"
                                        class="link-offset-3-hover link-underline-opacity-75-hover">
                                         ...Selengkapnya</a>
@@ -53,9 +57,6 @@
                                 <div>{{ $g_produk->kelompokKeahlian->nama_kbk }}</div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-md-4 col-sm-12 ps-md-4">
-
                     </div>
                 </div>
             @endforeach

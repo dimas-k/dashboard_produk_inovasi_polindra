@@ -27,4 +27,8 @@ class KelompokKeahlian extends Model
     {
         return $this->hasMany(Penelitian::class, 'kbk_id');
     }
+    public function anggota()
+    {
+        return $this->hasMany(AnggotaKelompokKeahlian::class, 'kelompok_keahlian_id');
+    }
 }

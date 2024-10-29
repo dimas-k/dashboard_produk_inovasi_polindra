@@ -335,6 +335,16 @@ a {
     flex-wrap: wrap;
     margin-top: 20px;
 }
+.project-item-new {
+    transition: transform 0.2s ease-in-out;
+    transition: box-shadow 0.2s ease-in-out;
+}
+
+.project-item-new:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
 
 .project-carousel .owl-dot {
     width: 35px;

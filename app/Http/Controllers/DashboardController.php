@@ -80,8 +80,7 @@ class DashboardController extends Controller
             'produks.anggota_inventor',
             'produks.email_inventor',
             'produks.lampiran',
-            'produks.status'
-        )->where('kelompok_keahlians.nama_kbk', '=', $nama_kbk)->latest('produks.created_at')->get();
+        )->where('kelompok_keahlians.nama_kbk', '=', $nama_kbk)->where('status', 'Tervalidasi')->latest('produks.created_at')->get();
 
         $data_penelitian = DB::table('users')
         ->join('kelompok_keahlians', 'users.kbk_id', '=', 'kelompok_keahlians.id')
@@ -102,8 +101,7 @@ class DashboardController extends Controller
             'penelitians.anggota_penulis',
             'penelitians.email_penulis',
             'penelitians.lampiran',
-            'penelitians.status'
-        )->where('kelompok_keahlians.nama_kbk', '=', $nama_kbk)->latest('penelitians.created_at')->get();
+        )->where('kelompok_keahlians.nama_kbk', '=', $nama_kbk)->where('status', 'Tervalidasi')->latest('penelitians.created_at')->get();
         // dd($data_produk);
         
         return view('dashboard.penelitian.index', compact('kbk', 'kbk_nama', 'kkbk','data_produk', 'data_penelitian'));
