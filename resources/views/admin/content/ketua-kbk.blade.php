@@ -216,7 +216,130 @@
                         <!-- Modal Update -->
                         <div class="modal fade" id="basicModal{{ $k->id }}" tabindex="-1"
                             aria-hidden="true">
-                            <!-- Modal content here -->
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel1">Update Ketua KBK</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form action="{{ route('update.k-kbk', $k->id) }}" enctype="multipart/form-data"
+                                            method="post" id="uploadForm{{ $k->id }}">
+                                            @csrf
+                                            <div class="row">
+                                                <div class="col mb-6">
+                                                    <label for="nameBasic" class="form-label">Nama Lengkap</label>
+                                                    <input type="text" id="nama_lengkap" class="form-control"
+                                                        value="{{ $k->nama_lengkap }}" name="nama_lengkap" />
+                                                    @error('nama_lengkap')
+                                                        <div class="invalid-feedback">
+                                                            {{ $message }}
+                                                        </div>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col mb-6">
+                                                    <label for="nameBasic" class="form-label">Nip</label>
+                                                    <input type="number" id="nip" class="form-control"
+                                                        value="{{ $k->nip }}" name="nip" />
+                                                    @error('nip')
+                                                        <div class="invalid-feedback">
+                                                            {{ $message }}
+                                                        </div>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col mb-6">
+                                                    <label for="nameBasic" class="form-label">Jabatan</label>
+                                                    <input type="text" id="jabatan" class="form-control"
+                                                        value="{{ $k->jabatan }}" name="jabatan" />
+                                                    @error('jabatan')
+                                                        <div class="invalid-feedback">
+                                                            {{ $message }}
+                                                        </div>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col mb-6">
+                                                    <label for="nameBasic" class="form-label">Pas Foto</label>
+                                                    <input type="file" id="foto" class="form-control"
+                                                        name="pas_foto" />
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col mb-6">
+                                                    <label for="nameBasic" class="form-label">No Handphone</label>
+                                                    <input type="number" id="no_hp" class="form-control"
+                                                        value="{{ $k->no_hp }}" name="no_hp" />
+                                                    @error('no_hp')
+                                                        <div class="invalid-feedback">
+                                                            {{ $message }}
+                                                        </div>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col mb-6">
+                                                    <label for="nameBasic" class="form-label">Email</label>
+                                                    <input type="email" id="email" class="form-control"
+                                                        value="{{ $k->email }}" name="email" />
+                                                    @error('email')
+                                                        <div class="invalid-feedback">
+                                                            {{ $message }}
+                                                        </div>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col mb-6">
+                                                    <label for="exampleFormControlSelect1" id="kbk"
+                                                        class="form-label">Pilih
+                                                        KBK</label>
+                                                    <select class="form-select" id="exampleFormControlSelect1"
+                                                        name="kbk_id" aria-label="Default select example">
+                                                        <option value=""
+                                                            {{ $k->kbk_id == null ? 'selected' : '' }}>Pilih KBK
+                                                        </option>
+                                                        @foreach ($jenis_kbk as $j_kbk)
+                                                            <option value="{{ $j_kbk->id }}"
+                                                                {{ $j_kbk->id == $k->kbk_id ? 'selected' : '' }}>
+                                                                {{ $j_kbk->nama_kbk }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col mb-6">
+                                                    <label for="nameBasic" class="form-label">Username</label>
+                                                    <input type="text" id="username" class="form-control"
+                                                        value="{{ $k->username }}" name="username" />
+                                                    @error('username')
+                                                        <div class="invalid-feedback">
+                                                            {{ $message }}
+                                                        </div>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                            <input type="text" value="ketua_kbk" name="role" hidden>
+                                            <br>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-outline-secondary me-1"
+                                                    data-bs-dismiss="modal">
+                                                    Batal
+                                                </button>
+                                                <button type="submit" class="btn btn-primary ms-1"
+                                                    id="btnSubmit">Simpan</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                     @empty

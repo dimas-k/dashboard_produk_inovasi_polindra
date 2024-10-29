@@ -59,11 +59,16 @@ class KetuaKbkController extends Controller
         $anggota->kbk_id = $request->input('kbk_id');
         $anggota->nama_lengkap = $request->input('nama_lengkap');
         $anggota->jabatan = $request->input('jabatan');
-        $anggota->kelompok_keahlian_id = $request->input('kelompok_keahlian_id');
         $anggota->save();
 
         // Redirect atau return response
         return redirect()->back()->with('success', 'Anggota berhasil ditambahkan!');
+    }
+    public function showAngggota($id)
+    {
+        $anggota = AnggotaKelompokKeahlian::with('kelompokKeahlian')->findOrFail($id);
+
+        return view('k_kbk.anggota.show.index', compact('anggota'));
     }
     public function produkInovasi()
     {

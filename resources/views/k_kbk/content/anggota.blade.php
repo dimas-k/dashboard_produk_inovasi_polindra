@@ -32,7 +32,7 @@
                                 <div class="row">
                                     <div class="col mb-6">
                                         <label for="nameBasic" class="form-label">Nama Lengkap</label>
-                                        <input type="text" id="nama_produk" class="form-control"
+                                        <input type="text" id="nama_lengkap" class="form-control"
                                             placeholder="Masukkan nama anggota" name="nama_lengkap" />
                                         @error('nama_lengkap')
                                             <div class="invalid-feedback">
@@ -91,7 +91,7 @@
                             <td>{{ $p->nama_lengkap }}</td>
                             <td>{{ $p->jabatan }}</td>
                             <td>
-                                <a href="{{ route('lihat.produk', $p->id) }}" class="btn btn-sm btn-primary"><i
+                                <a href="{{ route('lihat.anggota', $p->id) }}" class="btn btn-sm btn-primary"><i
                                         class='bx bxs-show'></i></a>
                                 <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal"
                                     data-bs-target="#basicModal{{ $p->id }}">

@@ -27,6 +27,16 @@
                 <div class="resume-item mb-4 shadow">
                     <strong>Deskripsi {{ $kkbk->nama_kbk }}</strong><br>
                     <p>{!! $kkbk->deskripsi ?? '' !!}</p>
+                    <br>
+                    <strong>Anggota {{ $kkbk->nama_kbk }}</strong><br>
+                    @foreach ($anggota_kbk as $anggota)
+                        <ul>
+                            <li>
+                                {{ $anggota->nama_lengkap }}
+                            </li>
+                        </ul>
+                    @endforeach
+                    
                 </div>
             </div>
 
