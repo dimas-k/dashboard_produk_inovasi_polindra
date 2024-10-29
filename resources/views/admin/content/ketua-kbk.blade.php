@@ -225,12 +225,12 @@
                                     </div>
                                     <div class="modal-body">
                                         <form action="{{ route('update.k-kbk', $k->id) }}" enctype="multipart/form-data"
-                                            method="post" id="uploadForm{{ $k->id }}">
+                                            method="post" id="editForm_{{ $k->id }}">
                                             @csrf
                                             <div class="row">
                                                 <div class="col mb-6">
                                                     <label for="nameBasic" class="form-label">Nama Lengkap</label>
-                                                    <input type="text" id="nama_lengkap" class="form-control"
+                                                    <input type="text" id="nama_lengkap_{{ $k->id }}" class="form-control"
                                                         value="{{ $k->nama_lengkap }}" name="nama_lengkap" />
                                                     @error('nama_lengkap')
                                                         <div class="invalid-feedback">
@@ -242,7 +242,7 @@
                                             <div class="row">
                                                 <div class="col mb-6">
                                                     <label for="nameBasic" class="form-label">Nip</label>
-                                                    <input type="number" id="nip" class="form-control"
+                                                    <input type="number" id="nip_{{ $k->id }}" class="form-control"
                                                         value="{{ $k->nip }}" name="nip" />
                                                     @error('nip')
                                                         <div class="invalid-feedback">
@@ -254,7 +254,7 @@
                                             <div class="row">
                                                 <div class="col mb-6">
                                                     <label for="nameBasic" class="form-label">Jabatan</label>
-                                                    <input type="text" id="jabatan" class="form-control"
+                                                    <input type="text" id="jabatan_{{ $k->id }}" class="form-control"
                                                         value="{{ $k->jabatan }}" name="jabatan" />
                                                     @error('jabatan')
                                                         <div class="invalid-feedback">
@@ -266,14 +266,14 @@
                                             <div class="row">
                                                 <div class="col mb-6">
                                                     <label for="nameBasic" class="form-label">Pas Foto</label>
-                                                    <input type="file" id="foto" class="form-control"
+                                                    <input type="file" id="foto_{{ $k->id }}" class="form-control"
                                                         name="pas_foto" />
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col mb-6">
                                                     <label for="nameBasic" class="form-label">No Handphone</label>
-                                                    <input type="number" id="no_hp" class="form-control"
+                                                    <input type="number" id="no_hp_{{ $k->id }}" class="form-control"
                                                         value="{{ $k->no_hp }}" name="no_hp" />
                                                     @error('no_hp')
                                                         <div class="invalid-feedback">
@@ -285,7 +285,7 @@
                                             <div class="row">
                                                 <div class="col mb-6">
                                                     <label for="nameBasic" class="form-label">Email</label>
-                                                    <input type="email" id="email" class="form-control"
+                                                    <input type="email" id="email_{{ $k->id }}" class="form-control"
                                                         value="{{ $k->email }}" name="email" />
                                                     @error('email')
                                                         <div class="invalid-feedback">
@@ -317,7 +317,7 @@
                                             <div class="row">
                                                 <div class="col mb-6">
                                                     <label for="nameBasic" class="form-label">Username</label>
-                                                    <input type="text" id="username" class="form-control"
+                                                    <input type="text" id="username_{{ $k->id }}" class="form-control"
                                                         value="{{ $k->username }}" name="username" />
                                                     @error('username')
                                                         <div class="invalid-feedback">
