@@ -33,7 +33,8 @@ Route::get('/dashboard/kontak', [DashboardController::class, 'contact']);
 
 Route::get('/dashboard/kelompok-bidang-keahlian/{nama_kbk}', [DashboardController::class,'penelitian'])->name('dashboard.penelitian');
 Route::get('/dashboard/produk/detail/{nama_produk}', [DashboardController::class, 'detailProduk'])->name('detail.produk');
-Route::get('/dashboard/produk/list-produk/{inventor}', [DashboardController::class, 'dosenProduk'])->name('produk.dosen');
+Route::get('/dashboard/penelitian/detail/{judul}', [DashboardController::class, 'detailPenelitian'])->name('detail.penelitian');
+Route::get('/dashboard/produk&penelitian/list-produk&penelitian/{dosen}', [DashboardController::class, 'dosenProduk'])->name('produk.dosen');
 
 
 

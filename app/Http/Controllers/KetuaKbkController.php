@@ -6,7 +6,6 @@ use App\Models\User;
 use App\Models\Produk;
 use App\Models\Penelitian;
 use Illuminate\Http\Request;
-use App\Models\KelompokKeahlian;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;

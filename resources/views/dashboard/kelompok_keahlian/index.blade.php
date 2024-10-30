@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <meta content="" name="keywords">
+    <meta content="" name="description">
 
     <link href="img/favicon.ico" rel="icon">
 
@@ -34,8 +36,7 @@
     <link rel="stylesheet" href={{ asset('css/dashboard.css') }}>
     <link rel="icon" type="image/x-icon" href="{{ asset('assets-admin/img/logo-polindra.png') }}" />
 
-
-    <title>Dashboard Produk Inovasi dan Penelitian || kontak Kami</title>
+    <title>Dashboard Produk Inovasi dan Penelitian || Ketua Kelompok Keahlian</title>
 
 </head>
 
@@ -51,7 +52,7 @@
             @include('dashboard.layout.sidebar')
 
             <!--app-content open-->
-            @include('dashboard.contact.content')
+            @include('dashboard.kelompok_keahlian.content')
             <!--app-content close-->
 
         </div>
@@ -63,7 +64,7 @@
     </div>
 
     <!-- Back to Top -->
-    {{-- <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded-circle"><i class="bi bi-arrow-up"></i></a> --}}
+    <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded-circle back-to-top"><i class="bi bi-arrow-up"></i></a>
 
 
     <!-- JavaScript Libraries -->

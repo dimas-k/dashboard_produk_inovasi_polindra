@@ -96,17 +96,16 @@
         </div>
         <div class="owl-carousel project-carousel wow fadeInUp" data-wow-delay="0.1s">
             @foreach ($produk_terbaru as $p)
-                <div class="project-item border rounded h-100 p-4" data-dot="{{ $loop->iteration }}">
-                    <div class="position-relative mb-4">
-                        <img class="img-fluid rounded" src="{{ asset('storage/' . $p->gambar) }}"
-                            alt="Gambar Produk {{ $p->id }}">
-                        <a href="{{ asset('storage/' . $p->gambar) }}" data-lightbox="project">
-                            <i class="fa fa-eye fa-2x"></i>
-                        </a>
-                    </div>
-                    <h6>{{ $p->nama_produk }}</h6>
+                <a href="{{ route('detail.produk', $p->nama_produk) }}">
+                    <div class="project-item-new border rounded h-100 p-4" data-dot="{{ $loop->iteration }}">
+                        <div class="position-relative mb-4">
+                            <img class="img-fluid rounded" src="{{ asset('storage/' . $p->gambar) }}"
+                                alt="Gambar Produk {{ $p->id }}">
+                        </div>
+                        <h6>{{ $p->nama_produk }}</h6>
 
-                </div>
+                    </div>
+                </a>
             @endforeach
 
         </div>
@@ -122,17 +121,16 @@
         </div>
         <div class="owl-carousel project-carousel wow fadeInUp" data-wow-delay="0.1s">
             @foreach ($penelitian_terbaru as $p)
-                <div class="project-item border rounded h-100 p-4" data-dot="{{ $loop->iteration }}">
-                    <div class="position-relative mb-4">
-                        <img class="img-fluid rounded" src="{{ asset('storage/' . $p->gambar) }}"
-                            alt="Gambar Produk {{ $p->id }}">
-                        <a href="{{ asset('storage/' . $p->gambar) }}" data-lightbox="project">
-                            <i class="fa fa-eye fa-2x"></i>
-                        </a>
-                    </div>
-                    <h6>{{ $p->judul }}</h6>
+                <a href="{{ route('detail.penelitian', $p->judul) }}">
+                    <div class="project-item-new border rounded h-100 p-4" data-dot="{{ $loop->iteration }}">
+                        <div class="position-relative mb-4">
+                            <img class="img-fluid rounded" src="{{ asset('storage/' . $p->gambar) }}"
+                                alt="Gambar Produk {{ $p->id }}">
+                        </div>
+                        <h6>{{ $p->judul }}</h6>
 
-                </div>
+                    </div>
+                </a>
             @endforeach
 
         </div>
@@ -141,7 +139,7 @@
 
 
 <!-- Testimonial Start -->
-<div class="container-xxl py-5">
+{{-- <div class="container-xxl py-5">
     <div class="container">
         <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
             <h6 class="section-title bg-white text-center text-primary px-3">Testimonial</h6>
@@ -194,6 +192,5 @@
             </div>
         </div>
     </div>
-</div>
+</div> --}}
 <!-- Testimonial End -->
-
