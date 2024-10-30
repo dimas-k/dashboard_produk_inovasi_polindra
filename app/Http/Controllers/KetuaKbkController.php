@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use App\Models\AnggotaKelompokKeahlian;
+use App\Models\ProdukAnggota;
 use Illuminate\Support\Facades\Storage;
 
 
@@ -90,18 +91,25 @@ class KetuaKbkController extends Controller
             ->get();
 
 
+            $user = auth()->user();
+            $anggotaKelompok = AnggotaKelompokKeahlian::where('kbk_id', $user->kbk_id)->get();
+        
+            // dd($anggotaKelompok);
+
+
         // dd($produks);
-        return view('k_kbk.produk.index', compact('produks', 'kkbk'));
+        return view('k_kbk.produk.index', compact('produks', 'kkbk','anggotaKelompok'));
     }
     public function showProduk($id)
     {
-        $produk = Produk::with('KelompokKeahlian')->findOrFail($id);
+        $produk = Produk::with(['KelompokKeahlian', 'anggota.detail'])->findOrFail($id);
         // dd($produk->lampiran);
         return view('k_kbk.produk.show.index', compact('produk'));
     }
 
     public function storeProduk(Request $request)
     {
+        // dd($request);
         try {
             // Validasi input
             $request->validate([
@@ -109,20 +117,21 @@ class KetuaKbkController extends Controller
                 'deskripsi' => 'required|string',
                 'kbk_id' => 'required|exists:kelompok_keahlians,id',
                 'inventor' => 'required|string|max:255',
-                'anggota_inventor' => 'nullable|string',
                 'email_inventor' => 'required|email',
                 'gambar' => 'required|file|mimes:jpeg,png,jpg|max:10240',
                 'lampiran' => 'nullable|file|mimes:jpeg,png,jpg,pdf,docx|max:10240',
             ]);
-
+            DB::beginTransaction();
             // Buat instance baru dari Produk
             $produk = new Produk();
             $produk->kbk_id = $request->kbk_id;
             $produk->nama_produk = $request->nama_produk;
             $produk->deskripsi = $request->deskripsi;
             $produk->inventor = $request->inventor;
-            $produk->anggota_inventor = $request->anggota_inventor;
+            // $produk->anggota_inventor = $request->anggota_inventor;
             $produk->email_inventor = $request->email_inventor;
+
+
 
             // Proses upload gambar
             if ($request->hasFile('gambar')) {
@@ -143,6 +152,14 @@ class KetuaKbkController extends Controller
             // Simpan produk ke database
             $produk->save();
 
+            foreach($request->anggota_inventor as $anggota)
+            {
+                ProdukAnggota::create([
+                    'produk_id' => $produk->id,
+                    'anggota_id' => $anggota
+                ]);
+            }
+            DB::commit();
             // Return response success dalam format JSON
             return response()->json(['success' => true, 'message' => 'Data Produk berhasil ditambahkan!']);
         } catch (\Exception $e) {

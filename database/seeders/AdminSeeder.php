@@ -17,6 +17,7 @@ class AdminSeeder extends Seeder
             'nama_lengkap' => 'Franz Kafka',
             'nip' => '19740817200312',
             'jabatan' => 'Staf Admin',
+            'pas_foto' => 'dokumen-user/foto_user_default.png',
             'no_hp' => '08123456789',
             'email' => 'admin@admin.com',
             'username' => 'admin',

@@ -25,8 +25,8 @@ class Produk extends Model
         return $this->belongsTo(KelompokKeahlian::class,  'kbk_id');
     }
 
-    public function anggotaInventors()
+    public function anggota()
     {
-        return $this->belongsToMany(AnggotaKelompokKeahlian::class, 'produks_anggotas', 'produk_id', 'anggota_id');
+        return $this->hasMany(ProdukAnggota::class, 'produk_id', 'id');
     }
 }

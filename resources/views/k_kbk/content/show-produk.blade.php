@@ -17,7 +17,9 @@
                 </tr>
                 <tr>
                     <th>anggota inventor</th>
-                    <td>: {{ $produk->anggota_inventor }}</td>
+                    <td>@foreach ($produk->anggota as $anggota )
+                        <li>{{ $anggota->detail->nama_lengkap }}</li>
+                    @endforeach</td>
                 </tr>
                 <tr>
                     <th>Kelompok Keahlian</th>

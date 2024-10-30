@@ -76,7 +76,7 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="row">
+                                {{-- <div class="row">
                                     <div class="col mb-6">
                                         <label for="nameBasic" class="form-label">Anggota Inventor</label>
                                         <textarea class="form-control" placeholder="Masukkan anggota inventor" id="floatingTextarea" style="height: 80px"
@@ -87,7 +87,7 @@
                                             </div>
                                         @enderror
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="row">
                                     <div class="col mb-6">
                                         <label for="nameBasic" class="form-label">Email Inventor</label>
@@ -111,6 +111,18 @@
                                         @enderror
                                     </div>
                                 </div>
+                                <div class="row">
+                                    <div class="col mb-6">
+                                        <div class="form-group">
+                                            <select class="selectpicker w-100" data-live-search="true" id="anggota_inventor" name="anggota_inventor[]" multiple title="Pilih Anggota Inventor.." >
+                                                @foreach($anggotaKelompok as $anggota)
+                                                    <option value="{{ $anggota->id }}">{{ $anggota->nama_lengkap }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            
                                 <hr class="border-3 w-100">
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-outline-secondary me-1"

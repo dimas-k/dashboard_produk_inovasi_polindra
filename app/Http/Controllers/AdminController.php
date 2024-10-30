@@ -162,6 +162,7 @@ class AdminController extends Controller
 
         $k_kbk = User::with('kelompokKeahlian')->find($id);
         // dd($k_kbk->toSql());
+        // dd($k_kbk);
         return view('admin.ketua-kbk.show.index', compact('k_kbk','kbk_navigasi'));
     }
 
