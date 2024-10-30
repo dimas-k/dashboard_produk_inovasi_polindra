@@ -56,7 +56,7 @@ class DashboardController extends Controller
             ->join('kelompok_keahlians', 'anggota_kelompok_keahlians.kbk_id', '=', 'kelompok_keahlians.id')
             ->where('kelompok_keahlians.nama_kbk', '=', $nama_kbk)
             ->select(
-                'anggota_kelompok_keahlians.id',
+                'anggota_kelompok_keahlians.nama_lengkap',
                 'anggota_kelompok_keahlians.nama_lengkap'
             )->get();
 
@@ -69,26 +69,21 @@ class DashboardController extends Controller
         // }
 
         // $data_produk = Produk::where('kbk_id', $id)->get();
-        $data_produk = DB::table('users')
-            ->join('kelompok_keahlians', 'users.kbk_id', '=', 'kelompok_keahlians.id')
-            ->join('produks', 'produks.kbk_id', '=', 'kelompok_keahlians.id')
+        $data_produk = DB::table('produks')
+            ->join('kelompok_keahlians', 'produks.kbk_id', '=', 'kelompok_keahlians.id')
+            ->join('users', 'users.kbk_id', '=', 'kelompok_keahlians.id')
             ->select(
                 'produks.id as id_produks',
-                'users.nama_lengkap',
-                'users.nip',
-                'users.jabatan',
-                'users.no_hp',
-                'users.email',
-                'kelompok_keahlians.nama_kbk',
-                'kelompok_keahlians.jurusan',
                 'produks.nama_produk as nama_produks',
                 'produks.deskripsi as produk_deskripsi',
-                'produks.gambar',
-                'produks.inventor',
-                'produks.anggota_inventor',
-                'produks.email_inventor',
-                'produks.lampiran',
-            )->where('kelompok_keahlians.nama_kbk', '=', $nama_kbk)->where('status', 'Tervalidasi')->latest('produks.created_at')->get();
+                'produks.gambar'
+            )
+            ->where('kelompok_keahlians.nama_kbk', '=', $nama_kbk)
+            ->where('status', 'Tervalidasi')
+            ->groupBy('produks.nama_produk')  // Group by product ID to remove duplicates
+            ->latest('produks.created_at')
+            ->get();
+
 
         $data_penelitian = DB::table('users')
             ->join('kelompok_keahlians', 'users.kbk_id', '=', 'kelompok_keahlians.id')
@@ -112,7 +107,7 @@ class DashboardController extends Controller
             )->where('kelompok_keahlians.nama_kbk', '=', $nama_kbk)->where('status', 'Tervalidasi')->latest('penelitians.created_at')->get();
         // dd($data_produk);
 
-        return view('dashboard.penelitian.index', compact('kbk', 'kbk_nama', 'kkbk', 'data_produk', 'data_penelitian', 'anggota_kbk'));
+        return view('dashboard.kelompok_keahlian.index', compact('kbk', 'kbk_nama', 'kkbk', 'data_produk', 'data_penelitian', 'anggota_kbk'));
     }
 
     public function detailProduk($nama_produk)
@@ -124,14 +119,35 @@ class DashboardController extends Controller
             ->where('nama_produk', $nama_produk)
             ->firstOrFail();
 
-        return view('dashboard.detail-penelitian.index', compact('produk', 'kbk', 'kbk_nama'));
+        return view('dashboard.detail-produk.index', compact('produk', 'kbk', 'kbk_nama'));
     }
-
-    public function dosenProduk($inventor)
+    public function detailPenelitian($judul)
     {
         $kbk = KelompokKeahlian::all();
-        $kbk_nama = KelompokKeahlian::where('nama_kbk', $inventor)->first();
-        $p_dosen = Produk::with('kelompokKeahlian')->where('inventor', $inventor)->paginate(7);
-        return view('dashboard.dosen-produk.index', compact('kbk', 'p_dosen', 'kbk_nama'));
+        $kbk_nama = KelompokKeahlian::where('nama_kbk', $judul)->first();
+
+        $penelitian = Penelitian::with('kelompokKeahlian')
+            ->where('judul', $judul)
+            ->firstOrFail();
+        return view('dashboard.detail-penelitian.index', compact('penelitian', 'kbk'));
+    }
+
+    public function dosenProduk($dosen)
+    {
+        $kbk = KelompokKeahlian::all();
+        $kbk_nama = KelompokKeahlian::where('nama_kbk', $dosen)->first();
+        $p_dosen = Produk::with('kelompokKeahlian')->where('inventor', $dosen)->paginate(7);
+        $plt_dosen = Penelitian::with('KelompokKeahlian')->where('penulis', $dosen)->paginate(7);
+        
+        return view('dashboard.dosen-produk.index', compact('kbk', 'p_dosen', 'kbk_nama', 'plt_dosen'));
+    }
+
+    public function dosenPenelitian($penulis)
+    {
+        $kbk = KelompokKeahlian::all();
+        $kbk_nama = KelompokKeahlian::where('nama_kbk', $penulis)->first();
+        $plt_dosen = Penelitian::with('KelompokKeahlian')->where('penulis', $penulis)->paginate(7);
+
+        return view('dashboard.dosen-penelitian.index', compact('kbk', 'plt_dosen', 'kbk_nama'));
     }
 }

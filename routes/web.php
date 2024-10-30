@@ -33,7 +33,8 @@ Route::get('/dashboard/kontak', [DashboardController::class, 'contact']);
 
 Route::get('/dashboard/kelompok-bidang-keahlian/{nama_kbk}', [DashboardController::class,'penelitian'])->name('dashboard.penelitian');
 Route::get('/dashboard/produk/detail/{nama_produk}', [DashboardController::class, 'detailProduk'])->name('detail.produk');
-Route::get('/dashboard/produk/list-produk/{inventor}', [DashboardController::class, 'dosenProduk'])->name('produk.dosen');
+Route::get('/dashboard/penelitian/detail/{judul}', [DashboardController::class, 'detailPenelitian'])->name('detail.penelitian');
+Route::get('/dashboard/produk&penelitian/list-produk&penelitian/{dosen}', [DashboardController::class, 'dosenProduk'])->name('produk.dosen');
 
 
 
@@ -80,7 +81,8 @@ Route::middleware(['auth', 'role:ketua_kbk'])->group(function () {
 
     Route::get('/k-kbk/anggota-kbk', [KetuaKbkController::class, 'anggotaPage']);
     Route::post('/k-kbk/anggota-kbk/store', [KetuaKbkController::class, 'storeAnggota']);
-    Route::get('/k-kbk/anggota-kbk/lihat/{id}', [KetuaKbkController::class, 'showAnggota'])->name('lihat.anggota');
+    Route::put('/k-kbk/anggota-kbk/edit/{id}', [KetuaKbkController::class, 'updateAnggota'])->name('edit.anggota');
+    Route::delete('/k-kbk/anggota-kbk/hapus/{id}', [KetuaKbkController::class, 'hapusAnggota'])->name('hapus.anggota');
 
     Route::get('/k-kbk/produk', [KetuaKbkController::class, 'produkInovasi']);
     Route::get('/k-kbk/produk/lihat/{id}', [KetuaKbkController::class, 'showProduk'])->name('lihat.produk');

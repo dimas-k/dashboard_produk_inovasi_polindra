@@ -2,12 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <meta content="" name="keywords">
     <meta content="" name="description">
 
-    <link href="img/favicon.ico" rel="icon">
+    {{-- <link href="img/favicon.ico" rel="icon"> --}}
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -36,7 +36,7 @@
     <link rel="stylesheet" href={{ asset('css/dashboard.css') }}>
     <link rel="icon" type="image/x-icon" href="{{ asset('assets-admin/img/logo-polindra.png') }}" />
 
-    <title>Dashboard Produk Inovasi dan Penelitian || Ketua Kelompok Keahlian</title>
+    <title>Dashboard Produk Inovasi dan Penelitian || Detail Produk</title>
 
 </head>
 
@@ -52,7 +52,7 @@
             @include('dashboard.layout.sidebar')
 
             <!--app-content open-->
-            @include('dashboard.penelitian.content')
+            @include('dashboard.detail-produk.content')
             <!--app-content close-->
 
         </div>
