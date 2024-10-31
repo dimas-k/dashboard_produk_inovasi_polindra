@@ -75,18 +75,7 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col mb-6">
-                                        <label for="nameBasic" class="form-label">Anggota Penulis</label>
-                                        <textarea class="form-control" placeholder="Masukkan anggota penullis" id="floatingTextarea" style="height: 80px"
-                                            name="anggota_penulis"></textarea>
-                                        @error('anggota_inventor')
-                                            <div class="invalid-feedback">
-                                                {{ $message }}
-                                            </div>
-                                        @enderror
-                                    </div>
-                                </div>
+
                                 <div class="row">
                                     <div class="col mb-6">
                                         <label for="nameBasic" class="form-label">Email Penulis</label>
@@ -101,9 +90,31 @@
                                 </div>
                                 <div class="row">
                                     <div class="col mb-6">
+                                        <label for="anggota_penulis">Anggota Penulis</label>
+                                        <select class="selectpicker w-100" data-live-search="true" id="anggota_penulis" name="anggota_penulis[]" multiple title="Pilih Anggota Penulis.." >
+                                            @foreach($anggotaKelompok as $anggota)
+                                                <option value="{{ $anggota->id }}">{{ $anggota->nama_lengkap }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>                           
+                                <div class="row">
+                                    <div class="col mb-6">
                                         <label for="nameBasic" class="form-label">Lampiran</label>
                                         <input type="file" id="lampiran" class="form-control" name="lampiran" />
                                         @error('lampiran')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col mb-6">
+                                        <label for="tanggal_publikasi" class="form-label">Tanggal Publikasi</label>
+                                        <input type="date" name="tanggal_publikasi" id="tanggal_publikasi"
+                                            class="form-control @error('tanggal_publikasi') is-invalid @enderror">
+                                        @error('tanggal_publikasi')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
                                             </div>
@@ -188,7 +199,6 @@
                                                                 id="kelompokKeahlianName"
                                                                 value="{{ $p->kelompokKeahlian ? $p->kelompokKeahlian->nama_kbk : 'Tidak ada' }}"
                                                                 readonly />
-
                                                         </div>
                                                     </div>
                                                     <div class="row">
@@ -250,18 +260,6 @@
                                                     </div>
                                                     <div class="row">
                                                         <div class="col mb-6">
-                                                            <label for="nameBasic" class="form-label">Anggota
-                                                                Penulis</label>
-                                                            <textarea class="form-control" id="anggota_{{ $p->id }}" style="height: 80px" name="anggota_penulis">{{ $p->anggota_penulis }}</textarea>
-                                                            @error('anggota_penulis')
-                                                                <div class="invalid-feedback">
-                                                                    {{ $message }}
-                                                                </div>
-                                                            @enderror
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col mb-6">
                                                             <label for="nameBasic" class="form-label">Email
                                                                 Penulis</label>
                                                             <input type="email" id="email_{{ $p->id }}"
@@ -272,7 +270,18 @@
                                                                     {{ $message }}
                                                                 </div>
                                                             @enderror
-
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col mb-6">
+                                                            <label for="nameBasic" class="form-label">Anggota
+                                                                Penulis</label>
+                                                            <textarea class="form-control" id="anggota_{{ $p->id }}" style="height: 80px" name="anggota_penulis">{{ $p->anggota_penulis }}</textarea>
+                                                            @error('anggota_penulis')
+                                                                <div class="invalid-feedback">
+                                                                    {{ $message }}
+                                                                </div>
+                                                            @enderror
                                                         </div>
                                                     </div>
                                                     <div class="row">
@@ -287,6 +296,18 @@
                                                             @enderror
                                                             <span class="text-danger"><small><i
                                                                     class='bx bxs-error me-1'></i>Jika tidak ada perubahan file tidak usah dinputkan kembali</small></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col mb-6">
+                                                            <label for="tanggal_publikasi" class="form-label">Tanggal Publikasi</label>
+                                                            <input type="date" name="tanggal_publikasi" id="tanggal_publikasi_{{ $p->id }}" value="{{ $p->tanggal_publikasi }}""
+                                                                class="form-control @error('tanggal_publikasi') is-invalid @enderror">
+                                                            @error('tanggal_publikasi')
+                                                                <div class="invalid-feedback">
+                                                                    {{ $message }}
+                                                                </div>
+                                                            @enderror
                                                         </div>
                                                     </div>
                                                     <hr class="border-3 w-100">

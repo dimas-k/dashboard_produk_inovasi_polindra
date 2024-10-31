@@ -29,4 +29,11 @@ class Produk extends Model
     {
         return $this->hasMany(ProdukAnggota::class, 'produk_id', 'id');
     }
+
+    public function anggota_inventor()
+    {
+        return $this->belongsToMany(ProdukAnggota::class, 'produks_anggotas', 'produk_id', 'anggota_id');
+    }
+
 }
+

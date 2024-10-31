@@ -211,7 +211,6 @@
                                                                 id="kelompokKeahlianName"
                                                                 value="{{ $p->kelompokKeahlian ? $p->kelompokKeahlian->nama_kbk : 'Tidak ada' }}"
                                                                 readonly />
-
                                                         </div>
                                                     </div>
                                                     <div class="row">
@@ -272,18 +271,6 @@
                                                     </div>
                                                     <div class="row">
                                                         <div class="col mb-6">
-                                                            <label for="nameBasic" class="form-label">Anggota
-                                                                Inventor</label>
-                                                            <textarea class="form-control" id="anggota_{{ $p->id }}" style="height: 80px" name="anggota_inventor">{{ $p->anggota_inventor }}</textarea>
-                                                            @error('anggota_inventor')
-                                                                <div class="invalid-feedback">
-                                                                    {{ $message }}
-                                                                </div>
-                                                            @enderror
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col mb-6">
                                                             <label for="nameBasic" class="form-label">Email
                                                                 Inventor</label>
                                                             <input type="email" id="email_{{ $p->id }}"
@@ -294,13 +281,48 @@
                                                                     {{ $message }}
                                                                 </div>
                                                             @enderror
-
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col mb-6">
+                                                            <label for="anggota_inventor" class="form-label">Anggota Inventor</label><br>
+                                                            {{-- <textarea class="form-control" id="anggota_{{ $p->id }}" style="height: 80px" name="anggota_inventor">{{ $p->anggota_inventor }}</textarea>
+                                                            @error('anggota_inventor')
+                                                                <div class="invalid-feedback">
+                                                                    {{ $message }}
+                                                                </div>
+                                                            @enderror --}}
+                                                            {{-- <select class="selectpicker w-100" data-live-search="true" id="anggota_inventor_{{ $p->id }}" name="anggota_inventor[]" multiple title="Pilih Anggota Inventor..">
+                                                                @foreach($anggotaKelompok as $anggota)
+                                                                    <option value="{{ $anggota->id }}"
+                                                                        @if($anggota->anggota_inventor && in_array($anggota->id, $anggota->anggota_inventor->pluck('id')->toArray())) selected @endif>
+                                                                        {{ $anggota->nama_lengkap }}
+                                                                    </option>
+                                                                @endforeach
+                                                            </select>--}}
+                                                            <div class="row">
+                                                                <div class="col mb-6">
+                                                                    @foreach ($p->anggota as $anggota )
+                                                                    <li>{{ $anggota->detail->nama_lengkap }}</li>
+                                                                    @endforeach
+                                                                </div>
+                                                            </div>
+                                                            <select class="selectpicker w-100" data-live-search="true" id="anggota_inventor_{{ $p->id }}" name="anggota_inventor[]" multiple title="Pilih Anggota Inventor..">
+                                                                @foreach($produkAnggota as $anggota)
+                                                                    <option value="{{ $anggota->id }}"
+                                                                        @if($p->anggota_inventor && in_array($anggota->id, $p->anggota_inventor->pluck('id')->toArray())) selected @endif>
+                                                                        {{ $anggota->nama_lengkap }}
+                                                                    </option>
+                                                                @endforeach
+                                                            </select><br>
+                                                            <span class="text-danger"><small><i
+                                                                class='bx bxs-error me-1'></i>Jika tidak ada perubahan anggota inventor tidak usah dinputkan kembali</small></span>
                                                         </div>
                                                     </div>
                                                     <div class="row">
                                                         <div class="col mb-6">
                                                             <label for="nameBasic" class="form-label">Lampiran</label>
-                                                            <input type="file" id="lampiran_{{ $p->id }}"
+                                                            <input type="file" id="lampiran_{{ $p->id }}" 
                                                                 class="form-control" name="lampiran" />
                                                             @error('lampiran')
                                                                 <div class="invalid-feedback">
@@ -309,6 +331,30 @@
                                                             @enderror
                                                             <span class="text-danger"><small><i
                                                                 class='bx bxs-error me-1'></i>Jika tidak ada perubahan file tidak usah dinputkan kembali</small></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col mb-6">
+                                                            <label for="tanggal_submit" class="form-label">Tanggal Submit</label>
+                                                            <input type="date" name="tanggal_submit" id="tanggal_submit_{{ $p->id }}" value="{{ $p->tanggal_submit }}"
+                                                                class="form-control @error('tanggal_submit') is-invalid @enderror">
+                                                            @error('tanggal_submit')
+                                                                <div class="invalid-feedback">
+                                                                    {{ $message }}
+                                                                </div>
+                                                            @enderror
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col mb-6">
+                                                            <label for="tanggal_granted" class="form-label">Tanggal Granted</label>
+                                                            <input type="date" name="tanggal_granted" id="tanggal_granted_{{ $p->id }}" value="{{ $p->tanggal_granted }}""
+                                                                class="form-control @error('tanggal_granted') is-invalid @enderror">
+                                                            @error('tanggal_granted')
+                                                                <div class="invalid-feedback">
+                                                                    {{ $message }}
+                                                                </div>
+                                                            @enderror
                                                         </div>
                                                     </div>
                                                     <hr class="border-3 w-100">

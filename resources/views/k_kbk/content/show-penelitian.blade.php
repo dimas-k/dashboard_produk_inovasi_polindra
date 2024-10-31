@@ -11,17 +11,23 @@
                     <th>Nama Penulis</th>
                     <td>: {{ $penelitian->penulis }}</td>
                 </tr>
+                <div class="row">
+                    <div class="col mb-6">
+                        <label for="anggota_inventor">Anggota Penulis</label>
+                        <select class="selectpicker w-100" data-live-search="true" id="anggota_inventor" name="anggota_inventor[]" multiple title="Pilih Anggota Inventor.." >
+                            @foreach($anggotaKelompok as $anggota)
+                                <option value="{{ $anggota->id }}">{{ $anggota->nama_lengkap }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
                 <tr>
-                    <th>anggota Penulis</th>
-                    <td>: {{ $penelitian->anggota_penulis }}</td>
+                    <th>email</th>
+                    <td>: {{ $penelitian->email_penulis }}</td>
                 </tr>
                 <tr>
                     <th>Kelompok Keahlian</th>
                     <td>: {{ $penelitian->kelompokKeahlian ? $penelitian->kelompokKeahlian->nama_kbk : 'Tidak ada' }}</td>
-                </tr>
-                <tr>
-                    <th>email</th>
-                    <td>: {{ $penelitian->email_penulis }}</td>
                 </tr>
                 <tr>
                     <th>Abstrak</th>
@@ -36,6 +42,12 @@
                 <tr>
                     <th>Gambar Penelitian</th>
                     <td>: <img src="{{ asset('storage/'.$penelitian->gambar) }}" alt="" style="max-width: 70%; height: auto"></td>
+                </tr>
+                <tr>
+                    <th>Tanggal Publikasi</th>
+                    <td>:
+                        {{ $penelitian->tanggal_publikasi }}
+                    </td>
                 </tr>
             </table>
         </div>

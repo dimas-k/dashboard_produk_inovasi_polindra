@@ -276,11 +276,13 @@
                 // Mengambil nilai input berdasarkan ID produk
                 const nama_produk = $('#nama_produk_' + id).val();
                 const deskripsi = $('#deskripsi_' + id).val();
-                const anggota = $('#anggota_' + id).val();
+                // const anggota = $('#anggota_' + id).val();
                 const email = $('#email_' + id).val();
                 const inventor = $('#inventor_' + id).val();
                 const gambar = $('#gambar_' + id)[0].files.length ? $('#gambar_' + id)[0].files[0] : null;
                 const lampiran = $('#lampiran_' + id)[0].files.length ? $('#lampiran_' + id)[0].files[0] : null;
+                const ts = $('#tanggal_submit_' + id).val();
+                const tg = $('#tanggal_granted_' + id).val();
 
                 // Regex untuk validasi file extensions
                 const gambarExtensions = /(\.jpg|\.jpeg|\.png)$/i;
@@ -290,7 +292,7 @@
                 const maxLampiranSize = 10 * 1024 * 1024; // 2MB
 
                 // Validasi input kosong
-                if (!nama_produk || !deskripsi || !anggota || !email || !inventor) {
+                if (!nama_produk || !deskripsi || !email || !inventor || !ts || !tg) {
                     Swal.fire({
                         icon: 'error',
                         title: 'Gagal',
@@ -369,12 +371,6 @@
         @endforeach
     });
 </script>
-
-
-
-
-
-
 
 </body>
 
