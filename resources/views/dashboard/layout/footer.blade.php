@@ -19,28 +19,8 @@
                 <a class="btn btn-link" href="/dashboard/kontak">Kontak Kami</a>
                 <a class="btn btn-link" href="https://siki.polindra.ac.id/">Sentra KI POLINDRA</a>
             </div>
-            <div class="col-lg-3 col-md-6">
-                <h5 class="text-light mb-4">Gallery</h5>
-                <div class="row g-2">
-                    <div class="col-4">
-                        <img class="img-fluid rounded" src={{ URL('img/project-1.jpg') }} alt="Image">
-                    </div>
-                    <div class="col-4">
-                        <img class="img-fluid rounded" src={{ URL('img/project-2.jpg') }} alt="Image">
-                    </div>
-                    <div class="col-4">
-                        <img class="img-fluid rounded" src={{ URL('img/project-3.jpg') }} alt="Image">
-                    </div>
-                    <div class="col-4">
-                        <img class="img-fluid rounded" src={{ URL('img/project-4.jpg') }} alt="Image">
-                    </div>
-                    <div class="col-4">
-                        <img class="img-fluid rounded" src={{ URL('img/project-5.jpg') }} alt="Image">
-                    </div>
-                    <div class="col-4">
-                        <img class="img-fluid rounded" src={{ URL('img/project-6.jpg') }} alt="Image">
-                    </div>
-                </div>
+            <div class="col-lg-6 col-md-2">
+                <img src="{{ asset('assets-admin/img/logo-putih.png') }}" alt="" style="width: 60%; height: auto">
             </div>
         </div>
     </div>

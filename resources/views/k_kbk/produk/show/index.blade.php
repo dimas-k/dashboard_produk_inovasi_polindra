@@ -19,7 +19,7 @@
 
 
 
-    <title>D-PROIN | Lihat Produk</title>
+    <title>DB-PRO | Lihat Produk</title>
 
     <meta name="description" content="" />
 

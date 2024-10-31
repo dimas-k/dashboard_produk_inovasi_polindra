@@ -18,13 +18,13 @@
         <!-- Dashboards -->
 
         <li class="menu-item">
-            <a href="/admin/dashboard" class="menu-link">
+            <a href="/admin/dashboard" class="menu-link {{ Request::is('admin/dashboard') ? 'active bg-light' : '' }}">
                 <i class="menu-icon tf-icons bx bx-home-smile"></i>
                 <div class="text-truncate" data-i18n="Dashboard">Dashboard</div>
             </a>
         </li>
         <li class="menu-item">
-            <a href="/admin/kelompok-bidang-keahlian" class="menu-link">
+            <a href="/admin/kelompok-bidang-keahlian" class="menu-link {{ Request::is('admin/kelompok-bidang-keahlian') ? 'active bg-light' : '' }}">
                 <i class='menu-icon tf-icons bx bxs-cog'></i>
                 <div class="text-truncate" data-i18n="KBK">Kelompok Bidang Keahlian</div>
             </a>
@@ -33,19 +33,19 @@
 
         <!-- Front Pages -->
         <li class="menu-item">
-            <a href="javascript:void(0);" class="menu-link menu-toggle">
+            <a href="#" class="menu-link menu-toggle {{ (Request::is('admin/admin-page') || Request::is('admin/ketua-kbk')) ? 'active bg-light' : '' }}">
                 <i class='menu-icon tf-icons bx bxs-user-circle'></i>
                 <div class="text-truncate" data-i18n="Pengguna">Pengguna</div>
                 
             </a>
             <ul class="menu-sub">
                 <li class="menu-item">
-                    <a href="/admin/admin-page" class="menu-link">
+                    <a href="/admin/admin-page" class="menu-link {{ Request::is('admin/admin-page') ? 'active bg-light' : '' }}">
                         <div class="text-truncate" data-i18n="Admin">Admin</div>
                     </a>
                 </li>
                 <li class="menu-item">
-                    <a href="/admin/ketua-kbk" class="menu-link">
+                    <a href="/admin/ketua-kbk" class="menu-link {{ Request::is('admin/ketua-kbk') ? 'active bg-light' : '' }}">
                         <div class="text-truncate" data-i18n="KetuaKBK">Ketua KBK</div>
                     </a>
                 </li>
@@ -53,14 +53,14 @@
         </li>
 
         <li class="menu-item">
-            <a href="javascript:void(o)" class="menu-link menu-toggle">
+            <a href="#" class="menu-link menu-toggle {{ Request::is('admin/produk-inovasi/*') ? 'active bg-light' : '' }}">
                 <i class='menu-icon tf-icons bx bxs-cog'></i>
                 <div class="text-truncate" data-i18n="Produk">Produk Inovasi</div>
             </a>
             @foreach ($kbk_navigasi as $i)
                 <ul class="menu-sub">
                     <li class="menu-item">
-                        <a href="/admin/produk-inovasi/{{ $i->id }}" class="menu-link">
+                        <a href="/admin/produk-inovasi/{{ $i->id }}" class="menu-link {{ Request::is('admin/produk-inovasi/' . $i->id) ? 'active bg-light' : '' }}">
                             <div class="text-truncate" data-i18n="{{ $i->nama_kbk }}">{{ $i->nama_kbk }}</div>
                         </a>
                     </li>
@@ -68,14 +68,14 @@
             @endforeach
         </li>
         <li class="menu-item">
-            <a href="javascript:void(o)" class="menu-link menu-toggle">
+            <a href="#" class="menu-link menu-toggle {{ Request::is('admin/penelitian/*') ? 'active bg-light' : '' }}">
                 <i class='menu-icon tf-icons bx bxs-cog'></i>
                 <div class="text-truncate" data-i18n="Produk">Penelitian</div>
             </a>
             @foreach ($kbk_navigasi as $i)
                 <ul class="menu-sub">
                     <li class="menu-item">
-                        <a href="/admin/penelitian/{{ $i->id }}" class="menu-link">
+                        <a href="/admin/penelitian/{{ $i->id }}" class="menu-link {{ Request::is('admin/penelitian/' . $i->id) ? 'active bg-light' : '' }}">
                             <div class="text-truncate" data-i18n="{{ $i->nama_kbk }}">{{ $i->nama_kbk }}</div>
                         </a>
                     </li>

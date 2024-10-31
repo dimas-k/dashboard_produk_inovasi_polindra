@@ -36,7 +36,7 @@
 
 
 
-    <title>D-PROIN | Ketua KBK | produk</title>
+    <title>DB-PRO | Ketua KBK | produk</title>
 
     <meta name="description" content="" />
 
@@ -276,7 +276,7 @@
                 // Mengambil nilai input berdasarkan ID produk
                 const nama_produk = $('#nama_produk_' + id).val();
                 const deskripsi = $('#deskripsi_' + id).val();
-                const anggota = $('#anggota_' + id).val();
+                // const anggota = $('#anggota_' + id).val();
                 const email = $('#email_' + id).val();
                 const inventor = $('#inventor_' + id).val();
                 const gambar = $('#gambar_' + id)[0].files.length ? $('#gambar_' + id)[0].files[0] : null;
@@ -290,7 +290,7 @@
                 const maxLampiranSize = 10 * 1024 * 1024; // 2MB
 
                 // Validasi input kosong
-                if (!nama_produk || !deskripsi || !anggota || !email || !inventor) {
+                if (!nama_produk || !deskripsi  || !email || !inventor) {
                     Swal.fire({
                         icon: 'error',
                         title: 'Gagal',

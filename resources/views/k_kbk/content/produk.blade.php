@@ -260,7 +260,7 @@
                                                             @enderror
                                                         </div>
                                                     </div>
-                                                    <div class="row">
+                                                    {{-- <div class="row">
                                                         <div class="col mb-6">
                                                             <label for="nameBasic" class="form-label">Anggota
                                                                 Inventor</label>
@@ -271,7 +271,7 @@
                                                                 </div>
                                                             @enderror
                                                         </div>
-                                                    </div>
+                                                    </div> --}}
                                                     <div class="row">
                                                         <div class="col mb-6">
                                                             <label for="nameBasic" class="form-label">Email
