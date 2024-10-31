@@ -17,8 +17,10 @@
                     <td>: {{ $produk->inventor }}</td>
                 </tr>
                 <tr>
-                    <th>Anggota Inventor</th>
-                    <td>: {{ $produk->anggota_inventor }}</td>
+                    <th>anggota inventor</th>
+                    <td>@foreach ($produk->anggota as $anggota )
+                        <li>{{ $anggota->detail->nama_lengkap }}</li>
+                    @endforeach</td>
                 </tr>
                 <tr>
                     <th>status produk</th>
@@ -32,6 +34,18 @@
                 <tr>
                     <th>Gambar</th>
                     <td>: <img src="{{ asset('storage/' . $produk->gambar) }}" alt="" style="max-width: 70%; height: auto"></td>
+                </tr>
+                <tr>
+                    <th>Tanggal Submit</th>
+                    <td>:
+                         {{ $produk->tanggal_submit }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>Tanggal Granted</th>
+                    <td>:
+                         {{ $produk->tanggal_granted }}
+                    </td>
                 </tr>
             </table>
         </div>

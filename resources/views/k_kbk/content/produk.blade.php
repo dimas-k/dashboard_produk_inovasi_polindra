@@ -76,18 +76,6 @@
                                         @enderror
                                     </div>
                                 </div>
-                                {{-- <div class="row">
-                                    <div class="col mb-6">
-                                        <label for="nameBasic" class="form-label">Anggota Inventor</label>
-                                        <textarea class="form-control" placeholder="Masukkan anggota inventor" id="floatingTextarea" style="height: 80px"
-                                            name="anggota_inventor"></textarea>
-                                        @error('anggota_inventor')
-                                            <div class="invalid-feedback">
-                                                {{ $message }}
-                                            </div>
-                                        @enderror
-                                    </div>
-                                </div> --}}
                                 <div class="row">
                                     <div class="col mb-6">
                                         <label for="nameBasic" class="form-label">Email Inventor</label>
@@ -98,6 +86,16 @@
                                                 {{ $message }}
                                             </div>
                                         @enderror
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col mb-6">
+                                        <label for="anggota_inventor">Anggota Inventor</label>
+                                        <select class="selectpicker w-100" data-live-search="true" id="anggota_inventor" name="anggota_inventor[]" multiple title="Pilih Anggota Inventor.." >
+                                            @foreach($anggotaKelompok as $anggota)
+                                                <option value="{{ $anggota->id }}">{{ $anggota->nama_lengkap }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -113,16 +111,28 @@
                                 </div>
                                 <div class="row">
                                     <div class="col mb-6">
-                                        <div class="form-group">
-                                            <select class="selectpicker w-100" data-live-search="true" id="anggota_inventor" name="anggota_inventor[]" multiple title="Pilih Anggota Inventor.." >
-                                                @foreach($anggotaKelompok as $anggota)
-                                                    <option value="{{ $anggota->id }}">{{ $anggota->nama_lengkap }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
+                                        <label for="tanggal_submit" class="form-label">Tanggal Submit</label>
+                                        <input type="date" name="tanggal_submit" id="tanggal_submit"
+                                            class="form-control @error('tanggal_submit') is-invalid @enderror">
+                                        @error('tanggal_submit')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
                                     </div>
                                 </div>
-                            
+                                <div class="row">
+                                    <div class="col mb-6">
+                                        <label for="tanggal_granted" class="form-label">Tanggal Granted</label>
+                                        <input type="date" name="tanggal_granted" id="tanggal_granted"
+                                            class="form-control @error('tanggal_granted') is-invalid @enderror">
+                                        @error('tanggal_granted')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+                                </div>
                                 <hr class="border-3 w-100">
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-outline-secondary me-1"

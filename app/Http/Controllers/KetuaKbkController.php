@@ -175,6 +175,8 @@ class KetuaKbkController extends Controller
                 'email_inventor' => 'required|email',
                 'gambar' => 'required|file|mimes:jpeg,png,jpg|max:10240',
                 'lampiran' => 'nullable|file|mimes:jpeg,png,jpg,pdf,docx|max:10240',
+                'tanggal_submit' =>'date',
+                'tanggal_granted'=>'date'
             ]);
             DB::beginTransaction();
             $produk = new Produk();
@@ -183,6 +185,8 @@ class KetuaKbkController extends Controller
             $produk->deskripsi = $request->deskripsi;
             $produk->inventor = $request->inventor;
             $produk->email_inventor = $request->email_inventor;
+            $produk->tanggal_submit = $request->tanggal_submit;
+            $produk->tanggal_granted = $request->tanggal_granted;
 
 
 

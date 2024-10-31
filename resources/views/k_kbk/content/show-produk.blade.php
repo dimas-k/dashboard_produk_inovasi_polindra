@@ -38,6 +38,18 @@
                     <td>: <a href={{ asset( 'storage/' . $produk->lampiran) }} class=""
                         target="_blank">Lihat Lampiran</a></td>
                 </tr>
+                <tr>
+                    <th>Tanggal Submit</th>
+                    <td>:
+                         {{ $produk->tanggal_submit }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>Tanggal Granted</th>
+                    <td>:
+                         {{ $produk->tanggal_granted }}
+                    </td>
+                </tr>
             </table>
         </div>
     </div>
