@@ -32,7 +32,7 @@
 
 
 
-    <title>D-PROIN | Ketua KBK | produk</title>
+    <title>DB-PRO | Ketua KBK | produk</title>
 
     <meta name="description" content="" />
 

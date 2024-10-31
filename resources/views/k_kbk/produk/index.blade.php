@@ -36,7 +36,7 @@
 
 
 
-    <title>D-PROIN | Ketua KBK | produk</title>
+    <title>DB-PRO | Ketua KBK | produk</title>
 
     <meta name="description" content="" />
 
@@ -292,7 +292,7 @@
                 const maxLampiranSize = 10 * 1024 * 1024; // 2MB
 
                 // Validasi input kosong
-                if (!nama_produk || !deskripsi || !email || !inventor || !ts || !tg) {
+                if (!nama_produk || !deskripsi || !anggota || !email || !inventor) {
                     Swal.fire({
                         icon: 'error',
                         title: 'Gagal',

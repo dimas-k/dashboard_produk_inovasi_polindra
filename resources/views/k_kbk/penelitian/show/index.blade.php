@@ -19,7 +19,7 @@
 
 
 
-    <title>Admin D-PROIN | Ketua KBK</title>
+    <title>Admin DB-PRO | Ketua KBK</title>
 
     <meta name="description" content="" />
 

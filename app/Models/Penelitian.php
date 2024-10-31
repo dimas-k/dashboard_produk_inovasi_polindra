@@ -19,4 +19,9 @@ class Penelitian extends Model
     {
         return $this->belongsTo(KelompokKeahlian::class,  'kbk_id');
     }
+
+    public function anggotaPenelitian()
+    {
+        return $this->hasMany(PenelitianAnggota::class, 'penelitian_id', 'id');
+    }
 }
