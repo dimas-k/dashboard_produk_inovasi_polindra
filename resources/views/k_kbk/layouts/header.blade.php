@@ -15,7 +15,7 @@
             <li class="nav-item navbar-dropdown dropdown-user dropdown">
                 <a class="nav-link dropdown-toggle hide-arrow p-0" href="javascript:void(0);" data-bs-toggle="dropdown">
                     <div class="avatar avatar-online">
-                        <img src="{{ asset('storage/' . auth()->user()->pas_foto) }}"
+                        <img src="{{ auth()->user()->pas_foto && file_exists(public_path('storage/' . auth()->user()->pas_foto)) ? asset('storage/' . auth()->user()->pas_foto) : asset('assets/foto_user_default.png') }}"
                             class="w-40 h-40 rounded-circle object-fit-cover" />
                     </div>
                 </a>
@@ -25,7 +25,7 @@
                             <div class="d-flex">
                                 <div class="flex-shrink-0 me-3">
                                     <div class="avatar avatar-online">
-                                        <img src="{{ asset('storage/' . auth()->user()->pas_foto) }}"
+                                        <img src="{{ auth()->user()->pas_foto && file_exists(public_path('storage/' . auth()->user()->pas_foto)) ? asset('storage/' . auth()->user()->pas_foto) : asset('assets/foto_user_default.png') }}"
                                             class="w-40 h-40 rounded-circle object-fit-cover" />
                                     </div>
                                 </div>

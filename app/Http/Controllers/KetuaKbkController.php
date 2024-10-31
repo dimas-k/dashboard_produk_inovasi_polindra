@@ -177,13 +177,11 @@ class KetuaKbkController extends Controller
                 'lampiran' => 'nullable|file|mimes:jpeg,png,jpg,pdf,docx|max:10240',
             ]);
             DB::beginTransaction();
-            // Buat instance baru dari Produk
             $produk = new Produk();
             $produk->kbk_id = $request->kbk_id;
             $produk->nama_produk = $request->nama_produk;
             $produk->deskripsi = $request->deskripsi;
             $produk->inventor = $request->inventor;
-            // $produk->anggota_inventor = $request->anggota_inventor;
             $produk->email_inventor = $request->email_inventor;
 
 
@@ -195,7 +193,6 @@ class KetuaKbkController extends Controller
                 $path = $request->file('gambar')->storeAs('dokumen-produk', $fileName);
                 $produk->gambar = $path;
             }
-
             // Proses upload lampiran
             if ($request->hasFile('lampiran')) {
                 $originalName = $request->file('lampiran')->getClientOriginalName();
@@ -203,7 +200,6 @@ class KetuaKbkController extends Controller
                 $path = $request->file('lampiran')->storeAs('dokumen-produk', $fileName);
                 $produk->lampiran = $path;
             }
-
             // Simpan produk ke database
             $produk->save();
 

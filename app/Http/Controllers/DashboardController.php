@@ -115,7 +115,7 @@ class DashboardController extends Controller
         $kbk = KelompokKeahlian::all();
         $kbk_nama = KelompokKeahlian::where('nama_kbk', $nama_produk)->first();
 
-        $produk = Produk::with('kelompokKeahlian')
+        $produk = Produk::with(['kelompokKeahlian', 'anggota.detail'])
             ->where('nama_produk', $nama_produk)
             ->firstOrFail();
 
@@ -139,15 +139,13 @@ class DashboardController extends Controller
         $p_dosen = Produk::with('kelompokKeahlian')->where('inventor', $dosen)->paginate(7);
         $plt_dosen = Penelitian::with('KelompokKeahlian')->where('penulis', $dosen)->paginate(7);
         
-        return view('dashboard.dosen-produk.index', compact('kbk', 'p_dosen', 'kbk_nama', 'plt_dosen'));
+        return view('dashboard.dosen-produk.index', [
+            'kbk' => $kbk,
+            'kbk_nama' => $kbk_nama,
+            'p_dosen' => $p_dosen,
+            'plt_dosen' => $plt_dosen,
+            'dosen' => $dosen
+        ]);
     }
 
-    public function dosenPenelitian($penulis)
-    {
-        $kbk = KelompokKeahlian::all();
-        $kbk_nama = KelompokKeahlian::where('nama_kbk', $penulis)->first();
-        $plt_dosen = Penelitian::with('KelompokKeahlian')->where('penulis', $penulis)->paginate(7);
-
-        return view('dashboard.dosen-penelitian.index', compact('kbk', 'plt_dosen', 'kbk_nama'));
-    }
 }

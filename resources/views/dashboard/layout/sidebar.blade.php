@@ -18,7 +18,6 @@
                 </div>
             </div>  
             <a href="/dashboard/kontak" class="nav-item nav-link {{ Request::is('dashboard/kontak') ? 'active' : '' }}">Kontak Kami</a>
-            <a href="https://siki.polindra.ac.id/" class="nav-item nav-link" target="_blank">Sentra KI</a>
             <a href="/login" class="nav-item nav-link {{ Request::is('login') ? 'active' : '' }}" target="_blank">Login</a>
         </div>
     </div>

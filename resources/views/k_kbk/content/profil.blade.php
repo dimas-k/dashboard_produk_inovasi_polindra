@@ -3,7 +3,9 @@
         <h5 class="card-header border-3 w-100 mb-2"><i class='bx bx-table me-2'></i>Data
             {{ auth()->user()->nama_lengkap }}
         </h5>
-        <img src="{{ asset('storage/'. auth()->user()->pas_foto) }}" class="rounded-circle mx-auto d-block mb-5 mt-2" alt="" style="width: 140px; height: 140px; border-radius: 70%; object-fit: cover;">
+        <img src="{{ auth()->user()->pas_foto && file_exists(public_path('storage/' . auth()->user()->pas_foto)) ? asset('storage/' . auth()->user()->pas_foto) : asset('assets/foto_user_default.png') }}"
+            class="rounded-circle mx-auto d-block mb-5 mt-2" alt=""
+            style="width: 140px; height: 140px; border-radius: 70%; object-fit: cover;">
         <div class="table-responsive text-nowrap">
 
             <table class="table table-borderless">

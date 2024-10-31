@@ -32,7 +32,7 @@ class KetuaKbkSeeder extends Seeder
                 'nama_lengkap' => 'Dian Pramadhana, M.Kom',
                 'nip' => '199302282022031007',
                 'jabatan' => 'Ketua KBK',
-                'pas_foto' => 'dokumen-user/foto_user_default.png',
+                'pas_foto' => 'assets/foto_user_default.png',
                 'no_hp' => '085742114040',
                 'kbk_id'=>$siId,
                 'email' => 'dianpramadhana@gmail.com',
@@ -47,7 +47,7 @@ class KetuaKbkSeeder extends Seeder
                 'kbk_id'=>$rplpId,
                 'email' => 'yaqutinams@polindra.ac.id',
                 'jabatan' => 'Ketua KBK',
-                'pas_foto' => 'dokumen-user/foto_user_default.png',
+                'pas_foto' => 'assets/foto_user_default.png',
                 'username' => '199211022022031014',
                 'password' => Hash::make('199211022022031014'),
                 'role' => 'ketua_kbk'
@@ -59,7 +59,7 @@ class KetuaKbkSeeder extends Seeder
                 'kbk_id'=>$skjId,
                 'email' => 'willy@polindra.ac.id',
                 'jabatan' => 'Ketua KBK',
-                'pas_foto' => 'dokumen-user/foto_user_default.png',
+                'pas_foto' => 'assets/foto_user_default.png',
                 'username' => '198610042019031004',
                 'password' => Hash::make('198610042019031004'),
                 'role' => 'ketua_kbk'
@@ -71,7 +71,7 @@ class KetuaKbkSeeder extends Seeder
                 'kbk_id'=>$sdId,
                 'email' => 'snhimawan@polindra.ac.id',
                 'jabatan' => 'Asisten Ahli',
-                'pas_foto' => 'dokumen-user/foto_user_default.png',
+                'pas_foto' => 'assets/foto_user_default.png',
                 'username' => '199407022022031005',
                 'password' => Hash::make('199407022022031005'),
                 'role' => 'ketua_kbk'
@@ -83,7 +83,7 @@ class KetuaKbkSeeder extends Seeder
                 'kbk_id'=>$fmnId,
                 'email' => 'gilarwisnu@gmail.com',
                 'jabatan' => 'Asisten Ahli',
-                'pas_foto' => 'dokumen-user/foto_user_default.png',
+                'pas_foto' => 'assets/foto_user_default.png',
                 'username' => '199308112022031008',
                 'password' => Hash::make('199308112022031008'),
                 'role' => 'ketua_kbk'
@@ -95,7 +95,7 @@ class KetuaKbkSeeder extends Seeder
                 'kbk_id'=>$ccnId,
                 'email' => 'priyantoghryfano@polindra.ac.id',
                 'jabatan' => 'Lektor',
-                'pas_foto' => 'dokumen-user/foto_user_default.png',
+                'pas_foto' => 'assets/foto_user_default.png',
                 'username' => '196502231984121001',
                 'password' => Hash::make('196502231984121001'),
                 'role' => 'ketua_kbk'
@@ -107,7 +107,7 @@ class KetuaKbkSeeder extends Seeder
                 'kbk_id'=>$mhcnId,
                 'email' => 'indra@polindra.ac.id',
                 'jabatan' => 'Lektor',
-                'pas_foto' => 'dokumen-user/foto_user_default.png',
+                'pas_foto' => 'assets/foto_user_default.png',
                 'username' => '196709271987031078',
                 'password' => Hash::make('196709271987031078'),
                 'role' => 'ketua_kbk'
@@ -119,7 +119,7 @@ class KetuaKbkSeeder extends Seeder
                 'kbk_id'=>$pmId,
                 'email' => 'dedi@polindra.ac.id',
                 'jabatan' => 'Lektor',
-                'pas_foto' => 'dokumen-user/foto_user_default.png',
+                'pas_foto' => 'assets/foto_user_default.png',
                 'username' => '198405052019031016',
                 'password' => Hash::make('198405052019031016'),
                 'role' => 'ketua_kbk'
@@ -131,7 +131,7 @@ class KetuaKbkSeeder extends Seeder
                 'kbk_id'=>$rmId,
                 'email' => 'titoendramawan@gmail.com',
                 'jabatan' => 'Lektor',
-                'pas_foto' => 'dokumen-user/foto_user_default.png',
+                'pas_foto' => 'assets/foto_user_default.png',
                 'username' => '19830312201121002',
                 'password' => Hash::make('19830312201121002'),
                 'role' => 'ketua_kbk'
@@ -143,7 +143,7 @@ class KetuaKbkSeeder extends Seeder
                 'kbk_id'=>$rhvacId,
                 'email' => 'yudhy@polindra.ac.id',
                 'jabatan' => 'Asisten Ahli',
-                'pas_foto' => 'dokumen-user/foto_user_default.png',
+                'pas_foto' => 'assets/foto_user_default.png',
                 'username' => '197710112021211003',
                 'password' => Hash::make('197710112021211003'),
                 'role' => 'ketua_kbk'
@@ -155,7 +155,7 @@ class KetuaKbkSeeder extends Seeder
                 'kbk_id'=>$ikId,
                 'email' => 'bobikhoerun@polindra.ac.id',
                 'jabatan' => 'Lektor',
-                'pas_foto' => 'dokumen-user/foto_user_default.png',
+                'pas_foto' => 'assets/foto_user_default.png',
                 'username' => '198806032018031001',
                 'password' => Hash::make('198806032018031001'),
                 'role' => 'ketua_kbk'

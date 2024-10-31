@@ -31,7 +31,7 @@
                 </tr>
                 <tr>
                     <th>Gambar Produk</th>
-                    <td>: <img src="{{ asset( 'storage/' . $produk->gambar) }}" alt="" style="max-width: 70%; height: auto"></td>
+                    <td>: <img src="{{ asset( 'storage/' . $produk->gambar) }}" alt="" style="max-width: 50%; height: auto"></td>
                 </tr>
                 <tr>
                     <th>Lampiran</th>

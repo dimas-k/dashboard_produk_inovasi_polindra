@@ -32,7 +32,9 @@
                     @foreach ($anggota_kbk as $anggota)
                         <ul style="margin: 0; padding-left: 30px;">
                             <li style="margin-bottom: 5px;">
-                                {{ $anggota->nama_lengkap }}
+                                <a href="{{ route('produk.dosen', ['dosen' => $anggota->nama_lengkap]) }}">
+                                    {{ $anggota->nama_lengkap }}
+                                </a>
                             </li>
                         </ul>
                     @endforeach
@@ -50,10 +52,12 @@
                             <div class="team-item text-center rounded overflow-hidden shadow">
 
                                 <div class="m-4">
-                                    <img class="img-fluid" src={{ asset('storage/' . $kkbk->pas_foto) }} alt="">
+                                    <img class="img-fluid" src={{ $kkbk->pas_foto && file_exists(public_path('storage/' . $kkbk->pas_foto)) ? asset('storage/' . $kkbk->pas_foto) : asset('assets/foto_user_default.png') }} alt="">
                                 </div>
                                 <h5 class="mb-0">
-                                    {{ $kkbk->nama_lengkap ?? '' }}
+                                    <a href="{{ route('produk.dosen', ['dosen' => $kkbk->nama_lengkap]) }}">
+                                        {{ $kkbk->nama_lengkap ?? '' }}
+                                    </a>
                                 </h5>
 
                                 <small>Ketua {{ $kkbk->nama_kbk }}</small>
