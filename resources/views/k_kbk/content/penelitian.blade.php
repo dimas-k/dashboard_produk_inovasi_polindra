@@ -274,16 +274,21 @@
                                                     </div>
                                                     <div class="row">
                                                         <div class="col mb-6">
-                                                            <label for="nameBasic" class="form-label">Anggota
-                                                                Penulis</label>
-                                                            <textarea class="form-control" id="anggota_{{ $p->id }}" style="height: 80px" name="anggota_penulis">{{ $p->anggota_penulis }}</textarea>
-                                                            @error('anggota_penulis')
-                                                                <div class="invalid-feedback">
-                                                                    {{ $message }}
-                                                                </div>
-                                                            @enderror
+                                                            <label for="nameBasic" class="form-label">Anggota Penulis</label>
+                                                            @foreach ($p->anggotaPenelitian as $anggota)
+                                                                <li>{{ $anggota->detailAnggota->nama_lengkap }}</li>
+                                                            @endforeach
+                                                            <br>
+                                                            <select class="selectpicker w-100" data-live-search="true" id="anggota_penulis_{{ $p->id }}" name="anggota_penulis[]" multiple title="Pilih Anggota Penulis..">
+                                                                @foreach($penelitianAnggota as $anggota)
+                                                                    <option value="{{ $anggota->id }}"
+                                                                        @if($p->anggotaPenelitian && $p->anggotaPenelitian->pluck('id')->contains($anggota->id)) selected @endif>
+                                                                        {{ $anggota->nama_lengkap }}
+                                                                    </option>
+                                                                @endforeach
+                                                            </select><br>
                                                         </div>
-                                                    </div>
+                                                    </div>                                                    
                                                     <div class="row">
                                                         <div class="col mb-6">
                                                             <label for="nameBasic" class="form-label">Lampiran</label>

@@ -258,7 +258,7 @@
 
                     // Mengambil nilai input berdasarkan ID produk
                     const judul = $('#judul_' + id).val();
-                    const anggota = $('#anggota_' + id).val();
+                    const anggota = $('#anggota_penulis_' + id).val();
                     const email = $('#email_' + id).val();
                     const penulis = $('#penulis_' + id).val();
                     const gambar = $('#gambar_' + id)[0].files.length ? $('#gambar_' + id)[0].files[0]
@@ -274,7 +274,7 @@
                     const abstrakExtensions = /(\.pdf)$/i;
 
                     // Validasi input kosong
-                    if (!judul || !anggota || !email || !penulis) {
+                    if (!judul || !email || !penulis) {
 
                         Swal.fire({
                             icon: 'error',

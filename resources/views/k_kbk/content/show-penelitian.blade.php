@@ -11,20 +11,23 @@
                     <th>Nama Penulis</th>
                     <td>: {{ $penelitian->penulis }}</td>
                 </tr>
-                <div class="row">
-                    <div class="col mb-6">
-                        <label for="anggota_inventor">Anggota Penulis</label>
-                        <select class="selectpicker w-100" data-live-search="true" id="anggota_inventor" name="anggota_inventor[]" multiple title="Pilih Anggota Inventor.." >
-                            @foreach($anggotaKelompok as $anggota)
-                                <option value="{{ $anggota->id }}">{{ $anggota->nama_lengkap }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
+
                 <tr>
-                    <th>email</th>
+                    <th>email penulis</th>
                     <td>: {{ $penelitian->email_penulis }}</td>
                 </tr>
+                <tr>
+                    <th>Anggota Penulis</th>
+                    <td>
+                        @if($penelitian->anggotaPenelitian)
+                            @foreach($penelitian->anggotaPenelitian as $anggota)
+                                <li>{{ $anggota->detailAnggota->nama_lengkap }}</li>
+                            @endforeach
+                        @else
+                            <p>Tidak ada anggota penulis.</p>
+                        @endif
+                    </td>
+                </tr>                
                 <tr>
                     <th>Kelompok Keahlian</th>
                     <td>: {{ $penelitian->kelompokKeahlian ? $penelitian->kelompokKeahlian->nama_kbk : 'Tidak ada' }}</td>

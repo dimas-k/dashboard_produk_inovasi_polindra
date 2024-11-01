@@ -271,18 +271,6 @@
                                                     </div>
                                                     <div class="row">
                                                         <div class="col mb-6">
-                                                            <label for="nameBasic" class="form-label">Anggota
-                                                                Inventor</label>
-                                                            <textarea class="form-control" id="anggota_{{ $p->id }}" style="height: 80px" name="anggota_inventor">{{ $p->anggota_inventor }}</textarea>
-                                                            @error('anggota_inventor')
-                                                                <div class="invalid-feedback">
-                                                                    {{ $message }}
-                                                                </div>
-                                                            @enderror
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col mb-6">
                                                             <label for="nameBasic" class="form-label">Email
                                                                 Inventor</label>
                                                             <input type="email" id="email_{{ $p->id }}"

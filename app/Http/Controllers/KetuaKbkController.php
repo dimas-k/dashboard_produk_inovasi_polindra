@@ -160,7 +160,7 @@ class KetuaKbkController extends Controller
     public function showProduk($id)
     {
         $produk = Produk::with(['KelompokKeahlian', 'anggota.detail'])->findOrFail($id);
-        // dd($produk->lampiran);
+        // dd($produk->anggota);
         return view('k_kbk.produk.show.index', compact('produk'));
     }
 
@@ -246,7 +246,6 @@ class KetuaKbkController extends Controller
         $produk->nama_produk = $request->nama_produk;
         $produk->deskripsi = $request->deskripsi;
         $produk->inventor = $request->inventor;
-        // $produk->anggota_inventor = $request->anggota_inventor;
         $produk->email_inventor = $request->email_inventor;
         $produk->tanggal_submit = $request->tanggal_submit;
         $produk->tanggal_granted = $request->tanggal_granted;
@@ -325,15 +324,20 @@ class KetuaKbkController extends Controller
 
         $user = auth()->user();
         $anggotaKelompok = AnggotaKelompokKeahlian::where('kbk_id', $user->kbk_id)->get();
-        $produkAnggota = AnggotaKelompokKeahlian::all();
+        $penelitianAnggota = AnggotaKelompokKeahlian::all();
 
 
-        return view('k_kbk.penelitian.index', compact('penelitians', 'kkbk','anggotaKelompok','produkAnggota'));
+        return view('k_kbk.penelitian.index', compact('penelitians', 'kkbk','anggotaKelompok','penelitianAnggota'));
     }
 
     public function showPenelitian($id)
     {
-        $penelitian = Penelitian::with('kelompokKeahlian')->findOrFail($id);
+        // $user = auth()->user();
+        // $anggotaKelompok = AnggotaKelompokKeahlian::where('kbk_id', $user->kbk_id)->get();
+        // $produkAnggota = AnggotaKelompokKeahlian::all();
+        $penelitian = Penelitian::with(['kelompokKeahlian','anggotaPenelitian.detailAnggota'])->findOrFail($id);
+
+
         return view('k_kbk.penelitian.show.index', compact('penelitian'));
     }
 
@@ -345,7 +349,6 @@ class KetuaKbkController extends Controller
                 'abstrak' => 'required|file|mimes:pdf|max:10240',
                 'kbk_id' => 'required|exists:kelompok_keahlians,id',
                 'penulis' => 'required|string|max:255',
-                'anggota_penulis' => 'nullable|array',
                 'email_penulis' => 'required|email',
                 'gambar' => 'required|file|mimes:jpeg,png,jpg|max:10240', // Sesuaikan dengan format file yang diperbolehkan
                 'lampiran' => 'required|file|mimes:jpeg,png,jpg,pdf,docx|max:10240',
@@ -369,7 +372,7 @@ class KetuaKbkController extends Controller
                 'gambar.mimes' => 'File gambar harus berupa JPG, JPEG, atau PNG.',
                 'lampiran.mimes' => 'File lampiran harus berupa JPG, JPEG, PNG, PDF, atau DOCX.',
             ]);
-            
+            DB::beginTransaction();
             $penelitian = new Penelitian();
             $penelitian->kbk_id = $request->kbk_id;
             $penelitian->judul = $request->judul;
@@ -413,9 +416,18 @@ class KetuaKbkController extends Controller
 
             $penelitian->save();
 
+            foreach($request->anggota_penulis as $anggota)
+            {
+                PenelitianAnggota::create([
+                    'penelitian_id' => $penelitian->id,
+                    'anggota_id' => $anggota
+                ]);
+            }
+            DB::commit();
+
             return response()->json([
                 'success' => true,
-                'message' => 'Produk berhasil disimpan.'
+                'message' => 'Penelitian berhasil disimpan.'
             ]);
         } catch (\Exception $e) {
             // Jika ada error, return response error dengan pesan
@@ -432,7 +444,7 @@ class KetuaKbkController extends Controller
             'judul' => 'required|string|max:255',
             'abstrak' => 'file|mimes:pdf|max:2048',
             'penulis' => 'required|string|max:255',
-            'anggota_penulis' => 'nullable|string',
+            // 'anggota_penulis' => 'nullable|string',
             'email_penulis' => 'required|email',
             'gambar' => 'file|mimes:jpeg,png,jpg|max:2048', // Sesuaikan dengan format file yang diperbolehkan
             'lampiran' => 'file|mimes:jpeg,png,jpg,pdf,docx|max:2048',
@@ -441,7 +453,7 @@ class KetuaKbkController extends Controller
         $penelitian = Penelitian::findOrFail($id);
         $penelitian->judul = $request->judul;
         $penelitian->penulis = $request->penulis;
-        $penelitian->anggota_penulis = $request->anggota_penulis;
+        // $penelitian->anggota_penulis = $request->anggota_penulis;
         $penelitian->email_penulis = $request->email_penulis;
         $penelitian->tanggal_publikasi = $request->tanggal_publikasi;
 
@@ -484,7 +496,21 @@ class KetuaKbkController extends Controller
             // Simpan path tanpa 'public/' di database
             $penelitian->lampiran = $path;
         }
+
         $penelitian->save();
+
+        if ($request->filled('anggota_penulis')) {
+            // Hapus semua anggota terkait sebelumnya
+            $penelitian->anggotaPenelitian()->delete();
+        
+            // Tambahkan data baru
+            foreach ($request->anggota_penulis as $anggotaId) {
+                $penelitian->anggotaPenelitian()->create([
+                    'anggota_id' => $anggotaId,
+                ]);
+            }
+        }
+
         return redirect('/k-kbk/penelitian')->with('success', 'Data Penelitian berhasil diupdate');
     }
     public function hapusPenelitian($id)

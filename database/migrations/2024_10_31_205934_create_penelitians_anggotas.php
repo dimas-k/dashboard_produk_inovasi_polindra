@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('anggota_id')->constrained('anggota_kelompok_keahlians')->onDelete('cascade');
             $table->timestamps();
         });
+        
     }
 
     /**
