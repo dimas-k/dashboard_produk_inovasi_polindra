@@ -39,7 +39,10 @@
                     <strong>Tim Inventor</strong> <br> <br> <br>
                     <p class="mb-1"><strong>Ketua : </strong> {{ $penelitian->penulis }}</p>
                     <p class="mb-1"><strong>Anggota : </strong></p>
-                    @php
+                    @foreach ($penelitian->anggotaPenelitian as $anggota )
+                        <li>{{ $anggota->detailAnggota->nama_lengkap }}</li>
+                    @endforeach
+                    {{-- @php
                         $anggotaArray = explode(',', $penelitian->anggota_penulis); 
                     @endphp
             
@@ -47,7 +50,7 @@
                         @foreach ($anggotaArray as $poin)
                             <li>{{ trim($poin) }}</li>
                         @endforeach
-                    </ul>
+                    </ul> --}}
                     <a class="btn btn-success p-3 mt-4" href="mailto:{{ $penelitian->email_penulis }}"><i class="bi bi-envelope me-2"></i>Hubungi penulis</a>
                 </div>
             </div>

@@ -13,8 +13,10 @@
                     <td>: {{ $penelitian->penulis }}</td>
                 </tr>
                 <tr>
-                    <th>Anggota Penulis</th>
-                    <td>: {{ $penelitian->anggota_penulis }}</td>
+                    <th>anggota penulis</th>
+                    <td>@foreach ($penelitian->anggotaPenelitian as $anggota )
+                        <li>{{ $anggota->detailAnggota->nama_lengkap }}</li>
+                    @endforeach</td>
                 </tr>
                 <tr>
                     <th>status produk</th>
