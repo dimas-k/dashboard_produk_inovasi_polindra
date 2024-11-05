@@ -78,7 +78,7 @@
 <div class="container-xxl py-5">
     <div class="container">
         <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
-            <h6 class="section-title bg-white text-center text-primary px-3">Penelitian</h6>
+            <h6 class="section-title bg-white text-center text-primary px-3">Produk Keahlian</h6>
             {{-- <h1 class="display-6 mb-4">Penelitian Terbaru</h1> --}}
         </div>
         <div class="owl-carousel project-carousel wow fadeInUp" data-wow-delay="0.1s">

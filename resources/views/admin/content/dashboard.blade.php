@@ -40,4 +40,16 @@
             </div>
         </div>
     </div>
+    <div class="card p-3">
+        <select id="chartSelect" class="form-select mb-3" style="width: 200px;">
+            <option value="produk" selected>Diagram Produk</option>
+            <option value="penelitian">Diagram Penelitian</option>
+        </select>
+        <div id="produkChartContainer">
+            <canvas id="myChartPrdk"></canvas>
+        </div>
+        <div id="penelitianChartContainer">
+            <canvas id="myChartPlt"></canvas>
+        </div>
+    </div>
 </div>

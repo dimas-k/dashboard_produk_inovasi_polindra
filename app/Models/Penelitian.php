@@ -15,6 +15,10 @@ class Penelitian extends Model
         'status'
     ];
 
+    protected $casts = [
+        'tanggal_publikasi' => 'date',
+    ];
+
     public function kelompokKeahlian()
     {
         return $this->belongsTo(KelompokKeahlian::class,  'kbk_id');

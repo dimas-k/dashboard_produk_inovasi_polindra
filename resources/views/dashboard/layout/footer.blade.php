@@ -8,9 +8,9 @@
                 <p class="text-light mb-2"><i class="fa fa-envelope me-3"></i>sentra_ki@polindra.ac.id</p>
                 <div class="d-flex pt-2">
                     <a class="btn btn-square btn-outline-secondary rounded-circle me-1" href="https://www.instagram.com/politekniknegeriindramayu/"><i class="fab fa-instagram"></i></a>
-                    <a class="btn btn-square btn-outline-secondary rounded-circle me-1" href=""><i class="fab fa-facebook-f"></i></a>
-                    <a class="btn btn-square btn-outline-secondary rounded-circle me-1" href=""><i class="fab fa-youtube"></i></a>
-                    <a class="btn btn-square btn-outline-secondary rounded-circle me-0" href=""><i class="fab fa-linkedin-in"></i></a>
+                    
+                    <a class="btn btn-square btn-outline-secondary rounded-circle me-1" href="https://youtube.com/@politekniknegeriindramayu4871?si=wi2FTpg_4Od_2F2s"><i class="fab fa-youtube"></i></a>
+                    <a class="btn btn-square btn-outline-secondary rounded-circle me-0" href="https://www.linkedin.com/company/politeknik_negeri_indramayu/"><i class="fab fa-linkedin-in"></i></a>
                 </div>
             </div>
             <div class="col-lg-3 col-md-6">

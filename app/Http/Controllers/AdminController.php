@@ -17,12 +17,32 @@ class AdminController extends Controller
     public function dashboard()
     {
         $kbk_navigasi = KelompokKeahlian::select('id', 'nama_kbk')->get();
-        $prdk_valid = Produk::with('kelompokKeahlian') ->where('status', 'Tervalidasi')->count();
-        $prdk_nonvalid = Produk::with('kelompokKeahlian') ->where('status', 'Belum Divalidasi')->count();
+        $prdk_valid = Produk::with('kelompokKeahlian')->where('status', 'Tervalidasi')->count();
+        $prdk_nonvalid = Produk::with('kelompokKeahlian')->where('status', 'Belum Divalidasi')->count();
 
-        $pnltan_valid = Penelitian::with('kelompokKeahlian') ->where('status', 'Tervalidasi')->count();
-        $pnltan_nonvalid = Penelitian::with('kelompokKeahlian') ->where('status', 'Belum Divalidasi')->count();
-        return view('admin.index', compact('kbk_navigasi' , 'pnltan_valid' , 'pnltan_nonvalid' , 'prdk_valid' , 'prdk_nonvalid'));
+        $pnltan_valid = Penelitian::with('kelompokKeahlian')->where('status', 'Tervalidasi')->count();
+        $pnltan_nonvalid = Penelitian::with('kelompokKeahlian')->where('status', 'Belum Divalidasi')->count();
+
+        $prdk_tahun = Produk::whereNotNull('tanggal_granted')
+            ->where('status', 'Tervalidasi')
+            ->get()
+            ->groupBy(function ($item) {
+                return $item->tanggal_granted->format('Y');
+            })
+            ->map(function ($group) {
+                return $group->count();
+            })->sortKeys();
+
+        $plt_tahun = Penelitian::whereNotNull('tanggal_publikasi')
+            ->where('status', 'Tervalidasi')
+            ->get()
+            ->groupBy(function ($item) {
+                return $item->tanggal_publikasi->format('Y');
+            })
+            ->map(function ($group) {
+                return $group->count();
+            })->sortKeys();
+        return view('admin.index', compact('kbk_navigasi', 'pnltan_valid', 'pnltan_nonvalid', 'prdk_valid', 'prdk_nonvalid', 'prdk_tahun', 'plt_tahun'));
     }
 
 
@@ -30,24 +50,24 @@ class AdminController extends Controller
     public function admin()
     {
         $kbk_navigasi = DB::table('kelompok_keahlians')
-        ->select(
-            'kelompok_keahlians.id',
-            'kelompok_keahlians.nama_kbk'
-        )
-        ->get();
+            ->select(
+                'kelompok_keahlians.id',
+                'kelompok_keahlians.nama_kbk'
+            )
+            ->get();
         $admin = User::where('role', 'admin')->get();
-        return view('admin.admin-page.index', compact('admin','kbk_navigasi'));
+        return view('admin.admin-page.index', compact('admin', 'kbk_navigasi'));
     }
     public function showAdmin(string $id)
     {
         $admin = User::find($id);
         $kbk_navigasi = DB::table('kelompok_keahlians')
-        ->select(
-            'kelompok_keahlians.id',
-            'kelompok_keahlians.nama_kbk'
-        )
-        ->get();
-        return view('admin.admin-page.show.index', compact('admin','kbk_navigasi'));
+            ->select(
+                'kelompok_keahlians.id',
+                'kelompok_keahlians.nama_kbk'
+            )
+            ->get();
+        return view('admin.admin-page.show.index', compact('admin', 'kbk_navigasi'));
     }
 
     public function storeAdmin(Request $request)
@@ -56,7 +76,7 @@ class AdminController extends Controller
             'nama_lengkap' => 'required|string',
             'nip' => 'required|numeric|digits_between:1,20',
             'no_hp' => 'required',
-            'pas_foto' =>'required|file|mimes:jpg,jpeg,png|max:2048',
+            'pas_foto' => 'required|file|mimes:jpg,jpeg,png|max:2048',
             'email' => 'required|email|unique:users',
             'jabatan' => 'required',
             'username' => 'required',
@@ -70,10 +90,10 @@ class AdminController extends Controller
         if ($request->hasFile('pas_foto')) {
             $originalName = $request->file('pas_foto')->getClientOriginalName();
             $fileName = time() . '_' . str_replace(' ', '_', $originalName);
-    
+
             // Simpan file ke storage/app/public/dokumen-user
             $path = $request->file('pas_foto')->storeAs('dokumen-user', $fileName);
-    
+
             // Simpan path utuh di database
             $admin->pas_foto = $path;
         }
@@ -95,7 +115,7 @@ class AdminController extends Controller
             'jabatan' => 'required',
             'username' => 'required',
             'password' => 'nullable|min:3',
-            'pas_foto' =>'file|mimes:jpg,jpeg,png|max:2048',
+            'pas_foto' => 'file|mimes:jpg,jpeg,png|max:2048',
         ]);
 
         $admin = User::find($id);
@@ -110,12 +130,12 @@ class AdminController extends Controller
             if ($admin->pas_foto && Storage::exists($admin->pas_foto)) {
                 Storage::delete($admin->pas_foto);
             }
-            
+
             // Simpan foto baru
             $originalName = $request->file('pas_foto')->getClientOriginalName();
             $fileName = time() . '_' . str_replace(' ', '_', $originalName);
             $path = $request->file('pas_foto')->storeAs('dokumen-user', $fileName);
-            
+
             // Simpan path ke database
             $admin->pas_foto = $path;
         }
@@ -141,34 +161,34 @@ class AdminController extends Controller
     {
         $kbk = User::with('kelompokKeahlian')->where('role', 'ketua_kbk')->paginate(10);
         $jenis_kbk = KelompokKeahlian::all();
-        
+
         $kbk_navigasi = DB::table('kelompok_keahlians')
-        ->select(
-            'kelompok_keahlians.id',
-            'kelompok_keahlians.nama_kbk'
-        )
-        ->get();
-        return view('admin.ketua-kbk.index', compact('kbk', 'jenis_kbk','kbk_navigasi'));
+            ->select(
+                'kelompok_keahlians.id',
+                'kelompok_keahlians.nama_kbk'
+            )
+            ->get();
+        return view('admin.ketua-kbk.index', compact('kbk', 'jenis_kbk', 'kbk_navigasi'));
     }
 
     public function showDataKetuaKbk(string $id)
     {
         $kbk_navigasi = DB::table('kelompok_keahlians')
-        ->select(
-            'kelompok_keahlians.id',
-            'kelompok_keahlians.nama_kbk'
-        )
-        ->get();
+            ->select(
+                'kelompok_keahlians.id',
+                'kelompok_keahlians.nama_kbk'
+            )
+            ->get();
 
         $k_kbk = User::with('kelompokKeahlian')->find($id);
         // dd($k_kbk->toSql());
         // dd($k_kbk);
-        return view('admin.ketua-kbk.show.index', compact('k_kbk','kbk_navigasi'));
+        return view('admin.ketua-kbk.show.index', compact('k_kbk', 'kbk_navigasi'));
     }
 
     public function storeDataKetuaKbk(Request $request)
     {
-        
+
         $validasi = $request->validate([
             'nama_lengkap' => 'required|string',
             'nip' => 'required|numeric|digits_between:1,20|unique:users',
@@ -179,10 +199,10 @@ class AdminController extends Controller
             'username' => 'required|unique:users',
             'password' => 'required|min:5', // Minimum length for password
             'confirm_password' => 'required|same:password', // Ensure passwords match
-            'pas_foto' =>'required|file|mimes:jpg,jpeg,png|max:2048',
+            'pas_foto' => 'required|file|mimes:jpg,jpeg,png|max:2048',
             'role' => 'required',
         ]);
-    
+
         $k_kbk = new User();
         $k_kbk->nama_lengkap = $request->nama_lengkap;
         $k_kbk->nip = $request->nip;
@@ -193,19 +213,19 @@ class AdminController extends Controller
         if ($request->hasFile('pas_foto')) {
             $originalName = $request->file('pas_foto')->getClientOriginalName();
             $fileName = time() . '_' . str_replace(' ', '_', $originalName);
-    
+
             // Simpan file ke storage/app/public/dokumen-user
             $path = $request->file('pas_foto')->storeAs('dokumen-user', $fileName);
-    
+
             // Simpan path utuh di database
             $k_kbk->pas_foto = $path;
         }
         $k_kbk->username = $request->username;
         $k_kbk->password = Hash::make($request->password); // Hashing password
         $k_kbk->role = $request->role;
-    
+
         $k_kbk->save($validasi);
-    
+
         return redirect('/admin/ketua-kbk')->with('success', 'Data ketua Kelompok Keahlian berhasil ditambahkan!');
     }
 
@@ -219,7 +239,7 @@ class AdminController extends Controller
             'email' => 'required|email|unique:users,email,' . $id,
             'jabatan' => 'required',
             'username' => 'required',
-            'pas_foto' =>'file|mimes:jpg,jpeg,png|max:2048',
+            'pas_foto' => 'file|mimes:jpg,jpeg,png|max:2048',
             'role' => 'required',
         ]);
 
@@ -235,17 +255,17 @@ class AdminController extends Controller
             if ($k_kbk->pas_foto && Storage::exists($k_kbk->pas_foto)) {
                 Storage::delete($k_kbk->pas_foto);
             }
-            
+
             // Simpan foto baru
             $originalName = $request->file('pas_foto')->getClientOriginalName();
             $fileName = time() . '_' . str_replace(' ', '_', $originalName);
             $path = $request->file('pas_foto')->storeAs('dokumen-user', $fileName);
-            
+
             // Simpan path ke database
             $k_kbk->pas_foto = $path;
         }
         $k_kbk->username = $request->username;
-        
+
         $k_kbk->role = $request->role;
 
         $k_kbk->save($validasi);
@@ -260,10 +280,11 @@ class AdminController extends Controller
         return redirect('/admin/ketua-kbk')->with('success', 'Data ketua Kelompok Keahlian berhasil dihapus');
     }
 
-    public function resetPassword(Request $request, $id ){
+    public function resetPassword(Request $request, $id)
+    {
         // Temukan user berdasarkan ID
         $user = User::find($id);
-        
+
         if (!$user) {
             return redirect()->back()->with('error', 'User tidak ditemukan.');
         }
@@ -274,5 +295,4 @@ class AdminController extends Controller
 
         return response()->json(['message' => 'Password berhasil direset menjadi "@Polindra123".']);
     }
-
 }

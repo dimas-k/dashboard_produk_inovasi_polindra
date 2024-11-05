@@ -30,8 +30,10 @@
             <div class="col-12 col-md-6">
                 <div class="resume-item mb-2">
                     <h2 class="resume mb-5">{{ $produk->nama_produk }}</h2>
-                    <strong>Deskripsi produk</strong> <br>
+                    <strong class="">Deskripsi produk</strong> <br>
                     <p class="mt-1">{{ $produk->deskripsi }}</p>
+                    <strong>Tahun granted</strong> <br>
+                    <p class="mt-1">Tahun {{ \Carbon\Carbon::parse($produk->tanggal_granted)->format('Y') }}</p>
                     <br><br>
                     
                 </div>
@@ -44,7 +46,7 @@
                     <p class="mb-1"><strong>Ketua : </strong><a href="{{ route('produk.dosen', ['dosen'=>$produk->inventor]) }}">{{ $produk->inventor }}</a></p>
                     <p class="mb-1"><strong>Anggota : </strong></p>
                     @foreach ($produk->anggota as $anggota)
-                        <li>{{ $anggota->detail->nama_lengkap }}</li>
+                        <li><a href="{{ route('produk.dosen', ['dosen'=>$anggota->detail->nama_lengkap]) }}">{{ $anggota->detail->nama_lengkap }}</a></li>
                     @endforeach
                     <a class="btn btn-success p-3 mt-4" href="mailto:{{ $produk->email_inventor }}"><i class="bi bi-envelope me-2"></i>Hubungi Inventor</a>
                 </div>

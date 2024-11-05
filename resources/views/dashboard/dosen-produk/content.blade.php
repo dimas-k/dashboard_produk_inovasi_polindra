@@ -1,6 +1,6 @@
 <div class="container-fluid page-header py-5 mb-5 wow fadeIn" data-wow-delay="0.001s">
     <div class="container text-center py-5">
-        <h1 class="display-4 text-white animated slideInDown mb-3">Produk Dosen
+        <h1 class="display-4 text-white animated slideInDown mb-3">Produk & Penelitian Dosen
             @if ($p_dosen->isNotEmpty())
                 {{ $p_dosen[0]->inventor }}
             @elseif($plt_dosen->isNotEmpty())

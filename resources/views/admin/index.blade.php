@@ -98,6 +98,157 @@
 
     <!-- Place this tag before closing body tag for github widget button. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const ctx = document.getElementById('myChartPrdk').getContext('2d');
+
+            // Labels dan data dari $prdk_tahun
+            const tahunLabels = @json($prdk_tahun->keys()); // Tahun sebagai label
+            const produkData = @json($prdk_tahun->values()); // Jumlah produk sebagai data
+
+            const myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: tahunLabels,
+                    datasets: [{
+                        label: 'Jumlah Produk Tervalidasi Berdasarkan Tanggal Granted per Tahun',
+                        data: produkData,
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            display: true,
+                        }
+                    },
+                    elements: {
+                        line: {
+                            tension: 0.5
+                        }
+                    },
+                    scales: {
+                        y: {
+                            suggestedMin: 0,
+                            ticks: {
+                                precision: 0
+                            }
+                        }
+                    },
+                    categoryPercentage: 0.5,
+                    transitions: {
+                        show: {
+                            animations: {
+                                x: {
+                                    from: 1
+                                },
+                                y: {
+                                    from: 1
+                                }
+                            }
+                        },
+                        hide: {
+                            animations: {
+                                x: {
+                                    to: 10
+                                },
+                                y: {
+                                    to: 10
+                                }
+                            }
+                        }
+                    }
+                },
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const ctx = document.getElementById('myChartPlt').getContext('2d');
+
+            // Labels dan data dari $prdk_tahun
+            const tahunLabels = @json($plt_tahun->keys()); // Tahun sebagai label
+            const penelitianData = @json($plt_tahun->values()); // Jumlah produk sebagai data
+
+            const myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: tahunLabels,
+                    datasets: [{
+                        label: 'Jumlah Penelitian Tervalidasi Berdasarkan Tanggal Publikasi per Tahun',
+                        data: penelitianData,
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            display: true,
+                        }
+                    },
+                    elements: {
+                        line: {
+                            tension: 0.5
+                        }
+                    },
+                    scales: {
+                        y: {
+                            suggestedMin: 0,
+                            ticks: {
+                                precision: 0
+                            }
+                        }
+                    },
+                    categoryPercentage: 0.5,
+                    transitions: {
+                        show: {
+                            animations: {
+                                x: {
+                                    from: 1
+                                },
+                                y: {
+                                    from: 1
+                                }
+                            }
+                        },
+                        hide: {
+                            animations: {
+                                x: {
+                                    to: 10
+                                },
+                                y: {
+                                    to: 10
+                                }
+                            }
+                        }
+                    }
+                },
+            });
+        });
+
+        function toggleChart() {
+            const selectedValue = document.getElementById('chartSelect').value;
+
+            if (selectedValue === 'produk') {
+                document.getElementById('produkChartContainer').style.display = 'block';
+                document.getElementById('penelitianChartContainer').style.display = 'none';
+            } else if (selectedValue === 'penelitian') {
+                document.getElementById('produkChartContainer').style.display = 'none';
+                document.getElementById('penelitianChartContainer').style.display = 'block';
+            }
+        }
+        document.getElementById('chartSelect').addEventListener('change', toggleChart);
+        window.onload = toggleChart;
+    </script>
+
 </body>
 
 </html>

@@ -19,6 +19,9 @@ class Produk extends Model
         'lampiran',
         'status'
     ];
+    protected $casts = [
+        'tanggal_granted' => 'date',
+    ];
 
     public function kelompokKeahlian()
     {

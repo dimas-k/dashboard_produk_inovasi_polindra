@@ -21,10 +21,11 @@
         <div class="row">
             <div class="col-md-6 mt-4">
                 <div class="col-lg-8 wow fadeInUp" data-wow-delay="0.5s">
-                    <p class=" mb-3">Politeknik Negeri Indramayu</p>
-                    <p class=" mb-3">Jl. Lohbener Lama No.08, Legok, Kec. Lohbener, Kabupaten Indramayu</p>
-                    <p class=" mb-3">Layanan Kerjasama</p>
-                    <p class=" mb-2">sentra_ki@polindra.ac.id</p>
+                    <p class=" mb-3"><strong>Politeknik Negeri Indramayu</strong></p>
+                    <p class=" mb-3"><i class="fa fa-map-marker-alt me-2"></i>Jl. Lohbener Lama No.08, Legok, Kec. Lohbener, Kabupaten Indramayu</p>
+                    <br><br>
+                    <p class=" mb-3"><strong>Layanan Kerjasama</strong></p>
+                    <p class=" mb-2"><i class="fas fa-envelope me-2"></i>sentra_ki@polindra.ac.id</p>
                 </div>
             </div>
             <div class="col-md-6">
