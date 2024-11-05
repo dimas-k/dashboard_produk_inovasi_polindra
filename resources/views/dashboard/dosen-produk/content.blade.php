@@ -55,6 +55,7 @@
                                     <h3><a
                                             href="{{ route('detail.produk', ['nama_produk' => $g_produk->nama_produk]) }}">{{ $g_produk->nama_produk }}</a>
                                     </h3>
+                                    
                                     @php
                                         $limitedDescription = \Illuminate\Support\Str::limit(
                                             $g_produk->deskripsi,
@@ -70,6 +71,7 @@
                                                 ...Selengkapnya</a>
                                         @endif
                                     </p>
+                                    <p><strong>Tahun Granted :</strong> {{\Carbon\Carbon::parse($g_produk->tanggal_granted)->format('Y') }}</p>
                                     <div class="article-meta-sm mt-2">
                                         <div><a class="link-secondary"
                                                 href="{{ route('dashboard.penelitian', ['nama_kbk' => $g_produk->KelompokKeahlian->nama_kbk]) }}">{{ $g_produk->kelompokKeahlian->nama_kbk }}</a>
@@ -112,6 +114,7 @@
                                 <h3><a
                                         href="{{ route('detail.penelitian', ['judul' => $g_penelitian->judul]) }}">{{ $g_penelitian->judul }}</a>
                                 </h3>
+                                <p><strong>Tahun Publikasi :</strong> {{\Carbon\Carbon::parse($g_penelitian->tanggal_publikasi)->format('Y') }}</p>
                                 <div class="article-meta-sm mt-2">
                                     <div><a class="link-secondary"
                                             href="{{ route('dashboard.penelitian', ['nama_kbk' => $g_penelitian->KelompokKeahlian->nama_kbk]) }}">{{ $g_penelitian->kelompokKeahlian->nama_kbk }}</a>

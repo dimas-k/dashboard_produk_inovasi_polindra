@@ -30,6 +30,8 @@
             <div class="col-12 col-md-6">
                 <div class="resume-item mb-2">
                     <h2 class="resume mb-5">{{ $penelitian->judul }}</h2>
+                    <strong>Tahun publikasi</strong> <br>
+                    <p class="mt-1">Tahun {{ \Carbon\Carbon::parse($penelitian->tanggal_publikasi)->format('Y') }}</p>
                 </div>
             </div>
 
@@ -37,10 +39,10 @@
             <div class="col-md-6">
                 <div class="resume-item mb-2">
                     <strong>Tim Inventor</strong> <br> <br> <br>
-                    <p class="mb-1"><strong>Ketua : </strong> {{ $penelitian->penulis }}</p>
+                    <p class="mb-1"><strong>Ketua : </strong><a href="{{ route('produk.dosen', ['dosen'=>$penelitian->penulis]) }}"> {{ $penelitian->penulis }}</a></p>
                     <p class="mb-1"><strong>Anggota : </strong></p>
                     @foreach ($penelitian->anggotaPenelitian as $anggota )
-                        <li>{{ $anggota->detailAnggota->nama_lengkap }}</li>
+                        <li><a href="{{ route('produk.dosen', ['dosen'=>$anggota->detailAnggota->nama_lengkap]) }}">{{ $anggota->detailAnggota->nama_lengkap }}</a></li>
                     @endforeach
                     {{-- @php
                         $anggotaArray = explode(',', $penelitian->anggota_penulis); 
@@ -66,7 +68,7 @@
 </div>
 
 <!-- Project Start -->
-<div class="container-xxl py-5">
+{{-- <div class="container-xxl py-5">
     <div class="container">
         <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
             <h6 class="section-title bg-white text-center text-primary px-3">Our Projects</h6>
@@ -155,5 +157,5 @@
             </div>
         </div>
     </div>
-</div>
+</div> --}}
 <!-- Project End -->
