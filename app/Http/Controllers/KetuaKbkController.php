@@ -541,10 +541,6 @@ class KetuaKbkController extends Controller
                 'message' => 'Terjadi kesalahan : ' . $e->getMessage()
             ], 500);
         }
-
-
-
-        return redirect('/k-kbk/penelitian')->with('success', 'Data Penelitian berhasil diupdate');
     }
     public function hapusPenelitian($id)
     {
@@ -557,9 +553,6 @@ class KetuaKbkController extends Controller
         // Hapus lampiran jika ada
         if ($penelitian->lampiran && Storage::exists($penelitian->lampiran)) {
             Storage::delete($penelitian->lampiran);
-        }
-        if ($penelitian->abstrak && Storage::exists($penelitian->abstrak)) {
-            Storage::delete($penelitian->abstrak);
         }
         $penelitian->delete();
         return redirect('/k-kbk/penelitian')->with('success', 'Data Penelitian berhasil dihapus');
