@@ -9,6 +9,7 @@
                         <th>Nama Produk</th>
                         <th>Nama Inventor</th>
                         <th>Email Inventor</th>
+                        <th>Tanggal Granted</th>
                         <th>STATUS</th>
                         <th>Aksi</th>
                         <th>Validasi</th>
@@ -27,6 +28,7 @@
                             <td>{{ $p->kelompokKeahlian->nama_kbk }}</td>
                             <!-- Menampilkan nama kelompok keahlian dari relasi -->
                             <td>{{ $p->email_inventor }}</td>
+                            <td>{{ \Carbon\Carbon::parse($p->tanggal_granted)->format('d-m-Y') }}</td>
                             <td>
                                 @if ($p->status === 'Tervalidasi')
                                     <span class="badge bg-label-success me-1">{{ $p->status }}</span>

@@ -57,14 +57,14 @@ class KetuaKbkController extends Controller
                     'nama_lengkap' => 'required|string|max:255',
                     'jabatan' => 'required|string|max:255',
                     'kbk_id' => 'required|exists:kelompok_keahlians,id',
-                    'email'=>'required|email',
+                    'email' => 'required|email',
                 ],
                 [
                     'nama_lengkap.required' => 'Nama Lengkap anggota harus diisi',
                     'jabatan.required' => 'Jabatan anggota harus diisi',
                     'kbk_id.required' => 'KBK harus diisi',
-                    'email.required'=>'Email harus diisi',
-                    'email.email'=>'Masukkan email yang valid'
+                    'email.required' => 'Email harus diisi',
+                    'email.email' => 'Masukkan email yang valid'
                 ]
             );
 
@@ -93,16 +93,16 @@ class KetuaKbkController extends Controller
                 [
                     'nama_lengkap' => 'required|string|max:255',
                     'jabatan' => 'required|string|max:255',
-                    'email'=>'required|email',
+                    'email' => 'required|email',
                 ],
                 [
                     'nama_lengkap.required' => 'Nama Lengkap anggota harus diisi',
                     'jabatan.required' => 'Jabatan anggota harus diisi',
-                    'email.required'=>'Email harus diisi',
-                    'email.email'=>'Masukkan email yang valid'
+                    'email.required' => 'Email harus diisi',
+                    'email.email' => 'Masukkan email yang valid'
                 ]
             );
-    
+
             $anggota = AnggotaKelompokKeahlian::findOrFail($id);
             $anggota->nama_lengkap = $request->input('nama_lengkap');
             $anggota->jabatan = $request->input('jabatan');
@@ -148,14 +148,14 @@ class KetuaKbkController extends Controller
             ->get();
 
 
-            $user = auth()->user();
-            $anggotaKelompok = AnggotaKelompokKeahlian::where('kbk_id', $user->kbk_id)->get();
-            $produkAnggota = AnggotaKelompokKeahlian::all();
+        $user = auth()->user();
+        $anggotaKelompok = AnggotaKelompokKeahlian::where('kbk_id', $user->kbk_id)->get();
+        $produkAnggota = AnggotaKelompokKeahlian::all();
 
-        
+
 
         // dd($produks);
-        return view('k_kbk.produk.index', compact('produks', 'kkbk','anggotaKelompok','produkAnggota'));
+        return view('k_kbk.produk.index', compact('produks', 'kkbk', 'anggotaKelompok', 'produkAnggota'));
     }
     public function showProduk($id)
     {
@@ -177,8 +177,8 @@ class KetuaKbkController extends Controller
                 'email_inventor' => 'required|email',
                 'gambar' => 'required|file|mimes:jpeg,png,jpg|max:10240',
                 'lampiran' => 'nullable|file|mimes:jpeg,png,jpg,pdf,docx|max:10240',
-                'tanggal_submit' =>'date',
-                'tanggal_granted'=>'date'
+                'tanggal_submit' => 'date',
+                'tanggal_granted' => 'date'
             ]);
             DB::beginTransaction();
             $produk = new Produk();
@@ -209,8 +209,7 @@ class KetuaKbkController extends Controller
             // Simpan produk ke database
             $produk->save();
 
-            foreach($request->anggota_inventor as $anggota)
-            {
+            foreach ($request->anggota_inventor as $anggota) {
                 ProdukAnggota::create([
                     'produk_id' => $produk->id,
                     'anggota_id' => $anggota
@@ -239,8 +238,8 @@ class KetuaKbkController extends Controller
             'email_inventor' => 'required|email',
             'gambar' => 'file|mimes:jpeg,png,jpg|max:10240',
             'lampiran' => 'file|mimes:jpeg,png,jpg,pdf,docx|max:10240',
-            'tanggal_submit' =>'date',
-            'tanggal_granted'=>'date'
+            'tanggal_submit' => 'date',
+            'tanggal_granted' => 'date'
         ]);
         $produk = Produk::findOrFail($id);
         $produk->nama_produk = $request->nama_produk;
@@ -327,7 +326,7 @@ class KetuaKbkController extends Controller
         $penelitianAnggota = AnggotaKelompokKeahlian::all();
 
 
-        return view('k_kbk.penelitian.index', compact('penelitians', 'kkbk','anggotaKelompok','penelitianAnggota'));
+        return view('k_kbk.penelitian.index', compact('penelitians', 'kkbk', 'anggotaKelompok', 'penelitianAnggota'));
     }
 
     public function showPenelitian($id)
@@ -335,7 +334,7 @@ class KetuaKbkController extends Controller
         // $user = auth()->user();
         // $anggotaKelompok = AnggotaKelompokKeahlian::where('kbk_id', $user->kbk_id)->get();
         // $produkAnggota = AnggotaKelompokKeahlian::all();
-        $penelitian = Penelitian::with(['kelompokKeahlian','anggotaPenelitian.detailAnggota'])->findOrFail($id);
+        $penelitian = Penelitian::with(['kelompokKeahlian', 'anggotaPenelitian.detailAnggota'])->findOrFail($id);
 
 
         return view('k_kbk.penelitian.show.index', compact('penelitian'));
@@ -346,13 +345,14 @@ class KetuaKbkController extends Controller
         try {
             $request->validate([
                 'judul' => 'required|string|max:255',
-                'abstrak' => 'required|file|mimes:pdf|max:10240',
+                // 'abstrak' => 'required|file|mimes:pdf|max:10240',
+                'abstrak' => 'required|string',
                 'kbk_id' => 'required|exists:kelompok_keahlians,id',
                 'penulis' => 'required|string|max:255',
                 'email_penulis' => 'required|email',
                 'gambar' => 'required|file|mimes:jpeg,png,jpg|max:10240', // Sesuaikan dengan format file yang diperbolehkan
                 'lampiran' => 'required|file|mimes:jpeg,png,jpg,pdf,docx|max:10240',
-                'tanggal_publikasi' =>'date'
+                'tanggal_publikasi' => 'date'
             ], [
                 'judul.required' => 'Judul penelitian wajib diisi.',
                 'kbk_id.required' => 'Harap Isi Kbk',
@@ -364,11 +364,12 @@ class KetuaKbkController extends Controller
                 'gambar.required' => 'Gambar penelitian penelitian wajib diisi.',
                 'lampiran.required' => 'Lampiran penelitian wajib diisi.',
 
-                'abstrak.max' => 'Ukuran file abstrak maksimal 10MB.',
+                // 'abstrak.max' => 'Ukuran file abstrak maksimal 10MB.',
+                // 'abstrak.max' => 'Abstrak Tidak Boleh Lebih Dari 250 Kata.',
                 'gambar.max' => 'Ukuran file gambar maksimal 10MB.',
                 'lampiran.max' => 'Ukuran file lampiran maksimal 10MB.',
 
-                'abstrak.mimes' => 'File abstrak harus berupa PDF.',
+                // 'abstrak.mimes' => 'File abstrak harus berupa PDF.',
                 'gambar.mimes' => 'File gambar harus berupa JPG, JPEG, atau PNG.',
                 'lampiran.mimes' => 'File lampiran harus berupa JPG, JPEG, PNG, PDF, atau DOCX.',
             ]);
@@ -376,21 +377,22 @@ class KetuaKbkController extends Controller
             $penelitian = new Penelitian();
             $penelitian->kbk_id = $request->kbk_id;
             $penelitian->judul = $request->judul;
+            $penelitian->abstrak = $request->abstrak;
             $penelitian->penulis = $request->penulis;
             // $penelitian->anggota_penulis = $request->anggota_penulis;
             $penelitian->email_penulis = $request->email_penulis;
             $penelitian->tanggal_publikasi = $request->tanggal_publikasi;
 
-            if ($request->hasFile('abstrak')) {
-                $originalName = $request->file('abstrak')->getClientOriginalName();
-                $fileName = time() . '_' . str_replace(' ', '_', $originalName);
+            // if ($request->hasFile('abstrak')) {
+            //     $originalName = $request->file('abstrak')->getClientOriginalName();
+            //     $fileName = time() . '_' . str_replace(' ', '_', $originalName);
 
-                // Simpan file ke folder 'storage/app/public/dokumen-penelitian'
-                $path = $request->file('abstrak')->storeAs('dokumen-penelitian', $fileName);
+            //     // Simpan file ke folder 'storage/app/public/dokumen-penelitian'
+            //     $path = $request->file('abstrak')->storeAs('dokumen-penelitian', $fileName);
 
-                // Simpan path utuh ke database
-                $penelitian->abstrak = $path;
-            }
+            //     // Simpan path utuh ke database
+            //     $penelitian->abstrak = $path;
+            // }
 
             if ($request->hasFile('gambar')) {
                 $originalName = $request->file('gambar')->getClientOriginalName();
@@ -416,8 +418,7 @@ class KetuaKbkController extends Controller
 
             $penelitian->save();
 
-            foreach($request->anggota_penulis as $anggota)
-            {
+            foreach ($request->anggota_penulis as $anggota) {
                 PenelitianAnggota::create([
                     'penelitian_id' => $penelitian->id,
                     'anggota_id' => $anggota
@@ -440,76 +441,108 @@ class KetuaKbkController extends Controller
 
     public function updatePenelitian(Request $request, $id)
     {
-        $request->validate([
-            'judul' => 'required|string|max:255',
-            'abstrak' => 'file|mimes:pdf|max:2048',
-            'penulis' => 'required|string|max:255',
-            // 'anggota_penulis' => 'nullable|string',
-            'email_penulis' => 'required|email',
-            'gambar' => 'file|mimes:jpeg,png,jpg|max:2048', // Sesuaikan dengan format file yang diperbolehkan
-            'lampiran' => 'file|mimes:jpeg,png,jpg,pdf,docx|max:2048',
-            'tanggal_publikasi' =>'date'
-        ]);
-        $penelitian = Penelitian::findOrFail($id);
-        $penelitian->judul = $request->judul;
-        $penelitian->penulis = $request->penulis;
-        // $penelitian->anggota_penulis = $request->anggota_penulis;
-        $penelitian->email_penulis = $request->email_penulis;
-        $penelitian->tanggal_publikasi = $request->tanggal_publikasi;
+        try {
+            $request->validate([
+                'judul' => 'required|string|max:255',
+                // 'abstrak' => 'required|file|mimes:pdf|max:10240',
+                'abstrak' => 'required|string',
+                
+                'penulis' => 'required|string|max:255',
+                'email_penulis' => 'required|email',
+                'gambar' => 'file|mimes:jpeg,png,jpg|max:10240', // Sesuaikan dengan format file yang diperbolehkan
+                'lampiran' => 'file|mimes:jpeg,png,jpg,pdf,docx|max:10240',
+                'tanggal_publikasi' => 'date'
+            ], [
+                'judul.required' => 'Judul penelitian wajib diisi.',
+                'penulis.required' => 'Nama penulis wajib diisi.',
+                'email_penulis.required' => 'Email penulis wajib diisi.',
+                'email_penulis.email' => 'Email penulis tidak valid.',
 
-        if ($request->hasFile('abstrak')) {
-            if ($penelitian->abstrak && Storage::exists($penelitian->abstrak)) {
-                Storage::delete($penelitian->abstrak);
+                'abstrak.required' => 'Abstrak penelitian wajib diisi.',
+
+                // 'abstrak.max' => 'Ukuran file abstrak maksimal 10MB.',
+                // 'abstrak.max' => 'Abstrak Tidak Boleh Lebih Dari 250 Kata.',
+                'gambar.max' => 'Ukuran file gambar maksimal 10MB.',
+                'lampiran.max' => 'Ukuran file lampiran maksimal 10MB.',
+
+                // 'abstrak.mimes' => 'File abstrak harus berupa PDF.',
+                'gambar.mimes' => 'File gambar harus berupa JPG, JPEG, atau PNG.',
+                'lampiran.mimes' => 'File lampiran harus berupa JPG, JPEG, PNG, PDF, atau DOCX.',
+                'tanggal_publikasi.date'=>'Tanggal Publikasi Harus Valid'
+            ]);
+            $penelitian = Penelitian::findOrFail($id);
+            $penelitian->judul = $request->judul;
+            $penelitian->abstrak = $request->abstrak;
+            $penelitian->penulis = $request->penulis;
+            // $penelitian->anggota_penulis = $request->anggota_penulis;
+            $penelitian->email_penulis = $request->email_penulis;
+            $penelitian->tanggal_publikasi = $request->tanggal_publikasi;
+
+            // if ($request->hasFile('abstrak')) {
+            //     if ($penelitian->abstrak && Storage::exists($penelitian->abstrak)) {
+            //         Storage::delete($penelitian->abstrak);
+            //     }
+            //     $originalName = $request->file('abstrak')->getClientOriginalName();
+            //     $fileName = time() . '_' . str_replace(' ', '_', $originalName);
+
+            //     // Simpan file dengan nama kustom
+            //     $path = $request->file('abstrak')->storeAs('dokumen-penelitian', $fileName);
+
+            //     // Simpan path tanpa 'public/' di database
+            //     $penelitian->gambar = $path;
+            // }
+            if ($request->hasFile('gambar')) {
+                if ($penelitian->gambar && Storage::exists($penelitian->gambar)) {
+                    Storage::delete($penelitian->gambar);
+                }
+                $originalName = $request->file('gambar')->getClientOriginalName();
+                $fileName = time() . '_' . str_replace(' ', '_', $originalName);
+
+                // Simpan file dengan nama kustom
+                $path = $request->file('gambar')->storeAs('dokumen-penelitian', $fileName);
+
+                // Simpan path tanpa 'public/' di database
+                $penelitian->gambar = $path;
             }
-            $originalName = $request->file('abstrak')->getClientOriginalName();
-            $fileName = time() . '_' . str_replace(' ', '_', $originalName);
+            if ($request->hasFile('lampiran')) {
+                if ($penelitian->lampiran && Storage::exists($penelitian->lampiran)) {
+                    Storage::delete($penelitian->lampiran);
+                }
+                $originalName = $request->file('lampiran')->getClientOriginalName();
+                $fileName = time() . '_' . str_replace(' ', '_', $originalName);
 
-            // Simpan file dengan nama kustom
-            $path = $request->file('abstrak')->storeAs('dokumen-penelitian', $fileName);
+                // Simpan file dengan nama kustom
+                $path = $request->file('lampiran')->storeAs('dokumen-penelitian', $fileName);
 
-            // Simpan path tanpa 'public/' di database
-            $penelitian->gambar = $path;
-        }
-        if ($request->hasFile('gambar')) {
-            if ($penelitian->gambar && Storage::exists($penelitian->gambar)) {
-                Storage::delete($penelitian->gambar);
+                // Simpan path tanpa 'public/' di database
+                $penelitian->lampiran = $path;
             }
-            $originalName = $request->file('gambar')->getClientOriginalName();
-            $fileName = time() . '_' . str_replace(' ', '_', $originalName);
 
-            // Simpan file dengan nama kustom
-            $path = $request->file('gambar')->storeAs('dokumen-penelitian', $fileName);
+            $penelitian->save();
 
-            // Simpan path tanpa 'public/' di database
-            $penelitian->gambar = $path;
-        }
-        if ($request->hasFile('lampiran')) {
-            if ($penelitian->lampiran && Storage::exists($penelitian->lampiran)) {
-                Storage::delete($penelitian->lampiran);
+            if ($request->filled('anggota_penulis')) {
+                // Hapus semua anggota terkait sebelumnya
+                $penelitian->anggotaPenelitian()->delete();
+
+                // Tambahkan data baru
+                foreach ($request->anggota_penulis as $anggotaId) {
+                    $penelitian->anggotaPenelitian()->create([
+                        'anggota_id' => $anggotaId,
+                    ]);
+                }
             }
-            $originalName = $request->file('lampiran')->getClientOriginalName();
-            $fileName = time() . '_' . str_replace(' ', '_', $originalName);
-
-            // Simpan file dengan nama kustom
-            $path = $request->file('lampiran')->storeAs('dokumen-penelitian', $fileName);
-
-            // Simpan path tanpa 'public/' di database
-            $penelitian->lampiran = $path;
+            return response()->json([
+                'success' => true,
+                'message' => 'Penelitian berhasil diupdate.'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Terjadi kesalahan : ' . $e->getMessage()
+            ], 500);
         }
 
-        $penelitian->save();
 
-        if ($request->filled('anggota_penulis')) {
-            // Hapus semua anggota terkait sebelumnya
-            $penelitian->anggotaPenelitian()->delete();
-        
-            // Tambahkan data baru
-            foreach ($request->anggota_penulis as $anggotaId) {
-                $penelitian->anggotaPenelitian()->create([
-                    'anggota_id' => $anggotaId,
-                ]);
-            }
-        }
 
         return redirect('/k-kbk/penelitian')->with('success', 'Data Penelitian berhasil diupdate');
     }

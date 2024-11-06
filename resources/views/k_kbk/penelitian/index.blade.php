@@ -10,18 +10,17 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 
     <!-- Custom CSS for z-index -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
     <style type="text/css">
-
-        .dropdown-toggle{
+        .dropdown-toggle {
             height: 43px;
         }
-
     </style>
-    
+
 
     <style>
         .swal2-container {
@@ -128,18 +127,16 @@
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-    
+
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
 
     <script type="text/javascript">
-
         $(document).ready(function() {
             $('#anggota_penulis').selectpicker();
         });
-    
-        </script>
+    </script>
 
     <script>
         window.deleteConfirm = function(e) {
@@ -188,6 +185,56 @@
     </script>
 
     <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const maxWords = 260;
+            const textarea = document.getElementById('limitedTextarea');
+            const wordCountDisplay = document.getElementById('wordCount');
+
+            function updateWordCount() {
+                // Pisahkan teks menjadi array kata
+                let words = textarea.value.trim().split(/\s+/);
+                let wordCount = words.filter(word => word).length;
+
+                // Jika jumlah kata melebihi batas
+                if (wordCount > maxWords) {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Batas Terlampaui',
+                        text: 'Abstrak tidak boleh lebih dari 260 kata!',
+                        confirmButtonText: 'OK'
+                    });
+
+                    // Potong teks pada batas maksimum kata
+                    words = words.slice(0, maxWords);
+                    textarea.value = words.join(" ");
+                    wordCount = maxWords;
+                }
+
+                // Update tampilan jumlah kata
+                wordCountDisplay.textContent = `${wordCount}/${maxWords} kata`;
+            }
+
+            // Hitung kata awal jika ada teks bawaan saat halaman dimuat
+            updateWordCount();
+
+            // Hitung kata saat pengguna mengetik di textarea
+            textarea.addEventListener('input', updateWordCount);
+
+            // Cegah input tambahan setelah batas tercapai
+            textarea.addEventListener('keydown', function(e) {
+                let words = textarea.value.trim().split(/\s+/);
+                if (words.filter(word => word).length >= maxWords && e.key !== "Backspace" && e.key !==
+                    "Delete") {
+                    e.preventDefault();
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Batas Terlampaui',
+                        text: 'Abstrak tidak boleh lebih dari 260 kata!',
+                        confirmButtonText: 'OK'
+                    });
+                }
+            });
+        });
         $(document).ready(function() {
             $('#uploadForm').on('submit', function(e) {
                 e.preventDefault(); // Mencegah submit default
@@ -247,75 +294,70 @@
         });
     </script>
     <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const maxWords = 260;
+
+            @foreach ($penelitians as $p)
+                const textarea{{ $p->id }} = document.getElementById('limitedTextarea{{ $p->id }}');
+                const wordCountDisplay{{ $p->id }} = document.getElementById(
+                    'wordCount{{ $p->id }}');
+
+                function updateWordCount{{ $p->id }}() {
+                    // Pisahkan teks menjadi array kata
+                    let words = textarea{{ $p->id }}.value.trim().split(/\s+/);
+                    let wordCount = words.filter(word => word).length;
+
+                    // Jika jumlah kata melebihi batas
+                    if (wordCount > maxWords) {
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'Batas Terlampaui',
+                            text: 'Abstrak tidak boleh lebih dari 260 kata!',
+                            confirmButtonText: 'OK'
+                        });
+
+                        // Potong teks pada batas maksimum kata
+                        words = words.slice(0, maxWords);
+                        textarea{{ $p->id }}.value = words.join(" ");
+                        wordCount = maxWords;
+                    }
+
+                    // Update tampilan jumlah kata
+                    wordCountDisplay{{ $p->id }}.textContent = `${wordCount}/${maxWords} kata`;
+                }
+
+                // Hitung kata awal saat halaman dimuat
+                updateWordCount{{ $p->id }}();
+
+                // Hitung kata saat pengguna mengetik di textarea
+                textarea{{ $p->id }}.addEventListener('input', updateWordCount{{ $p->id }});
+
+                // Tambahkan event untuk mencegah input tambahan saat mencapai batas
+                textarea{{ $p->id }}.addEventListener('keydown', function(e) {
+                    let words = textarea{{ $p->id }}.value.trim().split(/\s+/);
+                    if (words.filter(word => word).length >= maxWords && e.key !== "Backspace" && e.key !==
+                        "Delete") {
+                        e.preventDefault();
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'Batas Terlampaui',
+                            text: 'Abstrak tidak boleh lebih dari 260 kata!',
+                            confirmButtonText: 'OK'
+                        });
+                    }
+                });
+            @endforeach
+        });
         $(document).ready(function() {
-            // Loop untuk setiap form berdasarkan ID produk
             @foreach ($penelitians as $p)
                 $('#editForm_{{ $p->id }}').on('submit', function(e) {
-                    e.preventDefault(); // Mencegah submit form secara langsung
+                    e.preventDefault(); // Mencegah submit default
 
-                    // Ambil ID produk untuk elemen yang sedang diproses
-                    const id = '{{ $p->id }}';
-
-                    // Mengambil nilai input berdasarkan ID produk
-                    const judul = $('#judul_' + id).val();
-                    const anggota = $('#anggota_penulis_' + id).val();
-                    const email = $('#email_' + id).val();
-                    const penulis = $('#penulis_' + id).val();
-                    const gambar = $('#gambar_' + id)[0].files.length ? $('#gambar_' + id)[0].files[0]
-                        .name : '';
-                    const lampiran = $('#lampiran_' + id)[0].files.length ? $('#lampiran_' + id)[0].files[0]
-                        .name : '';
-                    const abstrak = $('#abstrak_' + id)[0].files.length ? $('#lampiran_' + id)[0].files[0]
-                        .name : '';
-
-                    // Regex untuk validasi file extensions
-                    const gambarExtensions = /(\.jpg|\.jpeg|\.png)$/i;
-                    const lampiranExtensions = /(\.jpg|\.jpeg|\.png|\.pdf|\.docx)$/i;
-                    const abstrakExtensions = /(\.pdf)$/i;
-
-                    // Validasi input kosong
-                    if (!judul || !email || !penulis) {
-
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Gagal',
-                            text: 'Semua input harus diisi kecuali abstrak, gambar, dan lampiran!',
-                        });
-                        return;
-                    }
-
-                    // Validasi format file gambar
-                    if (gambar && !gambarExtensions.exec(gambar)) {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Gagal',
-                            text: 'Gambar produk harus dalam format JPG, JPEG, atau PNG!',
-                        });
-                        return;
-                    }
-
-                    // Validasi format file lampiran
-                    if (lampiran && !lampiranExtensions.exec(lampiran)) {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Gagal',
-                            text: 'Lampiran harus dalam format JPG, JPEG, PNG, PDF, atau DOCX!',
-                        });
-                        return;
-                    }
-                    if (abstrak && !abstrakExtensions.exec(abstrak)) {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Gagal',
-                            text: 'Abstrak harus dalam format PDF!',
-                        });
-                        return;
-                    }
-
-                    // Jika semua validasi lolos, submit form
+                    // Buat form data
+                    var formData = new FormData(this);
                     Swal.fire({
                         title: 'Simpan Data?',
-                        text: "Apakah Anda yakin ingin update data produk ini?",
+                        text: "Apakah Anda yakin ingin simpan data penelitian ini?",
                         icon: 'warning',
                         showCancelButton: true,
                         confirmButtonColor: '#3085d6',
@@ -324,17 +366,41 @@
                         cancelButtonText: 'Batal'
                     }).then((result) => {
                         if (result.isConfirmed) {
-                            // Tutup modal sebelum submit form
-                            $('#basicModal{{ $p->id }}').modal('hide');
+                            $.ajax({
+                                url: '/k-kbk/penelitian/update/{{ $p->id }}',
+                                type: 'POST',
+                                data: formData,
+                                contentType: false,
+                                processData: false,
+                                success: function(response) {
+                                    if (response.success) {
+                                        // Jika sukses, tutup modal dan tampilkan pesan success
+                                        $('#basicModal').modal('hide');
+                                        Swal.fire({
+                                            icon: 'success',
+                                            title: 'Berhasil',
+                                            text: response.message,
+                                        }).then(() => {
+                                            // Redirect atau reload halaman jika diperlukan
+                                            window.location.reload();
+                                        });
+                                    }
+                                },
+                                error: function(xhr) {
+                                    let errorMessage = 'Terjadi kesalahan.';
 
-                            // Submit form yang terkait berdasarkan ID produk
-                            $('#editForm_{{ $p->id }}')[0].submit();
+                                    // Cek apakah ada pesan error yang lebih detail dari respons JSON
+                                    if (xhr.responseJSON && xhr.responseJSON.message) {
+                                        errorMessage = xhr.responseJSON.message;
+                                    }
 
-                            // Tampilkan alert setelah submit sukses
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'Berhasil',
-                                text: 'Data berhasil diupdate!'
+                                    // Tampilkan alert error dengan pesan yang jelas
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: 'Error',
+                                        text: errorMessage,
+                                    });
+                                }
                             });
                         }
                     });

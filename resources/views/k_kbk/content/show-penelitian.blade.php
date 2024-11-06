@@ -1,7 +1,8 @@
 <div class="container-xxl flex-grow-1 container-p-y">
     <div class="card p-3">
         <h5 class="card-header border-3 w-100 mb-2"><i class='bx bx-table me-2'></i>Data {{ $penelitian->judul }}</h5>
-        <div class="table-responsive text-nowrap">
+        <img class="mx-auto d-block mb-5 mt-4" src="{{ asset( 'storage/' . $penelitian->gambar) }}" alt="" style="max-width: 50%; height: auto">
+        <div class="table-responsive text-nowrap mt-4">
             <table class="table table-borderless">
                 <tr>
                     <th>Judul</th>
@@ -34,8 +35,9 @@
                 </tr>
                 <tr>
                     <th>Abstrak</th>
-                    <td>: <a href={{ asset('storage/' . $penelitian->abstrak) }} class=""
-                        target="_blank">Lihat Abstrak</a></td>
+                    {{-- <td>: <a href={{ asset('storage/' . $penelitian->abstrak) }} class=""
+                        target="_blank">Lihat Abstrak</a></td> --}}
+                    <td style="white-space: normal; word-wrap: break-word;">: {{ $penelitian->abstrak }}</td>
                 </tr>
                 <tr>
                     <th>Lampiran</th>
@@ -43,13 +45,19 @@
                         target="_blank">Lihat Lampiran</a></td>
                 </tr>
                 <tr>
+                    <th>Status</th>
+                    <td>:
+                        {{ $penelitian->status }}
+                    </td>
+                </tr>
+                {{-- <tr>
                     <th>Gambar Penelitian</th>
                     <td>: <img src="{{ asset('storage/'.$penelitian->gambar) }}" alt="" style="max-width: 70%; height: auto"></td>
-                </tr>
+                </tr> --}}
                 <tr>
                     <th>Tanggal Publikasi</th>
                     <td>:
-                        {{ $penelitian->tanggal_publikasi }}
+                        {{ \Carbon\Carbon::parse($penelitian->tanggal_publikasi)->format('d-m-Y') }}
                     </td>
                 </tr>
             </table>

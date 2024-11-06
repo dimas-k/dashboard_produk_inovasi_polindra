@@ -30,6 +30,8 @@
             <div class="col-12 col-md-6">
                 <div class="resume-item mb-2">
                     <h2 class="resume mb-5">{{ $penelitian->judul }}</h2>
+                    <strong class="">Abstrak Penelitian</strong> <br>
+                    <p class="mt-1">{{ $penelitian->abstrak }}</p>
                     <strong>Tahun publikasi</strong> <br>
                     <p class="mt-1">Tahun {{ \Carbon\Carbon::parse($penelitian->tanggal_publikasi)->format('Y') }}</p>
                 </div>
@@ -44,15 +46,6 @@
                     @foreach ($penelitian->anggotaPenelitian as $anggota )
                         <li><a href="{{ route('produk.dosen', ['dosen'=>$anggota->detailAnggota->nama_lengkap]) }}">{{ $anggota->detailAnggota->nama_lengkap }}</a></li>
                     @endforeach
-                    {{-- @php
-                        $anggotaArray = explode(',', $penelitian->anggota_penulis); 
-                    @endphp
-            
-                    <ul>
-                        @foreach ($anggotaArray as $poin)
-                            <li>{{ trim($poin) }}</li>
-                        @endforeach
-                    </ul> --}}
                     <a class="btn btn-success p-3 mt-4" href="mailto:{{ $penelitian->email_penulis }}"><i class="bi bi-envelope me-2"></i>Hubungi penulis</a>
                 </div>
             </div>

@@ -9,6 +9,7 @@
                         <th>Judul</th>
                         <th>Nama Penulis</th>
                         <th>Email Penulis</th>
+                        <td>Tanggal Publikasi</td>
                         <th>STATUS</th>
                         <th>Aksi</th>
                         <th>Validasi</th>
@@ -27,6 +28,7 @@
                             <td>{{ $p->kelompokKeahlian->nama_kbk }}</td>
                             <!-- Menampilkan nama kelompok keahlian dari relasi -->
                             <td>{{ $p->email_penulis }}</td>
+                            <td>{{ \Carbon\Carbon::parse($p->tanggal_publikasi)->format('d-m-Y') }}</td>
                             <td>
                                 @if ($p->status === 'Tervalidasi')
                                     <span class="badge bg-label-success me-1">{{ $p->status }}</span>

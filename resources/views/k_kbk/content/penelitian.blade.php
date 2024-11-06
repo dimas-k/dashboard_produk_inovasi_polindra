@@ -43,8 +43,12 @@
                                 </div>
                                 <div class="row">
                                     <div class="col mb-6">
-                                        <label for="nameBasic" class="form-label">Abstrak</label>
-                                        <input type="file" id="abstrak" class="form-control" name="abstrak" />
+                                        <label for="nameBasic" class="form-label">Abstrak <small
+                                                class="text-danger">(abstrak tidak lebih dari 260 kata)</small></label>
+                                        <textarea id="limitedTextarea" placeholder="Masukkan abstrak penelitian" class="form-control" style="height: 150px"
+                                            name="abstrak"></textarea>
+                                        <p id="wordCount">0/260 kata</p>
+                                        {{-- <input type="file" id="abstrak" class="form-control" name="abstrak" /> --}}
                                         @error('abstrak')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
@@ -91,13 +95,15 @@
                                 <div class="row">
                                     <div class="col mb-6">
                                         <label for="anggota_penulis">Anggota Penulis</label>
-                                        <select class="selectpicker w-100" data-live-search="true" id="anggota_penulis" name="anggota_penulis[]" multiple title="Pilih Anggota Penulis.." >
-                                            @foreach($anggotaKelompok as $anggota)
-                                                <option value="{{ $anggota->id }}">{{ $anggota->nama_lengkap }}</option>
+                                        <select class="selectpicker w-100" data-live-search="true" id="anggota_penulis"
+                                            name="anggota_penulis[]" multiple title="Pilih Anggota Penulis..">
+                                            @foreach ($anggotaKelompok as $anggota)
+                                                <option value="{{ $anggota->id }}">{{ $anggota->nama_lengkap }}
+                                                </option>
                                             @endforeach
                                         </select>
                                     </div>
-                                </div>                           
+                                </div>
                                 <div class="row">
                                     <div class="col mb-6">
                                         <label for="nameBasic" class="form-label">Lampiran</label>
@@ -147,6 +153,7 @@
                         <th>Nama Produk</th>
                         <th>Nama Inventor</th>
                         <th>email inventor</th>
+                        <th>Tanggal Publikasi</th>
                         <th>Status</th>
                         <th>Aksi</th>
                     </tr>
@@ -160,6 +167,7 @@
                             <td>{{ $p->judul }}</td>
                             <td>{{ $p->penulis }}</td>
                             <td>{{ $p->email_penulis }}</td>
+                            <td>{{ \Carbon\Carbon::parse($p->tanggal_publikasi)->format('d-m-Y') }}</td>
                             <td>
                                 @if ($p->status === 'Tervalidasi')
                                     <span class="badge bg-label-success me-1">{{ $p->status }}</span>
@@ -187,8 +195,7 @@
                                             </div>
                                             <div class="modal-body">
                                                 <form action="{{ route('edit.penelitian', $p->id) }}"
-                                                    enctype="multipart/form-data" method="post"
-                                                    id="editForm_{{ $p->id }}">
+                                                    enctype="multipart/form-data" method="post" id="editForm_{{ $p->id }}">
                                                     @method('PUT')
                                                     @csrf
                                                     <div class="row">
@@ -204,9 +211,8 @@
                                                     <div class="row">
                                                         <div class="col mb-6">
                                                             <label for="nameBasic" class="form-label">Judul</label>
-                                                            <input type="text" id="judul_{{ $p->id }}"
-                                                                class="form-control" value="{{ $p->judul }}"
-                                                                name="judul" />
+                                                            <input type="text" id="judul" class="form-control"
+                                                                value="{{ $p->judul }}" name="judul" />
                                                             @error('judul')
                                                                 <div class="invalid-feedback">
                                                                     {{ $message }}
@@ -216,41 +222,45 @@
                                                     </div>
                                                     <div class="row">
                                                         <div class="col mb-6">
-                                                            <label for="nameBasic" class="form-label">Abstrak</label>
-                                                            <input type="file" name="abstrak"
-                                                                id="abstrak_{{ $p->id }}"
-                                                                class="form-control">
+                                                            <label for="nameBasic" class="form-label">Abstrak <small
+                                                                class="text-danger">(abstrak tidak lebih dari 260 kata)</small></label>
+                                                            <textarea id="limitedTextarea{{ $p->id }}" placeholder="Masukkan abstrak penelitian" class="form-control" style="height: 150px"
+                                                                name="abstrak">{{ $p->abstrak }}</textarea>
+                                                            <p id="wordCount{{ $p->id }}">0/260 kata</p>
                                                             @error('abstrak')
                                                                 <div class="invalid-feedback">
                                                                     {{ $message }}
                                                                 </div>
                                                             @enderror
-                                                            <span class="text-danger"><small><i
-                                                                class='bx bxs-error me-1'></i>Jika tidak ada perubahan file tidak usah dinputkan kembali</small></span>
+                                                            {{-- <span class="text-danger"><small><i
+                                                                        class='bx bxs-error me-1'></i>Jika tidak ada
+                                                                    perubahan file tidak usah dinputkan
+                                                                    kembali</small></span> --}}
                                                         </div>
                                                     </div>
                                                     <div class="row">
                                                         <div class="col mb-6">
                                                             <label for="nameBasic" class="form-label">Gambar
                                                                 Penelitian</label>
-                                                            <input type="file" id="gambar_{{ $p->id }}"
-                                                                class="form-control" name="gambar" />
+                                                            <input type="file" id="gambar" class="form-control"
+                                                                name="gambar" />
                                                             @error('gambar')
                                                                 <div class="invalid-feedback">
                                                                     {{ $message }}
                                                                 </div>
                                                             @enderror
                                                             <span class="text-danger"><small><i
-                                                                class='bx bxs-error me-1'></i>Jika tidak ada perubahan file tidak usah dinputkan kembali</small></span>
+                                                                        class='bx bxs-error me-1'></i>Jika tidak ada
+                                                                    perubahan file tidak usah dinputkan
+                                                                    kembali</small></span>
                                                         </div>
                                                     </div>
                                                     <div class="row">
                                                         <div class="col mb-6">
                                                             <label for="nameBasic" class="form-label">Nama
                                                                 Penulis</label>
-                                                            <input type="text" id="penulis_{{ $p->id }}"
-                                                                class="form-control" value="{{ $p->penulis }}"
-                                                                name="penulis" />
+                                                            <input type="text" id="penulis" class="form-control"
+                                                                value="{{ $p->penulis }}" name="penulis" />
                                                             @error('penulis')
                                                                 <div class="invalid-feedback">
                                                                     {{ $message }}
@@ -262,8 +272,8 @@
                                                         <div class="col mb-6">
                                                             <label for="nameBasic" class="form-label">Email
                                                                 Penulis</label>
-                                                            <input type="email" id="email_{{ $p->id }}"
-                                                                class="form-control" value="{{ $p->email_penulis }}"
+                                                            <input type="email" id="email" class="form-control"
+                                                                value="{{ $p->email_penulis }}"
                                                                 name="email_penulis" />
                                                             @error('email_penulis')
                                                                 <div class="invalid-feedback">
@@ -274,39 +284,47 @@
                                                     </div>
                                                     <div class="row">
                                                         <div class="col mb-6">
-                                                            <label for="nameBasic" class="form-label">Anggota Penulis</label>
+                                                            <label for="nameBasic" class="form-label">Anggota
+                                                                Penulis</label>
                                                             @foreach ($p->anggotaPenelitian as $anggota)
                                                                 <li>{{ $anggota->detailAnggota->nama_lengkap }}</li>
                                                             @endforeach
                                                             <br>
-                                                            <select class="selectpicker w-100" data-live-search="true" id="anggota_penulis_{{ $p->id }}" name="anggota_penulis[]" multiple title="Pilih Anggota Penulis..">
-                                                                @foreach($penelitianAnggota as $anggota)
+                                                            <select class="selectpicker w-100" data-live-search="true"
+                                                                id="anggota_penulis" name="anggota_penulis[]" multiple
+                                                                title="Pilih Anggota Penulis..">
+                                                                @foreach ($penelitianAnggota as $anggota)
                                                                     <option value="{{ $anggota->id }}"
-                                                                        @if($p->anggotaPenelitian && $p->anggotaPenelitian->pluck('id')->contains($anggota->id)) selected @endif>
+                                                                        @if ($p->anggotaPenelitian && $p->anggotaPenelitian->pluck('id')->contains($anggota->id)) selected @endif>
                                                                         {{ $anggota->nama_lengkap }}
                                                                     </option>
                                                                 @endforeach
                                                             </select><br>
                                                         </div>
-                                                    </div>                                                    
+                                                    </div>
                                                     <div class="row">
                                                         <div class="col mb-6">
                                                             <label for="nameBasic" class="form-label">Lampiran</label>
-                                                            <input type="file" id="lampiran_{{ $p->id }}"
-                                                                class="form-control" name="lampiran" />
+                                                            <input type="file" id="lampiran" class="form-control"
+                                                                name="lampiran" />
                                                             @error('lampiran')
                                                                 <div class="invalid-feedback">
                                                                     {{ $message }}
                                                                 </div>
                                                             @enderror
                                                             <span class="text-danger"><small><i
-                                                                    class='bx bxs-error me-1'></i>Jika tidak ada perubahan file tidak usah dinputkan kembali</small></span>
+                                                                        class='bx bxs-error me-1'></i>Jika tidak ada
+                                                                    perubahan file tidak usah dinputkan
+                                                                    kembali</small></span>
                                                         </div>
                                                     </div>
                                                     <div class="row">
                                                         <div class="col mb-6">
-                                                            <label for="tanggal_publikasi" class="form-label">Tanggal Publikasi</label>
-                                                            <input type="date" name="tanggal_publikasi" id="tanggal_publikasi_{{ $p->id }}" value="{{ $p->tanggal_publikasi }}""
+                                                            <label for="tanggal_publikasi" class="form-label">Tanggal
+                                                                Publikasi</label>
+                                                            <input type="date" name="tanggal_publikasi"
+                                                                id="tanggal_publikasi"
+                                                                value="{{ $p->tanggal_publikasi ? \Carbon\Carbon::parse($p->tanggal_publikasi)->format('Y-m-d') : '' }}"
                                                                 class="form-control @error('tanggal_publikasi') is-invalid @enderror">
                                                             @error('tanggal_publikasi')
                                                                 <div class="invalid-feedback">

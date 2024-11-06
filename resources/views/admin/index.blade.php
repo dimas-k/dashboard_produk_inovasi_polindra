@@ -114,7 +114,7 @@
                 data: {
                     labels: tahunLabels,
                     datasets: [{
-                        label: 'Jumlah Produk Tervalidasi Berdasarkan Tanggal Granted per Tahun',
+                        label: 'Jumlah Produk Tervalidasi Per Tahun Berdasarkan Tahun Granted',
                         data: produkData,
                         backgroundColor: 'rgba(75, 192, 192, 0.2)',
                         borderColor: 'rgba(75, 192, 192, 1)',
@@ -180,7 +180,7 @@
                 data: {
                     labels: tahunLabels,
                     datasets: [{
-                        label: 'Jumlah Penelitian Tervalidasi Berdasarkan Tanggal Publikasi per Tahun',
+                        label: 'Jumlah Penelitian Tervalidasi Per Tahun Berdasarkan Tahun Publikasi',
                         data: penelitianData,
                         backgroundColor: 'rgba(75, 192, 192, 0.2)',
                         borderColor: 'rgba(75, 192, 192, 1)',

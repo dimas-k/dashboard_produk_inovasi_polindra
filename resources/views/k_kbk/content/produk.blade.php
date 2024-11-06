@@ -159,6 +159,7 @@
                         <th>Nama Produk</th>
                         <th>Nama Inventor</th>
                         <th>email inventor</th>
+                        <th>Tanggal Granted</th>
                         <th>Status</th>
                         <th>Aksi</th>
                     </tr>
@@ -172,6 +173,7 @@
                             <td>{{ $p->nama_produk }}</td>
                             <td>{{ $p->inventor }}</td>
                             <td>{{ $p->email_inventor }}</td>
+                            <td>{{ \Carbon\Carbon::parse($p->tanggal_granted)->format('d-m-Y') }}</td>
                             <td>
                                 @if ($p->status === 'Tervalidasi')
                                     <span class="badge bg-label-success me-1">{{ $p->status }}</span>
@@ -336,7 +338,7 @@
                                                     <div class="row">
                                                         <div class="col mb-6">
                                                             <label for="tanggal_submit" class="form-label">Tanggal Submit</label>
-                                                            <input type="date" name="tanggal_submit" id="tanggal_submit_{{ $p->id }}" value="{{ $p->tanggal_submit }}"
+                                                            <input type="date" name="tanggal_submit" id="tanggal_submit_{{ $p->id }}" value="{{ $p->tanggal_submit ? \Carbon\Carbon::parse($p->tanggal_submit)->format('Y-m-d') : '' }}"
                                                                 class="form-control @error('tanggal_submit') is-invalid @enderror">
                                                             @error('tanggal_submit')
                                                                 <div class="invalid-feedback">
@@ -348,7 +350,7 @@
                                                     <div class="row">
                                                         <div class="col mb-6">
                                                             <label for="tanggal_granted" class="form-label">Tanggal Granted</label>
-                                                            <input type="date" name="tanggal_granted" id="tanggal_granted_{{ $p->id }}" value="{{ $p->tanggal_granted }}""
+                                                            <input type="date" name="tanggal_granted" id="tanggal_granted_{{ $p->id }}" value="{{ $p->tanggal_granted ? \Carbon\Carbon::parse($p->tanggal_granted)->format('Y-m-d') : '' }}"
                                                                 class="form-control @error('tanggal_granted') is-invalid @enderror">
                                                             @error('tanggal_granted')
                                                                 <div class="invalid-feedback">
