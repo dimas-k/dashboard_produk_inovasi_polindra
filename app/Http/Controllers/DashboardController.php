@@ -10,6 +10,7 @@ use App\Models\KelompokKeahlian;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\AnggotaKelompokKeahlian;
 
 class DashboardController extends Controller
 {
@@ -136,8 +137,50 @@ class DashboardController extends Controller
     {
         $kbk = KelompokKeahlian::all();
         $kbk_nama = KelompokKeahlian::where('nama_kbk', $dosen)->first();
-        $p_dosen = Produk::with('kelompokKeahlian')->where('inventor', $dosen)->paginate(7);
-        $plt_dosen = Penelitian::with('KelompokKeahlian')->where('penulis', $dosen)->paginate(7);
+
+        
+        // $plt_dosen = Penelitian::with('KelompokKeahlian')->where('penulis', $dosen)->paginate(7);
+        $anggota = AnggotaKelompokKeahlian::where('nama_lengkap', $dosen)->first();
+
+        // Ambil data Produk jika hanya ada yang terkait dengan Kelompok Keahlian anggota atau berdasarkan inventor
+        if ($anggota) {
+            // Ambil produk berdasarkan kbk_id dari anggota
+            $p_dosen = Produk::whereHas('kelompokKeahlian', function ($query) use ($anggota) {
+                $query->where('id', $anggota->kbk_id);
+            })->with('kelompokKeahlian')->paginate(7);
+        
+            // Jika tidak ada produk yang sesuai dengan anggota, kosongkan hasil
+            if ($p_dosen->isEmpty()) {
+                $p_dosen = collect([]);
+            }
+        } else {
+            // Ambil produk berdasarkan nama inventor
+            $p_dosen = Produk::with('kelompokKeahlian')->where('inventor', $dosen)->paginate(7);
+        
+            // Jika tidak ada produk yang sesuai, kosongkan hasil
+            if ($p_dosen->isEmpty()) {
+                $p_dosen = collect([]);
+            }
+        }
+        
+        // Ambil data Penelitian jika hanya ada yang terkait dengan Kelompok Keahlian anggota atau berdasarkan penulis
+        if ($anggota) {
+            $plt_dosen = Penelitian::whereHas('kelompokKeahlian', function ($query) use ($anggota) {
+                $query->where('id', $anggota->kbk_id);
+            })->with('kelompokKeahlian')->paginate(7);
+            
+            // Jika tidak ada penelitian yang sesuai dengan anggota, kosongkan hasil
+            if ($plt_dosen->isEmpty()) {
+                $plt_dosen = collect([]);
+            }
+        } else {
+            $plt_dosen = Penelitian::with('kelompokKeahlian')->where('penulis', $dosen)->paginate(7);
+        
+            // Jika tidak ada penelitian yang sesuai, kosongkan hasil
+            if ($plt_dosen->isEmpty()) {
+                $plt_dosen = collect([]);
+            }
+        }
         
         return view('dashboard.dosen-produk.index', [
             'kbk' => $kbk,

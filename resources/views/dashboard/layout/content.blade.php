@@ -128,7 +128,6 @@
                                 alt="Gambar Produk {{ $p->id }}">
                         </div>
                         <h6>{{ $p->judul }}</h6>
-
                     </div>
                 </a>
             @endforeach

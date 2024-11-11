@@ -45,11 +45,11 @@
             <option value="produk" selected>Diagram Produk</option>
             <option value="penelitian">Diagram Penelitian</option>
         </select>
-        <div id="produkChartContainer">
-            <canvas id="myChartPrdk"></canvas>
+        <div id="produkChartContainer"></>
+            <canvas id="myChartPrdk" canvas>
         </div>
         <div id="penelitianChartContainer">
-            <canvas id="myChartPlt"></canvas>
+            <canvas id="myChartPlt" ></canvas>
         </div>
     </div>
 </div>

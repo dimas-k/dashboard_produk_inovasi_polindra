@@ -145,11 +145,11 @@ class KetuaKbkController extends Controller
                 'users.nama_lengkap'
             )
             ->where('users.id', '=', $userId)
-            ->get();
+            ->first();
 
-
+        // dd($kkbk->nama_kbk);
         $user = auth()->user();
-        $anggotaKelompok = AnggotaKelompokKeahlian::where('kbk_id', $user->kbk_id)->get();
+        $anggotaKelompok = AnggotaKelompokKeahlian::all();
         $produkAnggota = AnggotaKelompokKeahlian::all();
 
 
@@ -319,7 +319,7 @@ class KetuaKbkController extends Controller
                 'users.nama_lengkap'
             )
             ->where('users.id', '=', $userId)
-            ->get();
+            ->first();
 
         $user = auth()->user();
         $anggotaKelompok = AnggotaKelompokKeahlian::where('kbk_id', $user->kbk_id)->get();
