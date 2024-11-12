@@ -347,7 +347,7 @@ class KetuaKbkController extends Controller
                 'judul' => 'required|string|max:255',
                 // 'abstrak' => 'required|file|mimes:pdf|max:10240',
                 'abstrak' => 'required|string',
-                'kbk_id' => 'required|exists:kelompok_keahlians,id',
+                'kbk_id' => 'required',
                 'penulis' => 'required|string|max:255',
                 'email_penulis' => 'required|email',
                 'gambar' => 'required|file|mimes:jpeg,png,jpg|max:10240', // Sesuaikan dengan format file yang diperbolehkan

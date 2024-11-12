@@ -20,4 +20,5 @@ class PenelitianAnggota extends Model
     {
         return $this->belongsTo(AnggotaKelompokKeahlian::class, 'anggota_id');
     }
+    
 }

@@ -137,59 +137,38 @@ class DashboardController extends Controller
     public function dosenProduk($dosen)
     {
         $kbk = KelompokKeahlian::all();
-        $kbk_nama = KelompokKeahlian::where('nama_kbk', $dosen)->first();
-
-        
-        // $plt_dosen = Penelitian::with('KelompokKeahlian')->where('penulis', $dosen)->paginate(7);
         $anggota = AnggotaKelompokKeahlian::where('nama_lengkap', $dosen)->first();
-
-        // Ambil data Produk jika hanya ada yang terkait dengan Kelompok Keahlian anggota atau berdasarkan inventor
+        $p_dosen = null;
         if ($anggota) {
-            // Ambil produk berdasarkan kbk_id dari anggota
-            $p_dosen = Produk::whereHas('kelompokKeahlian', function ($query) use ($anggota) {
-                $query->where('id', $anggota->kbk_id);
+            $p_dosen = Produk::whereHas('anggota', function ($query) use ($anggota) {
+                $query->where('anggota_id', $anggota->id); 
             })->with('kelompokKeahlian')->paginate(7);
-        
-            // Jika tidak ada produk yang sesuai dengan anggota, kosongkan hasil
-            if ($p_dosen->isEmpty()) {
-                $p_dosen = collect([]);
-            }
-        } else {
-            // Ambil produk berdasarkan nama inventor
-            $p_dosen = Produk::with('kelompokKeahlian')->where('inventor', $dosen)->paginate(7);
-        
-            // Jika tidak ada produk yang sesuai, kosongkan hasil
-            if ($p_dosen->isEmpty()) {
-                $p_dosen = collect([]);
-            }
         }
-        
-        // Ambil data Penelitian jika hanya ada yang terkait dengan Kelompok Keahlian anggota atau berdasarkan penulis
+        if (!$anggota) {
+            $p_dosen = Produk::with('kelompokKeahlian')->where('inventor', $dosen)->paginate(7);
+        }
+        if ($p_dosen->isEmpty()) {
+            $p_dosen = null;
+        }
+        $plt_dosen = null;
         if ($anggota) {
-            $plt_dosen = Penelitian::whereHas('kelompokKeahlian', function ($query) use ($anggota) {
-                $query->where('id', $anggota->kbk_id);
-            })->with('kelompokKeahlian')->paginate(7);
-            
-            // Jika tidak ada penelitian yang sesuai dengan anggota, kosongkan hasil
-            if ($plt_dosen->isEmpty()) {
-                $plt_dosen = collect([]);
-            }
+            $plt_dosen = Penelitian::whereHas('anggotaPenelitian', function ($query) use ($anggota) {
+                $query->where('anggota_id', $anggota->id); // Menyaring berdasarkan anggota di penelitian
+            })->with(['kelompokKeahlian', 'anggotaPenelitian.detailAnggota'])->paginate(7);
         } else {
             $plt_dosen = Penelitian::with('kelompokKeahlian')->where('penulis', $dosen)->paginate(7);
-        
-            // Jika tidak ada penelitian yang sesuai, kosongkan hasil
-            if ($plt_dosen->isEmpty()) {
-                $plt_dosen = collect([]);
-            }
         }
-        
+
+        if ($plt_dosen->isEmpty()) {
+            $plt_dosen = null;
+        }
+
         return view('dashboard.dosen-produk.index', [
-            'kbk' => $kbk,
-            'kbk_nama' => $kbk_nama,
+            'kbk'=> $kbk,
             'p_dosen' => $p_dosen,
             'plt_dosen' => $plt_dosen,
-            'dosen' => $dosen
+            'dosen' => $dosen,
+            'anggota' => $anggota
         ]);
     }
-
 }

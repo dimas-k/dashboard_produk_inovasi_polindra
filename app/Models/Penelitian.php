@@ -26,6 +26,6 @@ class Penelitian extends Model
 
     public function anggotaPenelitian()
     {
-        return $this->hasMany(PenelitianAnggota::class, 'penelitian_id', 'id');
+        return $this->hasMany(PenelitianAnggota::class, 'penelitian_id');
     }
 }
