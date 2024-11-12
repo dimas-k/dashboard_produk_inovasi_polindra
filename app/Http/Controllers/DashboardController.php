@@ -25,6 +25,7 @@ class DashboardController extends Controller
         $pusat_penelitian = Penelitian::where('status', 'Tervalidasi')->get();
 
         $produk_terbaru = Produk::where('status', 'Tervalidasi')->latest()->take(10)->get();
+        // dd($produk_terbaru);
         $penelitian_terbaru = Penelitian::where('status', 'Tervalidasi')->latest()->take(10)->get();
         // dd($jumlah_kbk);
         return view('dashboard.index', compact('kbk', 'jumlah_kbk', 'jumlah_produk', 'jumlah_pusat_penelitian', 'produk', 'pusat_penelitian', 'produk_terbaru', 'penelitian_terbaru'));
