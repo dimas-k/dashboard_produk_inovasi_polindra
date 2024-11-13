@@ -100,11 +100,31 @@
                                         <label for="anggota_penulis">Anggota Penulis</label>
                                         <select class="selectpicker w-100" data-live-search="true" id="anggota_penulis"
                                             name="anggota_penulis[]" multiple title="Pilih Anggota Penulis..">
-                                            @foreach ($anggotaKelompok as $anggota)
+                                            @foreach ($penelitianAnggota as $anggota)
                                                 <option value="{{ $anggota->id }}">{{ $anggota->nama_lengkap }}
                                                 </option>
                                             @endforeach
                                         </select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col mb-6">
+                                        <div class="form-group">
+                                            <label>Apakah Penelitian Ini Bersama Mahasiswa?</label><br>
+                                            <input type="radio" id="mahasiswa_ya" name="bersama_mahasiswa" value="Ya" onclick="toggleTextarea()">
+                                            <label for="mahasiswa_ya">Ya</label>
+                                            
+                                            <input type="radio" id="mahasiswa_tidak" name="bersama_mahasiswa" value="Tidak" onclick="toggleTextarea()" checked>
+                                            <label for="mahasiswa_tidak">Tidak</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col mb-6">
+                                        <div class="form-group" id="nama_mahasiswa_field" style="display: none;">
+                                            <label class="form-label" for="nama_mahasiswa">Nama Mahasiswa</label>
+                                            <textarea id="nama_mahasiswa" name="nama_mahasiswa" class="form-control" style="height: 100px"></textarea>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="row">

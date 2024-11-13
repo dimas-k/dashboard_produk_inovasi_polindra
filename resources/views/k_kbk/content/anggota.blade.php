@@ -20,13 +20,16 @@
                                     <div class="col mb-6">
                                         <label for="exampleFormControlSelect1" id="kbk" class="form-label">Pilih
                                             KBK</label>
-                                        <select class="form-select" id="exampleFormControlSelect1" name="kbk_id"
+                                        {{-- <select class="form-select" id="exampleFormControlSelect1" name="kbk_id"
                                             aria-label="Default select example">
                                             <option value="" selected>Pilih KBK</option>
                                             @foreach ($kkbk as $j_kbk)
                                                 <option value="{{ $j_kbk->id }}">{{ $j_kbk->nama_kbk }}</option>
                                             @endforeach
-                                        </select>
+                                        </select> --}}
+                                        <input type="hidden" name="kbk_id" value="{{ $kkbk->id }}">
+                                        <input class="form-control" type="text"
+                                        id="nama_kbk" value="{{ $kkbk->nama_kbk}}" readonly/>
                                     </div>
                                 </div>
                                 <div class="row">

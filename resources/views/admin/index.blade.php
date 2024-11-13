@@ -108,6 +108,9 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Import ApexCharts via CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -255,6 +258,85 @@
         }
         document.getElementById('chartSelect').addEventListener('change', toggleChart);
         window.onload = toggleChart;
+    </script>
+    <script>
+        let penelitianChart, produkChart;
+
+        function initializeCharts() {
+            penelitianChart = new ApexCharts(document.querySelector("#penelitian-chart"), {
+                chart: {
+                    type: 'line'
+                },
+                series: [{
+                    name: 'Penelitians',
+                    data: []
+                }],
+                xaxis: {
+                    type: 'datetime'
+                },
+                title: {
+                    text: 'Laporan Penelitian'
+                }
+            });
+            penelitianChart.render();
+
+            produkChart = new ApexCharts(document.querySelector("#produk-chart"), {
+                chart: {
+                    type: 'line'
+                },
+                series: [{
+                    name: 'Produks',
+                    data: []
+                }],
+                xaxis: {
+                    type: 'datetime'
+                },
+                title: {
+                    text: 'Laporan Produk'
+                }
+            });
+            produkChart.render();
+        }
+
+        function fetchData() {
+            const startDate = document.getElementById("start_date").value;
+            const endDate = document.getElementById("end_date").value;
+
+            // Fetch data untuk Penelitian
+            fetch(/report/penelitian ? start_date = $ {
+                    startDate
+                } & end_date = $ {
+                    endDate
+                })
+                .then(response => response.json())
+                .then(data => {
+                    const formattedData = data.map(item => [new Date(item.date).getTime(), item.count]);
+                    penelitianChart.updateSeries([{
+                        name: 'Penelitians',
+                        data: formattedData
+                    }]);
+                });
+
+            // Fetch data untuk Produk
+            fetch(/report/produk ? start_date = $ {
+                    startDate
+                } & end_date = $ {
+                    endDate
+                })
+                .then(response => response.json())
+                .then(data => {
+                    const formattedData = data.map(item => [new Date(item.date).getTime(), item.count]);
+                    produkChart.updateSeries([{
+                        name: 'Produks',
+                        data: formattedData
+                    }]);
+                });
+        }
+
+        // Initialize charts on page load
+        document.addEventListener("DOMContentLoaded", function() {
+            initializeCharts();
+        });
     </script>
 
 </body>

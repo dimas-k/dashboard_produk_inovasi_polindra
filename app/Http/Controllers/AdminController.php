@@ -4,17 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Produk;
+use App\Models\Penelitian;
 use Illuminate\Http\Request;
 use App\Models\KelompokKeahlian;
-use App\Models\Penelitian;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Storage;
+
 
 class AdminController extends Controller
 {
-    public function dashboard()
+    public function dashboard(Request $request)
     {
         $kbk_navigasi = KelompokKeahlian::select('id', 'nama_kbk')->get();
         $prdk_valid = Produk::with('kelompokKeahlian')->where('status', 'Tervalidasi')->count();
@@ -42,8 +44,118 @@ class AdminController extends Controller
             ->map(function ($group) {
                 return $group->count();
             })->sortKeys();
-        return view('admin.index', compact('kbk_navigasi', 'pnltan_valid', 'pnltan_nonvalid', 'prdk_valid', 'prdk_nonvalid', 'prdk_tahun', 'plt_tahun'));
+
+        $penelitians = Penelitian::query();
+
+        if ($request->has('start_date') && $request->has('end_date')) {
+            $penelitians->whereBetween('tanggal_publikasi', [$request->start_date, $request->end_date]);
+        }
+
+        $data_plt = $penelitians->selectRaw('DATE(tanggal_publikasi) as date, COUNT(*) as count')
+            ->groupBy('date')
+            ->orderBy('date', 'ASC')
+            ->get();
+
+        $produks = Produk::query();
+
+        if ($request->has('start_date') && $request->has('end_date')) {
+            $produks->whereBetween('tanggal_submit', [$request->start_date, $request->end_date]);
+        }
+
+        $data_prdk = $produks->selectRaw('DATE(tanggal_submit) as date, COUNT(*) as count')
+            ->groupBy('date')
+            ->orderBy('date', 'ASC')
+            ->get();
+
+
+        $queryProduk = Produk::query();
+        $queryPenelitian = Penelitian::query();
+
+        // Filter berdasarkan tahun
+        if ($request->has('tahun_awal') && $request->has('tahun_akhir')) {
+            $tahun_awal = $request->input('tahun_awal');
+            $tahun_akhir = $request->input('tahun_akhir');
+
+            // Pastikan tahun_awal dan tahun_akhir tidak kosong
+            if ($tahun_awal && $tahun_akhir) {
+                $queryProduk->whereYear('tanggal_granted', '>=', $tahun_awal)
+                    ->whereYear('tanggal_granted', '<=', $tahun_akhir);
+
+                $queryPenelitian->whereYear('tanggal_publikasi', '>=', $tahun_awal)
+                    ->whereYear('tanggal_publikasi', '<=', $tahun_akhir);
+            }
+        } elseif ($request->has('tahun_awal')) {
+            $tahun_awal = $request->input('tahun_awal');
+
+            // Jika hanya tahun_awal yang ada
+            $queryProduk->whereYear('tanggal_granted', '>=', $tahun_awal);
+            $queryPenelitian->whereYear('tanggal_publikasi', '>=', $tahun_awal);
+        } elseif ($request->has('tahun_akhir')) {
+            $tahun_akhir = $request->input('tahun_akhir');
+
+            // Jika hanya tahun_akhir yang ada
+            $queryProduk->whereYear('tanggal_granted', '<=', $tahun_akhir);
+            $queryPenelitian->whereYear('tanggal_publikasi', '<=', $tahun_akhir);
+        }
+
+        $produk = $queryProduk->get();
+        $penelitian = $queryPenelitian->get();
+
+        // Cek apakah pengguna ingin mengunduh CSV
+        if ($request->has('download') && $request->input('download') == 'csv') {
+            return $this->downloadCSV($produk, $penelitian);
+        }
+
+
+        return view('admin.index', compact('kbk_navigasi', 'pnltan_valid', 'pnltan_nonvalid', 'prdk_valid', 'prdk_nonvalid', 'prdk_tahun', 'plt_tahun', 'data_plt', 'data_prdk', 'produk', 'penelitian'));
     }
+    protected function downloadCSV($produk, $penelitian)
+    {
+        $filename = "report_" . now()->format('YmdHis') . ".csv";
+        $columnsProduk = ['Nama KBK', 'Nama Produk', 'Inventor', 'Tanggal Submit', 'Tanggal Granted', 'Status'];
+        $columnsPenelitian = ['Nama KBK', 'Judul Penelitian', 'Penulis', 'Penulis Korespondensi', 'Tanggal Publikasi', 'Status'];
+
+        $callback = function () use ($produk, $penelitian, $columnsProduk, $columnsPenelitian) {
+            $file = fopen('php://output', 'w');
+            fputcsv($file, array_merge(['Produk'], $columnsProduk));
+
+            foreach ($produk as $item) {
+                fputcsv($file, [
+                    $item->kelompokKeahlian->nama_kbk ?? '-', // Nama KBK
+                    $item->nama_produk,
+                    $item->inventor,
+                    $item->tanggal_submit,
+                    $item->tanggal_granted,
+                    $item->status
+                ]);
+            }
+
+            fputcsv($file, []);
+            fputcsv($file, array_merge(['Penelitian'], $columnsPenelitian));
+
+            foreach ($penelitian as $item) {
+                fputcsv($file, [
+                    $item->kelompokKeahlian->nama_kbk ?? '-', // Nama KBK
+                    $item->judul,
+                    $item->penulis,
+                    $item->penulis_koresponden,
+                    $item->tanggal_publikasi,
+                    $item->status
+                ]);
+            }
+
+            fclose($file);
+        };
+
+        return Response::stream($callback, 200, [
+            "Content-type" => "text/csv",
+            "Content-Disposition" => "attachment; filename=$filename",
+            "Pragma" => "no-cache",
+            "Cache-Control" => "must-revalidate, post-check=0, pre-check=0",
+            "Expires" => "0"
+        ]);
+    }
+
 
 
     // Admin

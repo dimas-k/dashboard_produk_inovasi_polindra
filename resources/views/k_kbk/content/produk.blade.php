@@ -27,8 +27,9 @@
                                                 <option value="{{ $j_kbk->id }}">{{ $j_kbk->nama_kbk }}</option>
                                             @endforeach
                                         </select> --}}
+                                        <input type="hidden" name="kbk_id" value="{{ $kkbk->id }}">
                                         <input class="form-control" type="text"
-                                        id="nama_kbk" value="{{ $kkbk->nama_kbk}}" readonly />
+                                        id="nama_kbk" value="{{ $kkbk->nama_kbk}}" readonly/>
                                         
                                     </div>
                                 </div>

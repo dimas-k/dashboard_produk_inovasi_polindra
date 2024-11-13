@@ -235,6 +235,18 @@
                 }
             });
         });
+
+        function toggleTextarea() {
+            var mahasiswaYa = document.getElementById('mahasiswa_ya');
+            var textareaField = document.getElementById('nama_mahasiswa_field');
+
+            if (mahasiswaYa.checked) {
+                textareaField.style.display = "block";
+            } else {
+                textareaField.style.display = "none";
+            }
+        }
+
         $(document).ready(function() {
             $('#uploadForm').on('submit', function(e) {
                 e.preventDefault(); // Mencegah submit default

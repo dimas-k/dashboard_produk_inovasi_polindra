@@ -2,12 +2,13 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\AdminPenelitianController;
-use App\Http\Controllers\AdminProdukInovasiController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\ReportController;
+use App\Http\Controllers\KetuaKbkController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KelompokBidangController;
-use App\Http\Controllers\KetuaKbkController;
+use App\Http\Controllers\AdminPenelitianController;
+use App\Http\Controllers\AdminProdukInovasiController;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 /*
@@ -31,7 +32,7 @@ Route::get('/dashboard/kontak', [DashboardController::class, 'contact']);
 //     return view('dashboard.penelitian.index', [$id]);
 // });
 
-Route::get('/dashboard/kelompok-bidang-keahlian/{nama_kbk}', [DashboardController::class,'penelitian'])->name('dashboard.penelitian');
+Route::get('/dashboard/kelompok-bidang-keahlian/{nama_kbk}', [DashboardController::class, 'penelitian'])->name('dashboard.penelitian');
 Route::get('/dashboard/produk/detail/{nama_produk}', [DashboardController::class, 'detailProduk'])->name('detail.produk');
 Route::get('/dashboard/penelitian/detail/{judul}', [DashboardController::class, 'detailPenelitian'])->name('detail.penelitian');
 Route::get('/dashboard/produk&penelitian/list-produk&penelitian/{dosen}', [DashboardController::class, 'dosenProduk'])->name('produk.dosen');
@@ -46,12 +47,17 @@ Route::get('/logout', [LoginController::class, 'logout']);
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'dashboard']);
-    
+
+    Route::get('/report/penelitian', [ReportController::class, 'getPenelitianReport']);
+    Route::get('/report/produk', [ReportController::class, 'getProdukReport']);
+
+    Route::get('/admin/report', [AdminController::class, 'dashboard'])->name('report.index');
+
     Route::get('/admin/kelompok-bidang-keahlian', [KelompokBidangController::class, 'pageKelompokBidang']);
     Route::post('/admin/kelompok-bidang-keahlian/create', [KelompokBidangController::class, 'storeKelompokKeahlian']);
     Route::post('/admin/kelompok-bidang-keahlian/update/{id}', [KelompokBidangController::class, 'update'])->name('updateKelompokBidang');
     Route::delete('/admin/kelompok-bidang-keahlian/delete/{id}', [KelompokBidangController::class, 'hapusKbk'])->name('hapusKbk');
-    
+
     Route::get('/admin/admin-page', [AdminController::class, 'admin']);
     route::post('/admin/admin-page/tambah', [AdminController::class, 'storeAdmin']);
     Route::get('/admin/admin-page/show/{id}', [AdminController::class, 'showAdmin'])->name('admin.show');
@@ -73,7 +79,6 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/penelitian/{id}', [AdminPenelitianController::class, 'pagePenelitian'])->name('admin.penelitian');
     Route::get('/admin/penelitian/show/{id}', [AdminPenelitianController::class, 'showPenelitian'])->name('admin.show.penelitian');
     Route::put('/admin/penelitian/edit-status/{id}', [AdminPenelitianController::class, 'validatePenelitian'])->name('validasi.penelitian');
-    
 });
 
 Route::middleware(['auth', 'role:ketua_kbk'])->group(function () {
@@ -101,5 +106,4 @@ Route::middleware(['auth', 'role:ketua_kbk'])->group(function () {
     Route::put('/k-kbk/profil/update/{id}', [KetuaKbkController::class, 'updateProfil'])->name('update.profil');
     Route::get('/k-kbk/profil/ubah_password/{id}', [KetuaKbkController::class, 'ubahPasswordUser'])->name('ubah.password');
     Route::post('/k-kbk/profil/ubah_password/{id}', [KetuaKbkController::class, 'prosesUbahPassword'])->name('proses.ubah.password');
-
 });

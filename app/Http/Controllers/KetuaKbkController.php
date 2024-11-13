@@ -22,13 +22,35 @@ class KetuaKbkController extends Controller
 {
     public function dashboardPage()
     {
+        // Data Produk per Tahun
         $kelompokKeahlianId = Auth::user()->kelompokKeahlian->id ?? null;
+        $prdk_tahun = Produk::with('kelompokKeahlian')->whereNotNull('tanggal_granted')
+            ->where('status', 'Tervalidasi')->where('kbk_id', $kelompokKeahlianId)
+            ->get()
+            ->groupBy(function ($item) {
+                return $item->tanggal_granted->format('Y');
+            })
+            ->map(function ($group) {
+                return $group->count();
+            })->sortKeys();
+
+        // Data Penelitian per Tahun
+        $plt_tahun = Penelitian::with('kelompokKeahlian')->whereNotNull('tanggal_publikasi')
+            ->where('status', 'Tervalidasi')->where('kbk_id', $kelompokKeahlianId)
+            ->get()
+            ->groupBy(function ($item) {
+                return $item->tanggal_publikasi->format('Y');
+            })
+            ->map(function ($group) {
+                return $group->count();
+            })->sortKeys();
+        // Distribusi Status Produk
         $prdk_valid = Produk::with('kelompokKeahlian')->where('kbk_id', $kelompokKeahlianId)->where('status', 'Tervalidasi')->count();
         $prdk_nonvalid = Produk::with('kelompokKeahlian')->where('kbk_id', $kelompokKeahlianId)->where('status', 'Belum Divalidasi')->count();
 
         $pnltan_valid = Penelitian::with('kelompokKeahlian')->where('kbk_id', $kelompokKeahlianId)->where('status', 'Tervalidasi')->count();
         $pnltan_nonvalid = Penelitian::with('kelompokKeahlian')->where('kbk_id', $kelompokKeahlianId)->where('status', 'Belum Divalidasi')->count();
-        return view('k_kbk.index', compact('pnltan_valid', 'pnltan_nonvalid', 'pnltan_nonvalid', 'prdk_valid', 'prdk_nonvalid'));
+        return view('k_kbk.index', compact('pnltan_valid', 'pnltan_nonvalid', 'pnltan_nonvalid', 'prdk_valid', 'prdk_nonvalid', 'prdk_tahun', 'plt_tahun'));
     }
 
     public function anggotaPage()
@@ -44,7 +66,7 @@ class KetuaKbkController extends Controller
                 'kelompok_keahlians.id',
                 'kelompok_keahlians.nama_kbk',
                 'users.nama_lengkap'
-            )->where('users.id', '=', $userId)->get();
+            )->where('users.id', '=', $userId)->first();
 
         return view('k_kbk.anggota.index', compact('anggotas', 'kkbk'));
     }
@@ -446,7 +468,7 @@ class KetuaKbkController extends Controller
                 'judul' => 'required|string|max:255',
                 // 'abstrak' => 'required|file|mimes:pdf|max:10240',
                 'abstrak' => 'required|string',
-                
+
                 'penulis' => 'required|string|max:255',
                 'email_penulis' => 'required|email',
                 'gambar' => 'file|mimes:jpeg,png,jpg|max:10240', // Sesuaikan dengan format file yang diperbolehkan
@@ -468,7 +490,7 @@ class KetuaKbkController extends Controller
                 // 'abstrak.mimes' => 'File abstrak harus berupa PDF.',
                 'gambar.mimes' => 'File gambar harus berupa JPG, JPEG, atau PNG.',
                 'lampiran.mimes' => 'File lampiran harus berupa JPG, JPEG, PNG, PDF, atau DOCX.',
-                'tanggal_publikasi.date'=>'Tanggal Publikasi Harus Valid'
+                'tanggal_publikasi.date' => 'Tanggal Publikasi Harus Valid'
             ]);
             $penelitian = Penelitian::findOrFail($id);
             $penelitian->judul = $request->judul;

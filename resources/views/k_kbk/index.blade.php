@@ -80,6 +80,8 @@
 
     <!-- Core JS -->
     <!-- build:js assets/vendor/js/core.js -->
+    <!-- ApexCharts CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 
     <script src="{{ asset('assets-admin/vendor/libs/jquery/jquery.js') }}"></script>
     <script src="{{ asset('assets-admin/vendor/libs/popper/popper.js') }}"></script>
