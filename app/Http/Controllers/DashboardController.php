@@ -54,13 +54,23 @@ class DashboardController extends Controller
             )
             ->where('kelompok_keahlians.nama_kbk', '=', $nama_kbk)
             ->first();
+        // $anggota_kbk = DB::table('anggota_kelompok_keahlians')
+        //     ->join('kelompok_keahlians', 'anggota_kelompok_keahlians.kbk_id', '=', 'kelompok_keahlians.id')
+        //     ->where('kelompok_keahlians.nama_kbk', '=', $nama_kbk)
+        //     ->select(
+        //         'anggota_kelompok_keahlians.nama_lengkap',
+        //         'anggota_kelompok_keahlians.nama_lengkap'
+        //     )->get();
         $anggota_kbk = DB::table('anggota_kelompok_keahlians')
-            ->join('kelompok_keahlians', 'anggota_kelompok_keahlians.kbk_id', '=', 'kelompok_keahlians.id')
-            ->where('kelompok_keahlians.nama_kbk', '=', $nama_kbk)
-            ->select(
-                'anggota_kelompok_keahlians.nama_lengkap',
-                'anggota_kelompok_keahlians.nama_lengkap'
-            )->get();
+        ->join('kelompok_keahlians', 'anggota_kelompok_keahlians.kbk_id', '=', 'kelompok_keahlians.id')
+        ->where('kelompok_keahlians.nama_kbk', '=', $nama_kbk)
+        ->whereIn('anggota_kelompok_keahlians.jabatan', ['Dosen Lektor', 'Dosen Asisten Ahli', 'Dosen Lektor Kepala','Dosen'])
+        ->select(
+            'anggota_kelompok_keahlians.nama_lengkap',
+            'anggota_kelompok_keahlians.jabatan'
+        )
+        ->get();
+
 
         // dd($kelompokKeahlian);
         // Mengambil dan menampilkan nama_lengkap dan nama_kbk
@@ -103,8 +113,9 @@ class DashboardController extends Controller
                 'penelitians.abstrak',
                 'penelitians.gambar',
                 'penelitians.penulis',
-                'penelitians.anggota_penulis',
                 'penelitians.email_penulis',
+                'penelitians.penulis_korespondensi',
+                'penelitians.penulis_bersama',
                 'penelitians.lampiran',
             )->where('kelompok_keahlians.nama_kbk', '=', $nama_kbk)->where('status', 'Tervalidasi')->latest('penelitians.created_at')->get();
         // dd($data_produk);
@@ -116,13 +127,15 @@ class DashboardController extends Controller
     {
         $kbk = KelompokKeahlian::all();
         $kbk_nama = KelompokKeahlian::where('nama_kbk', $nama_produk)->first();
-
+    
         $produk = Produk::with(['kelompokKeahlian', 'anggota.detail'])
             ->where('nama_produk', $nama_produk)
             ->firstOrFail();
-
+    
         return view('dashboard.detail-produk.index', compact('produk', 'kbk', 'kbk_nama'));
     }
+    
+    
     public function detailPenelitian($judul)
     {
         $kbk = KelompokKeahlian::all();

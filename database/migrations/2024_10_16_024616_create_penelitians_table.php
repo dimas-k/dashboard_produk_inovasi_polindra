@@ -20,8 +20,9 @@ return new class extends Migration
             $table->text('abstrak');
             $table->string('gambar')->nullable();
             $table->string('penulis');
-            $table->text('anggota_penulis')->nullable();
             $table->string('email_penulis');
+            $table->string('penulis_korespondensi');
+            $table->text('penulis_bersama')->nullable();
             $table->text('lampiran')->nullable();
             $table->date('tanggal_publikasi')->nullable();
             $table->string('status')->default('Belum Divalidasi');

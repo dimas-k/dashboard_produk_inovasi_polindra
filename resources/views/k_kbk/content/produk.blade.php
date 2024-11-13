@@ -18,7 +18,7 @@
                                 @csrf
                                 <div class="row">
                                     <div class="col mb-6">
-                                        <label for="nama_kbk" id="kbk" class="form-label">Pilih
+                                        <label for="kbk_id" class="form-label">
                                             KBK</label>
                                         {{-- <select class="form-select" id="exampleFormControlSelect1" name="kbk_id"
                                             aria-label="Default select example">
@@ -27,8 +27,13 @@
                                                 <option value="{{ $j_kbk->id }}">{{ $j_kbk->nama_kbk }}</option>
                                             @endforeach
                                         </select> --}}
-                                        <input class="form-control" type="text"
-                                        id="nama_kbk" value="{{ $kkbk->nama_kbk}}" readonly />
+                                        {{-- <input class="form-control" type="text"
+                                        id="kbk_id" name="kbk_id" value="{{ $kkbk->id}}" hidden/> <br> --}}
+
+                                        <input name="kbk_id" value="{{ $kkbk->id }}" hidden>
+                                        <input class="form-control" type="text" id="nama_kbk" value="{{ $kkbk->nama_kbk}}" readonly/>
+                                        
+                                        {{-- {{ $kkbk->nama_kbk}} --}}
                                         
                                     </div>
                                 </div>
@@ -93,14 +98,17 @@
                                 </div>
                                 <div class="row">
                                     <div class="col mb-6">
-                                        <label for="anggota_inventor">Anggota Inventor</label>
-                                        <select class="selectpicker w-100" data-live-search="true" id="anggota_inventor" name="anggota_inventor[]" multiple title="Pilih Anggota Inventor.." >
+                                        <label for="anggota_inventor">Pilih Anggota Inventor</label> <br>
+                                        <select class="selectpicker w-100" data-live-search="true" id="anggota_inventor" name="anggota_inventor[]" multiple title="Pilih Anggota Inventor..">
                                             @foreach($anggotaKelompok as $anggota)
-                                                <option value="{{ $anggota->id }}">{{ $anggota->nama_lengkap }}</option>
+                                                <option value="{{ $anggota->id }}">
+                                                    {{ $anggota->nama_lengkap }}  -  {{ $anggota->jabatan ?? 'Tidak ada jabatan' }}
+                                                </option>
                                             @endforeach
                                         </select>
                                     </div>
                                 </div>
+                                
                                 <div class="row">
                                     <div class="col mb-6">
                                         <label for="nameBasic" class="form-label">Lampiran</label>
