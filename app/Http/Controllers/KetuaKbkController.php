@@ -176,6 +176,7 @@ class KetuaKbkController extends Controller
 
 
 
+
         // dd($produks);
         return view('k_kbk.produk.index', compact('produks', 'kkbk', 'anggotaKelompok', 'produkAnggota'));
     }
@@ -346,6 +347,7 @@ class KetuaKbkController extends Controller
         $user = auth()->user();
         $anggotaKelompok = AnggotaKelompokKeahlian::where('kbk_id', $user->kbk_id)->get();
         $penelitianAnggota = AnggotaKelompokKeahlian::all();
+        
 
 
         return view('k_kbk.penelitian.index', compact('penelitians', 'kkbk', 'anggotaKelompok', 'penelitianAnggota'));
@@ -372,6 +374,7 @@ class KetuaKbkController extends Controller
                 'kbk_id' => 'required',
                 'penulis' => 'required|string|max:255',
                 'email_penulis' => 'required|email',
+                'penulis_korespondensi'=> 'required|string|max:255',
                 'gambar' => 'required|file|mimes:jpeg,png,jpg|max:10240', // Sesuaikan dengan format file yang diperbolehkan
                 'lampiran' => 'required|file|mimes:jpeg,png,jpg,pdf,docx|max:10240',
                 'tanggal_publikasi' => 'date'
@@ -401,20 +404,10 @@ class KetuaKbkController extends Controller
             $penelitian->judul = $request->judul;
             $penelitian->abstrak = $request->abstrak;
             $penelitian->penulis = $request->penulis;
-            // $penelitian->anggota_penulis = $request->anggota_penulis;
             $penelitian->email_penulis = $request->email_penulis;
+            $penelitian->penulis_korespondensi = $request->penulis_korespondensi;
             $penelitian->tanggal_publikasi = $request->tanggal_publikasi;
 
-            // if ($request->hasFile('abstrak')) {
-            //     $originalName = $request->file('abstrak')->getClientOriginalName();
-            //     $fileName = time() . '_' . str_replace(' ', '_', $originalName);
-
-            //     // Simpan file ke folder 'storage/app/public/dokumen-penelitian'
-            //     $path = $request->file('abstrak')->storeAs('dokumen-penelitian', $fileName);
-
-            //     // Simpan path utuh ke database
-            //     $penelitian->abstrak = $path;
-            // }
 
             if ($request->hasFile('gambar')) {
                 $originalName = $request->file('gambar')->getClientOriginalName();
@@ -468,9 +461,10 @@ class KetuaKbkController extends Controller
                 'judul' => 'required|string|max:255',
                 // 'abstrak' => 'required|file|mimes:pdf|max:10240',
                 'abstrak' => 'required|string',
-
+                
                 'penulis' => 'required|string|max:255',
                 'email_penulis' => 'required|email',
+                'penulis_korespondensi'=> 'required|string|max:255',
                 'gambar' => 'file|mimes:jpeg,png,jpg|max:10240', // Sesuaikan dengan format file yang diperbolehkan
                 'lampiran' => 'file|mimes:jpeg,png,jpg,pdf,docx|max:10240',
                 'tanggal_publikasi' => 'date'
@@ -498,6 +492,7 @@ class KetuaKbkController extends Controller
             $penelitian->penulis = $request->penulis;
             // $penelitian->anggota_penulis = $request->anggota_penulis;
             $penelitian->email_penulis = $request->email_penulis;
+            $penelitian->penulis_korespondensi = $request->penulis_korespondensi;
             $penelitian->tanggal_publikasi = $request->tanggal_publikasi;
 
             // if ($request->hasFile('abstrak')) {

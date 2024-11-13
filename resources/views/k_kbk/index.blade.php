@@ -97,6 +97,7 @@
     <script src="{{ asset('assets-admin/js/main.js') }}"></script>
 
     <!-- Page JS -->
+    {{-- <script src="{{ asset('assest-admin/vendor/libs/apex-charts/apexcharts.js') }}"></script> --}}
 
     <!-- Place this tag before closing body tag for github widget button. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>

@@ -18,18 +18,17 @@
                                 @csrf
                                 <div class="row">
                                     <div class="col mb-6">
-                                        <label for="exampleFormControlSelect1" id="kbk" class="form-label">Pilih
-                                            KBK</label>
+                                        <label for="kbk_id" class="form-label">KBK</label>
+                                        <input class="form-control" type="text"
+                                        id="kbk_id" name="kbk_id" value="{{ $kkbk->id}}" hidden/> <br>
+                                        {{ $kkbk->nama_kbk}}
                                         {{-- <select class="form-select" id="exampleFormControlSelect1" name="kbk_id"
                                             aria-label="Default select example">
                                             <option value="" selected>Pilih KBK</option>
                                             @foreach ($kkbk as $j_kbk)
                                                 <option value="{{ $j_kbk->id }}">{{ $j_kbk->nama_kbk }}</option>
                                             @endforeach
-                                        </select> --}}
-                                        <input type="hidden" name="kbk_id" value="{{ $kkbk->id }}">
-                                        <input class="form-control" type="text"
-                                        id="nama_kbk" value="{{ $kkbk->nama_kbk}}" readonly/>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -131,7 +130,6 @@
                                                                 Lengkap</label>
                                                             <input type="text" class="form-control"
                                                                 value="{{ $p->nama_lengkap }}" name="nama_lengkap" />
-                                                           
                                                         </div>
                                                     </div>
                                                     <div class="row">
@@ -139,7 +137,6 @@
                                                             <label for="nameBasic" class="form-label">Jabatan</label>
                                                             <input type="text" class="form-control"
                                                                 value="{{ $p->jabatan }}" name="jabatan" />
-                                                            
                                                         </div>
                                                     </div>
                                                     <div class="row">
@@ -147,7 +144,6 @@
                                                             <label for="nameBasic" class="form-label">Email</label>
                                                             <input type="email" class="form-control"
                                                                 value="{{ $p->email }}" name="email" />
-                                                            
                                                         </div>
                                                     </div>
                                                     <hr class="border-3 w-100">

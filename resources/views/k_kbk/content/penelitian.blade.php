@@ -97,11 +97,24 @@
                                 </div>
                                 <div class="row">
                                     <div class="col mb-6">
-                                        <label for="anggota_penulis">Anggota Penulis</label>
+                                        <label for="penulis_korespondensi">Pilih Penulis Korespondensi</label><br>
+                                        <select class="selectpicker w-100" name="penulis_korespondensi" data-live-search="true" id="penulis_korespondensi" title="Pilih salah satu">
+                                            @foreach ($anggotaKelompok as $anggota)
+                                            <option value="{{ $anggota->id }}">{{ $anggota->nama_lengkap }} - {{ $anggota->jabatan }}
+                                            </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+
+
+                                <div class="row">
+                                    <div class="col mb-6">
+                                        <label for="anggota_penulis">Pilih Anggota Penulis</label>
                                         <select class="selectpicker w-100" data-live-search="true" id="anggota_penulis"
                                             name="anggota_penulis[]" multiple title="Pilih Anggota Penulis..">
-                                            @foreach ($penelitianAnggota as $anggota)
-                                                <option value="{{ $anggota->id }}">{{ $anggota->nama_lengkap }}
+                                            @foreach ($anggotaKelompok as $anggota)
+                                                <option value="{{ $anggota->id }}">{{ $anggota->nama_lengkap }} - {{ $anggota->jabatan }}
                                                 </option>
                                             @endforeach
                                         </select>
@@ -173,9 +186,9 @@
                 <thead>
                     <tr class="text-nowrap">
                         <th>No</th>
-                        <th>Nama Produk</th>
-                        <th>Nama Inventor</th>
-                        <th>email inventor</th>
+                        <th>Judul</th>
+                        <th>Penulis</th>
+                        <th>email Penulis</th>
                         <th>Tanggal Publikasi</th>
                         <th>Status</th>
                         <th>Aksi</th>

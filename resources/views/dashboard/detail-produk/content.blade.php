@@ -42,12 +42,18 @@
             <!-- Kolom Kanan -->
             <div class="col-md-6">
                 <div class="resume-item mb-2">
-                    <strong>Tim Inventor</strong> <br> <br> <br>
+                    <strong>Tim Inventor</strong> <br> <br>
                     <p class="mb-1"><strong>Ketua : </strong><a href="{{ route('produk.dosen', ['dosen'=>$produk->inventor]) }}">{{ $produk->inventor }}</a></p>
                     <p class="mb-1"><strong>Anggota : </strong></p>
-                    @foreach ($produk->anggota as $anggota)
-                        <li><a href="{{ route('produk.dosen', ['dosen'=>$anggota->detail->nama_lengkap]) }}">{{ $anggota->detail->nama_lengkap }}</a></li>
-                    @endforeach
+                    <ul>
+                        @foreach ($produk->anggota as $anggota)
+                            @if ($anggota->detail && $anggota->detail->jabatan === 'Mahasiswa')
+                                <li>{{ $anggota->detail->nama_lengkap }}   -   {{ $anggota->detail->jabatan }}</li> 
+                            @else
+                                <li><a href="{{ route('produk.dosen', ['dosen' => $anggota->detail->nama_lengkap]) }}">{{ $anggota->detail->nama_lengkap }}</a></li>
+                            @endif
+                        @endforeach
+                    </ul>                    
                     <a class="btn btn-success p-3 mt-4" href="mailto:{{ $produk->email_inventor }}"><i class="bi bi-envelope me-2"></i>Hubungi Inventor</a>
                 </div>
             </div>
