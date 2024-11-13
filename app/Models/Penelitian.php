@@ -10,7 +10,7 @@ class Penelitian extends Model
     use HasFactory;
 
     protected $fillable = [
-        'judul', 'deskripsi', 'gambar', 'penulis', 
+        'judul', 'deskripsi', 'gambar', 'penulis', 'penulis_korespondensi',
         'anggota_penulis', 'email_penulis', 'lampiran', 
         'status'
     ];

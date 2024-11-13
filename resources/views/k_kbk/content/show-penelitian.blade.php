@@ -18,11 +18,18 @@
                     <td>: {{ $penelitian->email_penulis }}</td>
                 </tr>
                 <tr>
+                <tr>
+                    <th>Penulis Korespondensi</th>
+                    <td>: {{ $penelitian->penulis_korespondensi }} 
+                        {{-- - {{$penelitian->penulis_korespondensi->jabatan}} --}}
+                    </td>
+                </tr>
+                <tr>
                     <th>Anggota Penulis</th>
                     <td>
                         @if($penelitian->anggotaPenelitian)
                             @foreach($penelitian->anggotaPenelitian as $anggota)
-                                <li>{{ $anggota->detailAnggota->nama_lengkap }}</li>
+                                <li>{{ $anggota->detailAnggota->nama_lengkap }} - {{ $anggota->detailAnggota->jabatan }}</li>
                             @endforeach
                         @else
                             <p>Tidak ada anggota penulis.</p>

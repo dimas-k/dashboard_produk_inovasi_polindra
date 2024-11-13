@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('gambar')->nullable();
             $table->string('penulis');
             $table->string('email_penulis');
-            $table->string('penulis_korespondensi');
+            $table->string('penulis_korespondensi')->nullable();
             $table->text('penulis_bersama')->nullable();
             $table->text('lampiran')->nullable();
             $table->date('tanggal_publikasi')->nullable();

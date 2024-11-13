@@ -100,7 +100,7 @@
                                         <label for="penulis_korespondensi">Pilih Penulis Korespondensi</label><br>
                                         <select class="selectpicker w-100" name="penulis_korespondensi" data-live-search="true" id="penulis_korespondensi" title="Pilih salah satu">
                                             @foreach ($anggotaKelompok as $anggota)
-                                            <option value="{{ $anggota->id }}">{{ $anggota->nama_lengkap }} - {{ $anggota->jabatan }}
+                                            <option value="{{ $anggota->nama_lengkap }}">{{ $anggota->nama_lengkap }} - {{ $anggota->jabatan }}
                                             </option>
                                             @endforeach
                                         </select>
@@ -223,8 +223,8 @@
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel1">Update Produk
-                                                    {{ $p->nama_produk }}
+                                                <h5 class="modal-title" id="exampleModalLabel1">Update Penelitian
+                                                    {{ $p->judul }}
                                                 </h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                     aria-label="Close"></button>
@@ -320,10 +320,27 @@
                                                     </div>
                                                     <div class="row">
                                                         <div class="col mb-6">
+                                                            <label for="nameBasic" class="form-label">Penulis
+                                                                Korespondensi</label>
+                                                                <li>{{ $p->penulis_korespondensi }}</li>
+                                                                <br>
+                                                                <select class="selectpicker w-100" data-live-search="true"
+                                                                    id="penulis_korespondensi" name="penulis_korespondensi[]"
+                                                                    title="Pilih salah satu..">
+                                                                    @foreach ($penelitianAnggota as $anggota)
+                                                                        <option value="{{ $anggota->id }}">
+                                                                            {{ $anggota->nama_lengkap }}
+                                                                        </option>
+                                                                    @endforeach
+                                                                </select><br>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col mb-6">
                                                             <label for="nameBasic" class="form-label">Anggota
                                                                 Penulis</label>
                                                             @foreach ($p->anggotaPenelitian as $anggota)
-                                                                <li>{{ $anggota->detailAnggota->nama_lengkap }}</li>
+                                                                <li>{{ $anggota->detailAnggota->nama_lengkap }} - {{ $anggota->detailAnggota->jabatan }}</li>
                                                             @endforeach
                                                             <br>
                                                             <select class="selectpicker w-100" data-live-search="true"

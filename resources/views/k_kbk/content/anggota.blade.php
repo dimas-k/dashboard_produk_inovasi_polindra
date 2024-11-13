@@ -28,7 +28,7 @@
                                             @foreach ($kkbk as $j_kbk)
                                                 <option value="{{ $j_kbk->id }}">{{ $j_kbk->nama_kbk }}</option>
                                             @endforeach
-                                        </select>
+                                        </select> --}}
                                     </div>
                                 </div>
                                 <div class="row">

@@ -360,6 +360,8 @@ class KetuaKbkController extends Controller
         // $produkAnggota = AnggotaKelompokKeahlian::all();
         $penelitian = Penelitian::with(['kelompokKeahlian', 'anggotaPenelitian.detailAnggota'])->findOrFail($id);
 
+        // dd($penelitian);
+
 
         return view('k_kbk.penelitian.show.index', compact('penelitian'));
     }
@@ -374,7 +376,7 @@ class KetuaKbkController extends Controller
                 'kbk_id' => 'required',
                 'penulis' => 'required|string|max:255',
                 'email_penulis' => 'required|email',
-                'penulis_korespondensi'=> 'required|string|max:255',
+                // 'penulis_korespondensi'=> 'required|string|max:255',
                 'gambar' => 'required|file|mimes:jpeg,png,jpg|max:10240', // Sesuaikan dengan format file yang diperbolehkan
                 'lampiran' => 'required|file|mimes:jpeg,png,jpg,pdf,docx|max:10240',
                 'tanggal_publikasi' => 'date'
@@ -405,7 +407,7 @@ class KetuaKbkController extends Controller
             $penelitian->abstrak = $request->abstrak;
             $penelitian->penulis = $request->penulis;
             $penelitian->email_penulis = $request->email_penulis;
-            $penelitian->penulis_korespondensi = $request->penulis_korespondensi;
+            // $penelitian->penulis_korespondensi = $request->penulis_korespondensi;
             $penelitian->tanggal_publikasi = $request->tanggal_publikasi;
 
 
@@ -437,6 +439,13 @@ class KetuaKbkController extends Controller
                 PenelitianAnggota::create([
                     'penelitian_id' => $penelitian->id,
                     'anggota_id' => $anggota
+                ]);
+            }
+
+            foreach ($request->penulis_korespondensi as $korespondensi) {
+                PenelitianAnggota::create([
+                    'penelitian_id' => $penelitian->id,
+                    'anggota_id' => $korespondensi
                 ]);
             }
             DB::commit();
