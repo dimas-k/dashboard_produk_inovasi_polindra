@@ -159,7 +159,7 @@ class AdminController extends Controller
                 $item->judul,
                 $item->penulis,
                 $item->penulis_koresponden,
-                $item->tanggal_publikasi ? Carbon::parse($item->tanggal_publikasi)->format('Y-m-d') : '-',
+                $item->tanggal_publikasi ? Carbon::parse($item->tanggal_publikasi)->format('d-m-Y') : '-',
                 $item->status,
             ]);
         }

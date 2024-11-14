@@ -64,7 +64,7 @@ class DashboardController extends Controller
         $anggota_kbk = DB::table('anggota_kelompok_keahlians')
         ->join('kelompok_keahlians', 'anggota_kelompok_keahlians.kbk_id', '=', 'kelompok_keahlians.id')
         ->where('kelompok_keahlians.nama_kbk', '=', $nama_kbk)
-        ->whereIn('anggota_kelompok_keahlians.jabatan', ['Dosen Lektor', 'Dosen Asisten Ahli', 'Dosen Lektor Kepala','Dosen'])
+        ->whereIn('anggota_kelompok_keahlians.jabatan', ['Dosen Lektor', 'Dosen Asisten Ahli', 'Dosen Lektor Kepala','Dosen' , 'Lektor'])
         ->select(
             'anggota_kelompok_keahlians.nama_lengkap',
             'anggota_kelompok_keahlians.jabatan'
@@ -141,7 +141,7 @@ class DashboardController extends Controller
         $kbk = KelompokKeahlian::all();
         $kbk_nama = KelompokKeahlian::where('nama_kbk', $judul)->first();
 
-        $penelitian = Penelitian::with('kelompokKeahlian')
+        $penelitian = Penelitian::with(['kelompokKeahlian', 'anggotaPenelitian.detailAnggota'])
             ->where('judul', $judul)
             ->firstOrFail();
         return view('dashboard.detail-penelitian.index', compact('penelitian', 'kbk'));

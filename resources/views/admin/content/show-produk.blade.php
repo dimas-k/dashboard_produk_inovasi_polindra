@@ -20,7 +20,7 @@
                 <tr>
                     <th>anggota inventor</th>
                     <td>@foreach ($produk->anggota as $anggota )
-                        <li>{{ $anggota->detail->nama_lengkap }}</li>
+                        <li>{{ $anggota->detail->nama_lengkap }} - {{ $anggota->detail->jabatan }}</li>
                     @endforeach</td>
                 </tr>
                 <tr>
