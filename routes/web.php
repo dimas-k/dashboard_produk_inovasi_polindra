@@ -48,8 +48,8 @@ Route::get('/logout', [LoginController::class, 'logout']);
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'dashboard']);
 
-    Route::get('/report/penelitian', [ReportController::class, 'getPenelitianReport']);
-    Route::get('/report/produk', [ReportController::class, 'getProdukReport']);
+    // Route::get('/report/penelitian', [ReportController::class, 'getPenelitianReport']);
+    // Route::get('/report/produk', [ReportController::class, 'getProdukReport']);
 
     Route::get('/admin/report', [AdminController::class, 'dashboard'])->name('report.index');
 

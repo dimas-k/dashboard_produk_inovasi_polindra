@@ -19,7 +19,7 @@
                     </div>
                     <div class="col-md-3 d-flex align-items-end">
                         <button type="submit" class="btn btn-primary me-3">Filter</button>
-                        <a href="{{ route('report.index', array_merge(request()->all(), ['download' => 'csv'])) }}"
+                        <a href="{{ route('report.index', array_merge(request()->all(), ['download' => 'Excel'])) }}"
                             class="btn btn-success ml-2">Unduh CSV</a>
                     </div>
                 </div>
@@ -31,6 +31,7 @@
                 <table class="table table-bordered">
                     <thead>
                         <tr>
+                            <th>No</th>
                             <th>Nama KBK</th>
                             <th>Nama Produk</th>
                             <th>Inventor</th>
@@ -40,8 +41,9 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($produk as $item)
+                        @foreach ($produk_paginate as $p => $item)
                             <tr>
+                                <td>{{ ($produk_paginate->currentPage() - 1) * $produk_paginate->perPage() + $loop->iteration }}</td>
                                 <td>{{ $item->kelompokKeahlian->nama_kbk ?? '-' }}</td>
                                 <td>{{ $item->nama_produk }}</td>
                                 <td>{{ $item->inventor }}</td>
@@ -52,6 +54,7 @@
                         @endforeach
                     </tbody>
                 </table>
+                {{ $produk_paginate->links() }}
             </div>
 
             <!-- Tabel Data Penelitian -->
@@ -60,6 +63,7 @@
                 <table class="table table-bordered">
                     <thead>
                         <tr>
+                            <th>no</th>
                             <th>Nama KBK</th>
                             <th>Judul Penelitian</th>
                             <th>Penulis</th>
@@ -69,8 +73,9 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($penelitian as $item)
+                        @foreach ($penelitian_paginate as $q => $item)
                             <tr>
+                                <td>{{ ($penelitian_paginate->currentPage() - 1) * $penelitian_paginate->perPage() + $loop->iteration }}</td>
                                 <td>{{ $item->kelompokKeahlian->nama_kbk ?? '-' }}</td>
                                 <td>{{ $item->judul }}</td>
                                 <td>{{ $item->penulis }}</td>
@@ -81,11 +86,12 @@
                         @endforeach
                     </tbody>
                 </table>
+                {{ $penelitian_paginate->links() }}
             </div>
         </div>
 
     </div>
-
+    <br><br>
     <div class="card p-3">
 
 

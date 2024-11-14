@@ -12,6 +12,10 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Storage;
+use Rap2hpoutre\FastExcel\FastExcel;
+use Carbon\Carbon;
+
+
 
 
 class AdminController extends Controller
@@ -97,63 +101,71 @@ class AdminController extends Controller
             $queryProduk->whereYear('tanggal_granted', '<=', $tahun_akhir);
             $queryPenelitian->whereYear('tanggal_publikasi', '<=', $tahun_akhir);
         }
-
+        $produk_paginate = $queryProduk->paginate(5);
+        $penelitian_paginate = $queryPenelitian->paginate(5);
         $produk = $queryProduk->get();
         $penelitian = $queryPenelitian->get();
 
-        // Cek apakah pengguna ingin mengunduh CSV
-        if ($request->has('download') && $request->input('download') == 'csv') {
-            return $this->downloadCSV($produk, $penelitian);
+        // Cek apakah pengguna ingin mengunduh EXCEL
+        if ($request->has('download') && $request->input('download') == 'Excel') {
+            return $this->downloadExcel($produk, $penelitian);
         }
 
 
-        return view('admin.index', compact('kbk_navigasi', 'pnltan_valid', 'pnltan_nonvalid', 'prdk_valid', 'prdk_nonvalid', 'prdk_tahun', 'plt_tahun', 'data_plt', 'data_prdk', 'produk', 'penelitian'));
+        return view('admin.index', compact('kbk_navigasi', 'pnltan_valid', 'pnltan_nonvalid', 'prdk_valid', 'prdk_nonvalid', 'prdk_tahun', 'plt_tahun', 'data_plt', 'data_prdk', 'produk', 'penelitian', 'produk_paginate', 'penelitian_paginate'));
     }
-    protected function downloadCSV($produk, $penelitian)
+
+    protected function downloadExcel($produk, $penelitian)
     {
-        $filename = "report_" . now()->format('YmdHis') . ".csv";
-        $columnsProduk = ['Nama KBK', 'Nama Produk', 'Inventor', 'Tanggal Submit', 'Tanggal Granted', 'Status'];
-        $columnsPenelitian = ['Nama KBK', 'Judul Penelitian', 'Penulis', 'Penulis Korespondensi', 'Tanggal Publikasi', 'Status'];
+        $filename = "report_" . now()->format('YmdHis') . ".xlsx";
 
-        $callback = function () use ($produk, $penelitian, $columnsProduk, $columnsPenelitian) {
-            $file = fopen('php://output', 'w');
-            fputcsv($file, array_merge(['Produk'], $columnsProduk));
+        $produk = $produk->sortBy('nama_produk');
+        $penelitian = $penelitian->sortBy('judul');
 
-            foreach ($produk as $item) {
-                fputcsv($file, [
-                    $item->kelompokKeahlian->nama_kbk ?? '-', // Nama KBK
-                    $item->nama_produk,
-                    $item->inventor,
-                    $item->tanggal_submit,
-                    $item->tanggal_granted,
-                    $item->status
-                ]);
-            }
-
-            fputcsv($file, []);
-            fputcsv($file, array_merge(['Penelitian'], $columnsPenelitian));
-
-            foreach ($penelitian as $item) {
-                fputcsv($file, [
-                    $item->kelompokKeahlian->nama_kbk ?? '-', // Nama KBK
-                    $item->judul,
-                    $item->penulis,
-                    $item->penulis_koresponden,
-                    $item->tanggal_publikasi,
-                    $item->status
-                ]);
-            }
-
-            fclose($file);
-        };
-
-        return Response::stream($callback, 200, [
-            "Content-type" => "text/csv",
-            "Content-Disposition" => "attachment; filename=$filename",
-            "Pragma" => "no-cache",
-            "Cache-Control" => "must-revalidate, post-check=0, pre-check=0",
-            "Expires" => "0"
+        // Tambahkan kolom 'No.' untuk nomor urut
+        $produkData = collect([
+            ['Produk'],
+            ['No','No Id',  'Nama KBK', 'Nama Produk', 'Inventor', 'Tanggal Submit', 'Tanggal Granted', 'Status']
         ]);
+
+        $no = 1;
+        foreach ($produk as $item) {
+            $produkData->push([
+                $no++,  // Menambah nomor urut secara manual
+                $item->id,
+                $item->kelompokKeahlian->nama_kbk ?? '-',
+                $item->nama_produk,
+                $item->inventor,
+                $item->tanggal_submit ? Carbon::parse($item->tanggal_submit)->format('d-m-Y') : '-',
+                $item->tanggal_granted ? Carbon::parse($item->tanggal_granted)->format('d-m-Y') : '-',
+                $item->status,
+            ]);
+        }
+
+        // Penelitian dengan nomor urut
+        $penelitianData = collect([
+            [],
+            ['Penelitian'],
+            ['No', 'No Id', 'Nama KBK', 'Judul Penelitian', 'Penulis', 'Penulis Korespondensi', 'Tanggal Publikasi', 'Status']
+        ]);
+
+        $no = 1; // Reset nomor urut untuk data penelitian
+        foreach ($penelitian as $item) {
+            $penelitianData->push([
+                $no++,  // Menambah nomor urut secara manual
+                $item->id,
+                $item->kelompokKeahlian->nama_kbk ?? '-',
+                $item->judul,
+                $item->penulis,
+                $item->penulis_koresponden,
+                $item->tanggal_publikasi ? Carbon::parse($item->tanggal_publikasi)->format('Y-m-d') : '-',
+                $item->status,
+            ]);
+        }
+
+        $data = $produkData->merge($penelitianData);
+
+        return (new FastExcel($data))->download($filename);
     }
 
 
