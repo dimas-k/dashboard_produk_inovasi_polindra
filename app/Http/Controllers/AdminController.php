@@ -100,6 +100,7 @@ class AdminController extends Controller
 
         $produk = $queryProduk->get();
         $penelitian = $queryPenelitian->get();
+        // dd($penelitian);
 
         // Cek apakah pengguna ingin mengunduh CSV
         if ($request->has('download') && $request->input('download') == 'csv') {

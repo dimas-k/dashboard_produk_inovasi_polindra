@@ -137,6 +137,11 @@
             $('#anggota_penulis').selectpicker();
         });
     </script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#penulis_korespondensi').selectpicker();
+        });
+    </script>
 
     <script>
         window.deleteConfirm = function(e) {

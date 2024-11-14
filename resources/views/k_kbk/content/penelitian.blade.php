@@ -20,13 +20,7 @@
                                     <div class="col mb-6">
                                         <label for="" id="kbk" class="form-label">
                                             KBK</label>
-                                        {{-- <select class="form-select" id="exampleFormControlSelect1" name="kbk_id"
-                                            aria-label="Default select example">
-                                            <option value="" selected>Pilih KBK</option>
-                                            @foreach ($kkbk as $j_kbk)
-                                                <option value="{{ $j_kbk->id }}">{{ $j_kbk->nama_kbk }}</option>
-                                            @endforeach
-                                        </select> --}}
+
                                         <input type="hidden" name="kbk_id" value="{{ $kkbk->id }}">
                                         <input class="form-control" type="text"
                                         id="nama_kbk" value="{{ $kkbk->nama_kbk}}" readonly/>
@@ -100,13 +94,12 @@
                                         <label for="penulis_korespondensi">Pilih Penulis Korespondensi</label><br>
                                         <select class="selectpicker w-100" name="penulis_korespondensi" data-live-search="true" id="penulis_korespondensi" title="Pilih salah satu">
                                             @foreach ($anggotaKelompok as $anggota)
-                                            <option value="{{ $anggota->nama_lengkap }}">{{ $anggota->nama_lengkap }} - {{ $anggota->jabatan }}
+                                            <option value="{{ $anggota->id }}">{{ $anggota->nama_lengkap }} - {{ $anggota->jabatan }}
                                             </option>
                                             @endforeach
                                         </select>
                                     </div>
                                 </div>
-
 
                                 <div class="row">
                                     <div class="col mb-6">
@@ -118,26 +111,6 @@
                                                 </option>
                                             @endforeach
                                         </select>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col mb-6">
-                                        <div class="form-group">
-                                            <label>Apakah Penelitian Ini Bersama Mahasiswa?</label><br>
-                                            <input type="radio" id="mahasiswa_ya" name="bersama_mahasiswa" value="Ya" onclick="toggleTextarea()">
-                                            <label for="mahasiswa_ya">Ya</label>
-                                            
-                                            <input type="radio" id="mahasiswa_tidak" name="bersama_mahasiswa" value="Tidak" onclick="toggleTextarea()" checked>
-                                            <label for="mahasiswa_tidak">Tidak</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col mb-6">
-                                        <div class="form-group" id="nama_mahasiswa_field" style="display: none;">
-                                            <label class="form-label" for="nama_mahasiswa">Nama Mahasiswa</label>
-                                            <textarea id="nama_mahasiswa" name="nama_mahasiswa" class="form-control" style="height: 100px"></textarea>
-                                        </div>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -223,7 +196,7 @@
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel1">Update Penelitian
+                                                <h5 class="modal-title" id="exampleModalLabel1">Update Penelitian <br>
                                                     {{ $p->judul }}
                                                 </h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
@@ -320,24 +293,25 @@
                                                     </div>
                                                     <div class="row">
                                                         <div class="col mb-6">
-                                                            <label for="nameBasic" class="form-label">Penulis
+                                                            <label for="nameBasic" class="form-label">Pilih Penulis
                                                                 Korespondensi</label>
-                                                                <li>{{ $p->penulis_korespondensi }}</li>
+                                                                <li>{{ $p->penulisKorespondensi->nama_lengkap }} - {{ $p->penulisKorespondensi->jabatan }} </li>
                                                                 <br>
                                                                 <select class="selectpicker w-100" data-live-search="true"
-                                                                    id="penulis_korespondensi" name="penulis_korespondensi[]"
+                                                                    id="penulis_korespondensi" name="penulis_korespondensi"
                                                                     title="Pilih salah satu..">
                                                                     @foreach ($penelitianAnggota as $anggota)
                                                                         <option value="{{ $anggota->id }}">
-                                                                            {{ $anggota->nama_lengkap }}
+                                                                            {{ $anggota->nama_lengkap }} - {{ $anggota->jabatan }}
                                                                         </option>
                                                                     @endforeach
-                                                                </select><br>
+                                                                </select>
+                                                                <br>
                                                         </div>
                                                     </div>
                                                     <div class="row">
                                                         <div class="col mb-6">
-                                                            <label for="nameBasic" class="form-label">Anggota
+                                                            <label for="nameBasic" class="form-label">Pilih Anggota
                                                                 Penulis</label>
                                                             @foreach ($p->anggotaPenelitian as $anggota)
                                                                 <li>{{ $anggota->detailAnggota->nama_lengkap }} - {{ $anggota->detailAnggota->jabatan }}</li>
@@ -349,7 +323,8 @@
                                                                 @foreach ($penelitianAnggota as $anggota)
                                                                     <option value="{{ $anggota->id }}"
                                                                         @if ($p->anggotaPenelitian && $p->anggotaPenelitian->pluck('id')->contains($anggota->id)) selected @endif>
-                                                                        {{ $anggota->nama_lengkap }}
+                                                                        {{ $anggota->nama_lengkap }} - 
+                                                                        {{-- {{ $anggota->detailAnggota->jabatan }} --}}
                                                                     </option>
                                                                 @endforeach
                                                             </select><br>

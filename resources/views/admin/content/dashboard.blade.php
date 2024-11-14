@@ -74,7 +74,7 @@
                                 <td>{{ $item->kelompokKeahlian->nama_kbk ?? '-' }}</td>
                                 <td>{{ $item->judul }}</td>
                                 <td>{{ $item->penulis }}</td>
-                                <td>{{ $item->penulis_korespondensi }}</td>
+                                <td>{{ $item->penulisKorespondensi->nama_lengkap }}</td>
                                 <td>{{ \Carbon\Carbon::parse($item->tanggal_publikasi)->format('d-m-Y') }}</td>
                                 <td>{{ $item->status }}</td>
                             </tr>
