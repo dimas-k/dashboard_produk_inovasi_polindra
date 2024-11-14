@@ -14,9 +14,15 @@
                     <td>: {{ $penelitian->penulis }}</td>
                 </tr>
                 <tr>
+                    <th>Penulis Korespondensi</th>
+                    <td>: {{ $penelitian->penulis_korespondensi }} - 
+                        {{-- {{ $penelitian->penulis_korespondensi }} --}}
+                    </td>
+                </tr>
+                <tr>
                     <th>anggota penulis</th>
                     <td>@foreach ($penelitian->anggotaPenelitian as $anggota )
-                        <li>{{ $anggota->detailAnggota->nama_lengkap }}</li>
+                        <li>{{ $anggota->detailAnggota->nama_lengkap }} - {{ $anggota->detailAnggota->jabatan }}</li>
                     @endforeach</td>
                 </tr>
                 <tr>

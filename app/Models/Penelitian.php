@@ -10,8 +10,14 @@ class Penelitian extends Model
     use HasFactory;
 
     protected $fillable = [
-        'judul', 'deskripsi', 'gambar', 'penulis', 'penulis_korespondensi',
-        'anggota_penulis', 'email_penulis', 'lampiran', 
+        'judul',
+        'deskripsi',
+        'gambar',
+        'penulis',
+        'penulis_korespondensi',
+        'anggota_penulis',
+        'email_penulis',
+        'lampiran',
         'status'
     ];
 
@@ -27,5 +33,9 @@ class Penelitian extends Model
     public function anggotaPenelitian()
     {
         return $this->hasMany(PenelitianAnggota::class, 'penelitian_id');
+    }
+    public function penulisKorespondensi()
+    {
+        return $this->belongsTo(AnggotaKelompokKeahlian::class, 'penulis_korespondensi');
     }
 }

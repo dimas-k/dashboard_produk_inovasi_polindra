@@ -105,6 +105,7 @@ class AdminController extends Controller
         $penelitian_paginate = $queryPenelitian->paginate(5);
         $produk = $queryProduk->get();
         $penelitian = $queryPenelitian->get();
+        // dd($penelitian);
 
         // Cek apakah pengguna ingin mengunduh EXCEL
         if ($request->has('download') && $request->input('download') == 'Excel') {
