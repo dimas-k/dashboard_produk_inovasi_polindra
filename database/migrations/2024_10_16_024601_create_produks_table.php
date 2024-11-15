@@ -20,7 +20,8 @@ return new class extends Migration
             $table->text('deskripsi');
             $table->string('gambar')->nullable();
             $table->string('inventor');
-            $table->text('anggota_inventor')->nullable();
+            $table->string('inventor_lainnya')->nullable();
+            $table->text('anggota_lainnya')->nullable();
             $table->string('email_inventor');
             $table->text('lampiran')->nullable();
             $table->date('tanggal_submit')->nullable();
