@@ -37,8 +37,10 @@ Route::get('/dashboard/produk/detail/{nama_produk}', [DashboardController::class
 Route::get('/dashboard/penelitian/detail/{judul}', [DashboardController::class, 'detailPenelitian'])->name('detail.penelitian');
 Route::get('/dashboard/produk&penelitian/list-produk&penelitian/{dosen}', [DashboardController::class, 'dosenProduk'])->name('produk.dosen');
 
+Route::get('/dashboard/katalog/produk-inovasi', [DashboardController::class, 'katalogProduk']);
+Route::post('/dashboard/katalog/produk-inovasi/cari', [DashboardController::class, 'katalogProdukCari']);
 
-
+Route::get('/dashboard/katalog/penelitian', [DashboardController::class, 'katalogPenelitian']);
 
 Route::get('/login', [LoginController::class, 'loginPage'])->name('login');
 Route::post('/login-admin/autentikasi', [LoginController::class, 'authenticate']);

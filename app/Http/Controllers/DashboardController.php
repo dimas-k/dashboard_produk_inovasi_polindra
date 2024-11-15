@@ -184,4 +184,35 @@ class DashboardController extends Controller
             'anggota' => $anggota
         ]);
     }
+
+    public function katalogProduk()
+    {
+        $kbk = KelompokKeahlian::all();
+        $produk = Produk::with('KelompokKeahlian')->where('status','Tervalidasi')->paginate(10);
+
+        return view('dashboard.katalog-produk.index', compact('produk', 'kbk'));
+    }
+
+    public function katalogProdukCari(Request $request)
+    {
+        $kbk = KelompokKeahlian::all();
+
+        $cari = $request->input('cari_produk');
+        $produk = Produk::with('KelompokKeahlian')->where('nama_produk', 'LIKE', "%" . $cari . "%")->where('status','Tervalidasi')->paginate(10);
+        return view('dashboard.katalog-produk.index', compact('produk', 'kbk'));
+    }
+
+    public function katalogPenelitian()
+    {
+        $kbk = KelompokKeahlian::all();
+        $penelitian = Penelitian::with('KelompokKeahlian')->where('status','Tervalidasi')->paginate(10);
+
+        return view('dashboard.katalog-penelitian.index', compact('penelitian', 'kbk'));
+    }
+    public function katalogPenelitianCari(Request $request)
+    {
+        $kbk = KelompokKeahlian::all();
+        $cari = $request->input('cari_penelitian');
+        $penelitian = Penelitian::with('KelompokKeahlian')->where('judul', 'LIKE', "%" . $cari . "%")->where('status','Tervalidasi')->paginate(10);
+    }
 }
