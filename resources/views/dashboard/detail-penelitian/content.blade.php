@@ -5,7 +5,9 @@
         <nav aria-label="breadcrumb animated slideInDown">
             <ol class="breadcrumb justify-content-center mb-0">
                 <li class="breadcrumb-item"><a class="text-white" href="/">Home</a></li>
-                <li class="breadcrumb-item"><a class="text-white" href="{{ route('dashboard.penelitian', ['nama_kbk' => $penelitian->KelompokKeahlian->nama_kbk]) }}">{{ $penelitian->KelompokKeahlian->nama_kbk }}</a></li>
+                <li class="breadcrumb-item"><a class="text-white"
+                        href="{{ route('dashboard.penelitian', ['nama_kbk' => $penelitian->KelompokKeahlian->nama_kbk]) }}">{{ $penelitian->KelompokKeahlian->nama_kbk }}</a>
+                </li>
                 <li class="breadcrumb-item text-primary active" aria-current="page">Produk {{ $penelitian->judul }}
                 </li>
             </ol>
@@ -40,23 +42,38 @@
             <!-- Kolom Kanan -->
             <div class="col-md-6">
                 <div class="resume-item mb-2">
-                    <strong>Tim Inventor</strong> <br> <br> <br>
-                    <p class="mb-1"><strong>Ketua : </strong><a href="{{ route('produk.dosen', ['dosen'=>$penelitian->penulis]) }}"> {{ $penelitian->penulis }}</a></p>
+                    <strong>Tim Inventor</strong> <br><br><br>
+                    <p class="mb-1"><strong>Ketua : </strong><a
+                            href="{{ route('produk.dosen', ['dosen' => $penelitian->penulis]) }}">
+                            {{ $penelitian->penulis }}</a></p>
                     <p class="mb-1"><strong>Anggota : </strong></p>
-                    @foreach ($penelitian->anggotaPenelitian as $anggota )
-                        <li><a href="{{ route('produk.dosen', ['dosen'=>$anggota->detailAnggota->nama_lengkap]) }}">{{ $anggota->detailAnggota->nama_lengkap }}</a></li>
+
+                    @foreach ($penelitian->anggotaPenelitian as $anggota)
+                        @if ($anggota->detailAnggota && $anggota->detailAnggota->jabatan === 'Mahasiswa')
+                            <li>{{ $anggota->detailAnggota->nama_lengkap }} - {{ $anggota->detailAnggota->jabatan }}
+                            </li>
+                        @else
+                            <li><a
+                                    href="{{ route('produk.dosen', ['dosen' => $anggota->detailAnggota->nama_lengkap]) }}">
+                                    {{ $anggota->detailAnggota->nama_lengkap }} - {{ $anggota->detailAnggota->jabatan }}</a></li>
+                        @endif
                     @endforeach
-                    <a class="btn btn-success p-3 mt-4" href="mailto:{{ $penelitian->email_penulis }}"><i class="bi bi-envelope me-2"></i>Hubungi penulis</a>
+
+                    <a class="btn btn-success p-3 mt-4" href="mailto:{{ $penelitian->email_penulis }}">
+                        <i class="bi bi-envelope me-2"></i>Hubungi penulis
+                    </a>
                 </div>
             </div>
-            
+
+
         </div>
 
     </div>
 </section> <!-- .section -->
 
 <div class="article-meta">
-    <div><a href="{{ route('produk.dosen', $penelitian->penulis) }}" class="link-secondary link-underline link-underline-opacity-0">By {{ $penelitian->penulis }}</a></div>
+    <div><a href="{{ route('produk.dosen', $penelitian->penulis) }}"
+            class="link-secondary link-underline link-underline-opacity-0">By {{ $penelitian->penulis }}</a></div>
     <div>{{ $penelitian->kelompokKeahlian->nama_kbk }}</div>
 </div>
 

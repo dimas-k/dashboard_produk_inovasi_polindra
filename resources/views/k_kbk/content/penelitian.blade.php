@@ -106,7 +106,7 @@
                                         <label for="anggota_penulis">Pilih Anggota Penulis</label>
                                         <select class="selectpicker w-100" data-live-search="true" id="anggota_penulis"
                                             name="anggota_penulis[]" multiple title="Pilih Anggota Penulis..">
-                                            @foreach ($anggotaKelompok as $anggota)
+                                            @foreach ($penelitianAnggota as $anggota)
                                                 <option value="{{ $anggota->id }}">{{ $anggota->nama_lengkap }} - {{ $anggota->jabatan }}
                                                 </option>
                                             @endforeach
@@ -295,7 +295,7 @@
                                                         <div class="col mb-6">
                                                             <label for="nameBasic" class="form-label">Pilih Penulis
                                                                 Korespondensi</label>
-                                                                <li>{{ $p->penulisKorespondensi->nama_lengkap }} - {{ $p->penulisKorespondensi->jabatan }} </li>
+                                                                <li>{{ $p->penulisKorespondensi->nama_lengkap ?? '' }} - {{ $p->penulisKorespondensi->jabatan ?? '' }} </li>
                                                                 <br>
                                                                 <select class="selectpicker w-100" data-live-search="true"
                                                                     id="penulis_korespondensi" name="penulis_korespondensi"

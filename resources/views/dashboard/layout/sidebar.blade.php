@@ -16,7 +16,18 @@
                     </a>
                     @endforeach
                 </div>
-            </div>  
+            </div>
+            <div class="nav-item dropdown">
+                <a href="#" class="nav-link dropdown-toggle {{ Request::is('dashboard/katalog/*') ? 'active' : '' }}" data-bs-toggle="dropdown">Katalog Produk & Penelitian</a>
+                <div class="dropdown-menu border-0 rounded-0 rounded-bottom m-0">
+                    <a href="/dashboard/katalog/produk-inovasi" class="dropdown-item {{ Request::is('dashboard/katalog/produk-inovasi') ? 'active' : '' }}">
+                        Produk Inovasi
+                    </a>
+                    <a href="/dashboard/katalog/penelitian" class="dropdown-item {{ Request::is('dashboard/katalog/penelitian') ? 'active' : '' }}">
+                        Penelitian
+                    </a>
+                </div>
+            </div>
             <a href="/dashboard/kontak" class="nav-item nav-link {{ Request::is('dashboard/kontak') ? 'active' : '' }}">Kontak Kami</a>
             <a href="/login" class="nav-item nav-link {{ Request::is('login') ? 'active' : '' }}" target="_blank">Login</a>
         </div>
