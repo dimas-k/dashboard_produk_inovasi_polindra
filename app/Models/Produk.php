@@ -14,6 +14,7 @@ class Produk extends Model
         'deskripsi',
         'gambar',
         'inventor',
+        'inventor_lainnya',
         'anggota_inventor',
         'email_penulis',
         'lampiran',

@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('nama_produk');
             $table->text('deskripsi');
             $table->string('gambar')->nullable();
-            $table->string('inventor');
+            $table->string('inventor')->nullable();
             $table->string('inventor_lainnya')->nullable();
             $table->text('anggota_lainnya')->nullable();
             $table->string('email_inventor');

@@ -11,18 +11,26 @@
 
     {{-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"> --}}
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
 
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
     <style type="text/css">
-
-        .dropdown-toggle{
+        .dropdown-toggle {
             height: 43px;
         }
 
+        .selectpicker {
+            max-height: 300px;
+            /* Atur ketinggian maksimal dropdown */
+            overflow-y: auto;
+            /* Menambahkan scroll jika data melebihi tinggi */
+        }
     </style>
+
+
 
     <!-- Custom CSS for z-index -->
     <style>
@@ -30,8 +38,6 @@
             z-index: 2000 !important;
             /* SweetAlert z-index lebih tinggi dari Bootstrap modal */
         }
-
-
     </style>
 
 
@@ -140,20 +146,61 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
 
-    <script type="text/javascript">
+    <script>
+        function toggleInventorInput() {
+            // Cek apakah pilihan 'Dosen' atau 'Non-Dosen' yang dipilih
+            const isDosen = document.getElementById('inventorDosen').checked;
 
-    $(document).ready(function() {
-        $('#anggota_inventor').selectpicker();
-    });
+            // Tampilkan 'selectpicker' jika 'Dosen' dipilih, sembunyikan input teks
+            document.getElementById('dosenInput').style.display = isDosen ? 'block' : 'none';
+            document.getElementById('nonDosenInput').style.display = isDosen ? 'none' : 'block';
+        }
 
+        // Inisialisasi SelectPicker jika menggunakan plugin
+        document.addEventListener('DOMContentLoaded', function() {
+            $('#inventor').selectpicker();
+        });
     </script>
 
+    <script>
+        function toggleInventorInput2() {
+            // Cek apakah pilihan 'Dosen' atau 'Non-Dosen' yang dipilih
+            const isDosen = document.getElementById('inventorDosen2').checked;
+
+            // Tampilkan 'selectpicker' jika 'Dosen' dipilih, sembunyikan input teks
+            document.getElementById('dosenInput2').style.display = isDosen ? 'block' : 'none';
+            document.getElementById('nonDosenInput2').style.display = isDosen ? 'none' : 'block';
+        }
+
+        // Inisialisasi SelectPicker jika menggunakan plugin
+        document.addEventListener('DOMContentLoaded', function() {
+            $('#inventor2').selectpicker();
+        });
+    </script>
+
+    <script>
+        // Fungsi untuk menampilkan input text jika "Ya" dipilih
+        function toggleAnggotaLainnya() {
+            var anggotaLainnyaContainer = document.getElementById('anggotaLainnyaContainer');
+            var radioYa = document.getElementById('inventorYes');
+
+            // Menampilkan atau menyembunyikan input berdasarkan pilihan radio button
+            if (radioYa.checked) {
+                anggotaLainnyaContainer.style.display = 'block';
+            } else {
+                anggotaLainnyaContainer.style.display = 'none';
+            }
+        }
+
+        // Memanggil fungsi untuk inisialisasi tampilan saat halaman pertama kali dimuat
+        toggleAnggotaLainnya();
+    </script>
+
+
     <script type="text/javascript">
-
-    $(document).ready(function() {
-        $('.js-example-basic-multiple').select2();
-    });
-
+        $(document).ready(function() {
+            $('#anggota_inventor').selectpicker();
+        });
     </script>
 
 
@@ -263,114 +310,117 @@
         });
     </script>
 
-<script>
-    $(document).ready(function() {
-        // Loop untuk setiap form berdasarkan ID produk
-        @foreach ($produks as $p)
-            $('#editForm_{{ $p->id }}').on('submit', function(e) {
-                e.preventDefault(); // Mencegah submit form secara langsung
+    <script>
+        $(document).ready(function() {
+            // Loop untuk setiap form berdasarkan ID produk
+            @foreach ($produks as $p)
+                $('#editForm_{{ $p->id }}').on('submit', function(e) {
+                    e.preventDefault(); // Mencegah submit form secara langsung
 
-                // Ambil ID produk untuk elemen yang sedang diproses
-                const id = '{{ $p->id }}';
+                    // Ambil ID produk untuk elemen yang sedang diproses
+                    const id = '{{ $p->id }}';
 
-                // Mengambil nilai input berdasarkan ID produk
-                const nama_produk = $('#nama_produk_' + id).val();
-                const deskripsi = $('#deskripsi_' + id).val();
-                // const anggota = $('#anggota_' + id).val();
-                const email = $('#email_' + id).val();
-                const inventor = $('#inventor_' + id).val();
-                const gambar = $('#gambar_' + id)[0].files.length ? $('#gambar_' + id)[0].files[0] : null;
-                const lampiran = $('#lampiran_' + id)[0].files.length ? $('#lampiran_' + id)[0].files[0] : null;
-                const ts = $('#tanggal_submit_' + id).val();
-                const tg = $('#tanggal_granted_' + id).val();
+                    // Mengambil nilai input berdasarkan ID produk
+                    const nama_produk = $('#nama_produk_' + id).val();
+                    const deskripsi = $('#deskripsi_' + id).val();
+                    // const anggota = $('#anggota_' + id).val();
+                    const email = $('#email_' + id).val();
+                    const inventor = $('#inventor_' + id).val();
+                    const inventor_lainnya = $('#inventor_lainnya_' + id).val();
+                    const gambar = $('#gambar_' + id)[0].files.length ? $('#gambar_' + id)[0].files[0] :
+                        null;
+                    const lampiran = $('#lampiran_' + id)[0].files.length ? $('#lampiran_' + id)[0].files[
+                        0] : null;
+                    const ts = $('#tanggal_submit_' + id).val();
+                    const tg = $('#tanggal_granted_' + id).val();
 
-                // Regex untuk validasi file extensions
-                const gambarExtensions = /(\.jpg|\.jpeg|\.png)$/i;
-                const lampiranExtensions = /(\.jpg|\.jpeg|\.png|\.pdf|\.docx)$/i;
+                    // Regex untuk validasi file extensions
+                    const gambarExtensions = /(\.jpg|\.jpeg|\.png)$/i;
+                    const lampiranExtensions = /(\.jpg|\.jpeg|\.png|\.pdf|\.docx)$/i;
 
-                const maxGambarSize = 10 * 1024 * 1024; // 10MB
-                const maxLampiranSize = 10 * 1024 * 1024; // 2MB
+                    const maxGambarSize = 10 * 1024 * 1024; // 10MB
+                    const maxLampiranSize = 10 * 1024 * 1024; // 2MB
 
-                // Validasi input kosong
-                if (!nama_produk || !deskripsi || !email || !inventor) {
+                    // Validasi input kosong
+                    if (!nama_produk || !deskripsi || !email) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Gagal',
+                            text: 'Semua input harus diisi!',
+                        });
+                        return;
+                    }
+
+                    // Validasi format dan ukuran file gambar
+                    if (gambar) {
+                        if (!gambarExtensions.exec(gambar.name)) {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Gagal',
+                                text: 'Gambar produk harus dalam format JPG, JPEG, atau PNG!',
+                            });
+                            return;
+                        }
+                        if (gambar.size > maxGambarSize) {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Gagal',
+                                text: 'Ukuran gambar tidak boleh lebih dari 10MB!',
+                            });
+                            return;
+                        }
+                    }
+
+                    // Validasi format dan ukuran file lampiran
+                    if (lampiran) {
+                        if (!lampiranExtensions.exec(lampiran.name)) {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Gagal',
+                                text: 'Lampiran harus dalam format JPG, JPEG, PNG, PDF, atau DOCX!',
+                            });
+                            return;
+                        }
+                        if (lampiran.size > maxLampiranSize) {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Gagal',
+                                text: 'Ukuran lampiran tidak boleh lebih dari 10MB!',
+                            });
+                            return;
+                        }
+                    }
+
+                    // Jika semua validasi lolos, submit form
                     Swal.fire({
-                        icon: 'error',
-                        title: 'Gagal',
-                        text: 'Semua input harus diisi!',
+                        title: 'Simpan Data?',
+                        text: "Apakah Anda yakin ingin update data produk ini?",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Ya, Simpan!',
+                        cancelButtonText: 'Batal'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            // Tutup modal sebelum submit form
+                            $('#basicModal_' + id).modal('hide');
+
+                            // Submit form yang terkait berdasarkan ID produk
+                            $('#editForm_' + id)[0].submit();
+
+                            // Tampilkan alert setelah submit sukses
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Berhasil',
+                                text: 'Data berhasil diupdate!'
+                            });
+                        }
                     });
-                    return;
-                }
-
-                // Validasi format dan ukuran file gambar
-                if (gambar) {
-                    if (!gambarExtensions.exec(gambar.name)) {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Gagal',
-                            text: 'Gambar produk harus dalam format JPG, JPEG, atau PNG!',
-                        });
-                        return;
-                    }
-                    if (gambar.size > maxGambarSize) {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Gagal',
-                            text: 'Ukuran gambar tidak boleh lebih dari 10MB!',
-                        });
-                        return;
-                    }
-                }
-
-                // Validasi format dan ukuran file lampiran
-                if (lampiran) {
-                    if (!lampiranExtensions.exec(lampiran.name)) {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Gagal',
-                            text: 'Lampiran harus dalam format JPG, JPEG, PNG, PDF, atau DOCX!',
-                        });
-                        return;
-                    }
-                    if (lampiran.size > maxLampiranSize) {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Gagal',
-                            text: 'Ukuran lampiran tidak boleh lebih dari 10MB!',
-                        });
-                        return;
-                    }
-                }
-
-                // Jika semua validasi lolos, submit form
-                Swal.fire({
-                    title: 'Simpan Data?',
-                    text: "Apakah Anda yakin ingin update data produk ini?",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Ya, Simpan!',
-                    cancelButtonText: 'Batal'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        // Tutup modal sebelum submit form
-                        $('#basicModal_' + id).modal('hide');
-
-                        // Submit form yang terkait berdasarkan ID produk
-                        $('#editForm_' + id)[0].submit();
-
-                        // Tampilkan alert setelah submit sukses
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Berhasil',
-                            text: 'Data berhasil diupdate!'
-                        });
-                    }
                 });
-            });
-        @endforeach
-    });
-</script>
+            @endforeach
+        });
+    </script>
 
 </body>
 

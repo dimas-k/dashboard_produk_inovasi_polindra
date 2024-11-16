@@ -174,16 +174,33 @@ class KetuaKbkController extends Controller
         $anggotaKelompok = AnggotaKelompokKeahlian::all();
         $produkAnggota = AnggotaKelompokKeahlian::all();
 
+        $inventorK = DB::table('users')
+            ->select('id','nama_lengkap', 'jabatan')
+            ->where('role', '=', 'ketua_kbk')
+            ->get();
 
+        $inventorA = DB::table('anggota_kelompok_keahlians')
+            ->join('users', 'anggota_kelompok_keahlians.kbk_id', '=', 'users.kbk_id')
+            ->join('kelompok_keahlians', 'anggota_kelompok_keahlians.kbk_id', '=', 'kelompok_keahlians.id')
+            ->select(
+                'anggota_kelompok_keahlians.id as id',
+                'anggota_kelompok_keahlians.nama_lengkap as nama_lengkap',
+                'anggota_kelompok_keahlians.jabatan as jabatan',
+                'kelompok_keahlians.nama_kbk as nama_kbk'
+            )
+            ->get();
 
+        $inventors = $inventorK->merge($inventorA);
+
+        // dd($inventors);
 
         // dd($produks);
-        return view('k_kbk.produk.index', compact('produks', 'kkbk', 'anggotaKelompok', 'produkAnggota'));
+        return view('k_kbk.produk.index', compact('produks', 'kkbk', 'anggotaKelompok', 'produkAnggota','inventors','inventorA','inventorK'));
     }
     public function showProduk($id)
     {
         $produk = Produk::with(['KelompokKeahlian', 'anggota.detail'])->findOrFail($id);
-        // dd($produk->anggota);
+        // dd($produk->inventor_lainnya);
         return view('k_kbk.produk.show.index', compact('produk'));
     }
 
@@ -196,7 +213,9 @@ class KetuaKbkController extends Controller
                 'nama_produk' => 'required|string|max:255',
                 'deskripsi' => 'required|string',
                 'kbk_id' => 'required|exists:kelompok_keahlians,id',
-                'inventor' => 'required|string|max:255',
+                'inventor' => 'nullable|string|max:255',
+                'inventor_lainnya' => 'nullable|string|max:255',
+                'anggota_lainnya'=>'nullable|text',
                 'email_inventor' => 'required|email',
                 'gambar' => 'required|file|mimes:jpeg,png,jpg|max:10240',
                 'lampiran' => 'nullable|file|mimes:jpeg,png,jpg,pdf,docx|max:10240',
@@ -209,6 +228,8 @@ class KetuaKbkController extends Controller
             $produk->nama_produk = $request->nama_produk;
             $produk->deskripsi = $request->deskripsi;
             $produk->inventor = $request->inventor;
+            $produk->inventor_lainnya = $request->inventor_lainnya;
+            $produk->anggota_lainnya = $request->anggota_lainnya;
             $produk->email_inventor = $request->email_inventor;
             $produk->tanggal_submit = $request->tanggal_submit;
             $produk->tanggal_granted = $request->tanggal_granted;
@@ -257,7 +278,7 @@ class KetuaKbkController extends Controller
             'nama_produk' => 'required|string|max:255',
             'deskripsi' => 'required|string',
             'inventor' => 'required|string|max:255',
-            // 'anggota_inventor' => 'nullable|string',
+            'inventor_lainnya' => 'nullable|string|max:255',
             'email_inventor' => 'required|email',
             'gambar' => 'file|mimes:jpeg,png,jpg|max:10240',
             'lampiran' => 'file|mimes:jpeg,png,jpg,pdf,docx|max:10240',
@@ -268,6 +289,7 @@ class KetuaKbkController extends Controller
         $produk->nama_produk = $request->nama_produk;
         $produk->deskripsi = $request->deskripsi;
         $produk->inventor = $request->inventor;
+        $produk->inventor_lainnya = $request->inventor_lainnya;
         $produk->email_inventor = $request->email_inventor;
         $produk->tanggal_submit = $request->tanggal_submit;
         $produk->tanggal_granted = $request->tanggal_granted;
@@ -352,7 +374,7 @@ class KetuaKbkController extends Controller
 
 
 
-        return view('k_kbk.penelitian.index', compact('penelitians', 'kkbk', 'anggotaKelompok', 'penelitianAnggota','penelitian'));
+        return view('k_kbk.penelitian.index', compact('penelitians', 'kkbk', 'anggotaKelompok', 'penelitianAnggota', 'penelitian'));
     }
 
     public function showPenelitian($id)

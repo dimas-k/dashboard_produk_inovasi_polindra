@@ -14,7 +14,7 @@
                 </tr>
                 <tr>
                     <th>Nama Inventor</th>
-                    <td>: {{ $produk->inventor }}</td>
+                    <td>: {{ $produk->inventor ?: $produk->inventor_lainnya }}</td>
                 </tr>
                 <tr>
                     <th>anggota inventor</th>
