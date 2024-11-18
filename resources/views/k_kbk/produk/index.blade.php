@@ -196,6 +196,24 @@
         toggleAnggotaLainnya();
     </script>
 
+    <script>
+        // Fungsi untuk menampilkan input text jika "Ya" dipilih
+        function toggleAnggotaLainnya2() {
+            var anggotaLainnyaContainer = document.getElementById('anggotaLainnyaContainer');
+            var radioYa = document.getElementById('inventorYes');
+
+            // Menampilkan atau menyembunyikan input berdasarkan pilihan radio button
+            if (radioYa.checked) {
+                anggotaLainnyaContainer.style.display = 'block';
+            } else {
+                anggotaLainnyaContainer.style.display = 'none';
+            }
+        }
+
+        // Memanggil fungsi untuk inisialisasi tampilan saat halaman pertama kali dimuat
+        toggleAnggotaLainnya2();
+    </script>
+
 
     <script type="text/javascript">
         $(document).ready(function() {

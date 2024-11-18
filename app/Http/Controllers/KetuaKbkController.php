@@ -175,7 +175,7 @@ class KetuaKbkController extends Controller
         $produkAnggota = AnggotaKelompokKeahlian::all();
 
         $inventorK = DB::table('users')
-            ->select('id','nama_lengkap', 'jabatan')
+            ->select('id', 'nama_lengkap', 'jabatan')
             ->where('role', '=', 'ketua_kbk')
             ->get();
 
@@ -192,17 +192,34 @@ class KetuaKbkController extends Controller
 
         $inventors = $inventorK->merge($inventorA);
 
+
+        // $produk = Produk::with(['kelompokKeahlian', 'anggota.detail']);
+        // $anggotaTerpilih = $produk->anggota->map(function ($anggota) {
+        //     return $anggota->anggota_type . '_' . $anggota->anggota_id;
+        // })->toArray();
+
+        // dd($anggotaTerpilih);
+
         // dd($inventors);
 
         // dd($produks);
-        return view('k_kbk.produk.index', compact('produks', 'kkbk', 'anggotaKelompok', 'produkAnggota','inventors','inventorA','inventorK'));
+        
+        return view('k_kbk.produk.index', compact('produks', 'kkbk', 'anggotaKelompok', 'produkAnggota', 'inventors', 'inventorA', 'inventorK'));
     }
+
+
     public function showProduk($id)
     {
-        $produk = Produk::with(['KelompokKeahlian', 'anggota.detail'])->findOrFail($id);
-        // dd($produk->inventor_lainnya);
+        $produk = Produk::with(['kelompokKeahlian', 'anggota.detail'])->findOrFail($id);
+
+
+        // foreach ($produk->anggota as $anggota) {
+        //     dd($anggota->anggota->jabatan); // Ini untuk melihat apakah data anggota tersedia
+        // }
+
         return view('k_kbk.produk.show.index', compact('produk'));
     }
+
 
     public function storeProduk(Request $request)
     {
@@ -215,7 +232,9 @@ class KetuaKbkController extends Controller
                 'kbk_id' => 'required|exists:kelompok_keahlians,id',
                 'inventor' => 'nullable|string|max:255',
                 'inventor_lainnya' => 'nullable|string|max:255',
-                'anggota_lainnya'=>'nullable|text',
+                'anggota_inventor' => 'array',
+                'anggota_inventor.*' => 'string',
+                'anggota_inventor_lainnya' => 'string|nullable|max:255',
                 'email_inventor' => 'required|email',
                 'gambar' => 'required|file|mimes:jpeg,png,jpg|max:10240',
                 'lampiran' => 'nullable|file|mimes:jpeg,png,jpg,pdf,docx|max:10240',
@@ -229,12 +248,10 @@ class KetuaKbkController extends Controller
             $produk->deskripsi = $request->deskripsi;
             $produk->inventor = $request->inventor;
             $produk->inventor_lainnya = $request->inventor_lainnya;
-            $produk->anggota_lainnya = $request->anggota_lainnya;
+            $produk->anggota_inventor_lainnya = $request->anggota_inventor_lainnya;
             $produk->email_inventor = $request->email_inventor;
             $produk->tanggal_submit = $request->tanggal_submit;
             $produk->tanggal_granted = $request->tanggal_granted;
-
-
 
             // Proses upload gambar
             if ($request->hasFile('gambar')) {
@@ -253,12 +270,27 @@ class KetuaKbkController extends Controller
             // Simpan produk ke database
             $produk->save();
 
+            // Proses anggota inventor
             foreach ($request->anggota_inventor as $anggota) {
+                // Cek prefix ID
+                if (str_starts_with($anggota, 'user_')) {
+                    $anggotaId = str_replace('user_', '', $anggota);
+                    $table = 'users';
+                } elseif (str_starts_with($anggota, 'anggota_')) {
+                    $anggotaId = str_replace('anggota_', '', $anggota);
+                    $table = 'anggota_kelompok_keahlians';
+                } else {
+                    continue; // Skip jika format tidak sesuai
+                }
+
+                // Simpan ke tabel pivot
                 ProdukAnggota::create([
                     'produk_id' => $produk->id,
-                    'anggota_id' => $anggota
+                    'anggota_id' => $anggotaId,
+                    'anggota_type' => $table, // Simpan informasi sumber tabel
                 ]);
             }
+
             DB::commit();
             // Return response success dalam format JSON
             return response()->json(['success' => true, 'message' => 'Data Produk berhasil ditambahkan!']);
@@ -271,65 +303,104 @@ class KetuaKbkController extends Controller
         }
     }
 
-
     public function updateProdukInovasi(Request $request, $id)
     {
+        // Validasi input
         $request->validate([
             'nama_produk' => 'required|string|max:255',
             'deskripsi' => 'required|string',
-            'inventor' => 'required|string|max:255',
+            'inventor' => 'nullable|string|max:255',
             'inventor_lainnya' => 'nullable|string|max:255',
+            'anggota_inventor' => 'nullable|array',
+            'anggota_inventor.*' => 'string',
+            'anggota_inventor_lainnya' => 'nullable|string|max:255',
             'email_inventor' => 'required|email',
-            'gambar' => 'file|mimes:jpeg,png,jpg|max:10240',
-            'lampiran' => 'file|mimes:jpeg,png,jpg,pdf,docx|max:10240',
-            'tanggal_submit' => 'date',
-            'tanggal_granted' => 'date'
+            'gambar' => 'nullable|file|mimes:jpeg,png,jpg|max:10240',
+            'lampiran' => 'nullable|file|mimes:jpeg,png,jpg,pdf,docx|max:10240',
+            'tanggal_submit' => 'nullable|date',
+            'tanggal_granted' => 'nullable|date',
         ]);
-        $produk = Produk::findOrFail($id);
-        $produk->nama_produk = $request->nama_produk;
-        $produk->deskripsi = $request->deskripsi;
-        $produk->inventor = $request->inventor;
-        $produk->inventor_lainnya = $request->inventor_lainnya;
-        $produk->email_inventor = $request->email_inventor;
-        $produk->tanggal_submit = $request->tanggal_submit;
-        $produk->tanggal_granted = $request->tanggal_granted;
 
-        if ($request->hasFile('gambar')) {
-            if ($produk->gambar && Storage::exists($produk->gambar)) {
-                Storage::delete($produk->gambar);
+        try {
+            DB::beginTransaction();
+
+            // Ambil data produk berdasarkan ID
+            $produk = Produk::findOrFail($id);
+
+            // Update data produk
+            $produk->nama_produk = $request->nama_produk;
+            $produk->deskripsi = $request->deskripsi;
+            $produk->inventor = $request->inventor;
+            $produk->inventor_lainnya = $request->inventor_lainnya;
+            $produk->anggota_inventor_lainnya = $request->anggota_inventor_lainnya;
+            $produk->email_inventor = $request->email_inventor;
+            $produk->tanggal_submit = $request->tanggal_submit;
+            $produk->tanggal_granted = $request->tanggal_granted;
+
+            // Proses upload gambar baru
+            if ($request->hasFile('gambar')) {
+                // Hapus file lama jika ada
+                if ($produk->gambar && Storage::exists($produk->gambar)) {
+                    Storage::delete($produk->gambar);
+                }
+
+                // Upload file baru
+                $originalName = $request->file('gambar')->getClientOriginalName();
+                $fileName = time() . '_' . str_replace(' ', '_', $originalName);
+                $path = $request->file('gambar')->storeAs('dokumen-produk', $fileName);
+                $produk->gambar = $path;
             }
-            $originalName = $request->file('gambar')->getClientOriginalName();
-            $fileName = time() . '_' . str_replace(' ', '_', $originalName);
 
-            // Simpan file dengan nama kustom
-            $path = $request->file('gambar')->storeAs('dokumen-produk', $fileName);
+            // Proses upload lampiran baru
+            if ($request->hasFile('lampiran')) {
+                // Hapus file lama jika ada
+                if ($produk->lampiran && Storage::exists($produk->lampiran)) {
+                    Storage::delete($produk->lampiran);
+                }
 
-            // Simpan path tanpa 'public/' di database
-            $produk->gambar = $path;
-        }
-
-        if ($request->hasFile('lampiran')) {
-            if ($produk->lampiran && Storage::exists($produk->lampiran)) {
-                Storage::delete($produk->lampiran);
+                // Upload file baru
+                $originalName = $request->file('lampiran')->getClientOriginalName();
+                $fileName = time() . '_' . str_replace(' ', '_', $originalName);
+                $path = $request->file('lampiran')->storeAs('dokumen-produk', $fileName);
+                $produk->lampiran = $path;
             }
-            $originalName = $request->file('lampiran')->getClientOriginalName();
-            $fileName = time() . '_' . str_replace(' ', '_', $originalName);
 
-            // Simpan file dengan nama kustom
-            $path = $request->file('lampiran')->storeAs('dokumen-produk', $fileName);
+            $produk->save();
 
-            // Simpan path tanpa 'public/' di database
-            $produk->lampiran = $path;
+            // Update anggota inventor
+            if ($request->filled('anggota_inventor')) {
+                // Hapus semua data lama di pivot table
+                ProdukAnggota::where('produk_id', $produk->id)->delete();
+
+                // Simpan data anggota inventor baru
+                foreach ($request->anggota_inventor as $anggota) {
+                    if (str_starts_with($anggota, 'user_')) {
+                        $anggotaId = str_replace('user_', '', $anggota);
+                        $table = 'users';
+                    } elseif (str_starts_with($anggota, 'anggota_')) {
+                        $anggotaId = str_replace('anggota_', '', $anggota);
+                        $table = 'anggota_kelompok_keahlians';
+                    } else {
+                        continue; // Skip jika format tidak sesuai
+                    }
+
+                    ProdukAnggota::create([
+                        'produk_id' => $produk->id,
+                        'anggota_id' => $anggotaId,
+                        'anggota_type' => $table,
+                    ]);
+                }
+            }
+
+            DB::commit();
+
+            return redirect('/k-kbk/produk')->with('success', 'Data Produk berhasil diupdate!');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
         }
-        $produk->save();
-
-        // Update anggota inventor only if input is provided, otherwise keep existing data
-        if ($request->filled('anggota_inventor')) {
-            $produk->anggota_inventor()->sync($request->anggota_inventor);
-        }
-
-        return redirect('/k-kbk/produk')->with('success', 'Data Produk berhasil diupdate!');
     }
+
 
     public function hapusProduk($id)
     {

@@ -14,8 +14,12 @@ return new class extends Migration
         Schema::create('produks_anggotas', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->foreignId('produk_id')->constrained('produks')->onDelete('cascade');
-            $table->foreignId('anggota_id')->constrained('anggota_kelompok_keahlians')->onDelete('cascade');
+            $table->unsignedBigInteger('anggota_id'); // Tidak perlu foreignId karena polymorphic
+            $table->string('anggota_type'); // Menyimpan tipe relasi (users atau anggota_kelompok_keahlians)
             $table->timestamps();
+            
+            // Menambahkan index untuk optimasi pencarian
+            $table->index(['anggota_id', 'anggota_type']);
         });
     }
 
@@ -27,3 +31,4 @@ return new class extends Migration
         Schema::dropIfExists('produks_anggotas');
     }
 };
+

@@ -15,31 +15,42 @@ class Produk extends Model
         'gambar',
         'inventor',
         'inventor_lainnya',
-        'anggota_inventor',
-        'email_penulis',
+        'anggota_lainnya',
+        'email_inventor', // Sesuaikan dengan nama kolom yang benar di database
         'lampiran',
-        'status'
-    ];
-    protected $casts = [
-        'tanggal_granted' => 'date',
+        'tanggal_submit',
+        'tanggal_granted',
+        'status',
+        'kbk_id',
     ];
 
+    protected $casts = [
+        'tanggal_granted' => 'date',
+        'tanggal_submit' => 'date',
+    ];
+
+    // Relasi ke Kelompok Keahlian
     public function kelompokKeahlian()
     {
-        return $this->belongsTo(KelompokKeahlian::class,  'kbk_id');
+        return $this->belongsTo(KelompokKeahlian::class, 'kbk_id');
     }
+
+    // Relasi ke anggota inventor (ProdukAnggota)
 
     public function anggota()
     {
         return $this->hasMany(ProdukAnggota::class, 'produk_id', 'id');
     }
 
-    
 
     public function anggota_inventor()
     {
-        return $this->belongsToMany(ProdukAnggota::class, 'produks_anggotas', 'produk_id', 'anggota_id');
+        return $this->morphToMany(
+            ProdukAnggota::class,
+            'anggota',
+            'produks_anggotas',
+            'produk_id',
+            'anggota_id'
+        );
     }
-
 }
-

@@ -10,13 +10,26 @@ class ProdukAnggota extends Model
     use HasFactory;
 
     protected $table = 'produks_anggotas';
+
     protected $fillable = [
         'produk_id',
-        'anggota_id'
+        'anggota_id',
+        'anggota_type', // Polimorfisme
     ];
 
     public function detail()
     {
         return $this->belongsTo(AnggotaKelompokKeahlian::class, 'anggota_id');
     }
+
+
+    public function anggota()
+    {
+        return $this->morphTo('anggota', 'anggota_type', 'anggota_id');
+    }
+
+    //     public function anggota()
+    // {
+    //     return $this->morphTo();
+    // }
 }

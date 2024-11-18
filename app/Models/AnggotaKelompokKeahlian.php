@@ -9,15 +9,32 @@ class AnggotaKelompokKeahlian extends Model
 {
     use HasFactory;
 
+    protected $table = 'anggota_kelompok_keahlians'; // Nama tabel
     protected $fillable = [
+        'kbk_id',
         'nama_lengkap',
         'jabatan',
+        'email',
     ];
 
+    /**
+     * Relasi ke tabel `produks` melalui tabel pivot `produks_anggotas`
+     * Menggunakan polimorfisme (morphTo)
+     */
     public function produk()
     {
-        return $this->belongsToMany(Produk::class, 'produks_anggotas', 'anggota_id', 'produk_id');
+        return $this->morphToMany(
+            Produk::class,
+            'anggota',       // Nama relasi polimorfik
+            'produks_anggotas', // Nama tabel pivot
+            'anggota_id',     // Kolom ID anggota
+            'produk_id'       // Kolom ID produk
+        );
     }
+
+    /**
+     * Relasi ke tabel `kelompok_keahlians`
+     */
     public function kelompokKeahlian()
     {
         return $this->belongsTo(KelompokKeahlian::class, 'kbk_id');

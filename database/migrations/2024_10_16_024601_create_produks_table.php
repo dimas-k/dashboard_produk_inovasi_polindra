@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('gambar')->nullable();
             $table->string('inventor')->nullable();
             $table->string('inventor_lainnya')->nullable();
-            $table->text('anggota_lainnya')->nullable();
+            $table->text('anggota_inventor_lainnya')->nullable();
             $table->string('email_inventor');
             $table->text('lampiran')->nullable();
             $table->date('tanggal_submit')->nullable();

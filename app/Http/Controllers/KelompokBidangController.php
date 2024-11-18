@@ -53,7 +53,6 @@ class KelompokBidangController extends Controller
                     'message' => 'KBK tidak bisa dihapus karena masih terhubung di data atau halaman lain. Silakan hapus data yang terkait terlebih dahulu.'
                 ], 400);
             }
-
             // Tampilkan error lain
             return response()->json(['message' => 'Terjadi kesalahan saat menghapus KBK.'], 500);
         }
@@ -75,9 +74,6 @@ class KelompokBidangController extends Controller
         $kbk->jurusan = $request->jurusan;
         $kbk->deskripsi = $request->deskripsi;
         $kbk->save();
-
-
-
         return redirect('/admin/kelompok-bidang-keahlian')->with('success', 'Data admin berhasil di update');
     }
 }

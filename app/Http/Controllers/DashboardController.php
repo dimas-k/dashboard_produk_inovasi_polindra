@@ -135,7 +135,6 @@ class DashboardController extends Controller
         return view('dashboard.detail-produk.index', compact('produk', 'kbk', 'kbk_nama'));
     }
     
-    
     public function detailPenelitian($judul)
     {
         $kbk = KelompokKeahlian::all();
@@ -152,13 +151,19 @@ class DashboardController extends Controller
         $kbk = KelompokKeahlian::all();
         $anggota = AnggotaKelompokKeahlian::where('nama_lengkap', $dosen)->first();
         $p_dosen = null;
+        
         if ($anggota) {
             $p_dosen = Produk::whereHas('anggota', function ($query) use ($anggota) {
-                $query->where('anggota_id', $anggota->id); 
+                $query->where('anggota_id', $anggota->id)
+                ->where('status','=','Tervalidasi'); 
             })->with('kelompokKeahlian')->paginate(7);
+
         }
         if (!$anggota) {
-            $p_dosen = Produk::with('kelompokKeahlian')->where('inventor', $dosen)->paginate(7);
+            $p_dosen = Produk::with('kelompokKeahlian')->where('inventor', $dosen)
+            ->paginate(7);
+            dd($p_dosen);
+
         }
         if ($p_dosen->isEmpty()) {
             $p_dosen = null;
