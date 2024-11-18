@@ -322,8 +322,7 @@
                                                             </div>
                                                             <select class="selectpicker w-100" data-live-search="true" id="anggota_inventor_{{ $p->id }}" name="anggota_inventor[]" multiple title="Pilih Anggota Inventor..">
                                                                 @foreach($produkAnggota as $anggota)
-                                                                    <option value="{{ $anggota->id }}"
-                                                                        @if($p->anggota_inventor && in_array($anggota->id, $p->anggota_inventor->pluck('id')->toArray())) selected @endif>
+                                                                    <option value="{{ $anggota->id }}">
                                                                         {{ $anggota->nama_lengkap }}
                                                                     </option>
                                                                 @endforeach

@@ -80,7 +80,6 @@ class AdminController extends Controller
             $tahun_awal = $request->input('tahun_awal');
             $tahun_akhir = $request->input('tahun_akhir');
 
-            // Pastikan tahun_awal dan tahun_akhir tidak kosong
             if ($tahun_awal && $tahun_akhir) {
                 $queryProduk->whereYear('tanggal_granted', '>=', $tahun_awal)
                     ->whereYear('tanggal_granted', '<=', $tahun_akhir);
@@ -91,28 +90,31 @@ class AdminController extends Controller
         } elseif ($request->has('tahun_awal')) {
             $tahun_awal = $request->input('tahun_awal');
 
-            // Jika hanya tahun_awal yang ada
             $queryProduk->whereYear('tanggal_granted', '>=', $tahun_awal);
             $queryPenelitian->whereYear('tanggal_publikasi', '>=', $tahun_awal);
         } elseif ($request->has('tahun_akhir')) {
             $tahun_akhir = $request->input('tahun_akhir');
 
-            // Jika hanya tahun_akhir yang ada
             $queryProduk->whereYear('tanggal_granted', '<=', $tahun_akhir);
             $queryPenelitian->whereYear('tanggal_publikasi', '<=', $tahun_akhir);
         }
+
+        // Filter berdasarkan status validasi
+        if ($request->has('status_validasi') && $request->status_validasi != '') {
+            $status_validasi = $request->input('status_validasi');
+            $queryProduk->where('status', $status_validasi);
+            $queryPenelitian->where('status', $status_validasi);
+        }
+
         $produk_paginate = $queryProduk->paginate(5);
         $penelitian_paginate = $queryPenelitian->paginate(5);
         $produk = $queryProduk->get();
         $penelitian = $queryPenelitian->get();
-        // dd($penelitian);
 
         // Cek apakah pengguna ingin mengunduh EXCEL
         if ($request->has('download') && $request->input('download') == 'Excel') {
             return $this->downloadExcel($produk, $penelitian);
         }
-
-
         return view('admin.index', compact('kbk_navigasi', 'pnltan_valid', 'pnltan_nonvalid', 'prdk_valid', 'prdk_nonvalid', 'prdk_tahun', 'plt_tahun', 'data_plt', 'data_prdk', 'produk', 'penelitian', 'produk_paginate', 'penelitian_paginate'));
     }
 
@@ -126,17 +128,18 @@ class AdminController extends Controller
         // Tambahkan kolom 'No.' untuk nomor urut
         $produkData = collect([
             ['Produk'],
-            ['No','No Id',  'Nama KBK', 'Nama Produk', 'Inventor', 'Tanggal Submit', 'Tanggal Granted', 'Status']
+            ['No', 'No Id',  'Nama KBK', 'Nama Produk', 'Inventor', 'Tanggal Submit', 'Tanggal Granted', 'Status']
         ]);
 
         $no = 1;
         foreach ($produk as $item) {
+            $inventor = $item->inventor ?: $item->inventor_lainnya;
             $produkData->push([
                 $no++,  // Menambah nomor urut secara manual
                 $item->id,
                 $item->kelompokKeahlian->nama_kbk ?? '-',
                 $item->nama_produk,
-                $item->inventor,
+                $inventor,
                 $item->tanggal_submit ? Carbon::parse($item->tanggal_submit)->format('d-m-Y') : '-',
                 $item->tanggal_granted ? Carbon::parse($item->tanggal_granted)->format('d-m-Y') : '-',
                 $item->status,
@@ -152,13 +155,14 @@ class AdminController extends Controller
 
         $no = 1; // Reset nomor urut untuk data penelitian
         foreach ($penelitian as $item) {
+            $penulis = $item->penulis ?: $item->penulis_lainnya;
             $penelitianData->push([
                 $no++,  // Menambah nomor urut secara manual
                 $item->id,
                 $item->kelompokKeahlian->nama_kbk ?? '-',
                 $item->judul,
-                $item->penulis,
-                $item->penulis_koresponden,
+                $penulis,
+                $item->PenulisKorespondensi->nama_lengkap,
                 $item->tanggal_publikasi ? Carbon::parse($item->tanggal_publikasi)->format('d-m-Y') : '-',
                 $item->status,
             ]);

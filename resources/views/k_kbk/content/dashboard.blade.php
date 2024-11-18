@@ -3,7 +3,7 @@
 
 
         <div class="container">
-            <div class="row">
+            <div class="row mb-5">
                 <div class="col-md-6">
                     <h4>Status Validasi Produk</h4>
                     <div id="produk-status-chart"></div>
@@ -15,16 +15,24 @@
             </div>
 
             <div class="row mt-4">
-                <div class="col-md-6">
+                <div id="gabungan-tahun-chart"></div>
+                {{-- <div class="col-md-6">
                     <h4>Produk per Tahun</h4>
                     <div id="produk-tahun-chart"></div>
                 </div>
                 <div class="col-md-6">
                     <h4>Penelitian per Tahun</h4>
                     <div id="penelitian-tahun-chart"></div>
-                </div>
+                </div> --}}
             </div>
         </div>
+
+        <?php
+        // Menggabungkan tahun dari produk dan penelitian menjadi satu array unik
+        $tahun_kategori = array_unique(array_merge(array_keys($prdk_tahun->toArray()), array_keys($plt_tahun->toArray())));
+        sort($tahun_kategori); // Urutkan tahun agar tampil berurutan
+        ?>
+
 
         <script>
             document.addEventListener("DOMContentLoaded", function() {
@@ -58,45 +66,52 @@
                     penelitianStatusOptions);
                 penelitianStatusChart.render();
 
-                // Data untuk chart produk per tahun
-                var produkTahunOptions = {
+                // Data untuk chart gabungan produk dan penelitian per tahun dengan area stacked
+                var gabunganTahunOptions = {
                     chart: {
-                        type: 'bar'
+                        type: 'area',
+                        height: 380,
+                        // stacked: true
+                    },
+                    dataLabels: {
+                        enabled: false
+                    },
+                    stroke: {
+                        curve: 'smooth',
+                        width: 2
+                    },
+                    fill: {
+                        opacity: 0.4
                     },
                     series: [{
-                        name: 'Jumlah Produk',
-                        data: {!! json_encode(array_values($prdk_tahun->toArray())) !!}
-                    }],
+                            name: 'Jumlah Produk',
+                            data: {!! json_encode(array_values(array_replace(array_fill_keys($tahun_kategori, 0), $prdk_tahun->toArray()))) !!}
+                        },
+                        {
+                            name: 'Jumlah Penelitian',
+                            data: {!! json_encode(array_values(array_replace(array_fill_keys($tahun_kategori, 0), $plt_tahun->toArray()))) !!}
+                        }
+                    ],
                     xaxis: {
-                        categories: {!! json_encode(array_keys($prdk_tahun->toArray())) !!}
+                        categories: {!! json_encode($tahun_kategori) !!}
                     },
+                    yaxis: {
+                        tickAmount: 4,
+                        decimalsInFloat: 1
+                    },
+                    colors: ['#1E90FF', '#32CD32'],
                     title: {
-                        text: 'Produk per Tahun'
+                        text: 'Produk dan Penelitian per Tahun Berdasarkan Status Tervalidasi'
+                    },
+                    legend: {
+                        position: 'top',
+                        horizontalAlign: 'left'
                     }
                 };
-                var produkTahunChart = new ApexCharts(document.querySelector("#produk-tahun-chart"),
-                    produkTahunOptions);
-                produkTahunChart.render();
 
-                // Data untuk chart penelitian per tahun
-                var penelitianTahunOptions = {
-                    chart: {
-                        type: 'bar'
-                    },
-                    series: [{
-                        name: 'Jumlah Penelitian',
-                        data: {!! json_encode(array_values($plt_tahun->toArray())) !!}
-                    }],
-                    xaxis: {
-                        categories: {!! json_encode(array_keys($plt_tahun->toArray())) !!}
-                    },
-                    title: {
-                        text: 'Penelitian per Tahun'
-                    }
-                };
-                var penelitianTahunChart = new ApexCharts(document.querySelector("#penelitian-tahun-chart"),
-                    penelitianTahunOptions);
-                penelitianTahunChart.render();
+                var gabunganTahunChart = new ApexCharts(document.querySelector("#gabungan-tahun-chart"),
+                    gabunganTahunOptions);
+                gabunganTahunChart.render();
             });
         </script>
 
