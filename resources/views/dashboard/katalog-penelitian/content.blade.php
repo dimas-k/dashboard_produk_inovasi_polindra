@@ -22,7 +22,7 @@
             </div>
             <div class="wow fadeInUp" data-wow-delay="0.1s">
                 <div class="d-flex justify-content-end mb-5">
-                    <form action="/dashboard/katalog/produk-inovasi/cari" method="post"
+                    <form action="/dashboard/katalog/penelitian/cari" method="post"
                         class="row row-cols-lg-auto g-2 align-items-center">
                         @csrf
                         <div class="col-auto">
@@ -61,7 +61,11 @@
                                 </p>
                                 <p><strong>Tahun Publikasi:</strong>
                                     {{ \Carbon\Carbon::parse($p->tanggal_publikasi)->format('Y') }}</p>
-                                <div class="article-meta-sm mt-2">
+                                <div class="article-meta-sm mt-2 mb-4">
+                                    <a class="link-secondary"
+                                        href="{{ route('produk.dosen', ['dosen' => $p->penulis ?: $p->penulis_lainnya]) }}">
+                                        {{ $p->penulis ?: $p->penulis_lainnya }}
+                                    </a>
                                     <a class="link-secondary"
                                         href="{{ route('dashboard.penelitian', ['nama_kbk' => $p->kelompokKeahlian->nama_kbk]) }}">
                                         {{ $p->kelompokKeahlian->nama_kbk }}

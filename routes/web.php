@@ -41,6 +41,7 @@ Route::get('/dashboard/katalog/produk-inovasi', [DashboardController::class, 'ka
 Route::post('/dashboard/katalog/produk-inovasi/cari', [DashboardController::class, 'katalogProdukCari']);
 
 Route::get('/dashboard/katalog/penelitian', [DashboardController::class, 'katalogPenelitian']);
+Route::post('/dashboard/katalog/penelitian/cari', [DashboardController::class, 'katalogPenelitianCari']);
 
 Route::get('/login', [LoginController::class, 'loginPage'])->name('login');
 Route::post('/login-admin/autentikasi', [LoginController::class, 'authenticate']);

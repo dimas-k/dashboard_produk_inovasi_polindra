@@ -61,8 +61,8 @@
                                     {{ \Carbon\Carbon::parse($p->tanggal_granted)->format('Y') }}</p>
                                 <div class="article-meta-sm mt-2">
                                     <a class="link-secondary"
-                                        href="{{ route('produk.dosen', ['dosen' => $p->inventor]) }}">
-                                        {{ $p->inventor }}
+                                        href="{{ route('produk.dosen', ['dosen' => $p->inventor ?: $p->inventor_lainnya]) }}">
+                                        {{ $p->inventor ?: $p->inventor_lainnya }}
                                     </a>
                                     <a class="link-secondary"
                                         href="{{ route('dashboard.penelitian', ['nama_kbk' => $p->kelompokKeahlian->nama_kbk]) }}">

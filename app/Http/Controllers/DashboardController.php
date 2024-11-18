@@ -219,5 +219,7 @@ class DashboardController extends Controller
         $kbk = KelompokKeahlian::all();
         $cari = $request->input('cari_penelitian');
         $penelitian = Penelitian::with('KelompokKeahlian')->where('judul', 'LIKE', "%" . $cari . "%")->where('status','Tervalidasi')->paginate(10);
+
+        return view('dashboard.katalog-penelitian.index', compact('penelitian', 'kbk'));
     }
 }
