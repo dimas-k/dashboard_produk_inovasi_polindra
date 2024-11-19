@@ -62,14 +62,14 @@ class DashboardController extends Controller
         //         'anggota_kelompok_keahlians.nama_lengkap'
         //     )->get();
         $anggota_kbk = DB::table('anggota_kelompok_keahlians')
-        ->join('kelompok_keahlians', 'anggota_kelompok_keahlians.kbk_id', '=', 'kelompok_keahlians.id')
-        ->where('kelompok_keahlians.nama_kbk', '=', $nama_kbk)
-        ->whereIn('anggota_kelompok_keahlians.jabatan', ['Dosen Lektor', 'Dosen Asisten Ahli', 'Dosen Lektor Kepala','Dosen' , 'Lektor'])
-        ->select(
-            'anggota_kelompok_keahlians.nama_lengkap',
-            'anggota_kelompok_keahlians.jabatan'
-        )
-        ->get();
+            ->join('kelompok_keahlians', 'anggota_kelompok_keahlians.kbk_id', '=', 'kelompok_keahlians.id')
+            ->where('kelompok_keahlians.nama_kbk', '=', $nama_kbk)
+            ->whereIn('anggota_kelompok_keahlians.jabatan', ['Dosen Lektor', 'Dosen Asisten Ahli', 'Dosen Lektor Kepala', 'Dosen', 'Lektor'])
+            ->select(
+                'anggota_kelompok_keahlians.nama_lengkap',
+                'anggota_kelompok_keahlians.jabatan'
+            )
+            ->get();
 
 
         // dd($kelompokKeahlian);
@@ -127,14 +127,16 @@ class DashboardController extends Controller
     {
         $kbk = KelompokKeahlian::all();
         $kbk_nama = KelompokKeahlian::where('nama_kbk', $nama_produk)->first();
-    
-        $produk = Produk::with(['kelompokKeahlian', 'anggota.detail'])
+
+        $produk = Produk::with(['kelompokKeahlian', 'anggota.anggota'])
             ->where('nama_produk', $nama_produk)
             ->firstOrFail();
-    
+
+        // dd($produk->anggota);
+
         return view('dashboard.detail-produk.index', compact('produk', 'kbk', 'kbk_nama'));
     }
-    
+
     public function detailPenelitian($judul)
     {
         $kbk = KelompokKeahlian::all();
@@ -150,23 +152,25 @@ class DashboardController extends Controller
     {
         $kbk = KelompokKeahlian::all();
         $anggota = AnggotaKelompokKeahlian::where('nama_lengkap', $dosen)->first();
-        $p_dosen = null;
-        
         if ($anggota) {
-            $p_dosen = Produk::whereHas('anggota', function ($query) use ($anggota) {
-                $query->where('anggota_id', $anggota->id)
-                ->where('status','=','Tervalidasi'); 
-            })->with('kelompokKeahlian')->paginate(7);
-
-        }
-        if (!$anggota) {
-            $p_dosen = Produk::with('kelompokKeahlian')->where('inventor', $dosen)
-            ->paginate(7);
-            dd($p_dosen);
-
-        }
-        if ($p_dosen->isEmpty()) {
-            $p_dosen = null;
+            $p_dosen = Produk::where(function ($query) use ($anggota) {
+                // Produk di mana Yana adalah anggota
+                $query->whereHas('anggota', function ($subQuery) use ($anggota) {
+                    $subQuery->where('anggota_id', $anggota->id)
+                        ->where('anggota_type', AnggotaKelompokKeahlian::class);
+                });
+            })
+                ->orWhere(function ($query) use ($dosen) {
+                    // Produk yang diketuai oleh Yano
+                    $query->where('inventor', $dosen);
+                })
+                ->where('status', 'Tervalidasi') // Status tervalidasi
+                ->with(['kelompokKeahlian', 'anggota.anggota'])
+                ->paginate(7);
+        } else {
+            $p_dosen = Produk::with(['kelompokKeahlian', 'anggota'])
+                ->where('inventor', $dosen)
+                ->paginate(7);
         }
         $plt_dosen = null;
         if ($anggota) {
@@ -180,9 +184,11 @@ class DashboardController extends Controller
         if ($plt_dosen->isEmpty()) {
             $plt_dosen = null;
         }
+        // dd($dosen);
+        // dd($p_dosen);
 
         return view('dashboard.dosen-produk.index', [
-            'kbk'=> $kbk,
+            'kbk' => $kbk,
             'p_dosen' => $p_dosen,
             'plt_dosen' => $plt_dosen,
             'dosen' => $dosen,
@@ -193,7 +199,7 @@ class DashboardController extends Controller
     public function katalogProduk()
     {
         $kbk = KelompokKeahlian::all();
-        $produk = Produk::with('KelompokKeahlian')->where('status','Tervalidasi')->paginate(10);
+        $produk = Produk::with('KelompokKeahlian')->where('status', 'Tervalidasi')->paginate(10);
 
         return view('dashboard.katalog-produk.index', compact('produk', 'kbk'));
     }
@@ -203,14 +209,14 @@ class DashboardController extends Controller
         $kbk = KelompokKeahlian::all();
 
         $cari = $request->input('cari_produk');
-        $produk = Produk::with('KelompokKeahlian')->where('nama_produk', 'LIKE', "%" . $cari . "%")->where('status','Tervalidasi')->paginate(10);
+        $produk = Produk::with('KelompokKeahlian')->where('nama_produk', 'LIKE', "%" . $cari . "%")->where('status', 'Tervalidasi')->paginate(10);
         return view('dashboard.katalog-produk.index', compact('produk', 'kbk'));
     }
 
     public function katalogPenelitian()
     {
         $kbk = KelompokKeahlian::all();
-        $penelitian = Penelitian::with('KelompokKeahlian')->where('status','Tervalidasi')->paginate(10);
+        $penelitian = Penelitian::with('KelompokKeahlian')->where('status', 'Tervalidasi')->paginate(10);
 
         return view('dashboard.katalog-penelitian.index', compact('penelitian', 'kbk'));
     }
@@ -218,7 +224,7 @@ class DashboardController extends Controller
     {
         $kbk = KelompokKeahlian::all();
         $cari = $request->input('cari_penelitian');
-        $penelitian = Penelitian::with('KelompokKeahlian')->where('judul', 'LIKE', "%" . $cari . "%")->where('status','Tervalidasi')->paginate(10);
+        $penelitian = Penelitian::with('KelompokKeahlian')->where('judul', 'LIKE', "%" . $cari . "%")->where('status', 'Tervalidasi')->paginate(10);
 
         return view('dashboard.katalog-penelitian.index', compact('penelitian', 'kbk'));
     }

@@ -19,7 +19,7 @@ class ProdukAnggota extends Model
 
     public function detail()
     {
-        return $this->belongsTo(AnggotaKelompokKeahlian::class, 'anggota_id');
+        return $this->anggota;
     }
 
 

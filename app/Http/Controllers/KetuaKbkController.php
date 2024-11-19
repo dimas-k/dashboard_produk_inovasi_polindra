@@ -216,6 +216,7 @@ class KetuaKbkController extends Controller
         // foreach ($produk->anggota as $anggota) {
         //     dd($anggota->anggota->jabatan); // Ini untuk melihat apakah data anggota tersedia
         // }
+        // dd($produk->anggota_inventor_lainnya);
 
         return view('k_kbk.produk.show.index', compact('produk'));
     }

@@ -5,8 +5,11 @@
         <nav aria-label="breadcrumb animated slideInDown">
             <ol class="breadcrumb justify-content-center mb-0">
                 <li class="breadcrumb-item"><a class="text-white" href="/">Home</a></li>
-                <li class="breadcrumb-item"><a class="text-white" href="{{ route('dashboard.penelitian', ['nama_kbk' => $produk->KelompokKeahlian->nama_kbk]) }}">{{ $produk->KelompokKeahlian->nama_kbk }}</a></li>
-                <li class="breadcrumb-item text-primary active" aria-current="page">Detail Produk {{ $produk->nama_produk }}
+                <li class="breadcrumb-item"><a class="text-white"
+                        href="{{ route('dashboard.penelitian', ['nama_kbk' => $produk->KelompokKeahlian->nama_kbk]) }}">{{ $produk->KelompokKeahlian->nama_kbk }}</a>
+                </li>
+                <li class="breadcrumb-item text-primary active" aria-current="page">Detail Produk
+                    {{ $produk->nama_produk }}
                 </li>
             </ol>
         </nav>
@@ -35,7 +38,7 @@
                     <strong>Tahun granted</strong> <br>
                     <p class="mt-1">Tahun {{ \Carbon\Carbon::parse($produk->tanggal_granted)->format('Y') }}</p>
                     <br><br>
-                    
+
                 </div>
             </div>
 
@@ -43,28 +46,44 @@
             <div class="col-md-6">
                 <div class="resume-item mb-2">
                     <strong>Tim Inventor</strong> <br> <br>
-                    <p class="mb-1"><strong>Ketua : </strong><a href="{{ route('produk.dosen', ['dosen'=>$produk->inventor ?: $produk->inventor_lainnya]) }}">{{ $produk->inventor ?: $produk->inventor_lainnya }}</a></p>
+                    <p class="mb-1"><strong>Ketua : </strong><a
+                            href="{{ route('produk.dosen', ['dosen' => $produk->inventor ?: $produk->inventor_lainnya]) }}">{{ $produk->inventor ?: $produk->inventor_lainnya }}</a>
+                    </p>
                     <p class="mb-1"><strong>Anggota : </strong></p>
                     <ul>
                         @foreach ($produk->anggota as $anggota)
-                            @if ($anggota->detail && $anggota->detail->jabatan === 'Mahasiswa')
-                                <li>{{ $anggota->detail->nama_lengkap }}   -   {{ $anggota->detail->jabatan }}</li> 
+                            @if ($anggota->anggota)
+                                <li><a
+                                        href="{{ route('produk.dosen', ['dosen' => $anggota->anggota->nama_lengkap]) }}">
+                                        {{ $anggota->anggota->nama_lengkap }} - {{ $anggota->anggota->jabatan }}</a>
+                                </li>
                             @else
-                                <li><a href="{{ route('produk.dosen', ['dosen' => $anggota->detail->nama_lengkap]) }}">{{ $anggota->detail->nama_lengkap }}</a></li>
+                                <li>Anggota tidak ditemukan</li>
                             @endif
                         @endforeach
-                    </ul>                    
-                    <a class="btn btn-success p-3 mt-4" href="mailto:{{ $produk->email_inventor }}"><i class="bi bi-envelope me-2"></i>Hubungi Inventor</a>
+                    </ul>
+                    @if (!empty($produk->anggota_inventor_lainnya))
+                        <p class="mb-1"><strong>Mahasiswa Atau Pihak Lain Yang Terlibat : </strong></p>
+                        @foreach (array_filter(explode(',', $produk->anggota_inventor_lainnya)) as $anggota_lain)
+                            <li>
+                                <a href="{{ route('produk.dosen', ['dosen' => $anggota_lain]) }}">{{ $anggota_lain }}</a>
+                            </li>
+                        @endforeach
+                    @endif
+                    <a class="btn btn-success p-3 mt-4" href="mailto:{{ $produk->email_inventor }}"><i
+                            class="bi bi-envelope me-2"></i>Hubungi Inventor</a>
                 </div>
             </div>
-            
+
         </div>
 
     </div>
 </section> <!-- .section -->
 
 <div class="article-meta">
-    <div><a href="{{ route('produk.dosen', $produk->inventor ?: $produk->inventor_lainnya) }}" class="link-secondary link-underline link-underline-opacity-0">By {{ $produk->inventor ?: $produk->inventor_lainnya }}</a></div>
+    <div><a href="{{ route('produk.dosen', $produk->inventor ?: $produk->inventor_lainnya) }}"
+            class="link-secondary link-underline link-underline-opacity-0">By
+            {{ $produk->inventor ?: $produk->inventor_lainnya }}</a></div>
     <div>{{ $produk->kelompokKeahlian->nama_kbk }}</div>
 </div>
 
