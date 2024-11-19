@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('penulis');
             $table->string('penulis_lainnya')->nullable();
             $table->string('email_penulis');
-            $table->string('penulis_korespondensi')->nullable();
+            $table->string('penulis_korespondensi');
             $table->text('penulis_bersama')->nullable();
             $table->text('lampiran')->nullable();
             $table->date('tanggal_publikasi')->nullable();

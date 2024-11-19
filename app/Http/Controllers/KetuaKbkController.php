@@ -405,12 +405,10 @@ class KetuaKbkController extends Controller
     public function hapusProduk($id)
     {
         $produk = Produk::findOrFail($id);
-
         // Hapus gambar jika ada
         if ($produk->gambar && Storage::exists($produk->gambar)) {
             Storage::delete($produk->gambar);
         }
-
         // Hapus lampiran jika ada
         if ($produk->lampiran && Storage::exists($produk->lampiran)) {
             Storage::delete($produk->lampiran);
@@ -442,17 +440,14 @@ class KetuaKbkController extends Controller
         $penelitianAnggota = AnggotaKelompokKeahlian::all();
         $penelitian = Penelitian::with(['kelompokKeahlian', 'penulisKorespondensi'])->find($userId);
 
-
-
-
         return view('k_kbk.penelitian.index', compact('penelitians', 'kkbk', 'anggotaKelompok', 'penelitianAnggota', 'penelitian'));
     }
 
     public function showPenelitian($id)
     {
-        // $penelitian = Penelitian::with(['kelompokKeahlian', 'anggotaPenelitian.detailAnggota'])->findOrFail($id);
-
-        $penelitian = Penelitian::with(['kelompokKeahlian', 'penulisKorespondensi'])->find($id);
+        $penelitian = Penelitian::with(['kelompokKeahlian', 'anggotaPenelitian.detailAnggota'])->findOrFail($id);
+        dd($penelitian);
+        // $penelitian = Penelitian::with(['kelompokKeahlian', 'penulisKorespondensi'])->find($id);
         // dd($penelitian->penulisKorespondensi->jabatan);  // Sekarang mengakses relasi yang benar
 
         return view('k_kbk.penelitian.show.index', compact('penelitian'));
@@ -463,12 +458,11 @@ class KetuaKbkController extends Controller
         try {
             $request->validate([
                 'judul' => 'required|string|max:255',
-                // 'abstrak' => 'required|file|mimes:pdf|max:10240',
                 'abstrak' => 'required|string',
                 'kbk_id' => 'required',
                 'penulis' => 'required|string|max:255',
                 'email_penulis' => 'required|email',
-                // 'penulis_korespondensi'=> 'required|string|max:255',
+                'penulis_korespondensi' => 'required|string',
                 'gambar' => 'required|file|mimes:jpeg,png,jpg|max:10240', // Sesuaikan dengan format file yang diperbolehkan
                 'lampiran' => 'required|file|mimes:jpeg,png,jpg,pdf,docx|max:10240',
                 'tanggal_publikasi' => 'date'
@@ -478,17 +472,11 @@ class KetuaKbkController extends Controller
                 'penulis.required' => 'Nama penulis wajib diisi.',
                 'email_penulis.required' => 'Email penulis wajib diisi.',
                 'email_penulis.email' => 'Email penulis tidak valid.',
-
                 'abstrak.required' => 'Abstrak penelitian wajib diisi.',
                 'gambar.required' => 'Gambar penelitian penelitian wajib diisi.',
                 'lampiran.required' => 'Lampiran penelitian wajib diisi.',
-
-                // 'abstrak.max' => 'Ukuran file abstrak maksimal 10MB.',
-                // 'abstrak.max' => 'Abstrak Tidak Boleh Lebih Dari 250 Kata.',
                 'gambar.max' => 'Ukuran file gambar maksimal 10MB.',
                 'lampiran.max' => 'Ukuran file lampiran maksimal 10MB.',
-
-                // 'abstrak.mimes' => 'File abstrak harus berupa PDF.',
                 'gambar.mimes' => 'File gambar harus berupa JPG, JPEG, atau PNG.',
                 'lampiran.mimes' => 'File lampiran harus berupa JPG, JPEG, PNG, PDF, atau DOCX.',
             ]);

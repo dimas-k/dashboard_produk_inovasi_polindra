@@ -20,8 +20,8 @@
                 <tr>
                 <tr>
                     <th>Penulis Korespondensi</th>
-                    <td>: {{ $penelitian->PenulisKorespondensi->nama_lengkap ?? '' }} 
-                        - {{$penelitian->penulisKorespondensi->jabatan  ?? ''}}
+                    <td>: {{ $penelitian->penulis_korespondensi->nama_lengkap ?? '' }} 
+                        - {{$penelitian->penulis_korespondensi->jabatan  ?? ''}}
                     </td>
                 </tr>
                 <tr>
