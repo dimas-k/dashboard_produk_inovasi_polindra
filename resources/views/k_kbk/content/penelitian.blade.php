@@ -94,7 +94,8 @@
                                         <label for="penulis_korespondensi">Pilih Penulis Korespondensi</label><br>
                                         <select class="selectpicker w-100" name="penulis_korespondensi" data-live-search="true" id="penulis_korespondensi" title="Pilih salah satu">
                                             @foreach ($anggotaKelompok as $anggota)
-                                            <option value="{{ $anggota->id }}">{{ $anggota->nama_lengkap }} - {{ $anggota->jabatan }}
+                                            <option value="{{ $anggota->nama_lengkap}}">
+                                                {{ $anggota->nama_lengkap }} - {{ $anggota->jabatan }}
                                             </option>
                                             @endforeach
                                         </select>

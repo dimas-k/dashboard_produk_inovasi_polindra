@@ -34,8 +34,8 @@ class Penelitian extends Model
     {
         return $this->hasMany(PenelitianAnggota::class, 'penelitian_id');
     }
-    public function penulisKorespondensi()
-    {
-        return $this->belongsTo(AnggotaKelompokKeahlian::class, 'penulis_korespondensi');
-    }
+    // public function penulisKorespondensi()
+    // {
+    //     return $this->belongsTo(AnggotaKelompokKeahlian::class, 'penulis_korespondensi');
+    // }
 }
