@@ -150,7 +150,6 @@
         function toggleInventorInput() {
             // Cek apakah pilihan 'Dosen' atau 'Non-Dosen' yang dipilih
             const isDosen = document.getElementById('inventorDosen').checked;
-
             // Tampilkan 'selectpicker' jika 'Dosen' dipilih, sembunyikan input teks
             document.getElementById('dosenInput').style.display = isDosen ? 'block' : 'none';
             document.getElementById('nonDosenInput').style.display = isDosen ? 'none' : 'block';
@@ -159,22 +158,6 @@
         // Inisialisasi SelectPicker jika menggunakan plugin
         document.addEventListener('DOMContentLoaded', function() {
             $('#inventor').selectpicker();
-        });
-    </script>
-
-    <script>
-        function toggleInventorInput2() {
-            // Cek apakah pilihan 'Dosen' atau 'Non-Dosen' yang dipilih
-            const isDosen = document.getElementById('inventorDosen2').checked;
-
-            // Tampilkan 'selectpicker' jika 'Dosen' dipilih, sembunyikan input teks
-            document.getElementById('dosenInput2').style.display = isDosen ? 'block' : 'none';
-            document.getElementById('nonDosenInput2').style.display = isDosen ? 'none' : 'block';
-        }
-
-        // Inisialisasi SelectPicker jika menggunakan plugin
-        document.addEventListener('DOMContentLoaded', function() {
-            $('#inventor2').selectpicker();
         });
     </script>
 
@@ -194,6 +177,85 @@
 
         // Memanggil fungsi untuk inisialisasi tampilan saat halaman pertama kali dimuat
         toggleAnggotaLainnya();
+    </script>
+
+
+    <script>
+        // Event delegation untuk menangani klik pada semua radio button
+        document.addEventListener('click', function(event) {
+            // Periksa apakah elemen yang diklik adalah radio button dengan ID tertentu
+            if (event.target.name && event.target.name.startsWith('inventor_type_')) {
+                // Ambil ID dari radio button yang diklik
+                var id = event.target.name.replace('inventor_type_', ''); // Contoh: inventor_type_1 menjadi 1
+
+                // Panggil fungsi toggleInventorInput untuk ID tersebut
+                toggleInventorInput(id);
+            }
+        });
+
+        // Fungsi untuk menampilkan/mengubah input berdasarkan radio yang dipilih
+        function toggleInventorInput(id) {
+            var dosenInput = document.getElementById('dosenInput_' + id);
+            var nonDosenInput = document.getElementById('nonDosenInput_' + id);
+            var radioDosen = document.getElementById('inventorDosen_' + id);
+            var radioNonDosen = document.getElementById('inventorNonDosen_' + id);
+
+            if (radioDosen && radioDosen.checked) {
+                dosenInput.style.display = 'block';
+                nonDosenInput.style.display = 'none';
+            } else if (radioNonDosen && radioNonDosen.checked) {
+                dosenInput.style.display = 'none';
+                nonDosenInput.style.display = 'block';
+            }
+        }
+    </script>
+
+    <script>
+        // Event delegation untuk menangani klik pada semua radio button "tipe_inventor"
+        document.addEventListener('click', function(event) {
+            if (event.target.name && event.target.name.startsWith('tipe_inventor_')) {
+                // Ambil ID produk dari name radio button
+                const id = event.target.name.replace('tipe_inventor_', ''); // Contoh: tipe_inventor_1 menjadi 1
+
+                // Panggil fungsi untuk toggle input "Nama Anggota Lainnya"
+                toggleAnggotaLainnya(id);
+            }
+        });
+
+        // Fungsi untuk menampilkan/mengubah input berdasarkan radio yang dipilih
+        function toggleAnggotaLainnya(id) {
+            const anggotaLainnyaContainer = document.getElementById('anggotaLainnyaContainer_' + id);
+            const radioYa = document.getElementById('inventorYes_' + id);
+
+            if (radioYa && radioYa.checked) {
+                anggotaLainnyaContainer.style.display = 'block';
+            } else {
+                anggotaLainnyaContainer.style.display = 'none';
+            }
+        }
+
+        // Inisialisasi saat halaman pertama kali dimuat
+        document.querySelectorAll('[name^="tipe_inventor_"]').forEach(radio => {
+            const id = radio.name.replace('tipe_inventor_', '');
+            toggleAnggotaLainnya(id);
+        });
+    </script>
+
+
+    <script>
+        function toggleInventorInput2() {
+            // Cek apakah pilihan 'Dosen' atau 'Non-Dosen' yang dipilih
+            const isDosen = document.getElementById('inventorDosen2').checked;
+
+            // Tampilkan 'selectpicker' jika 'Dosen' dipilih, sembunyikan input teks
+            document.getElementById('dosenInput2').style.display = isDosen ? 'block' : 'none';
+            document.getElementById('nonDosenInput2').style.display = isDosen ? 'none' : 'block';
+        }
+
+        // Inisialisasi SelectPicker jika menggunakan plugin
+        document.addEventListener('DOMContentLoaded', function() {
+            $('#inventor2').selectpicker();
+        });
     </script>
 
     <script>

@@ -565,7 +565,6 @@ class KetuaKbkController extends Controller
 
     public function storePenelitian(Request $request)
     {
-
         try {
             // Validasi input
             $validatedData = $request->validate(
