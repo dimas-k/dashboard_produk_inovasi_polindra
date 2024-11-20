@@ -199,8 +199,8 @@
     <script>
         // Fungsi untuk menampilkan input text jika "Ya" dipilih
         function toggleAnggotaLainnya2() {
-            var anggotaLainnyaContainer = document.getElementById('anggotaLainnyaContainer');
-            var radioYa = document.getElementById('inventorYes');
+            var anggotaLainnyaContainer = document.getElementById('anggotaLainnyaContainer2');
+            var radioYa = document.getElementById('inventorYes2');
 
             // Menampilkan atau menyembunyikan input berdasarkan pilihan radio button
             if (radioYa.checked) {
@@ -218,6 +218,12 @@
     <script type="text/javascript">
         $(document).ready(function() {
             $('#anggota_inventor').selectpicker();
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#anggota_inventor2').selectpicker();
         });
     </script>
 

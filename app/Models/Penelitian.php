@@ -15,7 +15,7 @@ class Penelitian extends Model
         'gambar',
         'penulis',
         'penulis_korespondensi',
-        'anggota_penulis',
+        'anggota_penulis_lainnya',
         'email_penulis',
         'lampiran',
         'status'
@@ -33,6 +33,23 @@ class Penelitian extends Model
     public function anggotaPenelitian()
     {
         return $this->hasMany(PenelitianAnggota::class, 'penelitian_id');
+    }
+
+    public function anggota1()
+    {
+        return $this->morphToMany(AnggotaKelompokKeahlian::class, 'anggota', 'penelitians_anggotas', 'penelitian_id', 'pene_id')
+            ->withPivot('anggota_type');
+    }
+
+    public function anggota_penulis()
+    {
+        return $this->morphToMany(
+            PenelitianAnggota::class,
+            'anggota',
+            'penelitians_anggotas',
+            'penelitian_id',
+            'anggota_id'
+        );
     }
     // public function penulisKorespondensi()
     // {

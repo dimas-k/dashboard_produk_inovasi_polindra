@@ -19,15 +19,14 @@ return new class extends Migration
             $table->string('judul');
             $table->text('abstrak');
             $table->string('gambar')->nullable();
-            $table->string('penulis');
+            $table->string('penulis')->nullable();
             $table->string('penulis_lainnya')->nullable();
             $table->string('email_penulis');
-            $table->string('penulis_korespondensi');
-            $table->text('penulis_bersama')->nullable();
+            $table->string('penulis_korespondensi')->nullable();
+            $table->text('anggota_penulis_lainnya')->nullable();
             $table->text('lampiran')->nullable();
             $table->date('tanggal_publikasi')->nullable();
             $table->string('status')->default('Belum Divalidasi');
-            
             $table->timestamps();
         });
 

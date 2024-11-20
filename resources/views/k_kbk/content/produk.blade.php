@@ -66,7 +66,6 @@
                                         <input type="radio" id="inventorDosen" name="inventor_type" value="dosen"
                                             checked onclick="toggleInventorInput()">
                                         <label for="inventorDosen">Dosen</label>
-
                                         <input type="radio" id="inventorNonDosen" name="inventor_type"
                                             value="non_dosen" onclick="toggleInventorInput()">
                                         <label for="inventorNonDosen">Non-Dosen</label>
@@ -247,7 +246,8 @@
                                 {{ ($produks->currentPage() - 1) * $produks->perPage() + $loop->iteration }}
                             </th>
                             <td>{{ $p->nama_produk }}</td>
-                            <td>{{ $p->inventor }}</td>
+                            {{-- <td>{{ $p->inventor }}</td> --}}
+                            <td> {{ $p->inventor ?: $p->inventor_lainnya }}</td>
                             <td>{{ $p->email_inventor }}</td>
                             <td>{{ \Carbon\Carbon::parse($p->tanggal_granted)->format('d-m-Y') }}</td>
                             <td>
@@ -345,25 +345,31 @@
                                                     <div class="row mb-3">
                                                         <label class="form-label">Inventor</label>
                                                         <div>
-                                                            <input type="radio" id="inventorDosen2" name="inventor_type" value="dosen"
-                                                                checked onclick="toggleInventorInput2()">
+                                                            <input type="radio" id="inventorDosen2"
+                                                                name="inventor_type" value="dosen" 
+                                                                onclick="toggleInventorInput2()">
                                                             <label for="inventorDosen2">Dosen</label>
-                    
-                                                            <input type="radio" id="inventorNonDosen2" name="inventor_type"
-                                                                value="non_dosen" onclick="toggleInventorInput2()">
+
+                                                            <input type="radio" id="inventorNonDosen2"
+                                                                name="inventor_type" value="non_dosen" 
+                                                                onclick="toggleInventorInput2()">
                                                             <label for="inventorNonDosen2">Non-Dosen</label>
                                                         </div>
                                                     </div>
                                                     <!-- Input untuk Dosen (SelectPicker) -->
-                                                    <div class="row" id="dosenInput">
+                                                    <div class="row" id="dosenInput2">
                                                         <div class="col mb-6">
-                                                            <label for="inventor" class="form-label">Nama Inventor</label>
+                                                            <label for="inventor" class="form-label">Nama
+                                                                Inventor</label>
                                                             <input type="text" id="inventor_{{ $p->id }}"
                                                                 class="form-control" value="{{ $p->inventor }}"
-                                                                name="inventor" hidden/>
-                                                            <select class="selectpicker w-70" data-live-search="true" id="inventor"
-                                                                name="inventor" title="Pilih Inventor..">
+                                                                name="inventor" hidden />
+                                                            <select class="selectpicker w-70" data-live-search="true"
+                                                                id="inventor2" name="inventor"
+                                                                title="Pilih Inventor..">
+                                                                <option disabled selected>Jika ingin dikosongkan klik None</option>
                                                                 <option disabled selected>--Pilih--</option>
+                                                                <option value=" ">None</option>
                                                                 <optgroup label="Ketua KBK">
                                                                     @foreach ($inventorK as $inventor)
                                                                         <option value="{{ $inventor->nama_lengkap }}">
@@ -376,7 +382,8 @@
                                                                     @foreach ($inventorA as $inventor)
                                                                         <option value="{{ $inventor->nama_lengkap }}">
                                                                             {{ $inventor->nama_lengkap }} -
-                                                                            {{ $inventor->jabatan ?? 'Tidak ada jabatan' }} -
+                                                                            {{ $inventor->jabatan ?? 'Tidak ada jabatan' }}
+                                                                            -
                                                                             {{ $inventor->nama_kbk }}
                                                                         </option>
                                                                     @endforeach
@@ -387,9 +394,12 @@
                                                     <!-- Input untuk Non-Dosen (Input Teks) -->
                                                     <div class="row" id="nonDosenInput2" style="display: none;">
                                                         <div class="col mb-6">
-                                                            <label for="inventor_lainnya" class="form-label">Nama Inventor Lainnya</label>
-                                                            <input type="text" id="inventor_lainnya" class="form-control"
-                                                                placeholder="Masukkan nama inventor lainnya" name="inventor_lainnya" />
+                                                            <label for="inventor_lainnya" class="form-label">Nama
+                                                                Inventor Lainnya</label>
+                                                            <input type="text" id="inventor_lainnya"
+                                                                class="form-control"
+                                                                placeholder="Masukkan nama inventor lainnya"
+                                                                name="inventor_lainnya" value="{{ $p->inventor_lainnya }}" />
                                                             @error('inventor_lainnya')
                                                                 <div class="invalid-feedback">
                                                                     {{ $message }}
@@ -428,40 +438,58 @@
                                                                             @endif
                                                                         </li>
                                                                     @endforeach
+                                                                    @if (!empty($p->anggota_inventor_lainnya))
+                                                                        @foreach (array_filter(explode(',', $p->anggota_inventor_lainnya)) as $anggota_lain)
+                                                                            <li>{{ $anggota_lain }}</li>
+                                                                        @endforeach
+                                                                    @else
+                                                                        <br>
+                                                                        <p>Tidak ada anggota_lainnya </p>
+                                                                    @endif
                                                                 </div>
                                                             </div>
                                                             <div class="row mb-3">
-                                                                <label class="form-label">Apakah Bersama Mahasiswa?</label>
+                                                                <label class="form-label">Apakah Bersama
+                                                                    Mahasiswa?</label>
                                                                 <div>
                                                                     <!-- Radio Button untuk "Tidak" -->
-                                                                    <input type="radio" id="inventorNo" name="tipe_inventor" value="Tidak"
-                                                                        onclick="toggleAnggotaLainnya()">
+                                                                    <input type="radio" id="inventorNo"
+                                                                        name="tipe_inventor" value="Tidak"
+                                                                        onclick="toggleAnggotaLainnya2()">
                                                                     <label for="inventorNo">Tidak</label>
-                            
+
                                                                     <!-- Radio Button untuk "Ya" -->
-                                                                    <input type="radio" id="inventorYes" name="tipe_inventor" value="Ya"
-                                                                        onclick="toggleAnggotaLainnya()">
-                                                                    <label for="inventorYes">Ya</label>
+                                                                    <input type="radio" id="inventorYes2"
+                                                                        name="tipe_inventor" value="Ya"
+                                                                        onclick="toggleAnggotaLainnya2()" checked>
+                                                                    <label for="inventorYes2">Ya</label>
                                                                 </div>
                                                             </div>
                                                             <div class="row">
-                                                                <div class="col mb-6" id="anggotaLainnyaContainer" style="display: none;">
-                                                                    <label class="form-label" for="anggota_inventor_lainnya">Nama Anggota
+                                                                <div class="col mb-6" id="anggotaLainnyaContainer2"
+                                                                    style="display: none;">
+                                                                    <label class="form-label"
+                                                                        for="anggota_inventor_lainnya">Nama Anggota
                                                                         Lainnya</label>
                                                                     <textarea id="anggota_inventor_lainnya" name="anggota_inventor_lainnya" class="form-control"
-                                                                        placeholder="Masukkan nama anggota lainnya"></textarea>
+                                                                        placeholder="Masukkan nama anggota lainnya">{{ $p->anggota_inventor_lainnya }}</textarea>
                                                                 </div>
                                                             </div>
                                                             <div class="row">
                                                                 <div class="col mb-6">
-                                                                    <label for="anggota_inventor">Pilih Anggota Inventor</label> <br>
-                                                                    <select class="selectpicker w-50" data-live-search="true"
-                                                                        id="anggota_inventor" name="anggota_inventor[]" multiple
+                                                                    <label for="anggota_inventor">Pilih Anggota
+                                                                        Inventor</label> <br>
+                                                                    <select class="selectpicker w-50"
+                                                                        data-live-search="true" id="anggota_inventor2"
+                                                                        name="anggota_inventor[]" multiple
                                                                         title="Pilih Anggota Inventor..">
+                                                                        <option disabled selected>Jika ingin dikosongkan klik None</option>
                                                                         <option disabled selected>-- Pilih --</option>
+                                                                        <option value="none">None</option>
                                                                         <optgroup label="Ketua KBK">
                                                                             @foreach ($inventorK as $inventor)
-                                                                                <option value="user_{{ $inventor->id }}">
+                                                                                <option
+                                                                                    value="user_{{ $inventor->id }}">
                                                                                     {{ $inventor->nama_lengkap }} -
                                                                                     {{ $inventor->jabatan ?? 'Tidak ada jabatan' }}
                                                                                 </option>
@@ -469,17 +497,18 @@
                                                                         </optgroup>
                                                                         <optgroup label="Anggota KBK">
                                                                             @foreach ($inventorA as $inventor)
-                                                                                <option value="anggota_{{ $inventor->id }}">
+                                                                                <option
+                                                                                    value="anggota_{{ $inventor->id }}">
                                                                                     {{ $inventor->nama_lengkap }} -
-                                                                                    {{ $inventor->jabatan ?? 'Tidak ada jabatan' }} -
+                                                                                    {{ $inventor->jabatan ?? 'Tidak ada jabatan' }}
+                                                                                    -
                                                                                     {{ $inventor->nama_kbk }}
                                                                                 </option>
                                                                             @endforeach
                                                                         </optgroup>
                                                                     </select>
                                                                 </div>
-                                                            </div>                                                        
-                                                            <br>
+                                                            </div>
                                                             <span class="text-danger"><small><i
                                                                         class='bx bxs-error me-1'></i>Jika tidak ada
                                                                     perubahan anggota inventor tidak usah dinputkan

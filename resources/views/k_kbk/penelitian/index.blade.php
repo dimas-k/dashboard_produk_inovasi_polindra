@@ -132,6 +132,79 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
 
+
+    {{-- <script>
+        function togglePenulisKorespondensiInput() {
+            const isDosen = document.getElementById('penulisKorespondensiDosen').checked;
+
+            document.getElementById('dosenInput1').style.display = isDosen ? 'block' : 'none';
+            document.getElementById('nonDosenInput1').style.display = isDosen ? 'none' : 'block';
+        }
+
+        function togglePenulisInput() {
+            const isDosen = document.getElementById('penulisDosen').checked;
+
+            document.getElementById('dosenInput').style.display = isDosen ? 'block' : 'none';
+            document.getElementById('nonDosenInput').style.display = isDosen ? 'none' : 'block';
+        }
+    </script> --}}
+
+
+    <script>
+        function togglePenulisInput() {
+            // Cek apakah pilihan 'Dosen' atau 'Non-Dosen' yang dipilih
+            const isDosen = document.getElementById('penulisDosen').checked;
+
+            // Tampilkan 'selectpicker' jika 'Dosen' dipilih, sembunyikan input teks
+            document.getElementById('dosenInput').style.display = isDosen ? 'block' : 'none';
+            document.getElementById('nonDosenInput').style.display = isDosen ? 'none' : 'block';
+        }
+
+        // Inisialisasi SelectPicker jika menggunakan plugin
+        document.addEventListener('DOMContentLoaded', function() {
+            $('#penulis').selectpicker();
+        });
+    </script>
+
+    <script>
+        function togglePenulisKorespondensiInput() {
+            // Cek apakah pilihan 'Dosen' atau 'Non-Dosen' yang dipilih
+            const isDosen = document.getElementById('penulisKorespondensiDosen').checked;
+
+            // Tampilkan 'selectpicker' jika 'Dosen' dipilih, sembunyikan input teks
+            document.getElementById('dosenInput1').style.display = isDosen ? 'block' : 'none';
+            document.getElementById('nonDosenInput1').style.display = isDosen ? 'none' : 'block';
+        }
+
+        // Inisialisasi SelectPicker jika menggunakan plugin
+        document.addEventListener('DOMContentLoaded', function() {
+            // Panggil togglePenulisKorespondensiInput saat halaman dimuat untuk set default input yang benar
+            togglePenulisKorespondensiInput();
+
+            // Inisialisasi SelectPicker
+            $('#penulis_korespondensi_select').selectpicker();
+        });
+    </script>
+
+    <script>
+        // Fungsi untuk menampilkan input text jika "Ya" dipilih
+        function toggleAnggotaLainnya() {
+            var anggotaLainnyaContainer = document.getElementById('anggotaLainnyaContainer');
+            var radioYa = document.getElementById('penulisYes');
+
+            // Menampilkan atau menyembunyikan input berdasarkan pilihan radio button
+            if (radioYa.checked) {
+                anggotaLainnyaContainer.style.display = 'block';
+            } else {
+                anggotaLainnyaContainer.style.display = 'none';
+            }
+        }
+
+        // Memanggil fungsi untuk inisialisasi tampilan saat halaman pertama kali dimuat
+        toggleAnggotaLainnya();
+    </script>
+
+
     <script type="text/javascript">
         $(document).ready(function() {
             $('#anggota_penulis').selectpicker();

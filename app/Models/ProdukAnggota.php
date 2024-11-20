@@ -19,17 +19,12 @@ class ProdukAnggota extends Model
 
     public function detail()
     {
-        return $this->anggota;
+        return $this->morphTo(null, 'anggota_type', 'anggota_id');
     }
-
-
+    
     public function anggota()
     {
         return $this->morphTo('anggota', 'anggota_type', 'anggota_id');
     }
 
-    //     public function anggota()
-    // {
-    //     return $this->morphTo();
-    // }
 }
