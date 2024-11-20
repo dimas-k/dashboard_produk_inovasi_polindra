@@ -15,7 +15,11 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->foreignId('penelitian_id')->constrained('penelitians')->onDelete('cascade');
             $table->foreignId('anggota_id')->constrained('anggota_kelompok_keahlians')->onDelete('cascade');
+            $table->string('anggota_type'); // Menyimpan tipe relasi (users atau anggota_kelompok_keahlians)
             $table->timestamps();
+
+            $table->index(['anggota_id', 'anggota_type']);
+
         });
         
     }

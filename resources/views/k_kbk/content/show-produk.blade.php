@@ -18,6 +18,10 @@
                     <td>: {{ $produk->inventor ?: $produk->inventor_lainnya }}</td>
                 </tr>
                 <tr>
+                    <th>Email</th>
+                    <td>: {{ $produk->email_inventor }}</td>
+                </tr>
+                <tr>
                     <th>Anggota Inventor</th>
                     <td>
                         @foreach ($produk->anggota as $anggota)
@@ -53,10 +57,7 @@
                     <th>Kelompok Keahlian</th>
                     <td>: {{ $produk->kelompokKeahlian ? $produk->kelompokKeahlian->nama_kbk : 'Tidak ada' }}</td>
                 </tr>
-                <tr>
-                    <th>Email</th>
-                    <td>: {{ $produk->email_inventor }}</td>
-                </tr>
+
                 <tr>
                     <th>Lampiran</th>
                     <td>:

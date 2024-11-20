@@ -41,7 +41,20 @@ class Produk extends Model
     {
         return $this->hasMany(ProdukAnggota::class, 'produk_id', 'id');
     }
+    // public function anggota()
+    // {
+    //     return $this->hasMany(ProdukAnggota::class, 'produk_id');
+    // }
+    public function anggota1()
+    {
+        return $this->morphToMany(AnggotaKelompokKeahlian::class, 'anggota', 'produk_anggotas', 'produk_id', 'anggota_id')
+            ->withPivot('anggota_type');
+    }
 
+    public function getAnggotaInventorLainnyaArrayAttribute()
+    {
+        return $this->anggota_inventor_lainnya ? explode(',', $this->anggota_inventor_lainnya) : [];
+    }
 
     public function anggota_inventor()
     {

@@ -31,6 +31,16 @@ class AnggotaKelompokKeahlian extends Model
             'produk_id'       // Kolom ID produk
         );
     }
+    public function penelitian()
+    {
+        return $this->morphToMany(
+            Penelitian::class,
+            'anggota',       // Nama relasi polimorfik
+            'penelitians_anggotas', // Nama tabel pivot
+            'anggota_id',     // Kolom ID anggota
+            'penelitian_id'       // Kolom ID produk
+        );
+    }
 
     /**
      * Relasi ke tabel `kelompok_keahlians`

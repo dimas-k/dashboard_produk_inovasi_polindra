@@ -13,7 +13,8 @@ class PenelitianAnggota extends Model
 
     protected $fillable = [
         'penelitian_id',
-        'anggota_id'
+        'anggota_id',
+        'anggota_type', // Polimorfisme
     ];
 
     public function detailAnggota()
@@ -21,4 +22,13 @@ class PenelitianAnggota extends Model
         return $this->belongsTo(AnggotaKelompokKeahlian::class, 'anggota_id');
     }
     
+    public function detail()
+    {
+        return $this->morphTo(null, 'anggota_type', 'anggota_id');
+    }
+    
+    public function anggota()
+    {
+        return $this->morphTo('anggota', 'anggota_type', 'anggota_id');
+    }
 }

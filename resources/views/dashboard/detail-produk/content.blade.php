@@ -62,14 +62,27 @@
                             @endif
                         @endforeach
                     </ul>
-                    @if (!empty($produk->anggota_inventor_lainnya))
+                    {{-- @if (!empty($produk->anggota_inventor_lainnya))
                         <p class="mb-1"><strong>Mahasiswa Atau Pihak Lain Yang Terlibat : </strong></p>
                         @foreach (array_filter(explode(',', $produk->anggota_inventor_lainnya)) as $anggota_lain)
                             <li>
-                                <a href="{{ route('produk.dosen', ['dosen' => $anggota_lain]) }}">{{ $anggota_lain }}</a>
+                                <a
+                                    href="{{ route('produk.dosen', ['dosen' => $anggota_lain]) }}">{{ $anggota_lain }}</a>
                             </li>
                         @endforeach
+                    @endif --}}
+                    @if (!empty($produk->anggota_inventor_lainnya))
+                        <p class="mb-1"><strong>Mahasiswa Atau Pihak Lain Yang Terlibat:</strong></p>
+                        <ul>
+                            @foreach ($produk->anggota_inventor_lainnya_array as $anggota_lain)
+                                <li>
+                                    <a
+                                        href="{{ route('produk.dosen', ['dosen' => trim($anggota_lain)]) }}">{{ $anggota_lain }}</a>
+                                </li>
+                            @endforeach
+                        </ul>
                     @endif
+
                     <a class="btn btn-success p-3 mt-4" href="mailto:{{ $produk->email_inventor }}"><i
                             class="bi bi-envelope me-2"></i>Hubungi Inventor</a>
                 </div>
