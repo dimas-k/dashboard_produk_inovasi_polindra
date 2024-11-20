@@ -38,13 +38,7 @@
                             <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
                         </div>
                     </div>
-                    <div class="mb-8">
-                        <div class="d-flex justify-content-between mt-8">
-                            <a href="auth-forgot-password-basic.html">
-                                <span>Lupa Password?</span>
-                            </a>
-                        </div>
-                    </div>
+                    <br>
                     <div class="mb-6">
                         <button class="btn btn-primary d-grid w-100" type="submit">Login</button>
                     </div>
