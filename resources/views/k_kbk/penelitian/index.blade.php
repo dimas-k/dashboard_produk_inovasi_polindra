@@ -131,23 +131,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
 
 
-    {{-- <script>
-        function togglePenulisKorespondensiInput() {
-            const isDosen = document.getElementById('penulisKorespondensiDosen').checked;
-
-            document.getElementById('dosenInput1').style.display = isDosen ? 'block' : 'none';
-            document.getElementById('nonDosenInput1').style.display = isDosen ? 'none' : 'block';
-        }
-
-        function togglePenulisInput() {
-            const isDosen = document.getElementById('penulisDosen').checked;
-
-            document.getElementById('dosenInput').style.display = isDosen ? 'block' : 'none';
-            document.getElementById('nonDosenInput').style.display = isDosen ? 'none' : 'block';
-        }
-    </script> --}}
-
-
     <script>
         function togglePenulisInput() {
             // Cek apakah pilihan 'Dosen' atau 'Non-Dosen' yang dipilih
@@ -200,6 +183,67 @@
 
         // Memanggil fungsi untuk inisialisasi tampilan saat halaman pertama kali dimuat
         toggleAnggotaLainnya();
+    </script>
+
+    <script>
+        // Event delegation untuk menangani klik pada semua radio button
+        document.addEventListener('click', function(event) {
+            // Periksa apakah elemen yang diklik adalah radio button dengan ID tertentu
+            if (event.target.name && event.target.name.startsWith('penulis_type_')) {
+                // Ambil ID dari radio button yang diklik
+                var id = event.target.name.replace('penulis_type_', ''); // Contoh: penulis_type_1 menjadi 1
+
+                // Panggil fungsi togglepenulisInput untuk ID tersebut
+                togglepenulisInput(id);
+            }
+        });
+
+        // Fungsi untuk menampilkan/mengubah input berdasarkan radio yang dipilih
+        function togglepenulisInput(id) {
+            var dosenInput = document.getElementById('dosenInput_' + id);
+            var nonDosenInput = document.getElementById('nonDosenInput_' + id);
+            var radioDosen = document.getElementById('penulisDosen_' + id);
+            var radioNonDosen = document.getElementById('penulisNonDosen_' + id);
+
+            if (radioDosen && radioDosen.checked) {
+                dosenInput.style.display = 'block';
+                nonDosenInput.style.display = 'none';
+            } else if (radioNonDosen && radioNonDosen.checked) {
+                dosenInput.style.display = 'none';
+                nonDosenInput.style.display = 'block';
+            }
+        }
+    </script>
+
+    <script>
+        // Event delegation untuk menangani klik pada semua radio button "tipe_penulis"
+        document.addEventListener('click', function(event) {
+            if (event.target.name && event.target.name.startsWith('tipe_penulis_')) {
+                // Ambil ID produk dari name radio button
+                const id = event.target.name.replace('tipe_penulis_', ''); // Contoh: tipe_penulis_1 menjadi 1
+
+                // Panggil fungsi untuk toggle input "Nama Anggota Lainnya"
+                toggleAnggotaLainnya(id);
+            }
+        });
+
+        // Fungsi untuk menampilkan/mengubah input berdasarkan radio yang dipilih
+        function toggleAnggotaLainnya(id) {
+            const anggotaLainnyaContainer = document.getElementById('anggotaLainnyaContainer_' + id);
+            const radioYa = document.getElementById('penulisYes_' + id);
+
+            if (radioYa && radioYa.checked) {
+                anggotaLainnyaContainer.style.display = 'block';
+            } else {
+                anggotaLainnyaContainer.style.display = 'none';
+            }
+        }
+
+        // Inisialisasi saat halaman pertama kali dimuat
+        document.querySelectorAll('[name^="tipe_penulis_"]').forEach(radio => {
+            const id = radio.name.replace('tipe_penulis_', '');
+            toggleAnggotaLainnya(id);
+        });
     </script>
 
 

@@ -284,7 +284,7 @@
                                                     @csrf
                                                     <div class="row">
                                                         <div class="col mb-6">
-                                                            <label for="exampleFormControlSelect1" id="kbk"
+                                                            <label for="kelompokKeahlianName" id="kbk"
                                                                 class="form-label">KBK</label>
                                                             <input class="form-control" type="text"
                                                                 id="kelompokKeahlianName"
@@ -344,8 +344,7 @@
                                                             <input type="hidden" name="inventor"
                                                                 value="{{ $p->inventor }}">
                                                             <!-- Hidden input untuk inventor_lainnya -->
-                                                            <input type="hidden"
-                                                                name="inventor_lainnya"
+                                                            <input type="hidden" name="inventor_lainnya"
                                                                 value="{{ $p->inventor_lainnya }}">
                                                         </div>
                                                     </div>
@@ -375,10 +374,9 @@
                                                                 class="form-label">Nama Inventor</label>
                                                             <select class="selectpicker w-70" data-live-search="true"
                                                                 id="inventor_{{ $p->id }}"
-                                                                name="inventor_{{ $p->id }}"
+                                                                {{-- name="inventor_{{ $p->id }}" --}} name="inventor"
                                                                 title="Pilih Inventor..">
                                                                 <option disabled selected>--Pilih--</option>
-                                                                <option value="">None</option>
                                                                 <optgroup label="Ketua KBK">
                                                                     @foreach ($inventorK as $inventor)
                                                                         <option value="{{ $inventor->nama_lengkap }}">
@@ -398,7 +396,6 @@
                                                             </select>
                                                         </div>
                                                     </div>
-
                                                     <!-- Input untuk Non-Dosen -->
                                                     <div class="row" id="nonDosenInput_{{ $p->id }}"
                                                         style="display: none;">
@@ -409,14 +406,21 @@
                                                                 id="inventor_lainnya_{{ $p->id }}"
                                                                 class="form-control"
                                                                 placeholder="Masukkan nama inventor lainnya"
-                                                                name="inventor_lainnya_{{ $p->id }}"
-                                                                value="{{ $p->inventor_lainnya }}" />
+                                                                {{-- name="inventor_lainnya_{{ $p->id }}" --}}
+                                                                name="inventor_lainnya"
+                                                                value="{{ $p->inventor_lainnya ?? '' }}" />
                                                             @error('inventor_lainnya')
                                                                 <div class="invalid-feedback">{{ $message }}
                                                                 </div>
                                                             @enderror
                                                         </div>
                                                     </div>
+                                                    <span class="text-danger"><small><i
+                                                                class='bx bxs-error me-1'></i>Jika tidak ada
+                                                            perubahan anggota inventor tidak usah dinputkan
+                                                            kembali</small>
+                                                    </span>
+                                                    <br> <br>
                                                     <div class="row">
                                                         <div class="col mb-6">
                                                             <label for="nameBasic" class="form-label">Email
@@ -490,7 +494,7 @@
                                                                     <label class="form-label"
                                                                         for="anggota_inventor_lainnya_{{ $p->id }}">Nama
                                                                         Anggota Lainnya</label>
-                                                                    <textarea id="anggota_inventor_lainnya_{{ $p->id }}" name="anggota_inventor_lainnya_{{ $p->id }}"
+                                                                    <textarea id="anggota_inventor_lainnya_{{ $p->id }}" {{-- name="anggota_inventor_lainnya_{{ $p->id }}" --}} name="anggota_inventor_lainnya"
                                                                         class="form-control" placeholder="Masukkan nama anggota lainnya">{{ $p->anggota_inventor_lainnya }}</textarea>
                                                                 </div>
                                                             </div>
@@ -504,13 +508,10 @@
                                                                     <select class="selectpicker w-50"
                                                                         data-live-search="true"
                                                                         id="anggota_inventor_{{ $p->id }}"
-                                                                        name="anggota_inventor_{{ $p->id }}[]"
+                                                                        {{-- name="anggota_inventor_{{ $p->id }}[]" --}} name="anggota_inventor[]"
                                                                         multiple title="Pilih Anggota Inventor..">
-                                                                        <option disabled selected>Jika ingin
-                                                                            dikosongkan klik None</option>
                                                                         <option disabled selected>-- Pilih --
                                                                         </option>
-                                                                        <option value="none">None</option>
                                                                         <optgroup label="Ketua KBK">
                                                                             @foreach ($inventorK as $inventor)
                                                                                 <option
@@ -537,7 +538,8 @@
                                                             <span class="text-danger"><small><i
                                                                         class='bx bxs-error me-1'></i>Jika tidak ada
                                                                     perubahan anggota inventor tidak usah dinputkan
-                                                                    kembali</small></span>
+                                                                    kembali</small>
+                                                            </span>
                                                         </div>
                                                     </div>
                                                     <div class="row">

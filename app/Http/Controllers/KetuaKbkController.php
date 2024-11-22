@@ -206,6 +206,8 @@ class KetuaKbkController extends Controller
                     // Tambahkan pengecekan atau kustomisasi jika diperlukan
                 }
             ])->findOrFail($id);
+            // dd($produk);
+
 
             return view('k_kbk.produk.show.index', compact('produk'));
         } catch (\Exception $e) {
@@ -480,13 +482,18 @@ class KetuaKbkController extends Controller
                 'lampiran' => 'required|file|mimes:jpeg,png,jpg,pdf,docx|max:10240',
                 'tanggal_publikasi' => 'nullable|date',
                 'anggota_penulis' => 'nullable|array',
-                'anggota_penulis.*' => ['regex:/^(user_|anggota_)[0-9]+$/'], // Validasi prefix ID
+                'anggota_penulis.*' => 'string',
                 'anggota_penulis_lainnya' => 'nullable|string|max:255',
 
             ]);
             $penulisKorespondensi = $request->penulis_korespondensi_select
                 ? $request->penulis_korespondensi_select
                 : $request->penulis_korespondensi_lainnya;
+
+            $penulisKorespondensi = $request->penulis_korespondensi_select
+                ? $request->penulis_korespondensi_select
+                : $request->penulis_korespondensi_lainnya;
+
 
             // Mulai transaksi
             DB::beginTransaction();
@@ -501,7 +508,6 @@ class KetuaKbkController extends Controller
             $penelitian->email_penulis = $request->email_penulis;
             $penelitian->penulis_korespondensi = $penulisKorespondensi;
             $penelitian->anggota_penulis_lainnya = $request->anggota_penulis_lainnya;
-
             $penelitian->tanggal_publikasi = $request->tanggal_publikasi;
             // $penelitian->fill($validatedData);
 
@@ -519,53 +525,25 @@ class KetuaKbkController extends Controller
 
             $penelitian->save($validatedData);
 
-            // Proses anggota penulis
-            // if ($request->filled('anggota_penulis')) {
-            //     foreach ($request->anggota_penulis as $anggota) {
-            //         if (str_starts_with($anggota, 'user_')) {
-            //             $anggotaId = str_replace('user_', '', $anggota);
-            //             $table = 'users';
-            //         } elseif (str_starts_with($anggota, 'anggota_')) {
-            //             $anggotaId = str_replace('anggota_', '', $anggota);
-            //             $table = 'anggota_kelompok_keahlians';
-            //         } else {
-            //             continue; // Skip jika format tidak sesuai
-            //         }
+            if (!empty($request->anggota_penulis) && is_array($request->anggota_penulis)) {
+                foreach ($request->anggota_penulis as $anggota) {
+                    if (str_starts_with($anggota, 'user_')) {
+                        $anggotaId = str_replace('user_', '', $anggota);
+                        $table = 'users';
+                    } elseif (str_starts_with($anggota, 'anggota_')) {
+                        $anggotaId = str_replace('anggota_', '', $anggota);
+                        $table = 'anggota_kelompok_keahlians';
+                    } else {
+                        continue; // Skip jika format tidak sesuai
+                    }
 
-            //         PenelitianAnggota::create([
-            //             'penelitian_id' => $penelitian->id,
-            //             'anggota_id' => $anggotaId,
-            //             'anggota_type' => $table,
-            //         ]);
-            //     }
-            // }
-            $anggotaPenulis = $request->input('anggota_penulis', []); // Ambil input anggota_penulis
-            $dataToInsert = [];
-
-            foreach ($anggotaPenulis as $anggota) {
-                if (str_starts_with($anggota, 'user_')) {
-                    $id = str_replace('user_', '', $anggota);
-                    $dataToInsert[] = [
+                    PenelitianAnggota::create([
                         'penelitian_id' => $penelitian->id,
-                        'anggota_id' => $id,
-                        'anggota_type' => 'users', // Tipe dari tabel users
-                        'created_at' => now(),
-                        'updated_at' => now(),
-                    ];
-                } elseif (str_starts_with($anggota, 'anggota_')) {
-                    $id = str_replace('anggota_', '', $anggota);
-                    $dataToInsert[] = [
-                        'penelitian_id' => $penelitian->id,
-                        'anggota_id' => $id,
-                        'anggota_type' => 'anggota_kelompok_keahlians', // Tipe dari tabel anggota_kelompok_keahlians
-                        'created_at' => now(),
-                        'updated_at' => now(),
-                    ];
+                        'anggota_id' => $anggotaId,
+                        'anggota_type' => $table,
+                    ]);
                 }
             }
-
-            // Insert ke database
-            DB::table('penelitians_anggotas')->insert($dataToInsert);
 
             DB::commit();
 
@@ -581,8 +559,6 @@ class KetuaKbkController extends Controller
             ], 500);
         }
     }
-
-
 
     public function updatePenelitian(Request $request, $id)
     {
@@ -615,30 +591,31 @@ class KetuaKbkController extends Controller
             // $penelitian->penulis_korespondensi = $request->penulis_korespondensi;
             $penelitian->tanggal_publikasi = $request->tanggal_publikasi;
 
+            // Proses upload gambar baru
             if ($request->hasFile('gambar')) {
+                // Hapus file lama jika ada
                 if ($penelitian->gambar && Storage::exists($penelitian->gambar)) {
                     Storage::delete($penelitian->gambar);
                 }
+
+                // Upload file baru
                 $originalName = $request->file('gambar')->getClientOriginalName();
                 $fileName = time() . '_' . str_replace(' ', '_', $originalName);
-
-                // Simpan file dengan nama kustom
                 $path = $request->file('gambar')->storeAs('dokumen-penelitian', $fileName);
-
-                // Simpan path tanpa 'public/' di database
                 $penelitian->gambar = $path;
             }
+
+            // Proses upload lampiran baru
             if ($request->hasFile('lampiran')) {
+                // Hapus file lama jika ada
                 if ($penelitian->lampiran && Storage::exists($penelitian->lampiran)) {
                     Storage::delete($penelitian->lampiran);
                 }
+
+                // Upload file baru
                 $originalName = $request->file('lampiran')->getClientOriginalName();
                 $fileName = time() . '_' . str_replace(' ', '_', $originalName);
-
-                // Simpan file dengan nama kustom
                 $path = $request->file('lampiran')->storeAs('dokumen-penelitian', $fileName);
-
-                // Simpan path tanpa 'public/' di database
                 $penelitian->lampiran = $path;
             }
             // Cek dan simpan penulis korespondensi jika ada
@@ -649,13 +626,25 @@ class KetuaKbkController extends Controller
             $penelitian->save();
 
             if ($request->filled('anggota_penulis')) {
-                // Hapus semua anggota terkait sebelumnya
-                $penelitian->anggotaPenelitian()->delete();
+                // Hapus semua data lama di pivot table
+                PenelitianAnggota::where('penelitian_id', $penelitian->id)->delete();
 
-                // Tambahkan data baru
-                foreach ($request->anggota_penulis as $anggotaId) {
-                    $penelitian->anggotaPenelitian()->create([
+                // Simpan data anggota inventor baru
+                foreach ($request->anggota_penulis as $anggota) {
+                    if (str_starts_with($anggota, 'user_')) {
+                        $anggotaId = str_replace('user_', '', $anggota);
+                        $table = 'users';
+                    } elseif (str_starts_with($anggota, 'anggota_')) {
+                        $anggotaId = str_replace('anggota_', '', $anggota);
+                        $table = 'anggota_kelompok_keahlians';
+                    } else {
+                        continue; // Skip jika format tidak sesuai
+                    }
+
+                    PenelitianAnggota::create([
+                        'penelitian_id' => $penelitian->id,
                         'anggota_id' => $anggotaId,
+                        'anggota_type' => $table,
                     ]);
                 }
             }
