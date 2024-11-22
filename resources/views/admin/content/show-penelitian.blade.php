@@ -10,21 +10,50 @@
                     <td>: {{ $penelitian->judul }}</td>
                 </tr>
                 <tr>
-                    <th>Penulis</th>
-                    <td>: {{ $penelitian->penulis }}</td>
+                    <th>Nama Penulis</th>
+                    <td>: {{ $penelitian->penulis ?: $penelitian->penulis_lainnya }}</td>
+                </tr>
+                <tr>
+                    <th>email penulis</th>
+                    <td>: {{ $penelitian->email_penulis }}</td>
                 </tr>
                 <tr>
                     <th>Penulis Korespondensi</th>
-                    <td>: {{ $penelitian->penulisKorespondensi->nama_lengkap ?? '' }} - 
-                        {{ $penelitian->penulisKorespondensi->jabatan ?? '' }}
+                    <td>: {{ $penelitian->penulis_korespondensi }}
                     </td>
                 </tr>
                 <tr>
-                    <th>anggota penulis</th>
-                    <td>@foreach ($penelitian->anggotaPenelitian as $anggota )
-                        <li>{{ $anggota->detailAnggota->nama_lengkap }} - {{ $anggota->detailAnggota->jabatan }}</li>
-                    @endforeach</td>
+                    <th>Anggota Penulis (Dosen/Tendik POLINDRA)</th>
+                    <td>
+                        @foreach ($penelitian->anggotaPenelitian as $anggota)
+                            <li>
+                                @if ($anggota->anggota)
+                                    @if ($anggota->anggota_type === 'users')
+                                        {{ $anggota->anggota->nama_lengkap }} -
+                                        {{ $anggota->anggota->jabatan ?? 'Tidak ada jabatan' }}
+                                    @elseif ($anggota->anggota_type === 'anggota_kelompok_keahlians')
+                                        {{ $anggota->anggota->nama_lengkap }} -
+                                        {{ $anggota->anggota->jabatan ?? 'Tidak ada jabatan' }}
+                                    @endif
+                                @else
+                                    Data anggota tidak ditemukan.
+                                @endif
+                            </li>
+                        @endforeach
+                    </td>
                 </tr>
+                <tr>
+                    <th>Anggota Penulis lainnya</th>
+                    <td>
+                        @if (!empty($penelitian->anggota_penulis_lainnya))
+                            @foreach (array_filter(explode(',', $penelitian->anggota_penulis_lainnya)) as $anggota_lain)
+                                <li>{{ $anggota_lain }}</li>
+                            @endforeach
+                        @else
+                            <li>Tidak ada anggota lainnya.</li>
+                        @endif
+                    </td>
+                </tr> 
                 <tr>
                     <th>status produk</th>
                     <td>: {{ $penelitian->status }}</td>

@@ -9,8 +9,8 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="exampleModalLabel1">Tambah Penelitian</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                aria-label="Close"></button>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                            </button>
                         </div>
                         <div class="modal-body">
                             <form action="/k-kbk/penelitian/store" enctype="multipart/form-data" method="post"
@@ -18,10 +18,12 @@
                                 @csrf
                                 <div class="row">
                                     <div class="col mb-6">
-                                        <label for="" id="kbk" class="form-label">
-                                            KBK</label>
+                                        <label for="nama_kbk" class="form-label">KBK</label>
 
+                                        <!-- Hidden input untuk kbk_id -->
                                         <input type="hidden" name="kbk_id" value="{{ $kkbk->id }}">
+
+                                        <!-- Input readonly untuk nama KBK -->
                                         <input class="form-control" type="text" id="nama_kbk"
                                             value="{{ $kkbk->nama_kbk }}" readonly />
                                     </div>
@@ -142,7 +144,6 @@
 
                                     </div>
                                 </div>
-
                                 <!-- Input untuk dosen -->
                                 <div class="row" id="dosenInput1">
                                     <div class="col mb-6">
@@ -175,7 +176,6 @@
                                         <br>
                                     </div>
                                 </div>
-
                                 <!-- Input untuk Non-Dosen -->
                                 <div class="row" id="nonDosenInput1" style="display: none;">
                                     <div class="col mb-6">
@@ -183,15 +183,14 @@
                                             Korespondensi Lainnya</label>
                                         <input type="text" id="penulis_korespondensi_lainnya" class="form-control"
                                             placeholder="Masukkan nama Penulis Korespondensi lainnya"
-                                            name="penulis_korespondensi_lainnya" />
-                                        @error('penulis_korespondensi_lainnya')
+                                            name="penulis_korespondensi" />
+                                        @error('penulis_korespondensi')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
                                             </div>
                                         @enderror
                                     </div>
                                 </div>
-
                                 <div class="row mb-3">
                                     <label class="form-label">Apakah Bersama Mahasiswa?</label>
                                     <div>
@@ -216,11 +215,10 @@
                                 </div>
                                 <div class="row">
                                     <div class="col mb-6">
-                                        <label for="anggota_penulis">Pilih Anggota Penulis</label> <br>
+                                        <label for="anggota_penulis">Pilih Anggota Penulis</label>
                                         <select class="selectpicker w-50" data-live-search="true"
                                             id="anggota_penulis" name="anggota_penulis[]" multiple
                                             title="Pilih Anggota Penulis..">
-                                            <option disabled selected>-- Pilih --</option>
                                             <optgroup label="Ketua KBK">
                                                 @foreach ($penulisU as $penulis)
                                                     <option value="user_{{ $penulis->id }}">
@@ -302,7 +300,7 @@
                                 {{ ($penelitians->currentPage() - 1) * $penelitians->perPage() + $loop->iteration }}
                             </th>
                             <td>{{ $p->judul }}</td>
-                            <td>{{ $p->penulis }}</td>
+                            <td>{{ $p->penulis ?: $p->penulis_lainnya }}</td>
                             <td>{{ $p->email_penulis }}</td>
                             <td>{{ \Carbon\Carbon::parse($p->tanggal_publikasi)->format('d-m-Y') }}</td>
                             <td>
@@ -371,10 +369,6 @@
                                                                     {{ $message }}
                                                                 </div>
                                                             @enderror
-                                                            {{-- <span class="text-danger"><small><i
-                                                                        class='bx bxs-error me-1'></i>Jika tidak ada
-                                                                    perubahan file tidak usah dinputkan
-                                                                    kembali</small></span> --}}
                                                         </div>
                                                     </div>
                                                     <div class="row">
@@ -394,13 +388,63 @@
                                                                     kembali</small></span>
                                                         </div>
                                                     </div>
-                                                    <div class="row">
+                                                    <div class="row mb-3">
+                                                        <label class="form-label">Penulis saat ini </label>
+                                                        <li>{{ $p->penulis ?: $p->penulis_lainnya ?? ' -' }}</li>
+                                                        <br> <br>
+                                                        <div>
+                                                            <input type="radio" id="penulisDosen"
+                                                                name="penulis_type" value="dosen" checked
+                                                                onclick="togglePenulisInput()">
+                                                            <label for="penulisDosen">Dosen</label>
+                                                            <input type="radio" id="penulisNonDosen"
+                                                                name="penulis_type" value="non_dosen"
+                                                                onclick="togglePenulisInput()">
+                                                            <label for="penulisNonDosen">Non-Dosen</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row" id="dosenInput">
                                                         <div class="col mb-6">
                                                             <label for="nameBasic" class="form-label">Nama
                                                                 Penulis</label>
-                                                            <input type="text" id="penulis" class="form-control"
-                                                                value="{{ $p->penulis }}" name="penulis" />
-                                                            @error('penulis')
+                                                            <select class="selectpicker w-70" data-live-search="true"
+                                                                id="penulis" name="penulis"
+                                                                title="Pilih penulis..">
+                                                                <option disabled selected>Jika ingin dikosongkan klik
+                                                                    None</option>
+                                                                <option disabled selected>--Pilih--</option>
+                                                                <option value="" selected>None</option>
+                                                                <optgroup label="Ketua KBK">
+                                                                    @foreach ($penulisU as $penulis)
+                                                                        <option value="{{ $penulis->nama_lengkap }}">
+                                                                            {{ $penulis->nama_lengkap }} -
+                                                                            {{ $penulis->jabatan ?? 'Tidak ada jabatan' }}
+                                                                        </option>
+                                                                    @endforeach
+                                                                </optgroup>
+                                                                <optgroup label="Anggota KBK">
+                                                                    @foreach ($penulisK as $penulis)
+                                                                        <option value="{{ $penulis->nama_lengkap }}">
+                                                                            {{ $penulis->nama_lengkap }} -
+                                                                            {{ $penulis->jabatan ?? 'Tidak ada jabatan' }}
+                                                                            -
+                                                                            {{ $penulis->nama_kbk }}
+                                                                        </option>
+                                                                    @endforeach
+                                                                </optgroup>
+                                                            </select>
+                                                            <br>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row" id="nonDosenInput" style="display: none;">
+                                                        <div class="col mb-6">
+                                                            <label for="penulis_lainnya" class="form-label">Nama
+                                                                Penulis Lainnya</label>
+                                                            <input type="text" id="penulis_lainnya"
+                                                                class="form-control"
+                                                                placeholder="Masukkan nama Penulis lainnya"
+                                                                name="penulis_lainnya" />
+                                                            @error('penulis_lainnya')
                                                                 <div class="invalid-feedback">
                                                                     {{ $message }}
                                                                 </div>
@@ -421,49 +465,150 @@
                                                             @enderror
                                                         </div>
                                                     </div>
-                                                    <div class="row">
+                                                    <div class="row mb-3">
+                                                        <label class="form-label">Penulis Korespondensi</label>
+                                                        <li>{{ $p->penulis_korespondensi ?? ' -' }}</li>
+                                                        <br> <br>
+                                                        <div>
+                                                            <input type="radio" id="penulisKorespondensiDosen"
+                                                                name="penulis_korespondensi_type" value="dosen"
+                                                                checked onclick="togglePenulisKorespondensiInput()">
+                                                            <label for="penulisKorespondensiDosen">Dosen</label>
+                                                            <input type="radio" id="penulisKorespondensiNonDosen"
+                                                                name="penulis_korespondensi_type" value="non_dosen"
+                                                                onclick="togglePenulisKorespondensiInput()">
+                                                            <label for="penulisKorespondensiNonDosen">Non-Dosen</label>
+                                                        </div>
+                                                    </div>
+                                                    <!-- Input untuk dosen -->
+                                                    <div class="row" id="dosenInput1">
                                                         <div class="col mb-6">
-                                                            <label for="nameBasic" class="form-label">Pilih Penulis
+                                                            <label for="penulis_korespondensi_select"
+                                                                class="form-label">Nama Penulis
                                                                 Korespondensi</label>
-                                                            <li>{{ $p->penulisKorespondensi->nama_lengkap ?? '' }} -
-                                                                {{ $p->penulisKorespondensi->jabatan ?? '' }} </li>
-                                                            <br>
-                                                            <select class="selectpicker w-100" data-live-search="true"
-                                                                id="penulis_korespondensi"
-                                                                name="penulis_korespondensi"
-                                                                title="Pilih salah satu..">
-                                                                @foreach ($penelitianAnggota as $anggota)
-                                                                    <option value="{{ $anggota->id }}">
-                                                                        {{ $anggota->nama_lengkap }} -
-                                                                        {{ $anggota->jabatan }}
-                                                                    </option>
-                                                                @endforeach
+                                                            <select class="selectpicker w-70" data-live-search="true"
+                                                                id="penulis_korespondensi_select"
+                                                                name="penulis_korespondensi" title="Pilih penulis..">
+                                                                <option disabled selected>Jika ingin dikosongkan klik
+                                                                    None</option>
+                                                                <option disabled selected>--Pilih--</option>
+                                                                <option value="" selected>None</option>
+                                                                <optgroup label="Ketua KBK">
+                                                                    @foreach ($penulisU as $penulis)
+                                                                        <option value="{{ $penulis->nama_lengkap }}">
+                                                                            {{ $penulis->nama_lengkap }} -
+                                                                            {{ $penulis->jabatan ?? 'Tidak ada jabatan' }}
+                                                                        </option>
+                                                                    @endforeach
+                                                                </optgroup>
+                                                                <optgroup label="Anggota KBK">
+                                                                    @foreach ($penulisK as $penulis)
+                                                                        <option value="{{ $penulis->nama_lengkap }}">
+                                                                            {{ $penulis->nama_lengkap }} -
+                                                                            {{ $penulis->jabatan ?? 'Tidak ada jabatan' }}
+                                                                            -
+                                                                            {{ $penulis->nama_kbk }}
+                                                                        </option>
+                                                                    @endforeach
+                                                                </optgroup>
                                                             </select>
                                                             <br>
                                                         </div>
                                                     </div>
-                                                    <div class="row">
+                                                    <!-- Input untuk Non-Dosen -->
+                                                    <div class="row" id="nonDosenInput1" style="display: none;">
                                                         <div class="col mb-6">
-                                                            <label for="nameBasic" class="form-label">Pilih Anggota
-                                                                Penulis</label>
-                                                            @foreach ($p->anggotaPenelitian as $anggota)
-                                                                <li>{{ $anggota->detailAnggota->nama_lengkap }} -
-                                                                    {{ $anggota->detailAnggota->jabatan }}</li>
-                                                            @endforeach
-                                                            <br>
-                                                            <select class="selectpicker w-100" data-live-search="true"
-                                                                id="anggota_penulis" name="anggota_penulis[]" multiple
-                                                                title="Pilih Anggota Penulis..">
-                                                                @foreach ($penelitianAnggota as $anggota)
-                                                                    <option value="{{ $anggota->id }}"
-                                                                        @if ($p->anggotaPenelitian && $p->anggotaPenelitian->pluck('id')->contains($anggota->id)) selected @endif>
-                                                                        {{ $anggota->nama_lengkap }} -
-                                                                        {{-- {{ $anggota->detailAnggota->jabatan }} --}}
-                                                                    </option>
-                                                                @endforeach
-                                                            </select><br>
+                                                            <label for="penulis_korespondensi_lainnya"
+                                                                class="form-label">Nama Penulis
+                                                                Korespondensi Lainnya</label>
+                                                            <input type="text" id="penulis_korespondensi_lainnya"
+                                                                class="form-control"
+                                                                placeholder="Masukkan nama Penulis Korespondensi lainnya"
+                                                                name="penulis_korespondensi" />
+                                                            @error('penulis_korespondensi')
+                                                                <div class="invalid-feedback">
+                                                                    {{ $message }}
+                                                                </div>
+                                                            @enderror
                                                         </div>
                                                     </div>
+                                                    <div class="row">
+                                                        <div class="col mb-6">
+                                                            <label for="">Anggota Penulis Saat ini</label>
+                                                            @foreach ($p->anggotaPenelitian as $anggota)
+                                                                <li>
+                                                                    @if ($anggota->anggota_type === 'users')
+                                                                        {{ $anggota->anggota->nama_lengkap }} -
+                                                                        {{ $anggota->anggota->role ?? 'Tidak ada jabatan' }}
+                                                                    @elseif ($anggota->anggota_type === 'anggota_kelompok_keahlians')
+                                                                        {{ $anggota->anggota->nama_lengkap }} -
+                                                                        {{ $anggota->anggota->jabatan ?? 'Tidak ada jabatan' }}
+                                                                    @endif
+                                                                </li>
+                                                            @endforeach
+                                                            @if (!empty($p->anggota_penulis_lainnya))
+                                                                @foreach (array_filter(explode(',', $p->anggota_penulis_lainnya)) as $anggota_lain)
+                                                                    <li>{{ $anggota_lain }}</li>
+                                                                @endforeach
+                                                            @else
+                                                                <br>
+                                                                <p>Tidak ada anggota_lainnya </p>
+                                                            @endif
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mb-3">
+                                                        <label class="form-label">Apakah Bersama Mahasiswa?</label>
+                                                        <div>
+                                                            <!-- Radio Button untuk "Tidak" -->
+                                                            <input type="radio" id="penulisNo" name="tipe_penulis"
+                                                                value="Tidak" checked
+                                                                onclick="toggleAnggotaLainnya()">
+                                                            <label for="penulisNo">Tidak</label>
+
+                                                            <!-- Radio Button untuk "Ya" -->
+                                                            <input type="radio" id="penulisYes" name="tipe_penulis"
+                                                                value="Ya" onclick="toggleAnggotaLainnya()">
+                                                            <label for="penulisYes">Ya</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col mb-6" id="anggotaLainnyaContainer"
+                                                            style="display: none;">
+                                                            <label class="form-label"
+                                                                for="anggota_penulis_lainnya">Nama Anggota
+                                                                Lainnya</label>
+                                                            <textarea id="anggota_penulis_lainnya" name="anggota_penulis_lainnya" class="form-control"
+                                                                placeholder="Masukkan Nama Anggota Penulis lainnya"></textarea>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col mb-6">
+                                                            <label for="anggota_penulis">Pilih Anggota Penulis</label>
+                                                            <select class="selectpicker w-50" data-live-search="true"
+                                                                id="anggota_penulis" name="anggota_penulis[]" multiple
+                                                                title="Pilih Anggota Penulis..">
+                                                                <optgroup label="Ketua KBK">
+                                                                    @foreach ($penulisU as $penulis)
+                                                                        <option value="user_{{ $penulis->id }}">
+                                                                            {{ $penulis->nama_lengkap }} -
+                                                                            {{ $penulis->jabatan ?? 'Tidak ada jabatan' }}
+                                                                        </option>
+                                                                    @endforeach
+                                                                </optgroup>
+                                                                <optgroup label="Anggota KBK">
+                                                                    @foreach ($penulisK as $penulis)
+                                                                        <option value="anggota_{{ $penulis->id }}">
+                                                                            {{ $penulis->nama_lengkap }} -
+                                                                            {{ $penulis->jabatan ?? 'Tidak ada jabatan' }}
+                                                                            -
+                                                                            {{ $penulis->nama_kbk }}
+                                                                        </option>
+                                                                    @endforeach
+                                                                </optgroup>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    {{-- @if ($p->anggotaPenelitian && $p->anggotaPenelitian->pluck('id')->contains($anggota->id)) selected @endif> --}}
                                                     <div class="row">
                                                         <div class="col mb-6">
                                                             <label for="nameBasic" class="form-label">Lampiran</label>

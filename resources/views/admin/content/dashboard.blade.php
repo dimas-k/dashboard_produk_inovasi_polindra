@@ -93,7 +93,7 @@
                                 <td>{{ $item->kelompokKeahlian->nama_kbk ?? '-' }}</td>
                                 <td>{{ $item->judul }}</td>
                                 <td>{{ $item->penulis ?: $item->penulis_lainnya }}</td>
-                                <td>{{ $item->penulisKorespondensi->nama_lengkap ?? '-' }}</td>
+                                <td>{{ $item->penulis_korespondensi ?? '-' }}</td>
                                 <td>{{ \Carbon\Carbon::parse($item->tanggal_publikasi)->format('d-m-Y') }}</td>
                                 <td>{{ $item->status }}</td>
                             </tr>

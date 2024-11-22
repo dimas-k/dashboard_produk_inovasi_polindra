@@ -163,7 +163,7 @@
 
     <script>
         // Fungsi untuk menampilkan input text jika "Ya" dipilih
-        function toggleAnggotaLainnya() {
+        function toggleAnggotaLainnya1() {
             var anggotaLainnyaContainer = document.getElementById('anggotaLainnyaContainer');
             var radioYa = document.getElementById('inventorYes');
 
@@ -176,7 +176,7 @@
         }
 
         // Memanggil fungsi untuk inisialisasi tampilan saat halaman pertama kali dimuat
-        toggleAnggotaLainnya();
+        toggleAnggotaLainnya1();
     </script>
 
 
@@ -243,18 +243,18 @@
 
 
     <script>
-        function toggleInventorInput2() {
+        function toggleInventorInput() {
             // Cek apakah pilihan 'Dosen' atau 'Non-Dosen' yang dipilih
-            const isDosen = document.getElementById('inventorDosen2').checked;
+            const isDosen = document.getElementById('inventorDosen').checked;
 
             // Tampilkan 'selectpicker' jika 'Dosen' dipilih, sembunyikan input teks
-            document.getElementById('dosenInput2').style.display = isDosen ? 'block' : 'none';
-            document.getElementById('nonDosenInput2').style.display = isDosen ? 'none' : 'block';
+            document.getElementById('dosenInput').style.display = isDosen ? 'block' : 'none';
+            document.getElementById('nonDosenInput').style.display = isDosen ? 'none' : 'block';
         }
 
         // Inisialisasi SelectPicker jika menggunakan plugin
         document.addEventListener('DOMContentLoaded', function() {
-            $('#inventor2').selectpicker();
+            $('#inventor').selectpicker();
         });
     </script>
 

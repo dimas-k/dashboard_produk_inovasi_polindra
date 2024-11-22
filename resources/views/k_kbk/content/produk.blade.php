@@ -129,12 +129,12 @@
                                     <div>
                                         <!-- Radio Button untuk "Tidak" -->
                                         <input type="radio" id="inventorNo" name="tipe_inventor" value="Tidak"
-                                            onclick="toggleAnggotaLainnya()">
+                                            onclick="toggleAnggotaLainnya1()">
                                         <label for="inventorNo">Tidak</label>
 
                                         <!-- Radio Button untuk "Ya" -->
                                         <input type="radio" id="inventorYes" name="tipe_inventor" value="Ya"
-                                            onclick="toggleAnggotaLainnya()">
+                                            onclick="toggleAnggotaLainnya1()">
                                         <label for="inventorYes">Ya</label>
                                     </div>
                                 </div>
@@ -153,6 +153,7 @@
                                             id="anggota_inventor" name="anggota_inventor[]" multiple
                                             title="Pilih Anggota Inventor..">
                                             <option disabled selected>-- Pilih --</option>
+                                            <option value=""> None </option>
                                             <optgroup label="Ketua KBK">
                                                 @foreach ($inventorK as $inventor)
                                                     <option value="user_{{ $inventor->id }}">

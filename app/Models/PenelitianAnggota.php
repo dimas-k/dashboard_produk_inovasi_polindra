@@ -21,14 +21,26 @@ class PenelitianAnggota extends Model
     {
         return $this->belongsTo(AnggotaKelompokKeahlian::class, 'anggota_id');
     }
-    
+
     public function detail()
     {
         return $this->morphTo(null, 'anggota_type', 'anggota_id');
     }
-    
+
     public function anggota()
     {
-        return $this->morphTo('anggota', 'anggota_type', 'anggota_id');
+        return $this->morphTo(null, 'anggota_type', 'anggota_id');
     }
+
+    public function userAnggota()
+    {
+        return $this->belongsTo(User::class, 'anggota_id');
+    }
+
+    // Relasi ke model Penelitian
+    public function penelitian()
+    {
+        return $this->belongsTo(Penelitian::class, 'penelitian_id');
+    }
+
 }

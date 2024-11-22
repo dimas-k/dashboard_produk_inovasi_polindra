@@ -411,7 +411,7 @@ class KetuaKbkController extends Controller
         return redirect('/k-kbk/produk')->with('success', 'Data Produk berhasil dihapus!');
     }
 
-    //penelitian method
+    // penelitian method
     public function penelitian()
     {
 
@@ -433,7 +433,6 @@ class KetuaKbkController extends Controller
         $anggotaKelompok = AnggotaKelompokKeahlian::where('kbk_id', $user->kbk_id)->get();
         $penelitianAnggota = AnggotaKelompokKeahlian::all();
         $penelitian = Penelitian::with(['kelompokKeahlian', 'anggotaPenelitian.detailAnggota'])->find($userId);
-
         $penulisU = DB::table('users')
             ->select('id', 'nama_lengkap', 'jabatan')
             ->where('role', '=', 'ketua_kbk')
@@ -449,144 +448,46 @@ class KetuaKbkController extends Controller
                 'kelompok_keahlians.nama_kbk as nama_kbk'
             )
             ->get();
-        // dd($penelitian);
+        // dd($penelitians);
 
         return view('k_kbk.penelitian.index', compact('penelitians', 'kkbk', 'anggotaKelompok', 'penelitianAnggota', 'penelitian', 'penulisU', 'penulisK'));
     }
 
+
     public function showPenelitian($id)
     {
         $penelitian = Penelitian::with(['kelompokKeahlian', 'anggotaPenelitian.detailAnggota'])->findOrFail($id);
-        // dd($penelitian);
-        // $penelitian = Penelitian::with(['kelompokKeahlian', 'penulisKorespondensi'])->find($id);
-        // dd($penelitian->penulisKorespondensi->jabatan);  // Sekarang mengakses relasi yang benar
+        // dd($penelitian->anggotaPenelitian);
 
         return view('k_kbk.penelitian.show.index', compact('penelitian'));
     }
-
-    // public function storePenelitian(Request $request)
-    // {
-    //     try {
-    //         // Validasi data input
-    //         $request->validate([
-    //             'judul' => 'required|string|max:255',
-    //             'abstrak' => 'required|string|max:5000',
-    //             'kbk_id' => 'required|integer|exists:kelompok_keahlians,id',
-    //             'penulis' => 'required|string|max:255',
-    //             'email_penulis' => 'required|email|max:255',
-    //             'penulis_korespondensi' => 'required|string|max:255',
-    //             'gambar' => 'required|file|mimes:jpeg,png,jpg|max:10240',
-    //             'lampiran' => 'required|file|mimes:jpeg,png,jpg,pdf,docx|max:10240',
-    //             'tanggal_publikasi' => 'nullable|date',
-    //             'anggota_penulis' => 'nullable|array',
-    //             'anggota_penulis.*' => 'string', // atau sesuai format data
-    //             'anggota_penulis_lainnya' => $request->input('tipe_penulis') == 'Ya' ? 'required|string|max:255' : 'nullable|string|max:255',
-    //         ], [
-    //             // Pesan error custom
-    //             'judul.required' => 'Judul penelitian wajib diisi.',
-    //             'kbk_id.required' => 'KBK wajib dipilih.',
-    //             'penulis.required' => 'Nama penulis wajib diisi.',
-    //             'email_penulis.required' => 'Email penulis wajib diisi.',
-    //             'abstrak.required' => 'Abstrak penelitian wajib diisi.',
-    //             'gambar.required' => 'Gambar penelitian wajib diunggah.',
-    //             'lampiran.required' => 'Lampiran wajib diunggah.',
-    //             'gambar.max' => 'Ukuran file gambar maksimal 10MB.',
-    //             'lampiran.max' => 'Ukuran file lampiran maksimal 10MB.',
-    //         ]);
-
-    //         // Mulai transaksi
-    //         DB::beginTransaction();
-
-    //         // Buat entitas penelitian baru
-    //         $penelitian = new Penelitian();
-    //         $penelitian->kbk_id = $request->kbk_id;
-    //         $penelitian->judul = $request->judul;
-    //         $penelitian->abstrak = $request->abstrak;
-    //         $penelitian->penulis = $request->penulis;
-    //         $penelitian->email_penulis = $request->email_penulis;
-    //         $penelitian->penulis_korespondensi = $request->penulis_korespondensi_type;
-    //         $penelitian->tanggal_publikasi = $request->tanggal_publikasi;
-
-    //         // Simpan gambar
-    //         if ($request->hasFile('gambar')) {
-    //             $originalName = $request->file('gambar')->getClientOriginalName();
-    //             $fileName = time() . '_' . str_replace(' ', '_', $originalName);
-    //             $gambarpath = $request->file('gambar')->storeAs('dokumen-penelitian', $fileName);
-    //             $penelitian->gambar = $gambarpath;
-    //         }
-
-    //         // Simpan lampiran
-    //         if ($request->hasFile('lampiran')) {
-    //             $originalName = $request->file('lampiran')->getClientOriginalName();
-    //             $fileName = time() . '_' . str_replace(' ', '_', $originalName);
-    //             $lampiranPath = $request->file('lampiran')->storeAs('dokumen-penelitian', $fileName);
-    //             $penelitian->lampiran = $lampiranPath; // Ubah field ini menjadi lampiran
-    //         }
-
-
-    //         $penelitian->save();
-
-    //         // Proses anggota inventor
-    //         foreach ($request->anggota_penulis as $anggota) {
-    //             // Cek prefix ID
-    //             if (str_starts_with($anggota, 'user_')) {
-    //                 $anggotaId = str_replace('user_', '', $anggota);
-    //                 $table = 'users';
-    //             } elseif (str_starts_with($anggota, 'anggota_')) {
-    //                 $anggotaId = str_replace('anggota_', '', $anggota);
-    //                 $table = 'anggota_kelompok_keahlians';
-    //             } else {
-    //                 continue; // Skip jika format tidak sesuai
-    //             }
-    //             PenelitianAnggota::create([
-    //                 'penelitian_id' => $penelitian->id,
-    //                 'anggota_id' => $anggotaId,
-    //                 'anggota_lainnya' => $request->anggota_penulis_lainnya,
-    //                 'anggota_type' => $table, // Simpan informasi sumber tabel
-    //             ]);
-    //         }
-
-    //         DB::commit();
-
-    //         return response()->json([
-    //             'success' => true,
-    //             'message' => 'Penelitian berhasil disimpan.',
-    //         ]);
-    //     } catch (\Exception $e) {
-    //         // Rollback jika ada kesalahan
-    //         DB::rollBack();
-    //         return response()->json([
-    //             'success' => false,
-    //             'message' => 'Terjadi kesalahan: ' . $e->getMessage(),
-    //         ], 500);
-    //     }
-    // }
 
 
     public function storePenelitian(Request $request)
     {
         try {
             // Validasi input
-            $validatedData = $request->validate(
-                [
-                    'judul' => 'required|string|max:255',
-                    'abstrak' => 'required|string|max:5000',
-                    'kbk_id' => 'required|integer|exists:kelompok_keahlians,id',
-                    'penulis' => 'nullable|string|max:255',
-                    'penulis_lainnya' => 'nullable|string|max:255',
-                    'email_penulis' => 'required|email|max:255',
-                    'penulis_korespondensi' => 'nullable|string|max:255',
-                    'gambar' => 'required|file|mimes:jpeg,png,jpg|max:10240',
-                    'lampiran' => 'required|file|mimes:jpeg,png,jpg,pdf,docx|max:10240',
-                    'tanggal_publikasi' => 'nullable|date',
-                    'anggota_penulis' => 'array', // Pastikan multiselect berisi array
-                    'anggota_penulis.*' => 'string', // Setiap item adalah string (misal: "user_1" atau "anggota_2")
-                    'anggota_penulis_lainnya' => 'string|nullable|max:255',
+            $validatedData = $request->validate([
+                'judul' => 'required|string|max:255',
+                'abstrak' => 'required|string|max:5000',
+                'kbk_id' => 'required|integer|exists:kelompok_keahlians,id',
+                'penulis' => 'nullable|string|max:255',
+                'penulis_lainnya' => 'nullable|string|max:255',
+                'email_penulis' => 'required|email|max:255',
+                'penulis_korespondensi' => 'nullable|string|max:255',
+                'gambar' => 'required|file|mimes:jpeg,png,jpg|max:10240',
+                'lampiran' => 'required|file|mimes:jpeg,png,jpg,pdf,docx|max:10240',
+                'tanggal_publikasi' => 'nullable|date',
+                'anggota_penulis' => 'nullable|array',
+                'anggota_penulis.*' => ['regex:/^(user_|anggota_)[0-9]+$/'], // Validasi prefix ID
+                'anggota_penulis_lainnya' => 'nullable|string|max:255',
 
+            ]);
 
-                ]);
-
+            // Mulai transaksi
             DB::beginTransaction();
+
+            // Simpan data penelitian
             $penelitian = new Penelitian();
             $penelitian->kbk_id = $request->kbk_id;
             $penelitian->judul = $request->judul;
@@ -594,54 +495,81 @@ class KetuaKbkController extends Controller
             $penelitian->penulis = $request->penulis;
             $penelitian->penulis_lainnya = $request->penulis_lainnya;
             $penelitian->email_penulis = $request->email_penulis;
-            $penelitian->anggota_penulis_lainnya = $request->anggota_penulis_lainnya;
             $penelitian->penulis_korespondensi = $request->penulis_korespondensi;
+            $penelitian->anggota_penulis_lainnya = $request->anggota_penulis_lainnya;
+
             $penelitian->tanggal_publikasi = $request->tanggal_publikasi;
+            // $penelitian->fill($validatedData);
 
             // Simpan gambar
             if ($request->hasFile('gambar')) {
-                $originalName = $request->file('gambar')->getClientOriginalName();
-                $fileName = time() . '_' . str_replace(' ', '_', $originalName);
-                $gambarpath = $request->file('gambar')->storeAs('dokumen-penelitian', $fileName);
-                $penelitian->gambar = $gambarpath;
+                $fileName = time() . '_' . $request->file('gambar')->getClientOriginalName();
+                $penelitian->gambar = $request->file('gambar')->storeAs('dokumen-penelitian', $fileName);
             }
 
             // Simpan lampiran
             if ($request->hasFile('lampiran')) {
-                $originalName = $request->file('lampiran')->getClientOriginalName();
-                $fileName = time() . '_' . str_replace(' ', '_', $originalName);
-                $lampiranPath = $request->file('lampiran')->storeAs('dokumen-penelitian', $fileName);
-                $penelitian->lampiran = $lampiranPath; // Ubah field ini menjadi lampiran
+                $fileName = time() . '_' . $request->file('lampiran')->getClientOriginalName();
+                $penelitian->lampiran = $request->file('lampiran')->storeAs('dokumen-penelitian', $fileName);
             }
 
-            $penelitian->save($validatedData); // Simpan data penelitian
+            $penelitian->save($validatedData);
 
-            // Proses anggota inventor
-            foreach ($request->anggota_penulis as $anggota) {
-                // Cek prefix ID
+            // Proses anggota penulis
+            // if ($request->filled('anggota_penulis')) {
+            //     foreach ($request->anggota_penulis as $anggota) {
+            //         if (str_starts_with($anggota, 'user_')) {
+            //             $anggotaId = str_replace('user_', '', $anggota);
+            //             $table = 'users';
+            //         } elseif (str_starts_with($anggota, 'anggota_')) {
+            //             $anggotaId = str_replace('anggota_', '', $anggota);
+            //             $table = 'anggota_kelompok_keahlians';
+            //         } else {
+            //             continue; // Skip jika format tidak sesuai
+            //         }
+
+            //         PenelitianAnggota::create([
+            //             'penelitian_id' => $penelitian->id,
+            //             'anggota_id' => $anggotaId,
+            //             'anggota_type' => $table,
+            //         ]);
+            //     }
+            // }
+            $anggotaPenulis = $request->input('anggota_penulis', []); // Ambil input anggota_penulis
+            $dataToInsert = [];
+
+            foreach ($anggotaPenulis as $anggota) {
                 if (str_starts_with($anggota, 'user_')) {
-                    $anggotaId = str_replace('user_', '', $anggota);
-                    $table = 'users';
+                    $id = str_replace('user_', '', $anggota);
+                    $dataToInsert[] = [
+                        'penelitian_id' => $penelitian->id,
+                        'anggota_id' => $id,
+                        'anggota_type' => 'users', // Tipe dari tabel users
+                        'created_at' => now(),
+                        'updated_at' => now(),
+                    ];
                 } elseif (str_starts_with($anggota, 'anggota_')) {
-                    $anggotaId = str_replace('anggota_', '', $anggota);
-                    $table = 'anggota_kelompok_keahlians';
-                } else {
-                    continue; // Skip jika format tidak sesuai
+                    $id = str_replace('anggota_', '', $anggota);
+                    $dataToInsert[] = [
+                        'penelitian_id' => $penelitian->id,
+                        'anggota_id' => $id,
+                        'anggota_type' => 'anggota_kelompok_keahlians', // Tipe dari tabel anggota_kelompok_keahlians
+                        'created_at' => now(),
+                        'updated_at' => now(),
+                    ];
                 }
-                PenelitianAnggota::create([
-                    'penelitian_id' => $penelitian->id,
-                    'anggota_id' => $anggotaId,
-                    'anggota_type' => $table, // Simpan informasi sumber tabel
-                ]);
             }
+
+            // Insert ke database
+            DB::table('penelitians_anggotas')->insert($dataToInsert);
 
             DB::commit();
+
             return response()->json([
                 'success' => true,
                 'message' => 'Penelitian berhasil disimpan.',
             ]);
         } catch (\Exception $e) {
-            // Rollback jika ada kesalahan
             DB::rollBack();
             return response()->json([
                 'success' => false,
@@ -649,6 +577,7 @@ class KetuaKbkController extends Controller
             ], 500);
         }
     }
+
 
 
     public function updatePenelitian(Request $request, $id)

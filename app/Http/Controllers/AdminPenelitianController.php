@@ -20,7 +20,9 @@ class AdminPenelitianController extends Controller
     public function showPenelitian($id)
     {
         $kbk_navigasi = KelompokKeahlian::select('kelompok_keahlians.id', 'kelompok_keahlians.nama_kbk')->get();
-        $penelitian = Penelitian::with(['kelompokKeahlian', 'penulisKorespondensi'])->find($id);
+        // $penelitian = Penelitian::with(['kelompokKeahlian', 'penulisKorespondensi'])->find($id);
+        $penelitian = Penelitian::with(['kelompokKeahlian', 'anggotaPenelitian.detailAnggota'])->findOrFail($id);
+
         // dd($penelitian->penulisKorespondensi->jabatan);
         return view('admin.penelitian.show.index', compact('penelitian', 'kbk_navigasi'));
     }

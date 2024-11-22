@@ -14,13 +14,16 @@ return new class extends Migration
         Schema::create('penelitians_anggotas', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->foreignId('penelitian_id')->constrained('penelitians')->onDelete('cascade');
-            $table->foreignId('anggota_id')->constrained('anggota_kelompok_keahlians')->onDelete('cascade');
-            $table->string('anggota_type'); // Menyimpan tipe relasi (users atau anggota_kelompok_keahlians)
+            $table->unsignedBigInteger('anggota_id');
+            $table->string('anggota_type'); // Menyimpan tipe anggota
             $table->timestamps();
-
+        
+            // Tetap gunakan foreign key untuk penelitian_id
+            $table->foreign('penelitian_id')->references('id')->on('penelitians')->onDelete('cascade');
             $table->index(['anggota_id', 'anggota_type']);
 
         });
+        
         
     }
 

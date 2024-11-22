@@ -11,9 +11,10 @@ class Penelitian extends Model
 
     protected $fillable = [
         'judul',
-        'deskripsi',
+        'abstrak',
         'gambar',
         'penulis',
+        'penulis_lainnya',
         'penulis_korespondensi',
         'anggota_penulis_lainnya',
         'email_penulis',
@@ -41,6 +42,7 @@ class Penelitian extends Model
             ->withPivot('anggota_type');
     }
 
+
     public function anggota_penulis()
     {
         return $this->morphToMany(
@@ -51,6 +53,12 @@ class Penelitian extends Model
             'anggota_id'
         );
     }
+
+    public function getAnggotaPenulisLainnyaArrayAttribute()
+    {
+        return $this->anggota_penulis_lainnya ? explode(',', $this->anggota_penulis_lainnya) : [];
+    }
+
     // public function penulisKorespondensi()
     // {
     //     return $this->belongsTo(AnggotaKelompokKeahlian::class, 'penulis_korespondensi');
