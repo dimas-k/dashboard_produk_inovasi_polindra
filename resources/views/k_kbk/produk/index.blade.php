@@ -147,7 +147,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
 
     <script>
-        function toggleInventorInput() {
+        function toggleInventorInput1() {
             // Cek apakah pilihan 'Dosen' atau 'Non-Dosen' yang dipilih
             const isDosen = document.getElementById('inventorDosen').checked;
             // Tampilkan 'selectpicker' jika 'Dosen' dipilih, sembunyikan input teks
@@ -160,6 +160,7 @@
             $('#inventor').selectpicker();
         });
     </script>
+
 
     <script>
         // Fungsi untuk menampilkan input text jika "Ya" dipilih
@@ -178,7 +179,6 @@
         // Memanggil fungsi untuk inisialisasi tampilan saat halaman pertama kali dimuat
         toggleAnggotaLainnya1();
     </script>
-
 
     <script>
         // Event delegation untuk menangani klik pada semua radio button
@@ -242,39 +242,7 @@
     </script>
 
 
-    <script>
-        function toggleInventorInput() {
-            // Cek apakah pilihan 'Dosen' atau 'Non-Dosen' yang dipilih
-            const isDosen = document.getElementById('inventorDosen').checked;
 
-            // Tampilkan 'selectpicker' jika 'Dosen' dipilih, sembunyikan input teks
-            document.getElementById('dosenInput').style.display = isDosen ? 'block' : 'none';
-            document.getElementById('nonDosenInput').style.display = isDosen ? 'none' : 'block';
-        }
-
-        // Inisialisasi SelectPicker jika menggunakan plugin
-        document.addEventListener('DOMContentLoaded', function() {
-            $('#inventor').selectpicker();
-        });
-    </script>
-
-    <script>
-        // Fungsi untuk menampilkan input text jika "Ya" dipilih
-        function toggleAnggotaLainnya2() {
-            var anggotaLainnyaContainer = document.getElementById('anggotaLainnyaContainer2');
-            var radioYa = document.getElementById('inventorYes2');
-
-            // Menampilkan atau menyembunyikan input berdasarkan pilihan radio button
-            if (radioYa.checked) {
-                anggotaLainnyaContainer.style.display = 'block';
-            } else {
-                anggotaLainnyaContainer.style.display = 'none';
-            }
-        }
-
-        // Memanggil fungsi untuk inisialisasi tampilan saat halaman pertama kali dimuat
-        toggleAnggotaLainnya2();
-    </script>
 
 
     <script type="text/javascript">
@@ -288,8 +256,6 @@
             $('#anggota_inventor2').selectpicker();
         });
     </script>
-
-
 
     <script>
         window.deleteConfirm = function(e) {

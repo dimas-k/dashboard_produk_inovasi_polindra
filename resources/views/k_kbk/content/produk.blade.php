@@ -64,10 +64,10 @@
                                     <label class="form-label">Inventor</label>
                                     <div>
                                         <input type="radio" id="inventorDosen" name="inventor_type" value="dosen"
-                                            checked onclick="toggleInventorInput()">
+                                            checked onclick="toggleInventorInput1()">
                                         <label for="inventorDosen">Dosen</label>
                                         <input type="radio" id="inventorNonDosen" name="inventor_type"
-                                            value="non_dosen" onclick="toggleInventorInput()">
+                                            value="non_dosen" onclick="toggleInventorInput1()">
                                         <label for="inventorNonDosen">Non-Dosen</label>
                                     </div>
                                 </div>
@@ -349,13 +349,13 @@
                                                             <input type="radio"
                                                                 id="inventorDosen_{{ $p->id }}"
                                                                 name="inventor_type_{{ $p->id }}"
-                                                                value="dosen">
+                                                                value="dosen" onclick="toggleInventorInput()">
                                                             <label
                                                                 for="inventorDosen_{{ $p->id }}">Dosen</label>
                                                             <input type="radio"
                                                                 id="inventorNonDosen_{{ $p->id }}"
                                                                 name="inventor_type_{{ $p->id }}"
-                                                                value="non_dosen">
+                                                                value="non_dosen" onclick="toggleInventorInput()">
                                                             <label
                                                                 for="inventorNonDosen_{{ $p->id }}">Non-Dosen</label>
                                                         </div>
