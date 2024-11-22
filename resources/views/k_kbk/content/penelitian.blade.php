@@ -150,10 +150,8 @@
                                         <label for="penulis_korespondensi_select" class="form-label">Nama Penulis
                                             Korespondensi</label>
                                         <select class="selectpicker w-70" data-live-search="true"
-                                            id="penulis_korespondensi_select" name="penulis_korespondensi"
+                                            id="penulis_korespondensi_select" name="penulis_korespondensi_select"
                                             title="Pilih penulis..">
-                                            <option disabled selected>Jika ingin dikosongkan klik None</option>
-                                            <option disabled selected>--Pilih--</option>
                                             <option value="" selected>None</option>
                                             <optgroup label="Ketua KBK">
                                                 @foreach ($penulisU as $penulis)
@@ -176,6 +174,7 @@
                                         <br>
                                     </div>
                                 </div>
+
                                 <!-- Input untuk Non-Dosen -->
                                 <div class="row" id="nonDosenInput1" style="display: none;">
                                     <div class="col mb-6">
@@ -183,14 +182,15 @@
                                             Korespondensi Lainnya</label>
                                         <input type="text" id="penulis_korespondensi_lainnya" class="form-control"
                                             placeholder="Masukkan nama Penulis Korespondensi lainnya"
-                                            name="penulis_korespondensi" />
-                                        @error('penulis_korespondensi')
+                                            name="penulis_korespondensi_lainnya" />
+                                        @error('penulis_korespondensi_lainnya')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
                                             </div>
                                         @enderror
                                     </div>
                                 </div>
+
                                 <div class="row mb-3">
                                     <label class="form-label">Apakah Bersama Mahasiswa?</label>
                                     <div>

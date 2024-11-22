@@ -265,24 +265,24 @@ class KetuaKbkController extends Controller
             $produk->save();
 
             // Proses anggota inventor
-            foreach ($request->anggota_inventor as $anggota) {
-                // Cek prefix ID
-                if (str_starts_with($anggota, 'user_')) {
-                    $anggotaId = str_replace('user_', '', $anggota);
-                    $table = 'users';
-                } elseif (str_starts_with($anggota, 'anggota_')) {
-                    $anggotaId = str_replace('anggota_', '', $anggota);
-                    $table = 'anggota_kelompok_keahlians';
-                } else {
-                    continue; // Skip jika format tidak sesuai
-                }
+            if (!empty($request->anggota_inventor) && is_array($request->anggota_inventor)) {
+                foreach ($request->anggota_inventor as $anggota) {
+                    if (str_starts_with($anggota, 'user_')) {
+                        $anggotaId = str_replace('user_', '', $anggota);
+                        $table = 'users';
+                    } elseif (str_starts_with($anggota, 'anggota_')) {
+                        $anggotaId = str_replace('anggota_', '', $anggota);
+                        $table = 'anggota_kelompok_keahlians';
+                    } else {
+                        continue; // Skip jika format tidak sesuai
+                    }
 
-                // Simpan ke tabel pivot
-                ProdukAnggota::create([
-                    'produk_id' => $produk->id,
-                    'anggota_id' => $anggotaId,
-                    'anggota_type' => $table, // Simpan informasi sumber tabel
-                ]);
+                    ProdukAnggota::create([
+                        'produk_id' => $produk->id,
+                        'anggota_id' => $anggotaId,
+                        'anggota_type' => $table,
+                    ]);
+                }
             }
 
             DB::commit();
@@ -474,7 +474,8 @@ class KetuaKbkController extends Controller
                 'penulis' => 'nullable|string|max:255',
                 'penulis_lainnya' => 'nullable|string|max:255',
                 'email_penulis' => 'required|email|max:255',
-                'penulis_korespondensi' => 'nullable|string|max:255',
+                'penulis_korespondensi_select' => 'nullable|string|max:255|required_without:penulis_korespondensi_lainnya',
+                'penulis_korespondensi_lainnya' => 'nullable|string|max:255|required_without:penulis_korespondensi_select',
                 'gambar' => 'required|file|mimes:jpeg,png,jpg|max:10240',
                 'lampiran' => 'required|file|mimes:jpeg,png,jpg,pdf,docx|max:10240',
                 'tanggal_publikasi' => 'nullable|date',
@@ -483,6 +484,9 @@ class KetuaKbkController extends Controller
                 'anggota_penulis_lainnya' => 'nullable|string|max:255',
 
             ]);
+            $penulisKorespondensi = $request->penulis_korespondensi_select
+                ? $request->penulis_korespondensi_select
+                : $request->penulis_korespondensi_lainnya;
 
             // Mulai transaksi
             DB::beginTransaction();
@@ -495,7 +499,7 @@ class KetuaKbkController extends Controller
             $penelitian->penulis = $request->penulis;
             $penelitian->penulis_lainnya = $request->penulis_lainnya;
             $penelitian->email_penulis = $request->email_penulis;
-            $penelitian->penulis_korespondensi = $request->penulis_korespondensi;
+            $penelitian->penulis_korespondensi = $penulisKorespondensi;
             $penelitian->anggota_penulis_lainnya = $request->anggota_penulis_lainnya;
 
             $penelitian->tanggal_publikasi = $request->tanggal_publikasi;

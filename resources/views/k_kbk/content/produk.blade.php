@@ -341,6 +341,12 @@
                                                     <div class="row">
                                                         <div class="col mb-6">
                                                             <li>{{ $p->inventor ?: $p->inventor_lainnya }} </li>
+                                                            <input type="hidden" name="inventor"
+                                                                value="{{ $p->inventor }}">
+                                                            <!-- Hidden input untuk inventor_lainnya -->
+                                                            <input type="hidden"
+                                                                name="inventor_lainnya"
+                                                                value="{{ $p->inventor_lainnya }}">
                                                         </div>
                                                     </div>
                                                     <div class="row mb-3">
