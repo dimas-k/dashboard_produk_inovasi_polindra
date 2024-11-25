@@ -424,17 +424,19 @@
                                                                 <option value="" @if (empty($p->penulis)) selected @endif>None</option>
                                                                 <optgroup label="Ketua KBK">
                                                                     @foreach ($penulisU as $penulis)
-                                                                    <option value="{{ $penulis->nama_lengkap }}-{{ $penulis->jabatan ?? 'Tidak ada jabatan' }}"
-                                                                        @if ($penulis->nama_lengkap . '-' . ($penulis->jabatan ?? 'Tidak ada jabatan') === $p->penulis) selected @endif>
+                                                                    <option value="{{ $penulis->nama_lengkap }}
+                                                                        {{-- -{{ $penulis->jabatan ?? 'Tidak ada jabatan' }} --}}
+                                                                        "
+                                                                        @if ($penulis->nama_lengkap === $p->penulis) selected @endif>
                                                                         {{ $penulis->nama_lengkap }} - {{ $penulis->jabatan ?? 'Tidak ada jabatan' }}
                                                                     </option>
                                                                 @endforeach
                                                                 </optgroup>
                                                                 <optgroup label="Anggota KBK">
                                                                     @foreach ($penulisK as $penulis)
-                                                                        <option value="{{ $penulis->nama_lengkap }}-{{ $penulis->jabatan ?? 'Tidak ada jabatan' }}">
-                                                                            {{ $penulis->nama_lengkap }} -
-                                                                            {{ $penulis->jabatan ?? 'Tidak ada jabatan' }} - {{ $penulis->nama_kbk }}
+                                                                        <option value="{{ $penulis->nama_lengkap }}"
+                                                                            @if ($penulis->nama_lengkap === $p->penulis) selected @endif>
+                                                                            {{ $penulis->nama_lengkap }} - {{ $penulis->jabatan ?? 'Tidak ada jabatan' }} - {{ $penulis->nama_kbk }}
                                                                         </option>
                                                                     @endforeach
                                                                 </optgroup>
@@ -482,7 +484,7 @@
                                                         <div>
                                                             <input type="radio" id="penulisKorespondensiDosen_{{ $p->id }}" 
                                                                    name="penulis_korespondensi_type_{{ $p->id }}" value="dosen"
-                                                                   checked onclick="togglePenulisKorespondensiInput(event)">
+                                                                    onclick="togglePenulisKorespondensiInput(event)">
                                                             <label for="penulisKorespondensiDosen_{{ $p->id }}">Dosen</label>
                                                             
                                                             <input type="radio" id="penulisKorespondensiNonDosen_{{ $p->id }}" 
@@ -491,55 +493,6 @@
                                                             <label for="penulisKorespondensiNonDosen_{{ $p->id }}">Non-Dosen</label>
                                                         </div>
                                                     </div>
-                                                    {{-- <!-- Input untuk dosen -->
-                                                    <div class="row" id="dosenInput1">
-                                                        <div class="col mb-6">
-                                                            <label for="penulis_korespondensi_select"
-                                                                class="form-label">Nama Penulis
-                                                                Korespondensi</label>
-                                                            <select class="selectpicker w-70" data-live-search="true"
-                                                                id="penulis_korespondensi_select"
-                                                                name="penulis_korespondensi" title="Pilih penulis..">
-                                                                <option disabled selected>--Pilih--</option>
-                                                                <optgroup label="Ketua KBK">
-                                                                    @foreach ($penulisU as $penulis)
-                                                                        <option value="{{ $penulis->nama_lengkap }}">
-                                                                            {{ $penulis->nama_lengkap }} -
-                                                                            {{ $penulis->jabatan ?? 'Tidak ada jabatan' }}
-                                                                        </option>
-                                                                    @endforeach
-                                                                </optgroup>
-                                                                <optgroup label="Anggota KBK">
-                                                                    @foreach ($penulisK as $penulis)
-                                                                        <option value="{{ $penulis->nama_lengkap }}">
-                                                                            {{ $penulis->nama_lengkap }} -
-                                                                            {{ $penulis->jabatan ?? 'Tidak ada jabatan' }}
-                                                                            -
-                                                                            {{ $penulis->nama_kbk }}
-                                                                        </option>
-                                                                    @endforeach
-                                                                </optgroup>
-                                                            </select>
-                                                            <br>
-                                                        </div>
-                                                    </div>
-                                                    <!-- Input untuk Non-Dosen -->
-                                                    <div class="row" id="nonDosenInput1" style="display: none;">
-                                                        <div class="col mb-6">
-                                                            <label for="penulis_korespondensi_lainnya"
-                                                                class="form-label">Nama Penulis
-                                                                Korespondensi Lainnya</label>
-                                                            <input type="text" id="penulis_korespondensi_lainnya"
-                                                                class="form-control"
-                                                                placeholder="Masukkan nama Penulis Korespondensi lainnya"
-                                                                name="penulis_korespondensi" />
-                                                            @error('penulis_korespondensi')
-                                                                <div class="invalid-feedback">
-                                                                    {{ $message }}
-                                                                </div>
-                                                            @enderror
-                                                        </div>
-                                                    </div> --}}
                                                     <!-- Input untuk dosen -->
                                                     <div class="row" id="dosenInput_{{ $p->id }}">
                                                         <div class="col mb-6">
@@ -551,17 +504,19 @@
                                                                 id="penulis_korespondensi_select_{{ $p->id }}"
                                                                 name="penulis_korespondensi_select"
                                                                 title="Pilih penulis..">
-                                                                <option value="" selected>None</option>
+                                                                <option value="" >None</option>
                                                                 <optgroup label="Ketua KBK">
                                                                     @foreach ($penulisU as $penulis)
-                                                                        <option value="{{ $penulis->nama_lengkap }}">
+                                                                        <option value="{{ $penulis->nama_lengkap }}"
+                                                                            @if ($penulis->nama_lengkap === $p->penulis_korespondensi) selected @endif>
                                                                             {{ $penulis->nama_lengkap }} - {{ $penulis->jabatan ?? 'Tidak ada jabatan' }}
                                                                         </option>
                                                                     @endforeach
                                                                 </optgroup>
                                                                 <optgroup label="Anggota KBK">
                                                                     @foreach ($penulisK as $penulis)
-                                                                        <option value="{{ $penulis->nama_lengkap }}">
+                                                                        <option value="{{ $penulis->nama_lengkap }}"
+                                                                            @if ($penulis->nama_lengkap === $p->penulis_korespondensi) selected @endif>
                                                                             {{ $penulis->nama_lengkap }} - {{ $penulis->jabatan ?? 'Tidak ada jabatan' }} - {{ $penulis->nama_kbk }}
                                                                         </option>
                                                                     @endforeach
@@ -617,7 +572,7 @@
                                                         <div>
                                                             <!-- Radio Button untuk "Tidak" -->
                                                             <input type="radio" id="penulisNo_{{ $p->id }}"
-                                                                name="tipe_penulis" value="Tidak" checked
+                                                                name="tipe_penulis" value="Tidak" 
                                                                 onclick="toggleAnggotaLainnya()">
                                                             <label for="penulisNo_{{ $p->id }}">Tidak</label>
 

@@ -686,11 +686,6 @@ class KetuaKbkController extends Controller
                 'penulis_korespondensi_lainnya.required_without' => 'Silakan pilih penulis korespondensi atau isi manual.',
             ]);
 
-
-            // $penulisKorespondensi = $request->penulis_korespondensi_select
-            //     ? $request->penulis_korespondensi_select
-            //     : $request->penulis_korespondensi_lainnya;
-
             $penelitian = Penelitian::findOrFail($id);
 
             // Update data utama
@@ -726,13 +721,9 @@ class KetuaKbkController extends Controller
                 $path = $request->file('lampiran')->storeAs('dokumen-penelitian', $fileName);
                 $penelitian->lampiran = $path;
             }
-            // Cek dan simpan penulis korespondensi jika ada
-            if ($request->penulis_korespondensi) {
-                $penelitian->penulis_korespondensi = $request->penulis_korespondensi;
-            }
 
             $penelitian->save();
-            
+
             if ($request->filled('anggota_penulis')) {
                 // Hapus semua data lama di pivot table
                 PenelitianAnggota::where('penelitian_id', $penelitian->id)->delete();
@@ -797,32 +788,6 @@ class KetuaKbkController extends Controller
         return view('k_kbk.profil.edit.index');
     }
 
-    // public function updateProfil(Request $request, $id)
-    // {
-    //     $request->validate([
-    //         'nama_lengkap' => 'required|string|max:255',
-    //         'nip' => 'required|string|max:20',
-    //         'jabatan' => 'required|string|max:100',
-    //         'email' => 'required|email|max:255',
-    //         'no_hp' => 'required|max:15',
-    //         'username' => 'required|string|max:255',
-
-    //     ]);
-
-    //     $user = User::find($id);
-    //     $user->nama_lengkap = $request->nama_lengkap;
-    //     $user->nip = $request->nip;
-    //     $user->jabatan = $request->jabatan;
-    //     $user->email = $request->email;
-    //     $user->no_hp = $request->no_hp;
-    //     $user->username = $request->username;
-    //     if ($request->filled('password')) {
-    //         $user->password = bcrypt($request->password);
-    //     }
-    //     $user->save();
-
-    // return redirect('/k-kbk/profil')->with('success', 'Data ketua kbk berhasil diperbaharui');
-    // }
 
     public function updateProfil(Request $request, $id)
     {
