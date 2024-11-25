@@ -625,7 +625,7 @@
                                                         <div>
                                                             <!-- Radio Button untuk "Tidak" -->
                                                             <input type="radio" id="penulisNo_{{ $p->id }}"
-                                                                name="tipe_penulis" value="Tidak" checked
+                                                                name="tipe_penulis_{{ $p->id }}" value="Tidak" checked
                                                                 onclick="toggleAnggotaLainnya()">
                                                             <label for="penulisNo_{{ $p->id }}">Tidak</label>
                                                     
