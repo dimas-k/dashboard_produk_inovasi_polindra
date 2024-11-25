@@ -62,15 +62,7 @@
                             @endif
                         @endforeach
                     </ul>
-                    {{-- @if (!empty($produk->anggota_inventor_lainnya))
-                        <p class="mb-1"><strong>Mahasiswa Atau Pihak Lain Yang Terlibat : </strong></p>
-                        @foreach (array_filter(explode(',', $produk->anggota_inventor_lainnya)) as $anggota_lain)
-                            <li>
-                                <a
-                                    href="{{ route('produk.dosen', ['dosen' => $anggota_lain]) }}">{{ $anggota_lain }}</a>
-                            </li>
-                        @endforeach
-                    @endif --}}
+                    
                     @if (!empty($produk->anggota_inventor_lainnya))
                         <p class="mb-1"><strong>Mahasiswa Atau Pihak Lain Yang Terlibat:</strong></p>
                         <ul>

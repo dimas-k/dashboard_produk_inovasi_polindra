@@ -695,6 +695,7 @@ class KetuaKbkController extends Controller
             $penelitian->penulis_lainnya = $request->penulis_lainnya;
             $penelitian->email_penulis = $request->email_penulis;
             $penelitian->tanggal_publikasi = $request->tanggal_publikasi;
+            $penelitian->anggota_penulis_lainnya = $request->anggota_penulis_lainnya;
 
             // Tentukan penulis korespondensi
             $penulisKorespondensi = $request->penulis_korespondensi_select ?: $request->penulis_korespondensi_lainnya;

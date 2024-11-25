@@ -49,15 +49,28 @@
                     <p class="mb-1"><strong>Anggota : </strong></p>
 
                     @foreach ($penelitian->anggotaPenelitian as $anggota)
-                        @if ($anggota->detailAnggota && $anggota->detailAnggota->jabatan === 'Mahasiswa')
-                            <li>{{ $anggota->detailAnggota->nama_lengkap }} - {{ $anggota->detailAnggota->jabatan }}
-                            </li>
-                        @else
-                            <li><a
-                                    href="{{ route('produk.dosen', ['dosen' => $anggota->detailAnggota->nama_lengkap]) }}">
-                                    {{ $anggota->detailAnggota->nama_lengkap }} - {{ $anggota->detailAnggota->jabatan }}</a></li>
-                        @endif
-                    @endforeach
+                            @if ($anggota->anggota)
+                                <li><a
+                                        href="{{ route('produk.dosen', ['dosen' => $anggota->anggota->nama_lengkap]) }}">
+                                        {{ $anggota->anggota->nama_lengkap }} - {{ $anggota->anggota->jabatan }}</a>
+                                </li>
+                            @else
+                                <li>Anggota tidak ditemukan</li>
+                            @endif
+                        @endforeach
+                    </ul>
+                    <br>
+                    @if (!empty($penelitian->anggota_penulis_lainnya))
+                        <p class="mb-1"><strong>Mahasiswa Atau Pihak Lain Yang Terlibat:</strong></p>
+                        <ul>
+                            @foreach ($penelitian->anggota_penulis_lainnya_array as $anggota_lain)
+                                <li>
+                                    <a
+                                        href="{{ route('produk.dosen', ['dosen' => trim($anggota_lain)]) }}">{{ $anggota_lain }}</a>
+                                </li>
+                            @endforeach
+                        </ul>
+                    @endif
 
                     <a class="btn btn-success p-3 mt-4" href="mailto:{{ $penelitian->email_penulis }}">
                         <i class="bi bi-envelope me-2"></i>Hubungi penulis
