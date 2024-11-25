@@ -192,7 +192,7 @@
                 if (event.target.name && event.target.name.startsWith('penulis_type_')) {
                     // Ambil ID dari radio button yang diklik
                     const id = event.target.name.replace('penulis_type_',
-                    ''); // Contoh: penulis_type_1 menjadi 1
+                        ''); // Contoh: penulis_type_1 menjadi 1
 
                     // Panggil fungsi togglepenulisInput untuk ID tersebut
                     togglepenulisInput(id);
@@ -201,7 +201,7 @@
                 if (event.target.name && event.target.name.startsWith('tipe_penulis_')) {
                     // Ambil ID dari radio button yang diklik
                     const id = event.target.name.replace('tipe_penulis_',
-                    ''); // Contoh: tipe_penulis_1 menjadi 1
+                        ''); // Contoh: tipe_penulis_1 menjadi 1
 
                     // Panggil fungsi untuk toggle input "Nama Anggota Lainnya"
                     toggleAnggotaLainnya(id);
@@ -248,7 +248,24 @@
             });
         });
     </script>
+    {{-- penulis korespondensi update --}}
+    <script> 
+        function togglePenulisKorespondensiInput(event) {
+            // Elemen input radio yang dipilih
+            const selectedRadio = event.target;
 
+            // Ambil ID unik berdasarkan elemen radio yang dipilih
+            const id = selectedRadio.id.split('_')[1]; // Ekstrak bagian ID dinamis
+
+            // Cek apakah opsi yang dipilih adalah 'Dosen'
+            const isDosen = selectedRadio.value === 'dosen';
+
+            // Tampilkan input dosen, sembunyikan input non-dosen
+            document.getElementById(`dosenInput1_${id}`).style.display = isDosen ? 'block' : 'none';
+            document.getElementById(`nonDosenInput1_${id}`).style.display = isDosen ? 'none' : 'block';
+        }
+    </script>
+    {{-- close penulis korespondensi update --}}
 
     <script type="text/javascript">
         $(document).ready(function() {

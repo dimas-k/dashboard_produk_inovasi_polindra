@@ -584,6 +584,11 @@ class KetuaKbkController extends Controller
                 'lampiran.mimes' => 'File lampiran harus berupa JPG, JPEG, PNG, PDF, atau DOCX.',
                 'tanggal_publikasi.date' => 'Tanggal Publikasi Harus Valid'
             ]);
+
+            // $penulisKorespondensi = $request->penulis_korespondensi_select
+            //     ? $request->penulis_korespondensi_select
+            //     : $request->penulis_korespondensi_lainnya;
+
             $penelitian = Penelitian::findOrFail($id);
             $penelitian->judul = $request->judul;
             $penelitian->abstrak = $request->abstrak;
@@ -621,9 +626,12 @@ class KetuaKbkController extends Controller
                 $penelitian->lampiran = $path;
             }
             // Cek dan simpan penulis korespondensi jika ada
-            if ($request->penulis_korespondensi) {
-                $penelitian->penulis_korespondensi = $request->penulis_korespondensi;
-            }
+            // if ($penulisKorespondensi) {
+            //     $penelitian->penulis_korespondensi = $penulisKorespondensi;
+            // }
+            // Tentukan penulis korespondensi
+            $penulisKorespondensi = $request->penulis_korespondensi_select ?: $request->penulis_korespondensi_lainnya;
+            $penelitian->penulis_korespondensi = $penulisKorespondensi;
 
             $penelitian->save();
 

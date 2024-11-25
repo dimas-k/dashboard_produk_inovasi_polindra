@@ -480,21 +480,19 @@
                                                         <li>{{ $p->penulis_korespondensi ?? ' -' }}</li>
                                                         <br> <br>
                                                         <div>
-                                                            <input type="radio"
-                                                                id="penulisKorespondensiDosen_{{ $p->id }}"
-                                                                name="penulis_korespondensi_type" value="dosen"
-                                                                checked onclick="togglePenulisKorespondensiInput()">
-                                                            <label
-                                                                for="penulisKorespondensiDosen_{{ $p->id }}">Dosen</label>
-                                                            <input type="radio"
-                                                                id="penulisKorespondensiNonDosen_{{ $p->id }}"
-                                                                name="penulis_korespondensi_type" value="non_dosen"
-                                                                onclick="togglePenulisKorespondensiInput()">
-                                                            <label
-                                                                for="penulisKorespondensiNonDosen_{{ $p->id }}">Non-Dosen</label>
+                                                            <input type="radio" id="penulisKorespondensiDosen_{{ $p->id }}" 
+                                                                   name="penulis_korespondensi_type_{{ $p->id }}" value="dosen"
+                                                                   checked onclick="togglePenulisKorespondensiInput(event)">
+                                                            <label for="penulisKorespondensiDosen_{{ $p->id }}">Dosen</label>
+                                                            
+                                                            <input type="radio" id="penulisKorespondensiNonDosen_{{ $p->id }}" 
+                                                                   name="penulis_korespondensi_type_{{ $p->id }}" value="non_dosen"
+                                                                   onclick="togglePenulisKorespondensiInput(event)">
+                                                            <label for="penulisKorespondensiNonDosen_{{ $p->id }}">Non-Dosen</label>
                                                         </div>
                                                     </div>
-                                                    {{-- <!-- Input untuk dosen -->
+                                                    {{-- ------Digganti yang di bawah----- --}}
+                                                    {{--  <!-- Input untuk dosen -->
                                                     <div class="row" id="dosenInput1">
                                                         <div class="col mb-6">
                                                             <label for="penulis_korespondensi_select"
@@ -543,6 +541,8 @@
                                                             @enderror
                                                         </div>
                                                     </div> --}}
+                                                    {{-- -----\Digganti yang di bawah\----- --}}
+
                                                     <!-- Input untuk dosen -->
                                                     <div class="row" id="dosenInput1_{{ $p->id }}">
                                                         <div class="col mb-6">
@@ -552,7 +552,7 @@
                                                                 Korespondensi</label>
                                                             <select class="selectpicker w-70" data-live-search="true"
                                                                 id="penulis_korespondensi_select_{{ $p->id }}"
-                                                                name="penulis_korespondensi_select"
+                                                                name="penulis_korespondensi_select_{{ $p->id }}"
                                                                 title="Pilih penulis..">
                                                                 <option value="" selected>None</option>
                                                                 <optgroup label="Ketua KBK">
@@ -589,7 +589,7 @@
                                                                 id="penulis_korespondensi_lainnya_{{ $p->id }}"
                                                                 class="form-control"
                                                                 placeholder="Masukkan nama Penulis Korespondensi lainnya"
-                                                                name="penulis_korespondensi_lainnya" />
+                                                                name="penulis_korespondensi_lainnya_{{ $p->id }}" />
                                                             @error('penulis_korespondensi_lainnya')
                                                                 <div class="invalid-feedback">
                                                                     {{ $message }}
