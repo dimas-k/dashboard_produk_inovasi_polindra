@@ -481,7 +481,7 @@ class KetuaKbkController extends Controller
                 'gambar' => 'required|file|mimes:jpeg,png,jpg|max:10240',
                 'lampiran' => 'required|file|mimes:jpeg,png,jpg,pdf,docx|max:10240',
                 'tanggal_publikasi' => 'nullable|date',
-                'anggota_penulis' => 'nullable|array',
+                'anggota_penulis' => 'array',
                 'anggota_penulis.*' => 'string',
                 'anggota_penulis_lainnya' => 'nullable|string|max:255',
 
@@ -563,14 +563,15 @@ class KetuaKbkController extends Controller
             $request->validate([
                 'judul' => 'required|string|max:255',
                 'abstrak' => 'required|string',
-                'penulis' => 'required|string|max:255',
+                'penulis' => 'nullable|string|max:255',
+                'penulis_lainnya' => 'nullable|string|max:255',
                 'email_penulis' => 'required|email',
                 'gambar' => 'file|mimes:jpeg,png,jpg|max:10240',
                 'lampiran' => 'file|mimes:jpeg,png,jpg,pdf,docx|max:10240',
                 'tanggal_publikasi' => 'date'
             ], [
                 'judul.required' => 'Judul penelitian wajib diisi.',
-                'penulis.required' => 'Nama penulis wajib diisi.',
+                // 'penulis.required' => 'Nama penulis wajib diisi.',
                 'email_penulis.required' => 'Email penulis wajib diisi.',
                 'email_penulis.email' => 'Email penulis tidak valid.',
                 'abstrak.required' => 'Abstrak penelitian wajib diisi.',
@@ -584,6 +585,7 @@ class KetuaKbkController extends Controller
             $penelitian->judul = $request->judul;
             $penelitian->abstrak = $request->abstrak;
             $penelitian->penulis = $request->penulis;
+            $penelitian->penulis_lainnya = $request->penulis_lainnya;
             $penelitian->email_penulis = $request->email_penulis;
             // $penelitian->penulis_korespondensi = $request->penulis_korespondensi;
             $penelitian->tanggal_publikasi = $request->tanggal_publikasi;
