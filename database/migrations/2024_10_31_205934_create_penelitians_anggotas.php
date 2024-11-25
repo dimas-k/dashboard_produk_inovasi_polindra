@@ -19,8 +19,8 @@ return new class extends Migration
             $table->timestamps();
         
             // Tetap gunakan foreign key untuk penelitian_id
-            $table->foreign('penelitian_id')->references('id')->on('penelitians')->onDelete('cascade');
-            $table->index(['anggota_id', 'anggota_type']);
+            // $table->foreign('penelitian_id')->references('id')->on('penelitians')->onDelete('cascade');
+            // $table->index(['anggota_id', 'anggota_type']);
 
         });
         

@@ -560,6 +560,109 @@ class KetuaKbkController extends Controller
         }
     }
 
+    // public function updatePenelitian(Request $request, $id)
+    // {
+    //     try {
+    //         $request->validate([
+    //             'judul' => 'required|string|max:255',
+    //             'abstrak' => 'required|string',
+    //             'penulis' => 'nullable|string|max:255',
+    //             'penulis_lainnya' => 'nullable|string|max:255',
+    //             'penulis_korespondensi' => 'nullable|string|max:255',
+    //             'email_penulis' => 'required|email',
+    //             'gambar' => 'file|mimes:jpeg,png,jpg|max:10240',
+    //             'lampiran' => 'file|mimes:jpeg,png,jpg,pdf,docx|max:10240',
+    //             'tanggal_publikasi' => 'date'
+    //         ], [
+    //             'judul.required' => 'Judul penelitian wajib diisi.',
+    //             // 'penulis.required' => 'Nama penulis wajib diisi.',
+    //             'email_penulis.required' => 'Email penulis wajib diisi.',
+    //             'email_penulis.email' => 'Email penulis tidak valid.',
+    //             'abstrak.required' => 'Abstrak penelitian wajib diisi.',
+    //             'gambar.max' => 'Ukuran file gambar maksimal 10MB.',
+    //             'lampiran.max' => 'Ukuran file lampiran maksimal 10MB.',
+    //             'gambar.mimes' => 'File gambar harus berupa JPG, JPEG, atau PNG.',
+    //             'lampiran.mimes' => 'File lampiran harus berupa JPG, JPEG, PNG, PDF, atau DOCX.',
+    //             'tanggal_publikasi.date' => 'Tanggal Publikasi Harus Valid'
+    //         ]);
+    //         $penelitian = Penelitian::findOrFail($id);
+    //         $penelitian->judul = $request->judul;
+    //         $penelitian->abstrak = $request->abstrak;
+    //         $penelitian->penulis = $request->penulis;
+    //         $penelitian->penulis_lainnya = $request->penulis_lainnya;
+    //         $penelitian->email_penulis = $request->email_penulis;
+    //         $penelitian->tanggal_publikasi = $request->tanggal_publikasi;
+
+    //         // Proses upload gambar baru
+    //         if ($request->hasFile('gambar')) {
+    //             // Hapus file lama jika ada
+    //             if ($penelitian->gambar && Storage::exists($penelitian->gambar)) {
+    //                 Storage::delete($penelitian->gambar);
+    //             }
+
+    //             // Upload file baru
+    //             $originalName = $request->file('gambar')->getClientOriginalName();
+    //             $fileName = time() . '_' . str_replace(' ', '_', $originalName);
+    //             $path = $request->file('gambar')->storeAs('dokumen-penelitian', $fileName);
+    //             $penelitian->gambar = $path;
+    //        }
+
+    //         // Proses upload lampiran baru
+    //         if ($request->hasFile('lampiran')) {
+    //             // Hapus file lama jika ada
+    //             if ($penelitian->lampiran && Storage::exists($penelitian->lampiran)) {
+    //                 Storage::delete($penelitian->lampiran);
+    //             }
+
+    //             // Upload file baru
+    //             $originalName = $request->file('lampiran')->getClientOriginalName();
+    //             $fileName = time() . '_' . str_replace(' ', '_', $originalName);
+    //             $path = $request->file('lampiran')->storeAs('dokumen-penelitian', $fileName);
+    //             $penelitian->lampiran = $path;
+    //         }
+    //         // Cek dan simpan penulis korespondensi jika ada
+    //         if ($request->penulis_korespondensi) {
+    //             $penelitian->penulis_korespondensi = $request->penulis_korespondensi;
+    //         }
+
+    //         $penelitian->save();
+
+    //         if ($request->filled('anggota_penulis')) {
+    //             // Hapus semua data lama di pivot table
+    //             PenelitianAnggota::where('penelitian_id', $penelitian->id)->delete();
+
+    //             // Simpan data anggota inventor baru
+    //             foreach ($request->anggota_penulis as $anggota) {
+    //                 if (str_starts_with($anggota, 'user_')) {
+    //                     $anggotaId = str_replace('user_', '', $anggota);
+    //                     $table = 'users';
+    //                 } elseif (str_starts_with($anggota, 'anggota_')) {
+    //                     $anggotaId = str_replace('anggota_', '', $anggota);
+    //                     $table = 'anggota_kelompok_keahlians';
+    //                 } else {
+    //                     continue; // Skip jika format tidak sesuai
+    //                 }
+
+    //                 PenelitianAnggota::create([
+    //                     'penelitian_id' => $penelitian->id,
+    //                     'anggota_id' => $anggotaId,
+    //                     'anggota_type' => $table,
+    //                 ]);
+    //             }
+    //         }
+    //         return response()->json([
+    //             'success' => true,
+    //             'message' => 'Penelitian berhasil diupdate.'
+    //         ]);
+    //     } catch (\Exception $e) {
+    //         return response()->json([
+    //             'success' => false,
+    //             'message' => 'Terjadi kesalahan : ' . $e->getMessage()
+    //         ], 500);
+    //     }
+    // }
+
+
     public function updatePenelitian(Request $request, $id)
     {
         try {
@@ -568,65 +671,55 @@ class KetuaKbkController extends Controller
                 'abstrak' => 'required|string',
                 'penulis' => 'nullable|string|max:255',
                 'penulis_lainnya' => 'nullable|string|max:255',
+                'penulis_korespondensi_select' => 'nullable|string|max:255|required_without:penulis_korespondensi_lainnya',
+                'penulis_korespondensi_lainnya' => 'nullable|string|max:255|required_without:penulis_korespondensi_select',
                 'email_penulis' => 'required|email',
                 'gambar' => 'file|mimes:jpeg,png,jpg|max:10240',
                 'lampiran' => 'file|mimes:jpeg,png,jpg,pdf,docx|max:10240',
-                'tanggal_publikasi' => 'date'
+                'tanggal_publikasi' => 'date',
             ], [
                 'judul.required' => 'Judul penelitian wajib diisi.',
-                // 'penulis.required' => 'Nama penulis wajib diisi.',
                 'email_penulis.required' => 'Email penulis wajib diisi.',
                 'email_penulis.email' => 'Email penulis tidak valid.',
                 'abstrak.required' => 'Abstrak penelitian wajib diisi.',
-                'gambar.max' => 'Ukuran file gambar maksimal 10MB.',
-                'lampiran.max' => 'Ukuran file lampiran maksimal 10MB.',
-                'gambar.mimes' => 'File gambar harus berupa JPG, JPEG, atau PNG.',
-                'lampiran.mimes' => 'File lampiran harus berupa JPG, JPEG, PNG, PDF, atau DOCX.',
-                'tanggal_publikasi.date' => 'Tanggal Publikasi Harus Valid'
+                'penulis_korespondensi_select.required_without' => 'Silakan pilih penulis korespondensi atau isi manual.',
+                'penulis_korespondensi_lainnya.required_without' => 'Silakan pilih penulis korespondensi atau isi manual.',
             ]);
+
             $penelitian = Penelitian::findOrFail($id);
+
+            // Update data utama
             $penelitian->judul = $request->judul;
             $penelitian->abstrak = $request->abstrak;
             $penelitian->penulis = $request->penulis;
             $penelitian->penulis_lainnya = $request->penulis_lainnya;
             $penelitian->email_penulis = $request->email_penulis;
-            // $penelitian->penulis_korespondensi = $request->penulis_korespondensi;
             $penelitian->tanggal_publikasi = $request->tanggal_publikasi;
+
+            // Tentukan penulis korespondensi
+            $penulisKorespondensi = $request->penulis_korespondensi_select ?: $request->penulis_korespondensi_lainnya;
+            $penelitian->penulis_korespondensi = $penulisKorespondensi;
 
             // Proses upload gambar baru
             if ($request->hasFile('gambar')) {
-                // Hapus file lama jika ada
                 if ($penelitian->gambar && Storage::exists($penelitian->gambar)) {
                     Storage::delete($penelitian->gambar);
                 }
-
-                // Upload file baru
-                $originalName = $request->file('gambar')->getClientOriginalName();
-                $fileName = time() . '_' . str_replace(' ', '_', $originalName);
-                $path = $request->file('gambar')->storeAs('dokumen-penelitian', $fileName);
-                $penelitian->gambar = $path;
+                $fileName = time() . '_' . str_replace(' ', '_', $request->file('gambar')->getClientOriginalName());
+                $penelitian->gambar = $request->file('gambar')->storeAs('dokumen-penelitian', $fileName);
             }
 
             // Proses upload lampiran baru
             if ($request->hasFile('lampiran')) {
-                // Hapus file lama jika ada
                 if ($penelitian->lampiran && Storage::exists($penelitian->lampiran)) {
                     Storage::delete($penelitian->lampiran);
                 }
-
-                // Upload file baru
-                $originalName = $request->file('lampiran')->getClientOriginalName();
-                $fileName = time() . '_' . str_replace(' ', '_', $originalName);
-                $path = $request->file('lampiran')->storeAs('dokumen-penelitian', $fileName);
-                $penelitian->lampiran = $path;
-            }
-            // Cek dan simpan penulis korespondensi jika ada
-            if ($request->penulis_korespondensi) {
-                $penelitian->penulis_korespondensi = $request->penulis_korespondensi;
+                $fileName = time() . '_' . str_replace(' ', '_', $request->file('lampiran')->getClientOriginalName());
+                $penelitian->lampiran = $request->file('lampiran')->storeAs('dokumen-penelitian', $fileName);
             }
 
             $penelitian->save();
-
+            
             if ($request->filled('anggota_penulis')) {
                 // Hapus semua data lama di pivot table
                 PenelitianAnggota::where('penelitian_id', $penelitian->id)->delete();
@@ -650,6 +743,7 @@ class KetuaKbkController extends Controller
                     ]);
                 }
             }
+
             return response()->json([
                 'success' => true,
                 'message' => 'Penelitian berhasil diupdate.'
@@ -657,10 +751,12 @@ class KetuaKbkController extends Controller
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Terjadi kesalahan : ' . $e->getMessage()
+                'message' => 'Terjadi kesalahan: ' . $e->getMessage(),
             ], 500);
         }
     }
+
+
     public function hapusPenelitian($id)
     {
         $penelitian = Penelitian::findOrFail($id);
