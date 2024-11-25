@@ -248,24 +248,50 @@
             });
         });
     </script>
-    {{-- penulis korespondensi update --}}
-    <script> 
+    {{-- penulis korespondensi dan angota update --}}
+    <script>
         function togglePenulisKorespondensiInput(event) {
             // Elemen input radio yang dipilih
             const selectedRadio = event.target;
 
-            // Ambil ID unik berdasarkan elemen radio yang dipilih
-            const id = selectedRadio.id.split('_')[1]; // Ekstrak bagian ID dinamis
+            // Ambil ID unik berdasarkan atribut data-id
+            const id = selectedRadio.dataset.id;
 
             // Cek apakah opsi yang dipilih adalah 'Dosen'
             const isDosen = selectedRadio.value === 'dosen';
 
             // Tampilkan input dosen, sembunyikan input non-dosen
-            document.getElementById(`dosenInput1_${id}`).style.display = isDosen ? 'block' : 'none';
-            document.getElementById(`nonDosenInput1_${id}`).style.display = isDosen ? 'none' : 'block';
+            const dosenInput = document.getElementById(`dosenInput1_${id}`);
+            const nonDosenInput = document.getElementById(`nonDosenInput1_${id}`);
+
+            if (dosenInput && nonDosenInput) {
+                dosenInput.style.display = isDosen ? 'block' : 'none';
+                nonDosenInput.style.display = isDosen ? 'none' : 'block';
+            } else {
+                console.error(`Elemen dengan ID dosenInput1_${id} atau nonDosenInput1_${id} tidak ditemukan.`);
+            }
+        }
+
+        function toggleAnggotaLainnya(id) {
+            // Ambil elemen radio yang sedang dipilih berdasarkan ID dinamis
+            const isBersamaMahasiswa = document.getElementById(`penulisYes_${id}`).checked;
+
+            // Elemen yang akan ditampilkan/disebunyikan
+            const anggotaLainnyaContainer = document.getElementById(`anggotaLainnyaContainer_${id}`);
+            const anggotaPenulisSelect = document.getElementById(`anggota_penulis_${id}`);
+
+            if (anggotaLainnyaContainer && anggotaPenulisSelect) {
+                // Tampilkan atau sembunyikan inputan tambahan
+                anggotaLainnyaContainer.style.display = isBersamaMahasiswa ? 'block' : 'none';
+
+                // Toggle disabled state untuk select
+                anggotaPenulisSelect.disabled = isBersamaMahasiswa;
+            } else {
+                console.error(`Elemen dengan ID anggotaLainnyaContainer_${id} atau anggota_penulis_${id} tidak ditemukan.`);
+            }
         }
     </script>
-    {{-- close penulis korespondensi update --}}
+    {{-- close penulis korespondensi dan anggota update --}}
 
     <script type="text/javascript">
         $(document).ready(function() {
