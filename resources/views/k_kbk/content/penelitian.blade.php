@@ -403,7 +403,7 @@
                                                             <input type="radio"
                                                                 id="penulisNonDosen_{{ $p->id }}"
                                                                 name="penulis_type_{{ $p->id }}"
-                                                                value="non_dosen" checked onclick="togglePenulisInput()">
+                                                                value="non_dosen" onclick="togglePenulisInput()">
                                                             <label
                                                                 for="penulisNonDosen_{{ $p->id }}">Non-Dosen</label>
                                                         </div>
@@ -478,7 +478,7 @@
                                                     <div class="row mb-3">
                                                         <label class="form-label">Penulis Korespondensi</label>
                                                         <li>{{ $p->penulis_korespondensi ?? ' -' }}</li>
-                                                        <br> <br>
+                                                        <input type="hidden" value="{{ $p->penulis_korespondensi }}">
                                                         <div>
                                                             <input type="radio" id="penulisKorespondensiDosen_{{ $p->id }}" 
                                                                    name="penulis_korespondensi_type_{{ $p->id }}" value="dosen"
@@ -491,8 +491,7 @@
                                                             <label for="penulisKorespondensiNonDosen_{{ $p->id }}">Non-Dosen</label>
                                                         </div>
                                                     </div>
-                                                    {{-- ------Digganti yang di bawah----- --}}
-                                                    {{--  <!-- Input untuk dosen -->
+                                                    {{-- <!-- Input untuk dosen -->
                                                     <div class="row" id="dosenInput1">
                                                         <div class="col mb-6">
                                                             <label for="penulis_korespondensi_select"
@@ -541,10 +540,8 @@
                                                             @enderror
                                                         </div>
                                                     </div> --}}
-                                                    {{-- -----\Digganti yang di bawah\----- --}}
-
                                                     <!-- Input untuk dosen -->
-                                                    <div class="row" id="dosenInput1_{{ $p->id }}">
+                                                    <div class="row" id="dosenInput_{{ $p->id }}">
                                                         <div class="col mb-6">
                                                             <label
                                                                 for="penulis_korespondensi_select_{{ $p->id }}"
@@ -552,35 +549,29 @@
                                                                 Korespondensi</label>
                                                             <select class="selectpicker w-70" data-live-search="true"
                                                                 id="penulis_korespondensi_select_{{ $p->id }}"
-                                                                name="penulis_korespondensi_select_{{ $p->id }}"
+                                                                name="penulis_korespondensi_select"
                                                                 title="Pilih penulis..">
                                                                 <option value="" selected>None</option>
                                                                 <optgroup label="Ketua KBK">
                                                                     @foreach ($penulisU as $penulis)
                                                                         <option value="{{ $penulis->nama_lengkap }}">
-                                                                            {{ $penulis->nama_lengkap }} -
-                                                                            {{ $penulis->jabatan ?? 'Tidak ada jabatan' }}
+                                                                            {{ $penulis->nama_lengkap }} - {{ $penulis->jabatan ?? 'Tidak ada jabatan' }}
                                                                         </option>
                                                                     @endforeach
                                                                 </optgroup>
                                                                 <optgroup label="Anggota KBK">
                                                                     @foreach ($penulisK as $penulis)
                                                                         <option value="{{ $penulis->nama_lengkap }}">
-                                                                            {{ $penulis->nama_lengkap }} -
-                                                                            {{ $penulis->jabatan ?? 'Tidak ada jabatan' }}
-                                                                            -
-                                                                            {{ $penulis->nama_kbk }}
+                                                                            {{ $penulis->nama_lengkap }} - {{ $penulis->jabatan ?? 'Tidak ada jabatan' }} - {{ $penulis->nama_kbk }}
                                                                         </option>
                                                                     @endforeach
                                                                 </optgroup>
                                                             </select>
-                                                            <br>
                                                         </div>
                                                     </div>
-
+                                                    
                                                     <!-- Input untuk Non-Dosen -->
-                                                    <div class="row" id="nonDosenInput1_{{ $p->id }}"
-                                                        style="display: none;">
+                                                    <div class="row" id="nonDosenInput_{{ $p->id }}" style="display: none;">
                                                         <div class="col mb-6">
                                                             <label for="penulis_korespondensi_lainnya"
                                                                 class="form-label">Nama Penulis
@@ -589,7 +580,7 @@
                                                                 id="penulis_korespondensi_lainnya_{{ $p->id }}"
                                                                 class="form-control"
                                                                 placeholder="Masukkan nama Penulis Korespondensi lainnya"
-                                                                name="penulis_korespondensi_lainnya_{{ $p->id }}" />
+                                                                name="penulis_korespondensi_lainnya" />
                                                             @error('penulis_korespondensi_lainnya')
                                                                 <div class="invalid-feedback">
                                                                     {{ $message }}
