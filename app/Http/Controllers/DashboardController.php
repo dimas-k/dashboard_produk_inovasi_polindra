@@ -115,7 +115,7 @@ class DashboardController extends Controller
                 'penelitians.penulis',
                 'penelitians.email_penulis',
                 'penelitians.penulis_korespondensi',
-                'penelitians.penulis_bersama',
+                'penelitians.anggota_penulis_lainnya',
                 'penelitians.lampiran',
             )->where('kelompok_keahlians.nama_kbk', '=', $nama_kbk)->where('status', 'Tervalidasi')->latest('penelitians.created_at')->get();
         // dd($data_produk);

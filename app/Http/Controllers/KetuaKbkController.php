@@ -486,6 +486,9 @@ class KetuaKbkController extends Controller
                 'anggota_penulis_lainnya' => 'nullable|string|max:255',
 
             ]);
+            $penulisKorespondensi = $request->penulis_korespondensi_select
+                ? $request->penulis_korespondensi_select
+                : $request->penulis_korespondensi_lainnya;
 
             $penulisKorespondensi = $request->penulis_korespondensi_select
                 ? $request->penulis_korespondensi_select
