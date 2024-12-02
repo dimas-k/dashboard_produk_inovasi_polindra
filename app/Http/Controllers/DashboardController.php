@@ -145,6 +145,7 @@ class DashboardController extends Controller
         $penelitian = Penelitian::with(['kelompokKeahlian', 'anggotaPenelitian.detailAnggota'])
             ->where('judul', $judul)
             ->firstOrFail();
+            // dd($penelitian);
         return view('dashboard.detail-penelitian.index', compact('penelitian', 'kbk'));
     }
 
@@ -155,6 +156,8 @@ class DashboardController extends Controller
         // Cari di tabel anggota_kelompok_keahlian atau users
         $anggota = AnggotaKelompokKeahlian::where('nama_lengkap', $dosen)->first() 
             ?? User::where('nama_lengkap', $dosen)->first();
+        $anggota_lain_plt = Penelitian::where('anggota_penulis_lainnya', 'LIKE', '%' . $dosen . '%')->first();
+
     
         // Pencarian produk
         $p_dosen = Produk::where(function ($query) use ($anggota, $dosen) {
@@ -167,7 +170,7 @@ class DashboardController extends Controller
                 ->orWhere('inventor', $dosen); // Cari berdasarkan kolom inventor
             } else {
                 // Tambahkan pencarian di kolom `inventor_lainnya`
-                $query->where('inventor_lainnya', 'LIKE', '%' . $dosen . '%');
+                $query->where('anggota_inventor_lainnya', 'LIKE', '%' . $dosen . '%');
             }
         })
         ->where('status', 'Tervalidasi')
@@ -175,26 +178,35 @@ class DashboardController extends Controller
         ->paginate(7);
        
 
-        $plt_dosen = null;
+        // $plt_dosen = null;
+
         if ($anggota) {
             $plt_dosen = Penelitian::whereHas('anggotaPenelitian', function ($query) use ($anggota) {
-                $query->where('anggota_id', $anggota->id); // Menyaring berdasarkan anggota di penelitian
+                $query->where('anggota_id', $anggota->id);
             })->with(['kelompokKeahlian', 'anggotaPenelitian.detailAnggota'])
-            ->where('status','=','Tervalidasi')
+            ->where('status',  'Tervalidasi')
             ->paginate(7);
+        } elseif ($anggota_lain_plt) {
+            $plt_dosen = Penelitian::where('anggota_penulis_lainnya', 'LIKE', '%' . $dosen . '%')
+                ->with(['kelompokKeahlian', 'anggotaPenelitian.detailAnggota'])
+                ->where('status',  'Tervalidasi')
+                ->paginate(7);
         } else {
-            $plt_dosen = Penelitian::with('kelompokKeahlian')->where('penulis', $dosen)
-            ->where('status','=','Tervalidasi')
-            ->paginate(7);
+            $plt_dosen = Penelitian::with('kelompokKeahlian')
+                ->where('penulis', $dosen)
+                ->orWhere('penulis_lainnya', $dosen)
+                ->where('status', 'Tervalidasi')
+                ->paginate(7);
         }
 
         if ($plt_dosen->isEmpty()) {
             $plt_dosen = null;
         }
+        // dd($plt_dosen);
         // dd($anggota->nama_lengkap);
 
         // dd($dosen);
-        // dd($p_dosen);
+        // dd($plt_dosen);
 
         return view('dashboard.dosen-produk.index', [
             'kbk' => $kbk,

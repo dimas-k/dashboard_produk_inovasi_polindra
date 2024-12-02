@@ -43,9 +43,9 @@
             <div class="col-md-6">
                 <div class="resume-item mb-2">
                     <strong>Tim Inventor</strong> <br><br><br>
-                    <p class="mb-1"><strong>Ketua : </strong><a
-                            href="{{ route('produk.dosen', ['dosen' => $penelitian->penulis]) }}">
-                            {{ $penelitian->penulis }}</a></p>
+                    <p class="mb-1"><strong>Penulis : </strong><a
+                            href="{{ route('produk.dosen', ['dosen' => $penelitian->penulis ?: $penelitian->penulis_lainnya]) }}">
+                            {{ $penelitian->penulis ?: $penelitian->penulis_lainnya }}</a></p>
                     <p class="mb-1"><strong>Anggota : </strong></p>
 
                     @foreach ($penelitian->anggotaPenelitian as $anggota)
@@ -85,8 +85,8 @@
 </section> <!-- .section -->
 
 <div class="article-meta">
-    <div><a href="{{ route('produk.dosen', $penelitian->penulis) }}"
-            class="link-secondary link-underline link-underline-opacity-0">By {{ $penelitian->penulis }}</a></div>
+    <div><a href="{{ route('produk.dosen', $penelitian->penulis ?: $penelitian->penulis_lainnya) }}"
+            class="link-secondary link-underline link-underline-opacity-0">By {{ $penelitian->penulis ?: $penelitian->penulis_lainnya }}</a></div>
     <div>{{ $penelitian->kelompokKeahlian->nama_kbk }}</div>
 </div>
 
