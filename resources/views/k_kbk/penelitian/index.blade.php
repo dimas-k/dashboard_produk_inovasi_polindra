@@ -148,7 +148,7 @@
     </script>
 
     <script>
-        function togglePenulisKorespondensiInput() {
+        function togglePenulisKorespondensiInput1() {
             // Cek apakah pilihan 'Dosen' atau 'Non-Dosen' yang dipilih
             const isDosen = document.getElementById('penulisKorespondensiDosen').checked;
 
@@ -159,9 +159,6 @@
 
         // Inisialisasi SelectPicker jika menggunakan plugin
         document.addEventListener('DOMContentLoaded', function() {
-            // Panggil togglePenulisKorespondensiInput saat halaman dimuat untuk set default input yang benar
-            togglePenulisKorespondensiInput();
-
             // Inisialisasi SelectPicker
             $('#penulis_korespondensi_select').selectpicker();
         });
@@ -169,7 +166,7 @@
 
     <script>
         // Fungsi untuk menampilkan input text jika "Ya" dipilih
-        function toggleAnggotaLainnya() {
+        function toggleAnggotaLainnya1() {
             var anggotaLainnyaContainer = document.getElementById('anggotaLainnyaContainer');
             var radioYa = document.getElementById('penulisYes');
 
@@ -182,7 +179,7 @@
         }
 
         // Memanggil fungsi untuk inisialisasi tampilan saat halaman pertama kali dimuat
-        toggleAnggotaLainnya();
+        toggleAnggotaLainnya1();
     </script>
 
     <script>

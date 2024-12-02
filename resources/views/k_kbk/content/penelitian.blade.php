@@ -135,11 +135,11 @@
                                     <div>
                                         <input type="radio" id="penulisKorespondensiDosen"
                                             name="penulis_korespondensi_type" value="dosen" checked
-                                            onclick="togglePenulisKorespondensiInput()">
+                                            onclick="togglePenulisKorespondensiInput1()">
                                         <label for="penulisKorespondensiDosen">Dosen</label>
                                         <input type="radio" id="penulisKorespondensiNonDosen"
                                             name="penulis_korespondensi_type" value="non_dosen"
-                                            onclick="togglePenulisKorespondensiInput()">
+                                            onclick="togglePenulisKorespondensiInput1()">
                                         <label for="penulisKorespondensiNonDosen">Non-Dosen</label>
 
                                     </div>
@@ -197,12 +197,12 @@
                                     <div>
                                         <!-- Radio Button untuk "Tidak" -->
                                         <input type="radio" id="penulisNo" name="tipe_penulis" value="Tidak"
-                                            checked onclick="toggleAnggotaLainnya()">
+                                            checked onclick="toggleAnggotaLainnya1()">
                                         <label for="penulisNo">Tidak</label>
 
                                         <!-- Radio Button untuk "Ya" -->
                                         <input type="radio" id="penulisYes" name="tipe_penulis" value="Ya"
-                                            onclick="toggleAnggotaLainnya()">
+                                            onclick="toggleAnggotaLainnya1()">
                                         <label for="penulisYes">Ya</label>
                                     </div>
                                 </div>
