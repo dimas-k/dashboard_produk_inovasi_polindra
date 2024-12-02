@@ -31,7 +31,7 @@
                     <div class="col-md-3 d-flex align-items-end">
                         <button type="submit" class="btn btn-primary me-3">Filter</button>
                         <a href="{{ route('report.index', array_merge(request()->all(), ['download' => 'Excel'])) }}"
-                            class="btn btn-success ml-2">Unduh CSV</a>
+                            class="btn btn-success ml-2">Unduh Excel</a>
                     </div>
                 </div>
             </form>
