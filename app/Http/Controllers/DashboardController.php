@@ -178,7 +178,7 @@ class DashboardController extends Controller
 
         // $plt_dosen = null;
         $plt_dosen = Penelitian::where(function ($query) use ($anggota, $dosen) {
-        if ($anggota) {
+            if ($anggota) {
                 // Cari produk berdasarkan relasi anggota atau inventor
                 $query->whereHas('anggotaPenelitian', function ($subQuery) use ($anggota) {
                     $subQuery->where('anggota_id', $anggota->id)
@@ -189,8 +189,8 @@ class DashboardController extends Controller
                 $query->where('penulis', 'LIKE', '%' . $dosen . '%')->orWhere('penulis_korespondensi', 'LIKE', '%' . $dosen . '%')->orWhere('anggota_penulis_lainnya', 'LIKE', '%' . $dosen . '%');
             }
         })->where('status', 'Tervalidasi')
-                ->with(['kelompokKeahlian', 'anggotaPenelitian.detailAnggota'])
-                ->paginate(7);
+        ->with(['kelompokKeahlian', 'anggotaPenelitian.detailAnggota'])
+        ->paginate(7);
 
         return view('dashboard.dosen-produk.index', [
             'kbk' => $kbk,

@@ -90,53 +90,56 @@
     </div>
 </section>
 
-
-<!-- Bagian Penelitian -->
-<div class="container-fluid">
-    <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: auto;">
-        <h6 class="section-title bg-white text-center text-primary px-3">Penelitian</h6>
-    </div>
-</div>
-
-<div class="wow fadeInUp" data-wow-delay="0.1s">
-    @if ($plt_dosen && $plt_dosen->isNotEmpty())
-        @foreach ($plt_dosen as $g_penelitian)
-            <div class="col-12 d-flex flex-wrap align-items-start mb-4">
-                <div class="col-md-4 col-sm-12 mb-4">
-                    <a href="{{ route('detail.penelitian', $g_penelitian->judul) }}"
-                        class="link-underline link-underline-opacity-0">
-                        <img src="{{ asset('storage/' . $g_penelitian->gambar) }}"
-                            alt="gambar penelitian {{ $g_penelitian->judul }}" style="width:100%; height:auto;">
-                    </a>
-                </div>
-                <div class="col-md-6 col-sm-12 ps-md-4">
-                    <div>
-                        <h3><a
-                                href="{{ route('detail.penelitian', ['judul' => $g_penelitian->judul]) }}">{{ $g_penelitian->judul }}</a>
-                        </h3>
-                        <p>{{ \Illuminate\Support\Str::limit($g_penelitian->abstrak, 250) }}
-                            @if (strlen($g_penelitian->abstrak) > 250)
-                                <a href="{{ route('detail.penelitian', ['judul' => $g_penelitian->judul]) }}"
-                                    class="link-offset-3-hover link-underline-opacity-75-hover">...Selengkapnya</a>
-                            @endif
-                        </p>
-                        <p><strong>Tahun Publikasi:</strong>
-                            {{ \Carbon\Carbon::parse($g_penelitian->tanggal_publikasi)->format('Y') }}</p>
-                        <div class="article-meta-sm mt-2">
-                            <a class="link-secondary"
-                                href="{{ route('dashboard.penelitian', ['nama_kbk' => $g_penelitian->kelompokKeahlian->nama_kbk]) }}">
-                                {{ $g_penelitian->kelompokKeahlian->nama_kbk }}
-                            </a>
-                        </div>
-                    </div>
+<section class="site-section" id="section-resume">
+    <div class="container">
+        <div class="row">
+            <!-- Bagian Penelitian -->
+            <div class="container-fluid">
+                <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: auto;">
+                    <h6 class="section-title bg-white text-center text-primary px-3">Penelitian</h6>
                 </div>
             </div>
-        @endforeach
-        {{ $plt_dosen->links() }}
-    @else
-        <p class="text-center mb-5">Tidak Ada Penelitian</p>
-    @endif
-</div>
-</div>
-</div>
+
+            <div class="wow fadeInUp" data-wow-delay="0.1s">
+                @if ($plt_dosen && $plt_dosen->isNotEmpty())
+                    @foreach ($plt_dosen as $g_penelitian)
+                        <div class="col-12 d-flex flex-wrap align-items-start mb-4">
+                            <div class="col-md-4 col-sm-12 mb-4">
+                                <a href="{{ route('detail.penelitian', $g_penelitian->judul) }}"
+                                    class="link-underline link-underline-opacity-0">
+                                    <img src="{{ asset('storage/' . $g_penelitian->gambar) }}"
+                                        alt="gambar penelitian {{ $g_penelitian->judul }}"
+                                        style="width:100%; height:auto;">
+                                </a>
+                            </div>
+                            <div class="col-md-6 col-sm-12 ps-md-4">
+                                <div>
+                                    <h3><a
+                                            href="{{ route('detail.penelitian', ['judul' => $g_penelitian->judul]) }}">{{ $g_penelitian->judul }}</a>
+                                    </h3>
+                                    <p>{{ \Illuminate\Support\Str::limit($g_penelitian->abstrak, 250) }}
+                                        @if (strlen($g_penelitian->abstrak) > 250)
+                                            <a href="{{ route('detail.penelitian', ['judul' => $g_penelitian->judul]) }}"
+                                                class="link-offset-3-hover link-underline-opacity-75-hover">...Selengkapnya</a>
+                                        @endif
+                                    </p>
+                                    <p><strong>Tahun Publikasi:</strong>
+                                        {{ \Carbon\Carbon::parse($g_penelitian->tanggal_publikasi)->format('Y') }}</p>
+                                    <div class="article-meta-sm mt-2">
+                                        <a class="link-secondary"
+                                            href="{{ route('dashboard.penelitian', ['nama_kbk' => $g_penelitian->kelompokKeahlian->nama_kbk]) }}">
+                                            {{ $g_penelitian->kelompokKeahlian->nama_kbk }}
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                    {{ $plt_dosen->links() }}
+                @else
+                    <p class="text-center mb-5">Tidak Ada Penelitian</p>
+                @endif
+            </div>
+        </div>
+    </div>
 </section>
