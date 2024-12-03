@@ -46,6 +46,10 @@
                     <p class="mb-1"><strong>Penulis : </strong><a
                             href="{{ route('produk.dosen', ['dosen' => $penelitian->penulis ?: $penelitian->penulis_lainnya]) }}">
                             {{ $penelitian->penulis ?: $penelitian->penulis_lainnya }}</a></p>
+                    <p class="mb-1"><strong>Penulis Korespondensi : </strong><a
+                            href="{{ route('produk.dosen', ['dosen' => $penelitian->penulis_korespondensi ]) }}">
+                            {{ $penelitian->penulis_korespondensi }}</a></p>
+                    <br>
                     <p class="mb-1"><strong>Anggota : </strong></p>
 
                     @foreach ($penelitian->anggotaPenelitian as $anggota)
