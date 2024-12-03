@@ -377,9 +377,11 @@
                                                                 {{-- name="inventor_{{ $p->id }}" --}} name="inventor"
                                                                 title="Pilih Inventor..">
                                                                 <option disabled selected>--Pilih--</option>
+                                                                <option value=""> None </option>
                                                                 <optgroup label="Ketua KBK">
                                                                     @foreach ($inventorK as $inventor)
-                                                                        <option value="{{ $inventor->nama_lengkap }}">
+                                                                        <option value="{{ $inventor->nama_lengkap }}"
+                                                                            @if ($inventor->nama_lengkap === $p->inventor) selected @endif>
                                                                             {{ $inventor->nama_lengkap }} -
                                                                             {{ $inventor->jabatan ?? 'Tidak ada jabatan' }}
                                                                         </option>
@@ -387,7 +389,8 @@
                                                                 </optgroup>
                                                                 <optgroup label="Anggota KBK">
                                                                     @foreach ($inventorA as $inventor)
-                                                                        <option value="{{ $inventor->nama_lengkap }}">
+                                                                        <option value="{{ $inventor->nama_lengkap }}"
+                                                                            @if ($inventor->nama_lengkap === $p->inventor) selected @endif>
                                                                             {{ $inventor->nama_lengkap }} -
                                                                             {{ $inventor->jabatan ?? 'Tidak ada jabatan' }}
                                                                             - {{ $inventor->nama_kbk }}</option>
