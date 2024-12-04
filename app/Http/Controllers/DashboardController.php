@@ -176,7 +176,7 @@ class DashboardController extends Controller
         })
         ->where('status', 'Tervalidasi')
         ->with(['kelompokKeahlian', 'anggota.detail'])
-        ->paginate(7);
+        ->paginate(2);
        
 
         // $plt_dosen = null;
@@ -193,7 +193,7 @@ class DashboardController extends Controller
             }
         })->where('status', 'Tervalidasi')
         ->with(['kelompokKeahlian', 'anggotaPenelitian.detailAnggota'])
-        ->paginate(7);
+        ->paginate(2);
 
         // if ($anggota) {
         //     $plt_dosen = Penelitian::whereHas('anggotaPenelitian', function ($query) use ($anggota) {
@@ -231,7 +231,7 @@ class DashboardController extends Controller
     public function katalogProduk()
     {
         $kbk = KelompokKeahlian::all();
-        $produk = Produk::with('KelompokKeahlian')->where('status', 'Tervalidasi')->paginate(10);
+        $produk = Produk::with('KelompokKeahlian')->where('status', 'Tervalidasi')->paginate(5);
 
         return view('dashboard.katalog-produk.index', compact('produk', 'kbk'));
     }
@@ -241,14 +241,14 @@ class DashboardController extends Controller
         $kbk = KelompokKeahlian::all();
 
         $cari = $request->input('cari_produk');
-        $produk = Produk::with('KelompokKeahlian')->where('nama_produk', 'LIKE', "%" . $cari . "%")->where('status', 'Tervalidasi')->paginate(10);
+        $produk = Produk::with('KelompokKeahlian')->where('nama_produk', 'LIKE', "%" . $cari . "%")->where('status', 'Tervalidasi')->paginate(5);
         return view('dashboard.katalog-produk.index', compact('produk', 'kbk'));
     }
 
     public function katalogPenelitian()
     {
         $kbk = KelompokKeahlian::all();
-        $penelitian = Penelitian::with('KelompokKeahlian')->where('status', 'Tervalidasi')->paginate(10);
+        $penelitian = Penelitian::with('KelompokKeahlian')->where('status', 'Tervalidasi')->paginate(5);
 
         return view('dashboard.katalog-penelitian.index', compact('penelitian', 'kbk'));
     }
@@ -256,7 +256,7 @@ class DashboardController extends Controller
     {
         $kbk = KelompokKeahlian::all();
         $cari = $request->input('cari_penelitian');
-        $penelitian = Penelitian::with('KelompokKeahlian')->where('judul', 'LIKE', "%" . $cari . "%")->where('status', 'Tervalidasi')->paginate(10);
+        $penelitian = Penelitian::with('KelompokKeahlian')->where('judul', 'LIKE', "%" . $cari . "%")->where('status', 'Tervalidasi')->paginate(5);
 
         return view('dashboard.katalog-penelitian.index', compact('penelitian', 'kbk'));
     }

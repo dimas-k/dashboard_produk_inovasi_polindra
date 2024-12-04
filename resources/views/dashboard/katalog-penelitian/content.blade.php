@@ -75,6 +75,9 @@
                         </div>
                     </div>
                 @endforeach
+                <div class="d-flex justify-content-end mt-3">
+                    {{ $penelitian->links() }}
+                </div>
             </div>
         </div>
     </div>

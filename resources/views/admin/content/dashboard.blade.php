@@ -67,7 +67,7 @@
                         @endforeach
                     </tbody>
                 </table>
-                {{ $produk_paginate->links() }}
+                {{-- {{ $produk_paginate->links() }} --}}
             </div>
 
             <!-- Tabel Data Penelitian -->
@@ -100,7 +100,9 @@
                         @endforeach
                     </tbody>
                 </table>
-                {{ $penelitian_paginate->links() }}
+                <div class="d-flex justify-content-end mt-4">
+                    {{ $penelitian_paginate->links() }}
+                </div>
             </div>
         </div>
     </div>
@@ -200,8 +202,8 @@
                         categories: {!! json_encode($tahun_kategori) !!}
                     },
                     yaxis: {
-                        tickAmount: 4, 
-                        decimalsInFloat: 1 
+                        tickAmount: 4,
+                        decimalsInFloat: 1
                     },
                     colors: ['#1E90FF', '#32CD32'],
                     title: {

@@ -80,7 +80,7 @@
                             </div>
                         </div>
                     @endforeach
-                    {{ $p_dosen->links() }}
+                    {{-- {{ $p_dosen->appends(request()->except('page'))->links() }} --}}
                 @else
                     <p class="text-center mb-5">Tidak Ada Produk</p>
                 @endif
@@ -135,10 +135,12 @@
                             </div>
                         </div>
                     @endforeach
-                    {{ $plt_dosen->links() }}
                 @else
                     <p class="text-center mb-5">Tidak Ada Penelitian</p>
                 @endif
+                <div class="d-flex justify-content-end mt-2">
+                    {{ $plt_dosen->appends(request()->except('page'))->links() }}
+                </div>
             </div>
         </div>
     </div>
