@@ -24,6 +24,18 @@
                     @endforeach</td>
                 </tr>
                 <tr>
+                    <th>Anggota Lainnya (Mahasiswa)</th>
+                    <td>
+                        @if (!empty($produk->anggota_inventor_lainnya))
+                            @foreach (array_filter(explode(',', $produk->anggota_inventor_lainnya)) as $anggota_lain)
+                                <li>{{ $anggota_lain }}</li>
+                            @endforeach
+                        @else
+                            <li>Tidak ada anggota lainnya.</li>
+                        @endif
+                    </td>
+                </tr>
+                <tr>
                     <th>status produk</th>
                     <td>: {{ $produk->status }}</td>
                 </tr>
