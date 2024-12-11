@@ -145,7 +145,7 @@ class DashboardController extends Controller
         $penelitian = Penelitian::with(['kelompokKeahlian', 'anggotaPenelitian.detailAnggota'])
             ->where('judul', $judul)
             ->firstOrFail();
-            // dd($penelitian);
+        // dd($penelitian);
         return view('dashboard.detail-penelitian.index', compact('penelitian', 'kbk'));
     }
 
@@ -154,50 +154,74 @@ class DashboardController extends Controller
         $kbk = KelompokKeahlian::all();
 
         // Cari di tabel anggota_kelompok_keahlian atau users
-        $anggota = AnggotaKelompokKeahlian::where('nama_lengkap', $dosen)->first() 
-            ?? User::where('nama_lengkap', $dosen)->first();
-    
-        // Pencarian produk
-        $p_dosen = Produk::where(function ($query) use ($anggota, $dosen) {
-            if ($anggota) {
-                // Cari produk berdasarkan relasi anggota atau inventor
-                $query->whereHas('anggota', function ($subQuery) use ($anggota) {
-                    $subQuery->where('anggota_id', $anggota->id)
-                        ->where('anggota_type', $anggota instanceof User ? 'users' : 'anggota_kelompok_keahlians');
-                })
-                ->orWhere('inventor', $dosen); // Cari berdasarkan kolom inventor
-            } else {
-                // Tambahkan pencarian di kolom inventor_lainnya
-                $query->where('anggota_inventor_lainnya', 'LIKE', '%' . $dosen . '%');
+        $anggota_user = User::where('nama_lengkap', $dosen)->first();
+        $anggota_kbk = AnggotaKelompokKeahlian::where('nama_lengkap', $dosen)->first();
+
+       
+        $p_dosen = Produk::where(function ($query) use ($anggota_user, $anggota_kbk, $dosen) {
+            
+            if ($dosen) {
+                $query->where(function ($query) use ($dosen) {
+                    $query->where('anggota_inventor_lainnya', 'LIKE', '%' . $dosen . '%')
+                        ->orWhere('inventor', 'LIKE', '%' . $dosen . '%')
+                        ->orWhere('inventor_lainnya', 'LIKE', '%' . $dosen . '%');
+                });
+            }
+        
+           
+            if ($anggota_kbk || $anggota_user) {
+                $query->orWhereHas('anggota', function ($subQuery) use ($anggota_kbk, $anggota_user) {
+                    $subQuery->where(function ($query) use ($anggota_kbk, $anggota_user) {
+                        if ($anggota_kbk) {
+                            $query->orWhere('anggota_id', $anggota_kbk->id);
+                        }
+                        if ($anggota_user) {
+                            $query->orWhere('anggota_id', $anggota_user->id);
+                        }
+                    });
+                });
             }
         })
-        ->where('status', 'Tervalidasi')
-        ->with(['kelompokKeahlian', 'anggota.detail'])
-        ->paginate(2);
-       
+            ->where('status', 'Tervalidasi')
+            ->with(['kelompokKeahlian', 'anggota.detail'])
+            ->paginate(4);
+
+        // if($anggota_user) {
+
+        //     $anggota_user = $anggota_user->nama_lengkap;
+        //     // dd($anggota);
+        //     // Tambahkan pencarian di kolom inventor_lainnya
+        //     $query->where('anggota_inventor_lainnya', 'LIKE', '%' . $dosen . '%')->orWhere('inventor', 'LIKE', '%' . $dosen . '%')->orwhere('inventor_lainnya', 'LIKE', '%' . $dosen . '%');
+        // }
+        // dd($p_dosen, $dosen, $anggota_kbk, $anggota_user);
 
         // $plt_dosen = null;
-        $plt_dosen = Penelitian::where(function ($query) use ($anggota, $dosen) {
-            if ($anggota) {
-                // Cari produk berdasarkan relasi anggota atau inventor
-                $query->whereHas('anggotaPenelitian', function ($subQuery) use ($anggota) {
-                    $subQuery->where('anggota_id', $anggota->id)
-                        ->where('anggota_type', $anggota instanceof User ? 'users' : 'anggota_kelompok_keahlians');
-                })
-                ->orWhere('penulis', $dosen); // Cari berdasarkan kolom inventor
-            } else {
+        $plt_dosen = Penelitian::where(function ($query) use ($anggota_kbk, $anggota_user,  $dosen) {
+            if ($dosen) {               
                 $query->where('penulis', 'LIKE', '%' . $dosen . '%')->orWhere('penulis_korespondensi', 'LIKE', '%' . $dosen . '%')->orWhere('anggota_penulis_lainnya', 'LIKE', '%' . $dosen . '%');
+            } 
+
+            if($anggota_kbk || $anggota_user) {
+                $query->whereHas('anggotaPenelitian', function ($subQuery) use ($anggota_kbk, $anggota_user) {
+                    if ($anggota_kbk) {
+                        $subQuery->orWhere('anggota_id', $anggota_kbk->id);
+                    }
+                    if ($anggota_user) {
+                        $subQuery->orWhere('anggota_id', $anggota_user->id);
+                    }
+                }); // Cari berdasarkan kolom inventor
             }
         })->where('status', 'Tervalidasi')
-        ->with(['kelompokKeahlian', 'anggotaPenelitian.detailAnggota'])
-        ->paginate(2);
+            ->with(['kelompokKeahlian', 'anggotaPenelitian.detailAnggota'])
+            ->paginate(4);
 
         return view('dashboard.dosen-produk.index', [
             'kbk' => $kbk,
             'p_dosen' => $p_dosen,
             'plt_dosen' => $plt_dosen,
             'dosen' => $dosen,
-            'anggota' => $anggota
+            'anggota_user' => $anggota_user,
+            'anggota_kbk' => $anggota_kbk,
         ]);
     }
 

@@ -39,7 +39,7 @@ class Produk extends Model
 
     public function anggota()
     {
-        return $this->hasMany(ProdukAnggota::class, 'produk_id', 'id');
+        return $this->hasMany(ProdukAnggota::class, 'produk_id');
     }
     // public function anggota()
     // {

@@ -2,8 +2,8 @@
     <div class="container text-center py-5">
         <h1 class="display-4 text-white animated slideInDown mb-3">
             Produk & Penelitian
-            @if ($anggota)
-                {{ $anggota->nama_lengkap }}
+            @if ($anggota_kbk ?? $anggota_user)
+                {{ $anggota_kbk->nama_lengkap ?? $anggota_user->nama_lengkap }}
             @elseif ($p_dosen && $p_dosen->isNotEmpty())
                 {{ $dosen }}
             @elseif ($plt_dosen && $plt_dosen->isNotEmpty())
@@ -17,8 +17,8 @@
                 <li class="breadcrumb-item"><a class="text-white" href="/">Home</a></li>
                 <li class="breadcrumb-item text-primary active" aria-current="page">
                     Produk dan Penelitian
-                    @if ($anggota)
-                        {{ $anggota->nama_lengkap }}
+                    @if ($anggota_kbk ?? $anggota_user)
+                        {{ $anggota_kbk ?? $anggota_user->nama_lengkap }}
                     @elseif ($p_dosen && $p_dosen->isNotEmpty())
                         {{ $dosen }}
                     @elseif ($plt_dosen && $plt_dosen->isNotEmpty())
@@ -62,7 +62,7 @@
                                             {{ $g_produk->nama_produk }}
                                         </a>
                                     </h3>
-                                    <p>{{ \Illuminate\Support\Str::limit($g_produk->deskripsi, 200) }}
+                                    <p class="text-panjang">{{ $g_produk->deskripsi }}
                                         @if (strlen($g_produk->deskripsi) > 200)
                                             <a href="{{ route('detail.produk', ['nama_produk' => $g_produk->nama_produk]) }}"
                                                 class="link-offset-3-hover link-underline-opacity-75-hover">...Selengkapnya</a>
@@ -89,7 +89,7 @@
         </div>
     </div>
 </section>
-
+<br><br>
 <section class="site-section" id="section-resume">
     <div class="container">
         <div class="row">
@@ -117,9 +117,9 @@
                                     <h3><a
                                             href="{{ route('detail.penelitian', ['judul' => $g_penelitian->judul]) }}">{{ $g_penelitian->judul }}</a>
                                     </h3>
-                                    <p>{{ \Illuminate\Support\Str::limit($g_penelitian->abstrak, 250) }}
-                                        @if (strlen($g_penelitian->abstrak) > 250)
-                                            <a href="{{ route('detail.penelitian', ['judul' => $g_penelitian->judul]) }}"
+                                    <p class="text-panjang">{{ $g_penelitian->abstrak }}
+                                        @if (strlen($g_penelitian->abstrak) > 200)
+                                            <a href="{{ route('detail.produk', ['nama_produk' => $g_penelitian->judul]) }}"
                                                 class="link-offset-3-hover link-underline-opacity-75-hover">...Selengkapnya</a>
                                         @endif
                                     </p>

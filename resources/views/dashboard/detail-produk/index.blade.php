@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <meta content="" name="keywords">
+    <meta content="" name="keywords">
     <meta content="" name="description">
 
     {{-- <link href="img/favicon.ico" rel="icon"> --}}
@@ -36,6 +37,35 @@
     <link rel="stylesheet" href={{ asset('css/dashboard.css') }}>
     <link rel="icon" type="image/x-icon" href="{{ asset('assets-admin/img/logo-polindra.png') }}" />
 
+    <style>
+        .responsive-img {
+            width: 100%;
+            max-width: 500px;
+            height: auto;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 768px) {
+
+            /* Untuk tablet atau lebih kecil */
+            .responsive-img {
+                width: 80%;
+                /* Isi 90% dari lebar layar */
+                max-width: none;
+                /* Tidak ada batas maksimum */
+            }
+        }
+
+        @media (max-width: 576px) {
+
+            /* Untuk HP */
+            .responsive-img {
+                width: 80%;
+                /* Isi seluruh layar */
+            }
+        }
+    </style>
+
     <title>Dashboard Produk Inovasi dan Penelitian || Detail Produk</title>
 
 </head>
@@ -64,7 +94,8 @@
     </div>
 
     <!-- Back to Top -->
-    <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded-circle back-to-top"><i class="bi bi-arrow-up"></i></a>
+    <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded-circle back-to-top"><i
+            class="bi bi-arrow-up"></i></a>
 
 
     <!-- JavaScript Libraries -->

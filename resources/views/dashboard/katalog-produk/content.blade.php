@@ -51,7 +51,7 @@
                                 <h3><a
                                         href="{{ route('detail.produk', ['nama_produk' => $p->nama_produk]) }}">{{ $p->nama_produk }}</a>
                                 </h3>
-                                <p>{{ \Illuminate\Support\Str::limit($p->deskripsi, 200) }}
+                                <p class="text-panjang">{{ $p->deskripsi }}
                                     @if (strlen($p->deskripsi) > 200)
                                         <a href="{{ route('detail.produk', ['nama_produk' => $p->nama_produk]) }}"
                                             class="link-offset-3-hover link-underline-opacity-75-hover">...Selengkapnya</a>

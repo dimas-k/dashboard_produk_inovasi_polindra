@@ -53,8 +53,8 @@
                                 <h3><a
                                         href="{{ route('detail.penelitian', ['judul' => $p->judul]) }}">{{ $p->judul }}</a>
                                 </h3>
-                                <p>{{ \Illuminate\Support\Str::limit($p->abstrak, 250) }}
-                                    @if (strlen($p->abstrak) > 250)
+                                <p class="text-panjang">{{ $p->abstrak }}
+                                    @if (strlen($p->abstrak) > 200)
                                         <a href="{{ route('detail.penelitian', ['judul' => $p->judul]) }}"
                                             class="link-offset-3-hover link-underline-opacity-75-hover">...Selengkapnya</a>
                                     @endif

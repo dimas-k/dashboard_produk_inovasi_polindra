@@ -33,6 +33,34 @@
     <!-- Customized Bootstrap Stylesheet -->
     <link href={{ asset('assets/bootstrap/css/bootstrap.min.css') }} rel="stylesheet">
     <style>
+        .text-panjang {
+            word-wrap: break-word;
+            white-space: normal;
+            overflow-wrap: break-word;
+        }
+
+        @media screen and (max-width: 768px) {
+
+            .col-md-4,
+            .col-md-6 {
+                width: 100%;
+                /* Pastikan kolom mengambil 100% lebar pada perangkat kecil */
+            }
+
+            .text-panjang {
+                font-size: 16px;
+                /* Menurunkan ukuran font pada perangkat kecil */
+                line-height: 1.6;
+                /* Memperbesar jarak antar baris untuk kenyamanan membaca */
+            }
+
+            /* Mengatur gambar untuk tetap responsif */
+            .col-md-4 img {
+                width: 100%;
+                height: auto;
+            }
+        }
+
         .hover-animate img {
             transition: transform 0.3s ease-in-out;
         }
