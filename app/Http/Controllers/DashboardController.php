@@ -200,16 +200,17 @@ class DashboardController extends Controller
             if ($dosen) {               
                 $query->where('penulis', 'LIKE', '%' . $dosen . '%')->orWhere('penulis_korespondensi', 'LIKE', '%' . $dosen . '%')->orWhere('anggota_penulis_lainnya', 'LIKE', '%' . $dosen . '%');
             } 
-
-            if($anggota_kbk || $anggota_user) {
-                $query->whereHas('anggotaPenelitian', function ($subQuery) use ($anggota_kbk, $anggota_user) {
-                    if ($anggota_kbk) {
-                        $subQuery->orWhere('anggota_id', $anggota_kbk->id);
-                    }
-                    if ($anggota_user) {
-                        $subQuery->orWhere('anggota_id', $anggota_user->id);
-                    }
-                }); // Cari berdasarkan kolom inventor
+            if ($anggota_kbk || $anggota_user) {
+                $query->orWhereHas('anggotaPenelitian', function ($subQuery) use ($anggota_kbk, $anggota_user) {
+                    $subQuery->where(function ($query) use ($anggota_kbk, $anggota_user) {
+                        if ($anggota_kbk) {
+                            $query->orWhere('anggota_id', $anggota_kbk->id);
+                        }
+                        if ($anggota_user) {
+                            $query->orWhere('anggota_id', $anggota_user->id);
+                        }
+                    });
+                });
             }
         })->where('status', 'Tervalidasi')
             ->with(['kelompokKeahlian', 'anggotaPenelitian.detailAnggota'])
