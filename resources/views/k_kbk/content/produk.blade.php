@@ -498,7 +498,7 @@
                                                                         for="anggota_inventor_lainnya_{{ $p->id }}">Nama
                                                                         Anggota Lainnya</label>
                                                                     <textarea id="anggota_inventor_lainnya_{{ $p->id }}" {{-- name="anggota_inventor_lainnya_{{ $p->id }}" --}} name="anggota_inventor_lainnya"
-                                                                        class="form-control" placeholder="Masukkan nama anggota lainnya">{{ $p->anggota_inventor_lainnya }}</textarea>
+                                                                        class="form-control" placeholder="Masukkan nama anggota lainnya">{{ $p->anggota_inventor_lainnya ?? ""}}</textarea>
                                                                 </div>
                                                             </div>
 

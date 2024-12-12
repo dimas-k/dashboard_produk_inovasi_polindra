@@ -588,7 +588,8 @@
                                                                 id="penulis_korespondensi_lainnya_{{ $p->id }}"
                                                                 class="form-control"
                                                                 placeholder="Masukkan nama Penulis Korespondensi lainnya"
-                                                                name="penulis_korespondensi_lainnya" />
+                                                                name="penulis_korespondensi_lainnya" 
+                                                                value="{{ $p->penulis_korespondensi ?? '' }}"/>
                                                             @error('penulis_korespondensi_lainnya')
                                                                 <div class="invalid-feedback">
                                                                     {{ $message }}
@@ -642,7 +643,7 @@
                                                         <div class="col mb-6" id="anggotaLainnyaContainer_{{ $p->id }}" style="display: none;">
                                                             <label class="form-label" for="anggota_penulis_lainnya_{{ $p->id }}">Nama Anggota Lainnya</label>
                                                             <textarea id="anggota_penulis_lainnya_{{ $p->id }}" name="anggota_penulis_lainnya" 
-                                                                class="form-control" placeholder="Masukkan Nama Anggota Penulis lainnya"></textarea>
+                                                                class="form-control" placeholder="Masukkan Nama Anggota Penulis lainnya" >{{ $p->anggota_penulis_lainnya ?? "" }}</textarea>
                                                         </div>
                                                     </div>
                                                     
@@ -672,7 +673,6 @@
                                                         </div>
                                                     </div>
                                                     
-                                                    {{-- @if ($p->anggotaPenelitian && $p->anggotaPenelitian->pluck('id')->contains($anggota->id)) selected @endif> --}}
                                                     <div class="row">
                                                         <div class="col mb-6">
                                                             <label for="lampiran" class="form-label">Lampiran</label>
