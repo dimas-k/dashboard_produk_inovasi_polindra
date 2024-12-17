@@ -12,13 +12,14 @@ class ProdukAnggotaResource extends JsonResource
      *
      * @return array<string, mixed>
      */
-    public function toArray(Request $request): array
+    public function toArray($request): array
     {
         return [
             'id' => $this->id,
             'produk_id' => $this->produk_id,
             'anggota_id' => $this->anggota_id,
             'anggota_type' => $this->anggota_type,
+            'user' => new UserResource($this->whenLoaded('user')), // Relasi ke User
         ];
     }
 }

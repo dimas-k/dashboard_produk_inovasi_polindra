@@ -416,7 +416,6 @@ class KetuaKbkController extends Controller
     // penelitian method
     public function penelitian()
     {
-
         $kelompokKeahlianId = Auth::user()->kelompokKeahlian->id ?? null;
         $penelitians = Penelitian::with('kelompokKeahlian')->where('kbk_id', $kelompokKeahlianId)->paginate(10);
 
@@ -468,6 +467,7 @@ class KetuaKbkController extends Controller
     public function storePenelitian(Request $request)
     {
         try {
+
             // Validasi input
             $validatedData = $request->validate([
                 'judul' => 'required|string|max:255',

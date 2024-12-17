@@ -29,6 +29,7 @@ class PenelitianResource extends JsonResource
             'tanggal_publikasi' => $this->tanggal_publikasi,
             'status' => $this->tanggal_publikasi,
             'kelompokKeahlian' => $this->whenLoaded('kelompokKeahlian'),
+            'anggota_penulis' => ProdukAnggotaResource::collection($this->whenLoaded('anggota')),
         ];
     }
 }

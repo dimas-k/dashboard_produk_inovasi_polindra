@@ -21,9 +21,39 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\AnggotaKelompokKeahlian;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\JsonResponse;
+
 
 class KetuaKbkController extends BaseController
 {
+
+    public function penelitianPage(): JsonResponse
+    {
+        // $penelitians = Penelitian::all(); // Sesuaikan query dengan kebutuhan Anda.
+        $penelitians = Penelitian::with(['kelompokKeahlian', 'anggota.user'])->get();
+        return response()->json([
+            'success' => true,
+            'data' => [
+                'penelitians' => PenelitianResource::collection($penelitians),
+            ],
+        ]);
+    }
+
+    public function produkPage(): JsonResponse
+    {
+        // Ambil data produk dengan relasi anggota dan user
+        $produks = Produk::with(['kelompokKeahlian', 'anggota.user'])->get();
+
+        // Kembalikan data dalam format JSON
+        return response()->json([
+            'success' => true,
+            'data' => [
+                'produks' => ProdukResource::collection($produks),
+            ],
+        ]);
+    }
+
+
     public function dashboardPage()
     {
         // Ambil ID Kelompok Keahlian dari user yang sedang login

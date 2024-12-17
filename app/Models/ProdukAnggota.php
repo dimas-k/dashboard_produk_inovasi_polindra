@@ -21,10 +21,15 @@ class ProdukAnggota extends Model
     {
         return $this->morphTo(null, 'anggota_type', 'anggota_id');
     }
-    
+
     public function anggota()
     {
         return $this->morphTo('anggota', 'anggota_type', 'anggota_id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'anggota_id'); // Relasi ke User
     }
 
 }

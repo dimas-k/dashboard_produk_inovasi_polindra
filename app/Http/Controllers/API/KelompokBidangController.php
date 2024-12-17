@@ -12,10 +12,13 @@ use Illuminate\Http\JsonResponse;
 
 class KelompokBidangController extends BaseController
 {
-    public function pageKelompokBidang()
+    public function pageKelompokBidang(): JsonResponse
     {
-        // Ambil semua data KelompokKeahlian
-        $kbk = KelompokKeahlian::all();
+        // Ambil semua data KelompokKeahlian beserta produk dan relasi anggota
+        $kbk = KelompokKeahlian::with([
+            'produk.anggota.user', // Eager load anggota dan user untuk produk
+            'penelitian.anggota.user'
+        ])->get();
 
         // Ambil data untuk navigasi
         $kbk_navigasi = DB::table('kelompok_keahlians')
@@ -28,6 +31,7 @@ class KelompokBidangController extends BaseController
             'kbk_navigasi' => $kbk_navigasi
         ], 200);
     }
+
 
     public function storeKelompokKeahlian(Request $request)
     {

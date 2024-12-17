@@ -94,3 +94,5 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 
 Route::get('kelompok_keahlians', [KelompokBidangController::class, 'pageKelompokBidang']);
+Route::get('penelitians', [Ketuakbkcontroller::class, 'penelitianPage']);
+Route::get('produks', [Ketuakbkcontroller::class, 'produkPage']);

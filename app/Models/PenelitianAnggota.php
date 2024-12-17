@@ -43,4 +43,9 @@ class PenelitianAnggota extends Model
         return $this->belongsTo(Penelitian::class, 'penelitian_id');
     }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'penelitian_id'); // Relasi ke User
+    }
+
 }

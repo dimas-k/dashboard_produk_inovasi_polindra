@@ -29,20 +29,9 @@ class ProdukResource extends JsonResource
             'tanggal_submit' => $this->tanggal_submit,
             'tanggal_granted' => $this->tanggal_granted,
             'status' => $this->status,
-            'kelompok_keahlian' => new KelompokKeahlianResource($this->kelompokKeahlian), // Relasi dengan KelompokKeahlian
-            'anggota' => AnggotaKelompokKeahlianResource::collection($this->anggota), // Relasi dengan AnggotaKelompokKeahlian
-            'kelompok_keahlian' => new KelompokKeahlianResource($this->whenLoaded('kelompokKeahlian')),
-            'anggota' => $this->whenLoaded('anggota', function () {
-                return $this->anggota->map(function ($anggota) {
-                    return [
-                        'id' => $anggota->id,
-                        'nama_lengkap' => $anggota->nama_lengkap,
-                        'jabatan' => $anggota->jabatan,
-                        'detail' => $anggota->detail // Sertakan jika relasi detail ada
-                    ];
-                });
-            }),
-            'anggota' => AnggotaKelompokKeahlianResource::collection($this->whenLoaded('anggota')),
+            // 'anggota_inventor_lainnya' => ProdukAnggotaResource::collection($this->whenLoaded('anggota')),
+            'anggota_inventor' => ProdukAnggotaResource::collection($this->whenLoaded('anggota')),
+            // 'kelompok_keahlian' => new KelompokKeahlianResource($this->kelompokKeahlian),
         ];
     }
 }

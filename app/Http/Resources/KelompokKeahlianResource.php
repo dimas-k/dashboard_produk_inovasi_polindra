@@ -19,8 +19,8 @@ class KelompokKeahlianResource extends JsonResource
             'nama_kbk' => $this->nama_kbk,
             'jurusan' => $this->jurusan,
             'deskripsi' => $this->deskripsi,
-            'produks' => ProdukResource::collection($this->whenLoaded('produks')),
-            'penelitians' => PenelitianResource::collection($this->whenLoaded('penelitians')),
+            'produks' => ProdukResource::collection($this->whenLoaded('produk')),
+            'penelitians' => PenelitianResource::collection($this->whenLoaded('penelitian')),
             'users' => UserResource::collection($this->whenLoaded('users'))
         ];
     }

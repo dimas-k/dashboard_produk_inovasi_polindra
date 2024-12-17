@@ -63,4 +63,14 @@ class Penelitian extends Model
     // {
     //     return $this->belongsTo(AnggotaKelompokKeahlian::class, 'penulis_korespondensi');
     // }
+
+    public function anggotaUtama()
+    {
+        return $this->belongsTo(User::class, 'anggota_penulis_lainnya'); // Relasi ke User sebagai inventor lainnya
+    }
+
+    public function anggota()
+    {
+        return $this->hasMany(PenelitianAnggota::class, 'penelitian_id', 'id');
+    }
 }

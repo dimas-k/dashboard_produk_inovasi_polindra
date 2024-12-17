@@ -66,4 +66,10 @@ class Produk extends Model
             'anggota_id'
         );
     }
+
+    public function inventorUtama()
+    {
+        return $this->belongsTo(User::class, 'inventor_lainnya'); // Relasi ke User sebagai inventor lainnya
+    }
+    
 }

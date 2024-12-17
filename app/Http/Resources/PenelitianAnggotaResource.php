@@ -18,6 +18,7 @@ class PenelitianAnggotaResource extends JsonResource
             'id' => $this->id,
             'penelitian_id' => $this->penelitian_id,
             'anggota_id' => $this->anggota_id,
+            'user' => new UserResource($this->whenLoaded('user')), // Relasi ke User
         ];
     }
 }
