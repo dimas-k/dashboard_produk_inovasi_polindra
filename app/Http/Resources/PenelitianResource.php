@@ -25,11 +25,12 @@ class PenelitianResource extends JsonResource
             'email_penulis' => $this->email_penulis,
             'penulis_korespondensi' => $this->penulis_korespondensi,
             'penulis_bersama' => $this->penulis_bersama,
+            'anggota_penulis_lainnya' => $this->anggota_penulis_lainnya,
             'lampiran' => $this->lampiran,
             'tanggal_publikasi' => $this->tanggal_publikasi,
-            'status' => $this->tanggal_publikasi,
+            'status' => $this->status,
             'kelompokKeahlian' => $this->whenLoaded('kelompokKeahlian'),
-            'anggota_penulis' => ProdukAnggotaResource::collection($this->whenLoaded('anggota')),
+            'anggota_penulis' => PenelitianAnggotaResource::collection($this->whenLoaded('anggotaPenelitian')),
         ];
     }
 }

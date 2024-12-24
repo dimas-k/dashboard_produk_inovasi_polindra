@@ -45,7 +45,8 @@ class PenelitianAnggota extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'penelitian_id'); // Relasi ke User
+        return $this->belongsTo(User::class, 'anggota_id'); // Harus menggunakan anggota_id
     }
+
 
 }
