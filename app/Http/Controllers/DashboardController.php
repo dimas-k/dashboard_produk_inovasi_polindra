@@ -197,7 +197,7 @@ class DashboardController extends Controller
         // $plt_dosen = null;
         $plt_dosen = Penelitian::where(function ($query) use ($anggota_kbk, $anggota_user,  $dosen) {
             if ($dosen) {               
-                $query->where('penulis', 'LIKE', '%' . $dosen . '%')->orWhere('penulis_korespondensi', 'LIKE', '%' . $dosen . '%')->orWhere('anggota_penulis_lainnya', 'LIKE', '%' . $dosen . '%');
+                $query->where('penulis', 'LIKE', '%' . $dosen . '%')->orwhere('penulis_lainnya', 'LIKE', '%' . $dosen . '%')->orWhere('penulis_korespondensi', 'LIKE', '%' . $dosen . '%')->orWhere('anggota_penulis_lainnya', 'LIKE', '%' . $dosen . '%');
             } 
             if ($anggota_kbk || $anggota_user) {
                 $query->orWhereHas('anggotaPenelitian', function ($subQuery) use ($anggota_kbk, $anggota_user) {

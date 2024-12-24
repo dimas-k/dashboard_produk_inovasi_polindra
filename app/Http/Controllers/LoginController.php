@@ -26,7 +26,7 @@ class LoginController extends Controller
            {
              return redirect('/admin/dashboard');
            }
-           elseif(Auth::user()->role =='ketua_kbk')
+           else if(Auth::user()->role =='ketua_kbk')
            {
                 return redirect('/k-kbk/dashboard');
            }

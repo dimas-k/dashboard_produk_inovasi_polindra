@@ -317,9 +317,17 @@ class AdminController extends Controller
 
     public function storeDataKetuaKbk(Request $request)
     {
+        if ($request->ajax() && $request->has('check_unique')) {
+            $field = $request->field; // Nama kolom yang dicek
+            $value = $request->value; // Nilai yang dicek
+    
+            $exists = User::where($field, $value)->exists();
+    
+            return response()->json(['exists' => $exists]);
+        }
 
         $validasi = $request->validate([
-            'nama_lengkap' => 'required|string',
+            'nama_lengkap' => 'required|string|unique:users,nama_lengkap',
             'nip' => 'required|numeric|digits_between:1,20|unique:users',
             'kbk_id' => 'required|exists:kelompok_keahlians,id',
             'no_hp' => 'required',
@@ -355,11 +363,25 @@ class AdminController extends Controller
 
         $k_kbk->save($validasi);
 
-        return redirect('/admin/ketua-kbk')->with('success', 'Data ketua Kelompok Keahlian berhasil ditambahkan!');
+        return response()->json([
+            'success' => true,
+            'message' => 'Data ketua Kelompok Keahlian berhasil ditambahkan!',
+        ]);
     }
 
     public function updateKetuaKbk(Request $request, $id)
     {
+        if ($request->ajax() && $request->has('check_unique')) {
+            $field = $request->field; // Nama kolom yang dicek
+            $value = $request->value; // Nilai yang dicek
+    
+            $exists = User::where($field, $value)
+                ->where('id', '!=', $id) 
+                ->exists();
+    
+            return response()->json(['exists' => $exists]);
+        }
+
         $validasi = $request->validate([
             'nama_lengkap' => 'required|string',
             'nip' => 'required|numeric|digits_between:1,20|unique:users,email,' . $id,
@@ -399,7 +421,10 @@ class AdminController extends Controller
 
         $k_kbk->save($validasi);
 
-        return redirect('/admin/ketua-kbk')->with('success', 'Data ketua Kelompok Keahlian berhasil diupdate!');
+        return response()->json([
+            'success' => true,
+            'message' => 'Data ketua Kelompok Keahlian berhasil diupdate!',
+        ]);
     }
 
     public function hapusKetuaKbk(string $id)
