@@ -30,7 +30,7 @@ class KetuaKbkController extends BaseController
     public function penelitianPage(): JsonResponse
     {
         // $penelitians = Penelitian::all(); // Sesuaikan query dengan kebutuhan Anda.
-        $penelitians = Penelitian::with(['kelompokKeahlian', 'anggota.user'])->get();
+        $penelitians = Penelitian::with(['kelompokKeahlian', 'anggotaPenelitian.user'])->get();
         return response()->json([
             'success' => true,
             'data' => [
