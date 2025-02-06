@@ -90,6 +90,28 @@ class KetuaKbkController extends Controller
                 ]
             );
 
+            // Cek apakah nama dan email sudah ada dalam KBK yang sama
+            $exist_nama = AnggotaKelompokKeahlian::where('kbk_id', $request->input('kbk_id'))
+                ->where('nama_lengkap', $request->input('nama_lengkap'))
+                ->exists();
+            $exist_email = AnggotaKelompokKeahlian::where('kbk_id', $request->input('kbk_id'))
+                ->where('email', $request->input('email'))
+                ->exists();
+
+            if ($exist_nama) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Nama sudah digunakan dalam KBK ini.'
+                ], 422);
+            }
+            if ($exist_email) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Email sudah digunakan dalam KBK ini.'
+                ], 422);
+            }
+
+            // Jika tidak ada, simpan data anggota baru
             $anggota = new AnggotaKelompokKeahlian();
             $anggota->kbk_id = $request->input('kbk_id');
             $anggota->nama_lengkap = $request->input('nama_lengkap');
@@ -104,10 +126,11 @@ class KetuaKbkController extends Controller
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Terjadi kesalahan : ' . $e->getMessage()
+                'message' => 'Terjadi kesalahan: ' . $e->getMessage()
             ], 500);
         }
     }
+
     public function updateAnggota(Request $request, $id)
     {
         try {
@@ -175,9 +198,15 @@ class KetuaKbkController extends Controller
         $produkAnggota = AnggotaKelompokKeahlian::all();
 
         $inventorK = DB::table('users')
-            ->select('id', 'nama_lengkap', 'jabatan')
-            ->where('role', '=', 'ketua_kbk')
+            ->join('kelompok_keahlians', 'users.kbk_id', '=', 'kelompok_keahlians.id')
+            ->select(
+                'users.id',
+                'users.nama_lengkap',
+                'kelompok_keahlians.nama_kbk as nama_kbk'
+            )
+            ->where('users.role', '=', 'ketua_kbk')
             ->get();
+
 
         $inventorA = DB::table('anggota_kelompok_keahlians')
             ->join('users', 'anggota_kelompok_keahlians.kbk_id', '=', 'users.kbk_id')

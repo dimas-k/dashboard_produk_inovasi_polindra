@@ -48,7 +48,7 @@
                                 <div class="row">
                                     <div class="col mb-6">
                                         <label for="nameBasic" class="form-label">email</label>
-                                        <input type="email" id="jabatan" class="form-control"
+                                        <input type="email" id="email" class="form-control"
                                             placeholder="Masukkan email anggota" name="email" />
                                     </div>
                                 </div>

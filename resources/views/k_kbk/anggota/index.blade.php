@@ -117,9 +117,9 @@
 
     <script>
         window.deleteConfirm = function(e) {
-            e.preventDefault(); // Mencegah pengiriman form
+            e.preventDefault();
 
-            var form = $(e.target).closest('form'); // Mengambil form terkait dan membungkusnya dengan jQuery
+            var form = $(e.target).closest('form');
 
             Swal.fire({
                 title: "Apakah Kamu yakin ?",
@@ -166,7 +166,6 @@
             $('#uploadForm').on('submit', function(e) {
                 e.preventDefault(); // Mencegah submit default
 
-                // Buat form data
                 var formData = new FormData(this);
                 Swal.fire({
                     title: 'Simpan Data?',
@@ -187,14 +186,12 @@
                             processData: false,
                             success: function(response) {
                                 if (response.success) {
-                                    // Jika sukses, tutup modal dan tampilkan pesan success
                                     $('#basicModal').modal('hide');
                                     Swal.fire({
                                         icon: 'success',
                                         title: 'Berhasil',
                                         text: response.message,
                                     }).then(() => {
-                                        // Redirect atau reload halaman jika diperlukan
                                         window.location.reload();
                                     });
                                 }
@@ -202,15 +199,13 @@
                             error: function(xhr) {
                                 let errorMessage = 'Terjadi kesalahan.';
 
-                                // Cek apakah ada pesan error yang lebih detail dari respons JSON
-                                if (xhr.responseJSON && xhr.responseJSON.message) {
+                                if (xhr.status === 422 && xhr.responseJSON) {
                                     errorMessage = xhr.responseJSON.message;
                                 }
 
-                                // Tampilkan alert error dengan pesan yang jelas
                                 Swal.fire({
                                     icon: 'error',
-                                    title: 'Error',
+                                    title: 'Oops... Ada yang salah',
                                     text: errorMessage,
                                 });
                             }

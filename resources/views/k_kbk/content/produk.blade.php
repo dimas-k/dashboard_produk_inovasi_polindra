@@ -157,17 +157,15 @@
                                             <optgroup label="Ketua KBK">
                                                 @foreach ($inventorK as $inventor)
                                                     <option value="user_{{ $inventor->id }}">
-                                                        {{ $inventor->nama_lengkap }} -
-                                                        {{ $inventor->jabatan ?? 'Tidak ada jabatan' }}
+                                                        {{ $inventor->nama_lengkap }} &nbsp; - &nbsp;
+                                                        {{ $inventor->nama_kbk }}
                                                     </option>
                                                 @endforeach
                                             </optgroup>
                                             <optgroup label="Anggota KBK">
                                                 @foreach ($inventorA as $inventor)
                                                     <option value="anggota_{{ $inventor->id }}">
-                                                        {{ $inventor->nama_lengkap }} -
-                                                        {{ $inventor->jabatan ?? 'Tidak ada jabatan' }} -
-                                                        {{ $inventor->nama_kbk }}
+                                                        {{ $inventor->nama_lengkap }} &nbsp; - &nbsp; {{ $inventor->nama_kbk }}
                                                     </option>
                                                 @endforeach
                                             </optgroup>
